@@ -7,7 +7,7 @@ An online E-store system built in Java 11=> and ___ _replace with other platform
 
 - Mason Bausenwein
 - Travis Hill
-- MEMBER3
+- Beining Zhou
 - MEMBER4
 
 
