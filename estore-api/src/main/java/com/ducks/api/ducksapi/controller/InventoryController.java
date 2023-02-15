@@ -29,9 +29,9 @@ import java.util.logging.Logger;
  */
 
 @RestController
-@RequestMapping("ducks")
-public class DuckController {
-    private static final Logger LOG = Logger.getLogger(DuckController.class.getName());
+@RequestMapping("inventory")
+public class InventoryController {
+    private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
     private DuckDAO duckDao;
 
     /**
@@ -41,7 +41,7 @@ public class DuckController {
      * <br>
      * This dependency is injected by the Spring Framework
      */
-    public DuckController(DuckDAO duckDao) {
+    public InventoryController(DuckDAO duckDao) {
         this.duckDao = duckDao;
     }
 
@@ -56,7 +56,7 @@ public class DuckController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Duck> getDuck(@PathVariable int id) {
-        LOG.info("GET /ducks/" + id);
+        LOG.info("GET /inventory/" + id);
         try {
             Duck duck = duckDao.getDuck(id);
             if (duck != null) {
@@ -80,7 +80,7 @@ public class DuckController {
      */
     @GetMapping("")
     public ResponseEntity<Duck[]> getDucks() {
-        LOG.info("GET /ducks");
+        LOG.info("GET /inventory");
         try {
             Duck[] ducks = duckDao.getDucks();
             if(ducks != null) {
@@ -105,11 +105,11 @@ public class DuckController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      * <p>
      * Example: Find all ducks that contain the text "ma"
-     * GET http://localhost:8080/ducks/?name=ma
+     * GET http://localhost:8080/inventory/?name=ma
      */
     @GetMapping("/")
     public ResponseEntity<Duck[]> searchDucks(@RequestParam String name) {
-        LOG.info("GET /ducks/?name="+name);
+        LOG.info("GET /inventory/?name="+name);
         try {
             Duck[] ducks = duckDao.findDucks(name);
             if(ducks != null) {
@@ -134,7 +134,7 @@ public class DuckController {
      */
     @PostMapping("")
     public ResponseEntity<Duck> createDuck(@RequestBody Duck duck) {
-        LOG.info("POST /ducks " + duck);
+        LOG.info("POST /inventory " + duck);
         try {
             Duck newDuck = duckDao.createDuck(duck);
             if(newDuck != null) {
@@ -159,7 +159,7 @@ public class DuckController {
      */
     @PutMapping("")
     public ResponseEntity<Duck> updateDuck(@RequestBody Duck duck) {
-        LOG.info("PUT /ducks " + duck);
+        LOG.info("PUT /inventory " + duck);
         try {
             Duck updateDuck = duckDao.updateDuck(duck);
             if(updateDuck != null) {
@@ -184,7 +184,7 @@ public class DuckController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Duck> deleteDuck(@PathVariable int id) {
-        LOG.info("DELETE /ducks/" + id);
+        LOG.info("DELETE /inventory/" + id);
         try{
             if(duckDao.deleteDuck(id)) {
                 return new ResponseEntity<>(HttpStatus.OK);

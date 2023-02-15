@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.ducks.api.ducksapi.controller.DuckController;
+import com.ducks.api.ducksapi.controller.InventoryController;
 import com.ducks.api.ducksapi.model.Duck;
 import com.ducks.api.ducksapi.persistence.DuckDAO;
 
@@ -23,18 +23,18 @@ import com.ducks.api.ducksapi.persistence.DuckDAO;
  * @author SWEN Faculty
  */
 @Tag("Controller-tier")
-public class DuckControllerTest {
-    private DuckController duckController;
+public class InventoryControllerTest {
+    private InventoryController duckController;
     private DuckDAO mockDuckDAO;
 
     /**
-     * Before each test, create a new DuckController object and inject
+     * Before each test, create a new InventoryController object and inject
      * a mock Duck DAO
      */
     @BeforeEach
-    public void setupDuckController() {
+    public void setupInventoryController() {
         mockDuckDAO = mock(DuckDAO.class);
-        duckController = new DuckController(mockDuckDAO);
+        duckController = new InventoryController(mockDuckDAO);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class DuckControllerTest {
     }
 
     /*****************************************************************
-     * The following tests will fail until all DuckController methods
+     * The following tests will fail until all InventoryController methods
      * are implemented.
      ****************************************************************/
 
