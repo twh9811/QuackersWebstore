@@ -59,10 +59,11 @@ public class HeroController {
         LOG.info("GET /heroes/" + id);
         try {
             Hero hero = heroDao.getHero(id);
-            if (hero != null)
+            if (hero != null) {
                 return new ResponseEntity<Hero>(hero,HttpStatus.OK);
-            else
+            } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         }
         catch(IOException e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
