@@ -56,23 +56,23 @@ public class DuckFileDAOTest {
     @Test
     public void testGetDucks() {
         // Invoke
-        Duck[] duckes = duckFileDAO.getDucks();
+        Duck[] ducks = duckFileDAO.getDucks();
 
         // Analyze
-        assertEquals(duckes.length,testDucks.length);
+        assertEquals(ducks.length,testDucks.length);
         for (int i = 0; i < testDucks.length;++i)
-            assertEquals(duckes[i],testDucks[i]);
+            assertEquals(ducks[i],testDucks[i]);
     }
 
     @Test
     public void testFindDucks() {
         // Invoke
-        Duck[] duckes = duckFileDAO.findDucks("la");
+        Duck[] ducks = duckFileDAO.findDucks("la");
 
         // Analyze
-        assertEquals(duckes.length,2);
-        assertEquals(duckes[0],testDucks[1]);
-        assertEquals(duckes[1],testDucks[2]);
+        assertEquals(ducks.length,2);
+        assertEquals(ducks[0],testDucks[1]);
+        assertEquals(ducks[1],testDucks[2]);
     }
 
     @Test
@@ -93,8 +93,8 @@ public class DuckFileDAOTest {
         // Analzye
         assertEquals(result,true);
         // We check the internal tree map size against the length
-        // of the test duckes array - 1 (because of the delete)
-        // Because duckes attribute of DuckFileDAO is package private
+        // of the test ducks array - 1 (because of the delete)
+        // Because ducks attribute of DuckFileDAO is package private
         // we can access it directly
         assertEquals(duckFileDAO.ducks.size(),testDucks.length-1);
     }

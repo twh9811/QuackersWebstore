@@ -180,26 +180,26 @@ public class InventoryControllerTest {
     }
 
     @Test
-    public void testGetDuckes() throws IOException { // getDuckes may throw IOException
+    public void testGetDucks() throws IOException { // getDucks may throw IOException
         // Setup
-        Duck[] duckes = new Duck[2];
-        duckes[0] = new Duck(99,"Bolt");
-        duckes[1] = new Duck(100,"The Great Iguana");
-        // When getDuckes is called return the duckes created above
-        when(mockDuckDAO.getDucks()).thenReturn(duckes);
+        Duck[] ducks = new Duck[2];
+        ducks[0] = new Duck(99,"Bolt");
+        ducks[1] = new Duck(100,"The Great Iguana");
+        // When getDucks is called return the ducks created above
+        when(mockDuckDAO.getDucks()).thenReturn(ducks);
 
         // Invoke
         ResponseEntity<Duck[]> response = duckController.getDucks();
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(duckes,response.getBody());
+        assertEquals(ducks,response.getBody());
     }
 
     @Test
-    public void testGetDuckesHandleException() throws IOException { // getDuckes may throw IOException
+    public void testGetDucksHandleException() throws IOException { // getDucks may throw IOException
         // Setup
-        // When getDuckes is called on the Mock Duck DAO, throw an IOException
+        // When getDucks is called on the Mock Duck DAO, throw an IOException
         doThrow(new IOException()).when(mockDuckDAO).getDucks();
 
         // Invoke
@@ -210,26 +210,26 @@ public class InventoryControllerTest {
     }
 
     @Test
-    public void testSearchDuckes() throws IOException { // findDuckes may throw IOException
+    public void testSearchDucks() throws IOException { // findDucks may throw IOException
         // Setup
         String searchString = "la";
-        Duck[] duckes = new Duck[2];
-        duckes[0] = new Duck(99,"Galactic Agent");
-        duckes[1] = new Duck(100,"Ice Gladiator");
-        // When findDuckes is called with the search string, return the two
-        /// duckes above
-        when(mockDuckDAO.findDucks(searchString)).thenReturn(duckes);
+        Duck[] ducks = new Duck[2];
+        ducks[0] = new Duck(99,"Galactic Agent");
+        ducks[1] = new Duck(100,"Ice Gladiator");
+        // When findDucks is called with the search string, return the two
+        /// ducks above
+        when(mockDuckDAO.findDucks(searchString)).thenReturn(ducks);
 
         // Invoke
         ResponseEntity<Duck[]> response = duckController.searchDucks(searchString);
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(duckes,response.getBody());
+        assertEquals(ducks,response.getBody());
     }
 
     @Test
-    public void testSearchDuckesHandleException() throws IOException { // findDuckes may throw IOException
+    public void testSearchDucksHandleException() throws IOException { // findDucks may throw IOException
         // Setup
         String searchString = "an";
         // When createDuck is called on the Mock Duck DAO, throw an IOException

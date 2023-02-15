@@ -20,11 +20,11 @@ public interface DuckDAO {
     Duck[] getDucks() throws IOException;
 
     /**
-     * Finds all {@linkplain Duck duckes} whose name contains the given text
+     * Finds all {@linkplain Duck ducks} whose name contains the given text
      * 
      * @param containsText The text to match against
      * 
-     * @return An array of {@link Duck duckes} whose nemes contains the given text, may be empty
+     * @return An array of {@link Duck ducks} whose nemes contains the given text, may be empty
      * 
      * @throws IOException if an issue with underlying storage
      */
