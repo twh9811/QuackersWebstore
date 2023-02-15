@@ -14,7 +14,7 @@ public interface DuckDAO {
      * Retrieves all {@linkplain Duck ducks}
      * 
      * @return An array of {@link Duck duck} objects, may be empty
-     * 
+     * FHERO
      * @throws IOException if an issue with underlying storage
      */
     Duck[] getDucks() throws IOException;

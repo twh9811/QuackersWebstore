@@ -17,7 +17,7 @@ public class Duck {
     @JsonProperty("id") private int id;
     @JsonProperty("name") private String name;
     @JsonProperty("size") private Size size;
-    @JsonProperty("color") private Color color;
+    @JsonProperty("color") private Colors color;
     @JsonProperty("hatUID") private int hatUID;
     @JsonProperty("shirtUID") private int shirtUID;
     @JsonProperty("shoesUID") private int shoesUID;
@@ -44,7 +44,7 @@ public class Duck {
      * is not provided in the JSON object, the Java field gets the default Java
      * value, i.e. 0 for int
      */
-    public Duck(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("size") Size size, @JsonProperty("color") Color color, @JsonProperty("hatUID") int hatUID,
+    public Duck(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("size") Size size, @JsonProperty("color") Colors color, @JsonProperty("hatUID") int hatUID,
         @JsonProperty("shirtUID") int shirtUID, @JsonProperty("shoesUID") int shoesUID, @JsonProperty("handItemUID") int handItemUID, @JsonProperty("jewerlyUID") int jewelryUID) {
         this.id = id;
         this.name = name;
@@ -91,13 +91,13 @@ public class Duck {
      * Sets the color of the Duck - necessary for JSON object to Java object deserialization
      * @param color The color of the Duck.
      */
-    public void setColor(Color color) {this.color = color;}
+    public void setColor(Colors color) {this.color = color;}
 
     /**
      * Retrieves the color of the duck
      * @return The color of the duck.
      */
-    public Color getColor() { return color;}
+    public Colors getColor() { return color;}
 
     /**
      * Sets the Unique Identifier of the Hat the Duck is wearing - necessary for JSON object to Java object deserialization

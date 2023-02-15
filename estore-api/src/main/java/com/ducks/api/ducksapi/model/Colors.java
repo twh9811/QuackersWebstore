@@ -3,7 +3,7 @@ package com.ducks.api.ducksapi.model;
  * Reperesnts the colors of a Duck that can be used.
  * @author Travis Hill
  */
-public enum Color {
+public enum Colors {
     /**
      * Red Color
      */

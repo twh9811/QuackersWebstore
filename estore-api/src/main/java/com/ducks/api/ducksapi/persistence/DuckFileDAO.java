@@ -177,7 +177,8 @@ public class DuckFileDAO implements DuckDAO {
         synchronized(ducks) {
             // We create a new duck object because the id field is immutable
             // and we need to assign the next unique id
-            Duck newDuck = new Duck(nextId(),duck.getName());
+            // Modified the constructor to handle duck accessories # Travis 2/15
+            Duck newDuck = new Duck(nextId(),duck.getName(),duck.getSize(),duck.getColor(),duck.getHatUID(),duck.getShirtUID(),duck.getShoesUID(),duck.getHandItemUID(),duck.getJewelryUID());
             ducks.put(newDuck.getId(),newDuck);
             save(); // may throw an IOException
             return newDuck;
