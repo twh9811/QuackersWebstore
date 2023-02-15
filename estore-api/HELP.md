@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.heroes.api.heroes-api' is invalid and this project uses 'com.heroes.api.heroesapi' instead.
+* The original package name 'com.heroes.api.heroes-api' is invalid and this project uses 'com.ducks.api.ducksapi' instead.
 
 # Getting Started
 
