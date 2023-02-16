@@ -12,7 +12,7 @@ public class Duck {
     private static final Logger LOG = Logger.getLogger(Duck.class.getName());
 
     // Package private for tests
-    static final String STRING_FORMAT = "Duck [id=%d, name=%s]";
+    static final String STRING_FORMAT = "Duck [id=%d, name=%s, size=%s, color=%s, hatUID=%d, shirtUID=%d, shoesUID=%d, handitemUID=%d, jewelryUID=%d]";
 
     @JsonProperty("id") private int id;
     @JsonProperty("name") private String name;
@@ -45,7 +45,7 @@ public class Duck {
      * value, i.e. 0 for int
      */
     public Duck(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("size") Size size, @JsonProperty("color") Colors color, @JsonProperty("hatUID") int hatUID,
-        @JsonProperty("shirtUID") int shirtUID, @JsonProperty("shoesUID") int shoesUID, @JsonProperty("handItemUID") int handItemUID, @JsonProperty("jewerlyUID") int jewelryUID) {
+        @JsonProperty("shirtUID") int shirtUID, @JsonProperty("shoesUID") int shoesUID, @JsonProperty("handItemUID") int handItemUID, @JsonProperty("jewelryUID") int jewelryUID) {
         this.id = id;
         this.name = name;
         this.size = size;
@@ -164,6 +164,6 @@ public class Duck {
      */
     @Override
     public String toString() {
-        return String.format(STRING_FORMAT,id,name);
+        return String.format(STRING_FORMAT,id,name,color,size,hatUID,shirtUID,shoesUID,handItemUID,jewelryUID);
     }
 }
