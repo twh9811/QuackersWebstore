@@ -164,6 +164,6 @@ public class Duck {
      */
     @Override
     public String toString() {
-        return String.format(STRING_FORMAT,id,name,color,size,hatUID,shirtUID,shoesUID,handItemUID,jewelryUID);
+        return String.format(STRING_FORMAT,id,name,size,color,hatUID,shirtUID,shoesUID,handItemUID,jewelryUID);
     }
 }
