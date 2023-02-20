@@ -113,7 +113,12 @@ public class InventoryController {
         try {
             Duck[] ducks = duckDao.findDucks(name);
             if(ducks != null) {
-                return new ResponseEntity<Duck[]>(ducks, HttpStatus.OK);
+                if(ducks.length != 0){
+                    return new ResponseEntity<Duck[]>(ducks, HttpStatus.OK);
+                }
+                else{
+                    return new ResponseEntity<Duck[]>(ducks, HttpStatus.NOT_FOUND);
+                }
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
