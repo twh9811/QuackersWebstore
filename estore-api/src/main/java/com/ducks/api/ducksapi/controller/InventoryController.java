@@ -54,7 +54,7 @@ public class InventoryController {
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @GetMapping("/{id}")
+    @GetMapping("/product/{id}")
     public ResponseEntity<Duck> getDuck(@PathVariable int id) {
         LOG.info("GET /inventory/" + id);
         try {
@@ -137,7 +137,7 @@ public class InventoryController {
      * ResponseEntity with HTTP status of CONFLICT if {@link Duck duck} object already exists<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @PostMapping("")
+    @PostMapping("/product")
     public ResponseEntity<Duck> createDuck(@RequestBody Duck duck) {
         LOG.info("POST /inventory " + duck);
         try {
@@ -187,7 +187,7 @@ public class InventoryController {
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/product/{id}")
     public ResponseEntity<Duck> deleteDuck(@PathVariable int id) {
         LOG.info("DELETE /inventory/" + id);
         try{
