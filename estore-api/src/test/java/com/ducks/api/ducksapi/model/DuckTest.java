@@ -10,14 +10,16 @@ import com.ducks.api.ducksapi.model.Duck;
 /**
  * The unit test suite for the Duck class
  * 
- * @author SWEN Faculty
+ * @author SWEN-261-06, Team 8
  */
 @Tag("Model-tier")
 public class DuckTest {
     @Test
-    public void testCtor() {
+    public void testConstructor() {
         // Setup
         int expected_id = 99;
+        int expected_quantity = 10;
+        String expected_price = "9.99";
         String expected_name = "Wi-Fire";
         Colors expected_color = Colors.BLUE;
         Size expected_size = Size.SMALL;
@@ -27,13 +29,16 @@ public class DuckTest {
         int expected_handitem_uid = 3;
         int expected_jewelry_uid = 4;
         // Invoke
-        Duck duck = new Duck(expected_id, expected_name, expected_size, expected_color, expected_hat_uid,
+        Duck duck = new Duck(expected_id, expected_name, expected_quantity, expected_price, expected_size,
+                expected_color, expected_hat_uid,
                 expected_shirt_uid,
                 expected_shoes_uid, expected_handitem_uid, expected_jewelry_uid);
 
         // Analyze
         assertEquals(expected_id, duck.getId());
         assertEquals(expected_name, duck.getName());
+        assertEquals(expected_quantity, duck.getQuantity());
+        assertEquals(expected_price, duck.getPrice());
         assertEquals(expected_size, duck.getSize());
         assertEquals(expected_color, duck.getColor());
         assertEquals(expected_hat_uid, duck.getHatUID());
@@ -48,6 +53,8 @@ public class DuckTest {
         // Setup
         int id = 99;
         String name = "Wi-Fire";
+        int quantity = 10;
+        String price = "9.99";
         Colors color = Colors.BLUE;
         Size size = Size.SMALL;
         int hat_uid = 0;
@@ -56,7 +63,8 @@ public class DuckTest {
         int handitem_uid = 3;
         int jewelry_uid = 4;
         // Invoke
-        Duck duck = new Duck(id, name, size, color, hat_uid, shirt_uid, shoes_uid, handitem_uid, jewelry_uid);
+        Duck duck = new Duck(id, name, quantity, price, size, color, hat_uid, shirt_uid, shoes_uid, handitem_uid,
+                jewelry_uid);
 
         String expected_name = "Galactic Agent";
 
@@ -72,6 +80,8 @@ public class DuckTest {
         // Setup
         int id = 99;
         String name = "Wi-Fire";
+        int quantity = 10;
+        String price = "9.99";
         Colors color = Colors.BLUE;
         Size size = Size.SMALL;
         int hat_uid = 0;
@@ -80,9 +90,12 @@ public class DuckTest {
         int handitem_uid = 3;
         int jewelry_uid = 4;
         // Invoke
-        Duck duck = new Duck(id, name, size, color, hat_uid, shirt_uid, shoes_uid, handitem_uid, jewelry_uid);
+        Duck duck = new Duck(id, name, quantity, price, size, color, hat_uid, shirt_uid, shoes_uid, handitem_uid,
+                jewelry_uid);
 
         String expected_name = "Galactic Agent";
+        int expected_quantity = 12;
+        String expected_price = "19.99";
         Colors expected_color = Colors.RED;
         Size expected_size = Size.MEDIUM;
         int expected_hat_uid = 6;
@@ -93,6 +106,8 @@ public class DuckTest {
 
         // Invoke
         duck.setName(expected_name);
+        duck.setQuantity(expected_quantity);
+        duck.setPrice(expected_price);
         duck.setColor(expected_color);
         duck.setSize(expected_size);
         duck.setHatUID(expected_hat_uid);
@@ -103,6 +118,8 @@ public class DuckTest {
 
         // Analyze
         assertEquals(expected_name, duck.getName());
+        assertEquals(expected_quantity, duck.getQuantity());
+        assertEquals(expected_price, duck.getPrice());
         assertEquals(expected_color, duck.getColor());
         assertEquals(expected_size, duck.getSize());
         assertEquals(expected_hat_uid, duck.getHatUID());
@@ -117,6 +134,8 @@ public class DuckTest {
         // Setup
         int id = 99;
         String name = "Wi-Fire";
+        int quantity = 10;
+        String price = "9.99";
         Colors color = Colors.BLUE;
         Size size = Size.SMALL;
         int hat_uid = 0;
@@ -124,9 +143,11 @@ public class DuckTest {
         int shoes_uid = 2;
         int handitem_uid = 3;
         int jewelry_uid = 4;
-        String expected_string = String.format(Duck.STRING_FORMAT, id, name, size, color, hat_uid, shirt_uid, shoes_uid,
+        String expected_string = String.format(Duck.STRING_FORMAT, id, name, quantity, price, size, color, hat_uid,
+                shirt_uid, shoes_uid,
                 handitem_uid, jewelry_uid);
-        Duck duck = new Duck(id, name, size, color, hat_uid, shirt_uid, shoes_uid, handitem_uid, jewelry_uid);
+        Duck duck = new Duck(id, name, quantity, price, size, color, hat_uid, shirt_uid, shoes_uid, handitem_uid,
+                jewelry_uid);
 
         // Invoke
         String actual_string = duck.toString();

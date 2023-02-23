@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  * {@literal @}RestController Spring annotation identifies this class as a REST API
  * method handler to the Spring framework
  * 
- * @author SWEN Faculty
+ * @author SWEN Faculty, SWEN-261-06 Team 8
  */
 
 @RestController
@@ -56,7 +56,7 @@ public class InventoryController {
      */
     @GetMapping("/product/{id}")
     public ResponseEntity<Duck> getDuck(@PathVariable int id) {
-        LOG.info("GET /inventory/" + id);
+        LOG.info("GET /inventory/product/" + id);
         try {
             Duck duck = duckDao.getDuck(id);
             if (duck != null) {
@@ -139,7 +139,7 @@ public class InventoryController {
      */
     @PostMapping("/product")
     public ResponseEntity<Duck> createDuck(@RequestBody Duck duck) {
-        LOG.info("POST /inventory " + duck);
+        LOG.info("POST /inventory/product " + duck);
         try {
             Duck newDuck = duckDao.createDuck(duck);
             if(newDuck != null) {
@@ -189,7 +189,7 @@ public class InventoryController {
      */
     @DeleteMapping("/product/{id}")
     public ResponseEntity<Duck> deleteDuck(@PathVariable int id) {
-        LOG.info("DELETE /inventory/" + id);
+        LOG.info("DELETE /inventory/product/" + id);
         try{
             if(duckDao.deleteDuck(id)) {
                 return new ResponseEntity<>(HttpStatus.OK);
