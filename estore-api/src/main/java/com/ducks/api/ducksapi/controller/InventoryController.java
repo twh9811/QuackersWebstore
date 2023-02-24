@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  * {@literal @}RestController Spring annotation identifies this class as a REST API
  * method handler to the Spring framework
  * 
- * @author SWEN Faculty
+ * @author SWEN Faculty, SWEN-261-06 Team 8
  */
 
 @RestController
@@ -54,9 +54,9 @@ public class InventoryController {
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @GetMapping("/{id}")
+    @GetMapping("/product/{id}")
     public ResponseEntity<Duck> getDuck(@PathVariable int id) {
-        LOG.info("GET /inventory/" + id);
+        LOG.info("GET /inventory/product/" + id);
         try {
             Duck duck = duckDao.getDuck(id);
             if (duck != null) {
@@ -113,7 +113,12 @@ public class InventoryController {
         try {
             Duck[] ducks = duckDao.findDucks(name);
             if(ducks != null) {
-                return new ResponseEntity<Duck[]>(ducks, HttpStatus.OK);
+                if(ducks.length != 0){
+                    return new ResponseEntity<Duck[]>(ducks, HttpStatus.OK);
+                }
+                else{
+                    return new ResponseEntity<Duck[]>(ducks, HttpStatus.NOT_FOUND);
+                }
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
@@ -132,9 +137,9 @@ public class InventoryController {
      * ResponseEntity with HTTP status of CONFLICT if {@link Duck duck} object already exists<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @PostMapping("")
+    @PostMapping("/product")
     public ResponseEntity<Duck> createDuck(@RequestBody Duck duck) {
-        LOG.info("POST /inventory " + duck);
+        LOG.info("POST /inventory/product " + duck);
         try {
             Duck newDuck = duckDao.createDuck(duck);
             if(newDuck != null) {
@@ -182,9 +187,9 @@ public class InventoryController {
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/product/{id}")
     public ResponseEntity<Duck> deleteDuck(@PathVariable int id) {
-        LOG.info("DELETE /inventory/" + id);
+        LOG.info("DELETE /inventory/product/" + id);
         try{
             if(duckDao.deleteDuck(id)) {
                 return new ResponseEntity<>(HttpStatus.OK);
