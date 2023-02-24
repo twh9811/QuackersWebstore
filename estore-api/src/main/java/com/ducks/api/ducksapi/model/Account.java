@@ -18,10 +18,19 @@ public class Account {
         @JsonProperty("adminStatus")
         private boolean adminStatus;
 
+    // Initial account creation, never want to store plain password anywhere. Only able to be yoinked in transit
     public Account(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("plainPassword") String plainPassword) {
         this.id = id;
         this.username = username;
         this.hashedPassword = plainPassword.hashCode();
+        this.adminStatus = false;
+    }
+
+    // Used for creating new Account objects in the DAO. Don't want to have a getter for plaintext password.
+    public Account(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("hashedPassword") int hashedPassword) {
+        this.id = id;
+        this.username = username;
+        this.hashedPassword = hashedPassword;
         this.adminStatus = false;
     }
 

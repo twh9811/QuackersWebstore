@@ -121,6 +121,17 @@ public class AccountFileDAO implements AccountDAO{
     }
 
     /**
+     * Generates the next id for a new {@linkplain} Account account}
+     * 
+     * @return The next unique id
+     */
+    private synchronized static int nextID() {
+        int id = nextID;
+        ++nextID;
+        return id;
+    }
+
+    /**
      * * {@inheritDoc}}
      */
     @Override
@@ -165,8 +176,24 @@ public class AccountFileDAO implements AccountDAO{
     */
     @Override
     public Account createAccount(Account account) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createAccount'");
+       // Handles multiple click events
+       synchronized(accounts) {
+            // Create new account object with nextID as its unique ID.
+            // First we check if the account username already exists
+            Account[] accountArray = getAccountsArray(account.getUsername());
+            for(Account existingAccount : accountArray) {
+                String existingUsername = existingAccount.getUsername();
+                // Username already exists in the inventory, return null
+                if(existingUsername.equalsIgnoreCase(account.getUsername())) {
+                    return null;
+                }
+            }
+            // If it doesn't already exist we can create the account
+            Account newAccount = new Account(nextID(), account.getUsername(), account.getHashedPassword());
+            // Save changes to the database
+            save();
+            return newAccount;
+       }
     }
 
     @Override
