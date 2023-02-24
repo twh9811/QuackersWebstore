@@ -84,21 +84,6 @@ public class AccountFileDAOTest {
     }
 
     @Test
-    public void testDeleteAccount() throws IOException {
-        // Setup
-        setupAccountFileDAO();
-
-        //Invoke
-        boolean successResult = accountFileDAO.deleteAccount(1);
-        boolean failResult = accountFileDAO.deleteAccount(40);
-         
-        //Analyze
-        assertEquals(successResult, true);
-        assertEquals(failResult, false);
-        assertEquals(accountFileDAO.accounts.size(), testAccounts.length - 1);
-    }
-
-    @Test
     public void testCreateAccount() throws IOException {
         // Setup
         setupAccountFileDAO();
@@ -135,6 +120,21 @@ public class AccountFileDAOTest {
         assertEquals(failResult, null);
         assertEquals(successResult.getClass(), Account.class);
         assertEquals(databaseUpdatedAccount, updatedAccount);
+    }
+
+    @Test
+    public void testDeleteAccount() throws IOException {
+        // Setup
+        setupAccountFileDAO();
+
+        //Invoke
+        boolean successResult = accountFileDAO.deleteAccount(1);
+        boolean failResult = accountFileDAO.deleteAccount(40);
+         
+        //Analyze
+        assertEquals(successResult, true);
+        assertEquals(failResult, false);
+        assertEquals(accountFileDAO.accounts.size(), testAccounts.length - 1);
     }
 
     @Test
