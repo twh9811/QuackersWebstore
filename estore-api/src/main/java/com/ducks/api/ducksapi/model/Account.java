@@ -34,6 +34,14 @@ public class Account {
         this.adminStatus = false;
     }
 
+     // Creates an admin account.
+     public Account() {
+        this.id = 0;
+        this.username = "admin";
+        this.hashedPassword = "admin".hashCode();
+        this.adminStatus = true;
+    }
+
     public int getId() {
         return id;
     }
@@ -59,7 +67,10 @@ public class Account {
     }
 
     public void setAdminStatus(boolean statusType) {
-        this.adminStatus = statusType;
+        // If you aren't an admin, you can't change account status.
+        if(this.adminStatus) {
+            this.adminStatus = statusType;
+        }
     }
 
     @Override

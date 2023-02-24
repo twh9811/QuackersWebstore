@@ -242,6 +242,7 @@ public class AccountFileDAO implements AccountDAO{
                     int newhash = newPass.hashCode();
                     //changes password
                     account.setHashedPassword(newhash);
+                    // Save changes to database
                     return save();
                 }
             }
