@@ -196,10 +196,23 @@ public class AccountFileDAO implements AccountDAO{
        }
     }
 
+    /**
+    * * {@inheritDoc}}
+    */
     @Override
-    public Account updateAccount(Account Account) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateAccount'");
+    public Account updateAccount(Account account) throws IOException {
+        // Handles multiple click events
+        synchronized(accounts) {
+            int accountID = account.getId();
+            // If the database has the account in it, put the changed account into it.
+            if(accounts.containsKey(accountID)) {
+                accounts.put(accountID, account);
+                // Save changes to database.
+                save();
+                return account;
+            }
+            return null;
+        }
     }
 
     @Override
@@ -229,7 +242,7 @@ public class AccountFileDAO implements AccountDAO{
                     int newhash = newPass.hashCode();
                     //changes password
                     account.setHashedPassword(newhash);
-                    return true;
+                    return save();
                 }
             }
             // Account not in database, can't change password

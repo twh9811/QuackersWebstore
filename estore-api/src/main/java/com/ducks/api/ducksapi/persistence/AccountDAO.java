@@ -68,7 +68,7 @@ public interface AccountDAO {
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
-    Account updateAccount(Account Account) throws IOException;
+    Account updateAccount(Account account) throws IOException;
 
     /**
      * Deletes a {@linkplain Account account} with the given id
