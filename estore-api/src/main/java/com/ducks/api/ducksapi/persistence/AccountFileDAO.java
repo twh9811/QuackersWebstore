@@ -35,12 +35,19 @@ public class AccountFileDAO implements AccountDAO{
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * 
+     * @return true if the {@link Account accounts} were written successfully
+     * 
+     * @throws IOException when file cannot be accessed or written to
+     */
     private boolean save() throws IOException {
         // TODO
         return true;
     }
 
     private boolean load() throws IOException {
+        // TODO
         return true;
     }
 
@@ -82,15 +89,22 @@ public class AccountFileDAO implements AccountDAO{
 
     @Override
     public boolean changePassword(int id, String originalPass, String newPass) throws IOException{
-        Account account = getAccount(id);
-        int checkHash = originalPass.hashCode();
-        int currentHash = account.getHashedPassword();
-        if(checkHash == currentHash) {
-            int newhash = newPass.hashCode();
-            account.setHashedPassword(newhash);
-            return true;
+        // Handles clickEvents
+        synchronized(accounts) {
+            // Checks if account is in database
+            if(accounts.containsKey(id)) {
+                Account account = getAccount(id);
+                int checkHash = originalPass.hashCode();
+                int currentHash = account.getHashedPassword();
+                if(checkHash == currentHash) {
+                    int newhash = newPass.hashCode();
+                    account.setHashedPassword(newhash);
+                    return true;
+                }
+            }
+            return false;
         }
-        return false;
+        
     }
     
 }
