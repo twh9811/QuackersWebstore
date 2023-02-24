@@ -36,6 +36,7 @@ public class AccountFileDAO implements AccountDAO{
     public AccountFileDAO(String filename, ObjectMapper objectMapper) throws IOException{
         this.filename = filename;
         this.objectMapper = objectMapper;
+        load();
     }
 
     /**
@@ -190,6 +191,7 @@ public class AccountFileDAO implements AccountDAO{
             }
             // If it doesn't already exist we can create the account
             Account newAccount = new Account(nextID(), account.getUsername(), account.getHashedPassword());
+            accounts.put(newAccount.getId(), newAccount);
             // Save changes to the database
             save();
             return newAccount;
@@ -222,6 +224,7 @@ public class AccountFileDAO implements AccountDAO{
             // Checks if account is in database
             if(accounts.containsKey(id)) {
                 accounts.remove(id);
+                return true;
             }
             // Account is not in database, therefore cannot be deleted
             return false;
