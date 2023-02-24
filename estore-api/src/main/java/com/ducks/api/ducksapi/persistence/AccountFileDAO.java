@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.ducks.api.ducksapi.model.Account;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,7 +35,7 @@ public class AccountFileDAO implements AccountDAO{
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public AccountFileDAO(String filename, ObjectMapper objectMapper) throws IOException{
+    public AccountFileDAO(@Value("${accounts.file}") String filename, ObjectMapper objectMapper) throws IOException{
         this.filename = filename;
         this.objectMapper = objectMapper;
         load();
@@ -254,5 +256,4 @@ public class AccountFileDAO implements AccountDAO{
         }
         
     }
-    
 }
