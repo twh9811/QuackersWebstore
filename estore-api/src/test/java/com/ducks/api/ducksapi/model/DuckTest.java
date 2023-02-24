@@ -14,6 +14,9 @@ import com.ducks.api.ducksapi.model.Duck;
  */
 @Tag("Model-tier")
 public class DuckTest {
+
+    // TODO: Add testEquals unit test
+
     @Test
     public void testConstructor() {
         // Setup

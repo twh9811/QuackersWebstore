@@ -12,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Mason Bausenwein
  */
 public class ShoppingCart {
-    
-    private static final String FORMAT = "ShoppingCart [customerId=%s, items=[%s]]";
+
+    protected static final String FORMAT = "ShoppingCart [customerId=%s, items=[%s]]";
 
     @JsonProperty("customerId")
     private final int customerId;
@@ -23,8 +23,9 @@ public class ShoppingCart {
 
     /**
      * Creates a new shopping cart with the given item list
-     * @param customerId The customer id that the shopping cart belongs to 
-     * @param items The items to add to the shopping cart
+     * 
+     * @param customerId The customer id that the shopping cart belongs to
+     * @param items      The items to add to the shopping cart
      */
     public ShoppingCart(int customerId, ArrayList<Duck> items) {
         this.customerId = customerId;
@@ -33,6 +34,7 @@ public class ShoppingCart {
 
     /**
      * Creates a new shopping cart with an empty item list
+     * 
      * @param customerId The customer id that the shopping cart belongs to
      */
     public ShoppingCart(int customerId) {
@@ -48,6 +50,7 @@ public class ShoppingCart {
 
     /**
      * Gets all of the items (ducks) in the shopping cart
+     * 
      * @return An ArrayList of ducks
      */
     public ArrayList<Duck> getItems() {
@@ -56,17 +59,19 @@ public class ShoppingCart {
 
     /**
      * Adds given ducks to the shopping cart
+     * 
      * @param itemsToAdd The Duck objects to remove
      */
-    public void addItems(Duck...itemsToAdd) {
+    public void addItems(Duck... itemsToAdd) {
         this.items.addAll(Arrays.asList(itemsToAdd));
     }
 
     /**
      * Removes the given ducks from the shopping cart
+     * 
      * @param itemsToRemove The duck objects to remove
      */
-    public void removeItems(Duck...itemsToRemove) {
+    public void removeItems(Duck... itemsToRemove) {
         this.items.removeAll(Arrays.asList(itemsToRemove));
     }
 
@@ -81,12 +86,22 @@ public class ShoppingCart {
      * {@inheritDoc}
      */
     @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ShoppingCart))
+            return false;
+
+        ShoppingCart other = (ShoppingCart) obj;
+        return this.customerId == other.customerId && this.items.equals(other.items);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String toString() {
         // Joins the items list to a string delimited by ', '
         String itemsString = items.stream().map(Duck::toString).collect(Collectors.joining(", "));
         return String.format(FORMAT, this.customerId, itemsString);
     }
-
-
 
 }
