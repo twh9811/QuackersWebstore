@@ -120,24 +120,49 @@ public class AccountFileDAO implements AccountDAO{
         return accountArray;
     }
 
+    /**
+     * * {@inheritDoc}}
+     */
     @Override
     public Account[] getAccounts() throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAccounts'");
+        // Handles multiple click events
+        synchronized(accounts) {
+            // No filter
+            return getAccountsArray();
+        }
     }
 
+    /**
+    * * {@inheritDoc}}
+    */
     @Override
     public Account[] findAccounts(String containsText) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAccounts'");
+        // Handles multiple click events
+        synchronized(accounts) {
+            // With filter
+            return getAccountsArray(containsText);
+        }
     }
 
+    /**
+    * * {@inheritDoc}}
+    */
     @Override
     public Account getAccount(int id) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAccount'");
+        // Handles multiple click events
+        synchronized(accounts) {
+            // If accounts has account id return it.
+            if(accounts.containsKey(id)) {
+                return accounts.get(id);
+            }
+            // If the ID doesn't exist, return null
+            return null;
+        }
     }
 
+    /**
+    * * {@inheritDoc}}
+    */
     @Override
     public Account createAccount(Account account) throws IOException {
         // TODO Auto-generated method stub

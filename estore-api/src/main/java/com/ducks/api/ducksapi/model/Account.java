@@ -1,7 +1,7 @@
 package com.ducks.api.ducksapi.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public abstract class Account {
+public class Account {
 
         @JsonProperty("id")
         private int id;
@@ -53,14 +53,9 @@ public abstract class Account {
         this.adminStatus = statusType;
     }
 
-    public boolean changePassword(String originalPass, String newPass) {
-        int checkHash = originalPass.hashCode();
-        if(checkHash == getHashedPassword()) {
-            int newhash = newPass.hashCode();
-            setHashedPassword(newhash);
-            return true;
-        }
-        return false;
+    @Override
+    public String toString() {
+        return username + ":" + hashedPassword;
     }
 
 }
