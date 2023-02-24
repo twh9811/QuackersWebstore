@@ -11,6 +11,14 @@ import com.ducks.api.ducksapi.model.Account;
  */
 public interface AccountDAO {
 
+    /**
+     * Retrieves all {@linkplain Account accounts}
+     * 
+     * @return An array of {@link Account account} objects, may be empty
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+
     Account[] getAccounts() throws IOException;
 
     /**
@@ -74,4 +82,21 @@ public interface AccountDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     boolean deleteAccount(int id) throws IOException;
+
+    /**
+     * Changes the original password of a {@linkplain Account account} with the new Password.
+     * 
+     * @param id The id of the {@link Account account} that needs their password changed
+     * 
+     * @param originalPass The original password of the {@link Account account}
+     * 
+     * @param newPass The new password of the {@link Account account}
+     * 
+     * @return true if the password of the {@link Account account} was changed
+     * <br>
+     * false if account password was not changed
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    boolean changePassword(int id, String originalPass, String newPass) throws IOException;
 }
