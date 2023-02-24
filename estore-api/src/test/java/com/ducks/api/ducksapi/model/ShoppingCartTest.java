@@ -2,6 +2,7 @@ package com.ducks.api.ducksapi.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
@@ -62,7 +63,7 @@ public class ShoppingCartTest {
         ShoppingCart cart = new ShoppingCart(expected_customer_id, expected_items);
 
         assertEquals(expected_items, cart.getItems(), "Items arraylist is incorrect");
-        
+
         // addItems single test
         cart.addItems(duckTwo);
         expected_items.add(duckTwo);
@@ -72,6 +73,15 @@ public class ShoppingCartTest {
         cart.removeItems(duckOne);
         expected_items.remove(duckOne);
         assertEquals(expected_items, cart.getItems(), "removeItems single failed");
+
+        // removeItemById - No Error
+        cart.removeItemById(2);
+        expected_items.remove(duckTwo);
+        assertEquals(expected_items, cart.getItems(), "removeItemById failed");
+
+        // removeItemById - Error
+        assertThrows(NullPointerException.class, () -> cart.removeItemById(0), "removeItemById did not throw a NullPointerException");
+        assertEquals(expected_items, cart.getItems(), "removeItemById removed an item despite erroring");
 
         // clearItems test
         cart.clearItems();
@@ -137,7 +147,7 @@ public class ShoppingCartTest {
         items.add(duckThree);
 
         ShoppingCart cart = new ShoppingCart(customerId, items);
-        
+
         // Joins the items list to a string delimited by ', '
         String itemsString = items.stream().map(Duck::toString).collect(Collectors.joining(", "));
         String expected_toString = String.format(ShoppingCart.FORMAT, customerId, itemsString);
