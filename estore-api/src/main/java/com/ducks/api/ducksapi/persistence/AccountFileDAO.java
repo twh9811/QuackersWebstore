@@ -1,8 +1,10 @@
 package com.ducks.api.ducksapi.persistence;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.ducks.api.ducksapi.model.Account;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,12 +45,44 @@ public class AccountFileDAO implements AccountDAO{
      * @throws IOException when file cannot be accessed or written to
      */
     private boolean save() throws IOException {
-        // TODO
+        Account[] accountArray = getAccountsArray();
+
+        // Serializes the Java Objects to JSON objects into the file
+        // Throws IOException if an error occurs reading/writing to the file
+        objectMapper.writeValue(new File(filename), accountArray);
+
         return true;
     }
-
+    
+    /**
+     * Loads {@linkplain Account accounts} from the JSON file and stores them into a Map.
+     * <br>
+     * Sets the next ID to be greatest id found in the file.
+     * 
+     * @return true if the file was loaded/read successfully
+     * 
+     * @throws IOException when file cannot be read or accessed.
+     */
     private boolean load() throws IOException {
-        // TODO
+        accounts = new TreeMap<>();
+        nextID = 0;
+
+        // Deserializes the JSON Objects in the file to an array of accounts.
+        // Throws IOException if an error occurs reading/accessing the file
+        Account[] accountArray = objectMapper.readValue(new File(filename), Account[].class);
+
+        // Add each account to the tree map and find the greatest ID.
+        for(Account account : accountArray) {
+            // Uses account ID as key in map, stores account as value to key.
+            accounts.put(account.getId(), account);
+            int currAccountID = account.getId();
+            if(currAccountID > nextID) {
+                nextID = currAccountID;
+            }
+        }
+        // Now we have the greatest account ID, so increment it by one to prevent duplicates
+        // use pre-increment since its stored in a variable.
+        ++nextID;
         return true;
     }
 
@@ -85,6 +119,7 @@ public class AccountFileDAO implements AccountDAO{
         accountArrayList.toArray(accountArray);
         return accountArray;
     }
+
     @Override
     public Account[] getAccounts() throws IOException {
         // TODO Auto-generated method stub
