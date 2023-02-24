@@ -1,6 +1,7 @@
 package com.ducks.api.ducksapi.persistence;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 import com.ducks.api.ducksapi.model.Account;
@@ -51,6 +52,39 @@ public class AccountFileDAO implements AccountDAO{
         return true;
     }
 
+    /**
+     * Generates an array of {@linkplain Account accounts} from the tree map
+     * 
+     * @return The array of {@link Account accounts}, may be empty.
+     */
+    private Account[] getAccountsArray() {
+        return getAccountsArray(null);
+    }
+
+    /**
+     * Generates an array of {@linkplain Account accounts} from the tree map, specifically
+     * any {linkplain Account accounts} that contain the text specified by contains.
+     * <br>
+     * If contains is null, then all {@linkplain Account accounts} should be returned since there is no filter.
+     * 
+     * @return The array of {@link Account accounts}, it can be empty.
+     */
+    private Account[] getAccountsArray(String contains) {
+        ArrayList<Account> accountArrayList = new ArrayList<>();
+
+        // Loops through all accounts in tree map
+        for(Account account : accounts.values()) {
+            // If the account matches the filter, add it to the array list.
+            if(contains == null || account.getUsername().contains(contains)) {
+                accountArrayList.add(account);
+            }
+        }
+
+        // Convert the array list to a regular array, makes it static/fixrd size and hard to modify by accident
+        Account[] accountArray = new Account[accountArrayList.size()];
+        accountArrayList.toArray(accountArray);
+        return accountArray;
+    }
     @Override
     public Account[] getAccounts() throws IOException {
         // TODO Auto-generated method stub
@@ -83,25 +117,35 @@ public class AccountFileDAO implements AccountDAO{
 
     @Override
     public boolean deleteAccount(int id) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteAccount'");
+        // Handles multiple clickEvents
+        synchronized(accounts) {
+            // Checks if account is in database
+            if(accounts.containsKey(id)) {
+                accounts.remove(id);
+            }
+            // Account is not in database, therefore cannot be deleted
+            return false;
+        }
     }
 
     @Override
     public boolean changePassword(int id, String originalPass, String newPass) throws IOException{
-        // Handles clickEvents
+        // Handles multiple clickEvents
         synchronized(accounts) {
             // Checks if account is in database
             if(accounts.containsKey(id)) {
                 Account account = getAccount(id);
                 int checkHash = originalPass.hashCode();
                 int currentHash = account.getHashedPassword();
+                // checks if they have permission to change password
                 if(checkHash == currentHash) {
                     int newhash = newPass.hashCode();
+                    //changes password
                     account.setHashedPassword(newhash);
                     return true;
                 }
             }
+            // Account not in database, can't change password
             return false;
         }
         
