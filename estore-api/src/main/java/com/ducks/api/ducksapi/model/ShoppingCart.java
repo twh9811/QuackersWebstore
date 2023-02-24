@@ -83,8 +83,8 @@ public class ShoppingCart {
      *                              the passed id
      */
     public void removeItemById(int duckId) throws NullPointerException {
-        boolean result = this.items.removeIf(duck -> duck.getId() == duckId);
-        if (result)
+        boolean didDelete = this.items.removeIf(duck -> duck.getId() == duckId);
+        if (didDelete)
             return;
 
         String errorFormat = "No duck with the id %d found in the shopping cart with the customerId of %d";
