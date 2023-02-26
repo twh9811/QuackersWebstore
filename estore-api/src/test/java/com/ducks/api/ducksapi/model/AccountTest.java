@@ -18,7 +18,7 @@ public class AccountTest {
         boolean expectedAdminStatus = false;
 
         // Invoke
-        Account account = new Account(expectedID, expectedUsername, plainPassword);
+        Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
 
         //Analyze
 
@@ -39,7 +39,7 @@ public class AccountTest {
         boolean expectedAdminStatus = false;
 
         // Invoke
-        Account account = new Account(expectedID, expectedUsername, expectedHashPassword);
+        Account account = new UserAccount(expectedID, expectedUsername, expectedHashPassword);
 
         //Analyze
 
@@ -60,7 +60,7 @@ public class AccountTest {
         boolean expectedAdminStatus = true;
 
         // Invoke
-        Account account = new Account();
+        Account account = new OwnerAccount();
 
         //Analyze
 
@@ -78,7 +78,7 @@ public class AccountTest {
           String originalusername = "admin";
           String plainPassword = "password123";
 
-          Account account = new Account(expectedID, originalusername, plainPassword);
+          Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
           String expectedUsername = "notadmin";
           // Invoke
@@ -95,7 +95,7 @@ public class AccountTest {
           String expectedUsername = "admin";
           String plainPassword = "password123";
 
-          Account account = new Account(expectedID, expectedUsername, plainPassword);
+          Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
 
           String newPassword = "password";
           int expectedHashPassword = newPassword.hashCode();
@@ -109,7 +109,7 @@ public class AccountTest {
     @Test
     public void testSetAdminStatusSuccess() {
           // Setup
-          Account admin = new Account();
+          Account admin = new OwnerAccount();
           boolean expectedAdminStatusAfterChange = false;
 
           // Invoke
@@ -126,7 +126,7 @@ public class AccountTest {
           String originalusername = "notadmin";
           String plainPassword = "password123";
 
-          Account account = new Account(expectedID, originalusername, plainPassword);
+          Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
           boolean attemptedStatus = true;
           boolean actualStatus = false;
@@ -145,7 +145,7 @@ public class AccountTest {
         String expectedUsername = "notadmin";
         String plainPassword = "password123";
         
-        Account account = new Account(expectedID, expectedUsername, plainPassword);
+        Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
         
         String expectedString = expectedUsername + ":" + account.getHashedPassword();
         // Invoke
@@ -158,7 +158,7 @@ public class AccountTest {
     @Test
     public void testToStringAdmin() {
         // Setup
-        Account account = new Account();
+        Account account = new OwnerAccount();
         
         String expectedString = "admin:" + account.getHashedPassword();
         // Invoke
