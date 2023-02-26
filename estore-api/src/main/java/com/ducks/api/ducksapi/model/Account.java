@@ -1,7 +1,7 @@
 package com.ducks.api.ducksapi.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Account {
+public abstract class Account {
 
         @JsonProperty("id")
         private int id;

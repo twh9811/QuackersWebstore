@@ -1,6 +1,8 @@
 package com.ducks.api.ducksapi.persistence;
 
 import com.ducks.api.ducksapi.model.Account;
+import com.ducks.api.ducksapi.model.UserAccount;
+import com.ducks.api.ducksapi.model.OwnerAccount;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,11 +28,13 @@ public class AccountFileDAOTest {
      */
     public void setupAccountFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
-        testAccounts = new Account[3];
+        testAccounts = new Account[4];
 
-        testAccounts[0] = new Account(1, "Jeff", "password");
-        testAccounts[1] = new Account(2, "Travis", "password");
-        testAccounts[2] = new Account(3, "Bob", "password");
+        testAccounts[0] = new OwnerAccount();
+        testAccounts[1] = new UserAccount(1, "Jeff", "password");
+        testAccounts[2] = new UserAccount(2, "Travis", "password");
+        testAccounts[3] = new UserAccount(3, "Bob", "password");
+        
 
         // When the object mapper is supposed to read from the file
         // the mock object mapper will return the duck array above
@@ -50,6 +54,8 @@ public class AccountFileDAOTest {
         //Analyze
         assertEquals(accounts.length, testAccounts.length);
         for(int i=0; i<testAccounts.length; i++) {
+            System.out.println(accounts[i]);
+            System.out.println(testAccounts[i]);
             assertEquals(accounts[i], testAccounts[i]);
         }
     }
@@ -63,7 +69,7 @@ public class AccountFileDAOTest {
         Account[] emptySearch = accountFileDAO.findAccounts("Zuch");
         //Analyze
         assertEquals(accounts.length, 1);
-        assertEquals(accounts[0], testAccounts[1]);
+        assertEquals(accounts[0], testAccounts[2]);
         assertEquals(emptySearch.length, 0);
     }
 
@@ -78,17 +84,17 @@ public class AccountFileDAOTest {
         Account failResult = accountFileDAO.getAccount(100);
         
         //Analyze
-        assertEquals(account1, testAccounts[0]);
-        assertEquals(account2, testAccounts[1]);
+        assertEquals(account1, testAccounts[1]);
+        assertEquals(account2, testAccounts[2]);
         assertEquals(failResult, null);
     }
 
     @Test
-    public void testCreateAccount() throws IOException {
+    public void testCreateUserAccount() throws IOException {
         // Setup
         setupAccountFileDAO();
-        Account successAccount = new Account(4, "Timmy", "password");
-        Account failAccount = new Account(5, "Travis", "password");
+        Account successAccount = new UserAccount(4, "Timmy", "password");
+        Account failAccount = new UserAccount(5, "Travis", "password");
 
         // Invoke
         Account successResult = accountFileDAO.createAccount(successAccount);
@@ -97,7 +103,7 @@ public class AccountFileDAOTest {
         //Analyze
         Account createdAccount = accountFileDAO.getAccount(successResult.getId());;
         assertEquals(failResult, null);
-        assertEquals(successResult.getClass(), Account.class);
+        assertEquals(successResult.getClass(), UserAccount.class);
         assertEquals(createdAccount.getId(), 4);
         assertEquals(createdAccount.getUsername(), "Timmy");
         assertEquals(createdAccount.getHashedPassword(), "password".hashCode());
@@ -105,11 +111,30 @@ public class AccountFileDAOTest {
     }
 
     @Test
+    public void testCreateOwnerAccount() throws IOException {
+        // Setup
+        setupAccountFileDAO();
+        Account failAccount = new OwnerAccount();
+
+        // Invoke
+        Account failResult = accountFileDAO.createAccount(failAccount);
+
+        //Analyze
+        Account createdAccount = accountFileDAO.getAccount(0);;
+        assertEquals(failResult, null);
+        assertEquals(createdAccount.getClass(), OwnerAccount.class);
+        assertEquals(createdAccount.getId(), 0);
+        assertEquals(createdAccount.getUsername(), "admin");
+        assertEquals(createdAccount.getHashedPassword(), "admin".hashCode());
+        assertEquals(createdAccount.getAdminStatus(), true);
+    }
+
+    @Test
     public void testUpdateAccount() throws IOException {
         // Setup
         setupAccountFileDAO();
-        Account updatedAccount = new Account(1, "notJeff", "password");
-        Account failUpdatedAccount = new Account(50, "notJeff", "password");
+        Account updatedAccount = new UserAccount(1, "notJeff", "password");
+        Account failUpdatedAccount = new UserAccount(50, "notJeff", "password");
 
         // Invoke
         Account successResult = accountFileDAO.updateAccount(updatedAccount);
@@ -118,7 +143,7 @@ public class AccountFileDAOTest {
         // Analyze 
         Account databaseUpdatedAccount = accountFileDAO.getAccount(1);
         assertEquals(failResult, null);
-        assertEquals(successResult.getClass(), Account.class);
+        assertEquals(successResult.getClass(), UserAccount.class);
         assertEquals(databaseUpdatedAccount, updatedAccount);
     }
 
