@@ -3,8 +3,6 @@ package com.ducks.api.ducksapi.persistence;
 import java.io.IOException;
 
 
-
-import com.ducks.api.ducksapi.model.Duck;
 import com.ducks.api.ducksapi.model.ShoppingCart;
 
 /*
@@ -24,7 +22,7 @@ public interface CartDAO {
     ShoppingCart[] getShoppingCarts() throws IOException;
 
     /**
-     * Finds all {@linkplain ShoppingCart shopping cart} whose id contains the given text
+     * Finds all {@linkplain ShoppingCart shopping cart} whose id contains the given number
      * 
      * @param containsText The text to match against
      * 
@@ -45,7 +43,7 @@ public interface CartDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    ShoppingCart getShoppingCart() throws IOException;
+    ShoppingCart getShoppingCart(int id) throws IOException;
 
     /**
      * Creates and saves a {@linkplain ShoppingCart shopping cart}
@@ -79,7 +77,7 @@ public interface CartDAO {
      * 
      * @return true if the {@link ShoppingCart shopping cart} was deleted
      * <br>
-     * false if duck with the given id does not exist
+     * false if  the {@link ShoppingCart shopping cart} with the given id does not exist
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
