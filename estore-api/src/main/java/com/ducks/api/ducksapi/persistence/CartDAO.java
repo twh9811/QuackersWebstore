@@ -21,16 +21,6 @@ public interface CartDAO {
      */
     ShoppingCart[] getShoppingCarts() throws IOException;
 
-    /**
-     * Finds all {@linkplain ShoppingCart shopping cart} whose id contains the given number
-     * 
-     * @param containsText The text to match against
-     * 
-     * @return An array of {@link ShoppingCart shopping cart} whose id contains the given text, may be empty
-     * 
-     * @throws IOException if an issue with underlying storage
-     */
-    ShoppingCart[] findShoppingCarts(String containsText) throws IOException;
 
     /**
      * Retrieves a {@linkplain ShoppingCart shopping cart} with the given customer id
