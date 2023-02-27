@@ -1,7 +1,21 @@
 <div>
-    <label for="name">Username: </label>
-    <input type="username">
+    <label for="username">Username: 
+        <input type="text" id="username" name="username" [(ngModel)]="username">
+    </label>
     <br>
-    <label for="name">Password:   </label>
-    <input type="password">
+    <label for="password">Password:
+        <input type="password" id="password" name="password" [(ngModel)]="password">
+    </label>
+    <br>
+    <button type="button" (click)="onSubmit(username,password)">Submit</button>
+</div>
+
+
+<div>
+    <span>Entered Username:</span>
+    {{attempt.username}}
+</div>
+<div>
+    <span>Entered Password:</span>
+    {{attempt.password}}
 </div>
