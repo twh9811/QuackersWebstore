@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Login } from '../login';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,28 +8,28 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   message = "Please login to our store to continue :)"
-  username = '';
-  password = '';
 
-  attempt : Login = {
-    username : "",
-    password : ""
-  };
+  username : String = '';
+  password : String = '';
+  isLoggedIn : Boolean = false;
 
   constructor(private router : Router) {}
 
-  onSubmit(username : String, password : String) {
-      this.attempt.username = username;
-      this.attempt.password = password;
-      this.redirect(this.attempt);
-  }
-
-  redirect(account : Login) {
-    if(account.username == "admin") {
+  redirect() {
+    if(this.username == "admin") {
       this.router.navigate(['/adminPage'])
     } else {
       this.router.navigate(['/customerPage'])
     }
   }
+
+  onSubmit(username : String, password : String) {
+      this.username = username;
+      this.password = password;
+      this.isLoggedIn = true;
+      this.redirect();
+  }
+
+  
 
 }
