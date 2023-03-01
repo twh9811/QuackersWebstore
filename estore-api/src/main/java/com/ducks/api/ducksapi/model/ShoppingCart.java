@@ -27,7 +27,7 @@ public class ShoppingCart {
      * @param customerId The customer id that the shopping cart belongs to
      * @param items      The items to add to the shopping cart
      */
-    public ShoppingCart(int customerId, ArrayList<Duck> items) {
+    public ShoppingCart(@JsonProperty("customerId") int customerId, @JsonProperty("items") ArrayList<Duck> items) {
         this.customerId = customerId;
         this.items = items;
     }
@@ -103,8 +103,9 @@ public class ShoppingCart {
      */
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof ShoppingCart))
+        if (!(obj instanceof ShoppingCart)) {
             return false;
+        }
 
         ShoppingCart other = (ShoppingCart) obj;
         return this.customerId == other.customerId && this.items.equals(other.items);

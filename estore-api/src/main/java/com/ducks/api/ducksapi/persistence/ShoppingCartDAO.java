@@ -15,7 +15,7 @@ public interface ShoppingCartDAO {
     /**
      * Retrieves all {@linkplain ShoppingCart shopping cart}
      * 
-     * @return An array of {@link ShoppingCart shopping cart} objects, may be empty
+     * @return An array of {@linkplain ShoppingCart shopping cart} objects, may be empty
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -25,11 +25,11 @@ public interface ShoppingCartDAO {
     /**
      * Retrieves a {@linkplain ShoppingCart shopping cart} with the given customer id
      * 
-     * @param id The id of the {@link ShoppingCart shopping cart} to get
+     * @param id The id of the {@linkplain ShoppingCart shopping cart} to get
      * 
-     * @return a {@link ShoppingCart shopping cart} object with the matching id
+     * @return a {@linkplain ShoppingCart shopping cart} object with the matching id
      * <br>
-     * null if no {@link ShoppingCart shopping cart} with a matching id is found
+     * null if no {@linkplain ShoppingCart shopping cart} with a matching id is found
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -40,9 +40,9 @@ public interface ShoppingCartDAO {
      * 
      * @param cart {@linkplain ShoppingCart shopping cart} object to be created and saved
      * <br>
-     * The id of the shopping cart object is ignored and a new uniqe id is assigned
+     * The id of the {@linkplain ShoppingCart shopping cart} object is ignored and a new uniqe id is assigned
      *
-     * @return new {@link ShoppingCart shopping cart} if successful, false otherwise 
+     * @return new {@linkplain ShoppingCart shopping cart} if successful, false otherwise 
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -51,10 +51,10 @@ public interface ShoppingCartDAO {
     /**
      * Updates and saves a {@linkplain ShoppingCart shopping cart}
      * 
-     * @param cart {@link ShoppingCart shopping cart} object to be updated and saved
+     * @param cart {@linkplain ShoppingCart shopping cart} object to be updated and saved
      * 
-     * @return updated {@link ShoppingCart shopping cart} if successful, null if
-     * {@link ShoppingCart shopping cart} could not be found
+     * @return updated {@linkplain ShoppingCart shopping cart} if successful, null if
+     * {@linkplain ShoppingCart shopping cart} could not be found
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
@@ -63,11 +63,11 @@ public interface ShoppingCartDAO {
     /**
      * Deletes a {@linkplain ShoppingCart shopping cart} with the given customer id
      * 
-     * @param id The id of the {@link ShoppingCart shopping cart}
+     * @param id The id of the {@linkplain ShoppingCart shopping cart}
      * 
-     * @return true if the {@link ShoppingCart shopping cart} was deleted
+     * @return true if the {@linkplain ShoppingCart shopping cart} was deleted
      * <br>
-     * false if  the {@link ShoppingCart shopping cart} with the given id does not exist
+     * false if  the {@linkplain ShoppingCart shopping cart} with the given id does not exist
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
