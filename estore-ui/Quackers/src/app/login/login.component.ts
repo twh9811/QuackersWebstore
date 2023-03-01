@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Account } from '../account';
 
 @Component({
   selector: 'app-login',
@@ -9,9 +10,15 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   message = "Please login to our store to continue :)"
 
+  account: Account = {
+    id: null,
+    username: "",
+    password: "",
+    adminStatus: null
+  };
+
   username : String = '';
   password : String = '';
-  isLoggedIn : Boolean = false;
 
   constructor(private router : Router) {}
 
