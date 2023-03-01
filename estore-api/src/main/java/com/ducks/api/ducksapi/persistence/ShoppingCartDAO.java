@@ -10,7 +10,7 @@ import com.ducks.api.ducksapi.model.ShoppingCart;
  *  
  * @author Andrew Le
  */
-public interface CartDAO {
+public interface ShoppingCartDAO {
     
     /**
      * Retrieves all {@linkplain ShoppingCart shopping cart}
