@@ -138,7 +138,7 @@ public class ShoppingCartFileDAO implements ShoppingCartDAO {
      * {@inheritDoc}
      */
     @Override
-    public ShoppingCart getShoppingCart(int id) throws IOException {
+    public ShoppingCart getShoppingCart(int id) {
         synchronized (carts) {
             return carts.get(id); // NULL If not found
         }
@@ -148,7 +148,7 @@ public class ShoppingCartFileDAO implements ShoppingCartDAO {
      * {@inheritDoc}
      */
     @Override
-    public ShoppingCart[] getShoppingCarts() throws IOException {
+    public ShoppingCart[] getShoppingCarts() {
         synchronized (carts) {
             return getShoppingCartArray();
         }
