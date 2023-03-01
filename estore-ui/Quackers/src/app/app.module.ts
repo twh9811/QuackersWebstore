@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { AdminTestComponent } from './admin-test/admin-test.component';
 import { CustomerTestComponent } from './customer-test/customer-test.component';
 
+import { HttpClientModule} from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CustomerTestComponent } from './customer-test/customer-test.component';
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
