@@ -295,6 +295,22 @@ public class Duck {
      * {@inheritDoc}
      */
     @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Duck))
+            return false;
+        
+        Duck other = (Duck) obj;
+        return this.id == other.id && this.name.equals(other.name) && this.quantity == other.quantity
+                && this.price == other.price
+                && this.size == other.size && this.color == other.color && this.hatUID == other.hatUID
+                && this.shirtUID == other.shirtUID && this.handItemUID == other.handItemUID
+                && this.jewelryUID == other.jewelryUID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String toString() {
         return String.format(STRING_FORMAT, id, name, quantity, price, size, color, hatUID, shirtUID, shoesUID,
                 handItemUID, jewelryUID);
