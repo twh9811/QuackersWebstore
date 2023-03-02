@@ -70,6 +70,9 @@ public class AuthController {
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
+        // Something went wrong not related to user authentication.
+        } catch(IOException ioe) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
