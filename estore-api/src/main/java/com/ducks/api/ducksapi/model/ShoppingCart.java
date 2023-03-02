@@ -1,5 +1,6 @@
 package com.ducks.api.ducksapi.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -181,11 +182,20 @@ public class ShoppingCart {
             throw new IllegalArgumentException("There must be at least one duck id in the entered array");
         }
 
+        ArrayList<Integer> invalidIds = new ArrayList<>();
+
         for (Integer duckId : duckIds) {
             if (!this.items.containsKey(duckId)) {
-                throw new IllegalArgumentException("There is no duck with the id " + duckId + " in the shopping cart");
+                invalidIds.add(duckId);
+                continue;
             }
             this.items.remove(duckId);
+        }
+
+        if (invalidIds.size() != 0) {
+            String ids = invalidIds.stream().map(Object::toString).collect(Collectors.joining(", "));
+            throw new IllegalArgumentException(
+                    "Failed to remove the ducks with the following ids from the shopping cart: " + ids);
         }
     }
 
