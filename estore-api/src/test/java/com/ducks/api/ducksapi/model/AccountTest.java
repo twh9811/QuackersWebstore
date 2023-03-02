@@ -1,11 +1,17 @@
 package com.ducks.api.ducksapi.model;
-import com.ducks.api.ducksapi.model.Account;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-
+/**
+ * A unit test suite for the abstract Account class.
+ * Tests both OwnerAccount and UserAccount classes functionality
+ * 
+ * @author Travis Hill
+ */
+@Tag("Model-tier")
 public class AccountTest {
 
     @Test

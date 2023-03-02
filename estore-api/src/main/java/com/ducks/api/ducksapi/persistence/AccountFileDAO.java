@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 import com.ducks.api.ducksapi.model.Account;
 import com.ducks.api.ducksapi.model.UserAccount;
-import com.ducks.api.ducksapi.model.OwnerAccount;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /** 
