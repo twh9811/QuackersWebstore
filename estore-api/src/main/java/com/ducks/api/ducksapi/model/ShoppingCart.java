@@ -240,22 +240,6 @@ public class ShoppingCart {
     }
 
     /**
-     * Removes a duck based on a given id
-     * 
-     * @param duckId The id of the duck being removed
-     * @throws IllegalArgumentException If there is no duck in the shopping cart
-     *                                  with the passed id
-     */
-    public void removeItemById(int duckId) throws IllegalArgumentException {
-        boolean didDelete = this.items.remove(duckId) == duckId;
-        if (didDelete)
-            return;
-
-        String errorFormat = "No duck with the id %d found in the shopping cart with the customerId of %d";
-        throw new IllegalArgumentException(String.format(errorFormat, duckId, this.customerId));
-    }
-
-    /**
      * Clears the items in the shopping cart
      */
     public void clearItems() {
