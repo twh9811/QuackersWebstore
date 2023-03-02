@@ -201,9 +201,9 @@ public class AccountTest {
         boolean diffPasswordFail = account.equals(diffPassword);
         //Analyze
           
-        assertEquals(successTest, true);
-        assertEquals(diffUsernameFail, false);
-        assertEquals(diffPasswordFail, false);
+        assertEquals(true, successTest);
+        assertEquals(false, diffUsernameFail);
+        assertEquals(false, diffPasswordFail);
     }
     
 }
