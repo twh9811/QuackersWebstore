@@ -40,17 +40,12 @@ public class AuthController {
 
 
     /**
-     * Responds to the GET request for a ({@linkplain} Account account} for the specific ID
-     * This is needed to get valid data to compare to the potentially invalid user-input data
      * 
-     * @param id the id of the account to be fetched
-     * @return the account object
+     * @param account
+     * @return
      * 
-     * ResponseEntity with HTTP status of OK if found
-     * ResponseEntity with HTTP status of NOT_FOUND if not found.
-     * ResponseEntity with HTTP status of Internal Server Error if anything else happens
+     * 
      */
-
     @PostMapping("/login")
     public ResponseEntity<Account> authenticateUser(@PathVariable Account account) {
         try {
