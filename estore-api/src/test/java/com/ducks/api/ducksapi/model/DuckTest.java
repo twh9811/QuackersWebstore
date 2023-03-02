@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import com.ducks.api.ducksapi.model.Duck;
 
 /**
  * The unit test suite for the Duck class

@@ -10,14 +10,12 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 
 import com.ducks.api.ducksapi.model.Colors;
 import com.ducks.api.ducksapi.model.Duck;
 import com.ducks.api.ducksapi.model.Size;
-import com.ducks.api.ducksapi.persistence.DuckFileDAO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.BeforeEach;

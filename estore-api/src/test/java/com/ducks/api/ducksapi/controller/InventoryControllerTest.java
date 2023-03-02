@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.ducks.api.ducksapi.controller.InventoryController;
 import com.ducks.api.ducksapi.model.Duck;
 import com.ducks.api.ducksapi.persistence.DuckDAO;
 import com.ducks.api.ducksapi.model.Colors;
