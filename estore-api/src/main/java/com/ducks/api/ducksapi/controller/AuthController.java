@@ -41,10 +41,14 @@ public class AuthController {
 
     /**
      * 
-     * @param account
-     * @return
+     * Responds to the POST request for a {@linkplain Account account} attempting to login to the site
      * 
+     * @param account A Login attempt by the user (not linked to the database)
+     * @return The account in the database if attempt successful
      * 
+     * HttpStatus OK if the authentication was successful
+     * HttpStatus CONFLICT if the authentication failed
+     * HttpStatus NOT_FOUND if the login attempt was for an account was not found in the database
      */
     @PostMapping("/login")
     public ResponseEntity<Account> authenticateUser(@PathVariable Account account) {
