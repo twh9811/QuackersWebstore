@@ -59,8 +59,6 @@ public class AccountFileDAOTest {
         // Analyze
         assertEquals(accounts.length, testAccounts.length);
         for (int i = 0; i < testAccounts.length; i++) {
-            System.out.println(accounts[i]);
-            System.out.println(testAccounts[i]);
             assertEquals(accounts[i], testAccounts[i]);
         }
     }
@@ -101,7 +99,7 @@ public class AccountFileDAOTest {
 
         // Analyze
         Account createdAccount = accountFileDAO.getAccount(successResult.getId());
-        ;
+        
         assertEquals(failResult, null);
         assertEquals(successResult.getClass(), UserAccount.class);
         assertEquals(createdAccount.getId(), 4);
@@ -120,7 +118,7 @@ public class AccountFileDAOTest {
 
         // Analyze
         Account createdAccount = accountFileDAO.getAccount(0);
-        ;
+        
         assertEquals(failResult, null);
         assertEquals(createdAccount.getClass(), OwnerAccount.class);
         assertEquals(createdAccount.getId(), 0);
