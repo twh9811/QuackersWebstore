@@ -12,16 +12,14 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import com.ducks.api.ducksapi.model.Colors;
-import com.ducks.api.ducksapi.model.Duck;
 import com.ducks.api.ducksapi.model.ShoppingCart;
-import com.ducks.api.ducksapi.model.Size;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -47,18 +45,18 @@ public class ShoppingCartFileDAOTest {
         mockObjectMapper = mock(ObjectMapper.class);
         testCarts = new ShoppingCart[3];
 
-        Duck duckOne = new Duck(99, "Wi-Fire", 12, "9.99", Size.MEDIUM, Colors.BLUE, 0, 0, 0, 0, 0);
-        Duck duckTwo = new Duck(100, "Galactic Agent", 11, "19.99", Size.SMALL, Colors.RED, 0, 0, 0, 0, 0);
-        Duck duckThree = new Duck(101, "Ice Gladiator", 10, "29.99", Size.EXTRA_LARGE, Colors.GREEN, 0, 0, 0, 0, 0);
-
         ShoppingCart cartOne = new ShoppingCart(0);
-        cartOne.addItems(duckOne, duckTwo);
+        cartOne.addItemAmount(1, 30);
+        cartOne.addItemAmount(2, 20);
+        cartOne.addItemAmount(3, 10);
 
         ShoppingCart cartTwo = new ShoppingCart(1);
-        cartTwo.addItems(duckTwo, duckThree);
+        cartTwo.addItemAmount(2, 5);
+        cartTwo.addItemAmount(3, 3);
 
         ShoppingCart cartThree = new ShoppingCart(2);
-        cartThree.addItems(duckOne, duckThree);
+        cartOne.addItemAmount(1, 15);
+        cartOne.addItemAmount(3, 13);
 
         testCarts[0] = cartOne;
         testCarts[1] = cartTwo;
@@ -121,9 +119,8 @@ public class ShoppingCartFileDAOTest {
     @Test
     public void testCreateShoppingCart() {
         // Setup
-        Duck duck = new Duck(99, "Galactic Agent", 10, "9.99", Size.LARGE, Colors.INDIGO, 0, 0, 0, 0, 0);
-        ArrayList<Duck> items = new ArrayList<>();
-        items.add(duck);
+        Map<Integer, Integer> items = new HashMap<>();
+        items.put(1, 10);
 
         ShoppingCart newCart = new ShoppingCart(3, items);
 
@@ -143,9 +140,8 @@ public class ShoppingCartFileDAOTest {
         // Setup
         int customerId = 1;
 
-        Duck duck = new Duck(99, "Galactic Agent", 10, "9.99", Size.LARGE, Colors.INDIGO, 0, 0, 0, 0, 0);
-        ArrayList<Duck> items = new ArrayList<>();
-        items.add(duck);
+        Map<Integer, Integer> items = new HashMap<>();
+        items.put(1, 10);
 
         ShoppingCart newCart = new ShoppingCart(customerId, items);
 
@@ -165,9 +161,8 @@ public class ShoppingCartFileDAOTest {
         // Setup
         int customerId = 1;
 
-        Duck duck = new Duck(99, "Galactic Agent", 10, "9.99", Size.LARGE, Colors.INDIGO, 0, 0, 0, 0, 0);
-        ArrayList<Duck> items = new ArrayList<>();
-        items.add(duck);
+        Map<Integer, Integer> items = new HashMap<>();
+        items.put(1, 10);
 
         ShoppingCart cart = new ShoppingCart(customerId, items);
         // Invoke
@@ -185,10 +180,9 @@ public class ShoppingCartFileDAOTest {
         // Setup
         int customerId = 7;
 
-        Duck duck = new Duck(99, "Galactic Agent", 10, "9.99", Size.LARGE, Colors.INDIGO, 0, 0, 0, 0, 0);
-        ArrayList<Duck> items = new ArrayList<>();
-        items.add(duck);
-
+        Map<Integer, Integer> items = new HashMap<>();
+        items.put(1, 10);
+        
         ShoppingCart cart = new ShoppingCart(customerId, items);
         // Invoke
         ShoppingCart result = assertDoesNotThrow(() -> cartFileDAO.updateShoppingCart(cart),
