@@ -182,7 +182,7 @@ public class ShoppingCartFileDAOTest {
 
         Map<Integer, Integer> items = new HashMap<>();
         items.put(1, 10);
-        
+
         ShoppingCart cart = new ShoppingCart(customerId, items);
         // Invoke
         ShoppingCart result = assertDoesNotThrow(() -> cartFileDAO.updateShoppingCart(cart),
