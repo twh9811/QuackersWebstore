@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ducks.api.ducksapi.model.Account;
+import com.ducks.api.ducksapi.model.UserAccount;
 import com.ducks.api.ducksapi.persistence.AccountDAO;
 
 /**
@@ -41,7 +42,7 @@ public class AuthController {
 
     /**
      * 
-     * Responds to the POST request for a {@linkplain Account account} attempting to login to the site
+     * Responds to the GET request for a {@linkplain Account account} attempting to login to the site
      * 
      * @param account A Login attempt by the user (not linked to the database)
      * @return The account in the database if attempt successful
@@ -50,20 +51,23 @@ public class AuthController {
      * HttpStatus CONFLICT if the authentication failed
      * HttpStatus NOT_FOUND if the login attempt was for an account was not found in the database
      */
-    @PostMapping("/login")
-    public ResponseEntity<Account> authenticateUser(@PathVariable Account account) {
+    @GetMapping("/login")
+    public ResponseEntity<Account> authenticateUser(@PathVariable String username, @PathVariable String password) {
+        // GET /login/?username=username&password=password
         try {
-            int accountToLookFor = account.getId();
-            Account databaseAccount = accountDAO.getAccount(accountToLookFor);
-            // This means account DOES exist in system
-            if(databaseAccount != null) {
-                // If the accounts match, successful login
-                if(databaseAccount.equals(account)) {
-                    return new ResponseEntity<Account>(databaseAccount, HttpStatus.OK);
-                // Accounts don't match, unsuccessful login
-                } else {
-                    return new ResponseEntity<>(HttpStatus.CONFLICT);
+            Account[] databaseAccounts = accountDAO.findAccounts(username);
+            // This means account does exist in system
+            if(databaseAccounts.length != 0) {
+                // Create a temporary account. Only one account with the username can exist so ID doesn't matter
+                UserAccount tempAccount = new UserAccount(-100, username, password);
+                for(Account databaseAccount : databaseAccounts) {
+                    // Same username and hashed password
+                    if(databaseAccount.equals(tempAccount)) {
+                        return new ResponseEntity<Account>(databaseAccount, HttpStatus.OK);
+                    }
                 }
+                // Account exists in the system, but wrong login information was provided by user.
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
             // Account does not exist in system, need to tell user to create one
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
