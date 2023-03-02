@@ -15,6 +15,11 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * A unit test suite for the AccountFileDAO Class to test its functionality
+ * 
+ * @author Travis Hill
+ */
 public class AccountFileDAOTest {
     AccountFileDAO accountFileDAO;
     Account[] testAccounts;
