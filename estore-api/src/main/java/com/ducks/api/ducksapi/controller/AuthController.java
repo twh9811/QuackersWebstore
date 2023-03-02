@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,7 @@ import com.ducks.api.ducksapi.persistence.AccountDAO;
  */
 
 @RestController
-@RequestMapping("accounts")
+@RequestMapping("/login")
 public class AuthController {
     private AccountDAO accountDAO;
 
@@ -50,17 +51,19 @@ public class AuthController {
      * ResponseEntity with HTTP status of NOT_FOUND if not found.
      * ResponseEntity with HTTP status of Internal Server Error if anything else happens
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<Account> getAccount(@PathVariable int id) {
+
+    @PostMapping("")
+    public ResponseEntity<Account> authenticateUser(@PathVariable Account account) {
         try {
-            Account account = accountDAO.getAccount(id);
-            if(account != null) {
-                return new ResponseEntity<Account>(account, HttpStatus.OK);
+            int accountToLookFor = account.getId();
+            Account databaseAccount = accountDAO.getAccount(accountToLookFor);
+            // This means account DOES exist in system
+            if(databaseAccount != null) {
+                
+            // Account does not exist in system, need to tell user to create one
             } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
             }
-        } catch(IOException ioe) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
