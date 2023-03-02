@@ -13,6 +13,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+<<<<<<< HEAD
+=======
+import com.ducks.api.ducksapi.model.Duck;
+import com.ducks.api.ducksapi.persistence.DuckDAO;
+>>>>>>> accountModel
 import com.ducks.api.ducksapi.model.Colors;
 import com.ducks.api.ducksapi.model.Duck;
 import com.ducks.api.ducksapi.model.Size;
