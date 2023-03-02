@@ -1,12 +1,10 @@
 package com.ducks.api.ducksapi.model;
 
-
 /**
  * A Account class that represents an Admin on the webstore.
  * 
  * @author Travis Hill
  */
-
 public class OwnerAccount extends Account {
 
     /**
