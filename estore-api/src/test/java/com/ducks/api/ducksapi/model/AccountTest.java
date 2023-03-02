@@ -183,12 +183,6 @@ public class AccountTest {
         
         Account account = new UserAccount(id1, user1, pass1);
 
-        int id2 = 2;
-        String user2 = "notadmin";
-        String pass2 = "password123";
-        
-        Account diffID = new UserAccount(id2, user2, pass2);
-
         int id3 = 1;
         String user3 = "notadmin1";
         String pass3 = "password123";
@@ -203,13 +197,11 @@ public class AccountTest {
     
         // Invoke
         boolean successTest = account.equals(account);
-        boolean diffIDFail = account.equals(diffID);
         boolean diffUsernameFail = account.equals(diffUsername);
         boolean diffPasswordFail = account.equals(diffPassword);
         //Analyze
           
         assertEquals(successTest, true);
-        assertEquals(diffIDFail, false);
         assertEquals(diffUsernameFail, false);
         assertEquals(diffPasswordFail, false);
     }

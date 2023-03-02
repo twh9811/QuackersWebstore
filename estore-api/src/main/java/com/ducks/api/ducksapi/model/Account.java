@@ -112,13 +112,13 @@ public abstract class Account {
     }
 
     /**
-     * Two accounts are considered equal if they have the same exact fields.
+     * ID and admin status don't matter in this regard. This is solely for login verification purposes.
      */
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Account) {
             Account other = (Account) obj;
-            return (this.id == other.getId() && this.username.equals(other.getUsername()) && this.hashedPassword == other.getHashedPassword() && this.adminStatus == other.getAdminStatus());
+            return (this.username.equals(other.getUsername()) && this.hashedPassword == other.getHashedPassword());
         } 
         return false;
     }
