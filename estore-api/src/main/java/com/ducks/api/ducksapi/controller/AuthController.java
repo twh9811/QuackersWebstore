@@ -59,10 +59,16 @@ public class AuthController {
             Account databaseAccount = accountDAO.getAccount(accountToLookFor);
             // This means account DOES exist in system
             if(databaseAccount != null) {
-                
+                // If the accounts match, successful login
+                if(databaseAccount.equals(account)) {
+                    return new ResponseEntity<Account>(databaseAccount, HttpStatus.OK);
+                // Accounts don't match, unsuccessful login
+                } else {
+                    return new ResponseEntity<>(HttpStatus.CONFLICT);
+                }
             // Account does not exist in system, need to tell user to create one
             } else {
-
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         }
     }
