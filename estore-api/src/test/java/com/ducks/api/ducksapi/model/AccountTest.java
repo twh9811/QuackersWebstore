@@ -173,5 +173,45 @@ public class AccountTest {
           
         assertEquals(expectedString, actual_string);
     }
+
+    @Test
+    public void testEqualsUser() {
+        // Setup
+        int id1 = 1;
+        String user1 = "notadmin";
+        String pass1 = "password123";
+        
+        Account account = new UserAccount(id1, user1, pass1);
+
+        int id2 = 2;
+        String user2 = "notadmin";
+        String pass2 = "password123";
+        
+        Account diffID = new UserAccount(id2, user2, pass2);
+
+        int id3 = 1;
+        String user3 = "notadmin1";
+        String pass3 = "password123";
+        
+        Account diffUsername = new UserAccount(id3, user3, pass3);
+
+        int id4 = 1;
+        String user4 = "notadmin";
+        String pass4 = "password1234";
+        
+        Account diffPassword = new UserAccount(id4, user4, pass4);
+    
+        // Invoke
+        boolean successTest = account.equals(account);
+        boolean diffIDFail = account.equals(diffID);
+        boolean diffUsernameFail = account.equals(diffUsername);
+        boolean diffPasswordFail = account.equals(diffPassword);
+        //Analyze
+          
+        assertEquals(successTest, true);
+        assertEquals(diffIDFail, false);
+        assertEquals(diffUsernameFail, false);
+        assertEquals(diffPasswordFail, false);
+    }
     
 }
