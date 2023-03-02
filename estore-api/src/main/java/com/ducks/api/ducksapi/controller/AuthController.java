@@ -24,7 +24,6 @@ import com.ducks.api.ducksapi.persistence.AccountDAO;
  */
 
 @RestController
-@RequestMapping("/login")
 public class AuthController {
     private AccountDAO accountDAO;
 
@@ -52,7 +51,7 @@ public class AuthController {
      * ResponseEntity with HTTP status of Internal Server Error if anything else happens
      */
 
-    @PostMapping("")
+    @PostMapping("/login")
     public ResponseEntity<Account> authenticateUser(@PathVariable Account account) {
         try {
             int accountToLookFor = account.getId();
