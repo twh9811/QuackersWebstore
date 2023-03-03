@@ -49,16 +49,23 @@ public class ShoppingCartController {
     /**
      * Responds to the GET request for all {@linkplain ShoppingCart Shopping carts}
      * 
-     * @return ResponseEntity with array of {@link Duck ducks} objects (may be empty) and
+     * @return ResponseEntity with array of {@link ShoppingCart Shopping carts} objects (may be empty) and
      * HTTP status of OK<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("")
     public ResponseEntity<ShoppingCart[]> getShoppingCarts(){
-        LOG.info(msg: "GET /inventory");
+        LOG.info("GET /ShoppingCart");
         try{
-            ShoppingCart[] cart = cartDao.getShoppingCarts();
-            if
-        }
+            ShoppingCart[] carts = cartDao.getShoppingCarts();
+            if(carts != null) {
+                return new ResponseEntity<>(carts, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(carts, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch(IOException ioe) {
+        LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+}
 }
