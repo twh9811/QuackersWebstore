@@ -182,6 +182,9 @@ public class ShoppingCart {
             throw new IllegalArgumentException("There must be at least one duck id in the entered array");
         }
 
+        // This list keeps track of invalidIds so they can provided in an error message
+        // when the loop completes. This allows us to delete all valid ducks from the
+        // cart before erroring, making it easier to deal with
         ArrayList<Integer> invalidIds = new ArrayList<>();
 
         for (Integer duckId : duckIds) {
