@@ -1,6 +1,11 @@
 package com.ducks.api.ducksapi.model;
 
+import org.apache.catalina.User;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 
 /** 
@@ -9,6 +14,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Travis Hill
  */
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = UserAccount.class, name = "UserAccount"),
+    @JsonSubTypes.Type(value = OwnerAccount.class, name = "OwnerAccount")
+})
 public abstract class Account {
 
         @JsonProperty("id")
@@ -23,12 +33,17 @@ public abstract class Account {
         @JsonProperty("adminStatus")
         private boolean adminStatus;
 
+    /**
+     * Needed for Spring to run the server. Needs Public Default Constructor.
+     */
+    public Account() {}
+
     // Used for creating new Account objects in the DAO.
-    public Account(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("plainPassword") String plainPassword) {
+    public Account(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("plainPassword") String plainPassword, @JsonProperty("adminStatus") boolean adminStatus) {
         this.id = id;
         this.username = username;
         this.plainPassword = plainPassword;
-        this.adminStatus = false;
+        this.adminStatus = adminStatus;
     }
 
     /**
