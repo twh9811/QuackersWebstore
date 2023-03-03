@@ -24,8 +24,9 @@ public class UserAccount extends Account {
     @JsonProperty("hashedPassword")
     private int hashedPassword;
 
-    @JsonProperty("adminStatus")
-    private boolean adminStatus;
+    public UserAccount() {
+        super();
+    }
     
     /**
      * Creates a new regular user account using the constructor defined in the Account class.
