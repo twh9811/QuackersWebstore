@@ -1,11 +1,8 @@
 package com.ducks.api.ducksapi.model;
 
-import org.apache.catalina.User;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 
 /** 

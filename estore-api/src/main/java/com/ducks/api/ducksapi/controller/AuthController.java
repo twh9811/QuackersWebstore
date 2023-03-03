@@ -70,14 +70,14 @@ public class AuthController {
      * HttpStatus NOT_FOUND if the login attempt was for an account was not found in the database
      */
     @GetMapping("/login")
-    public ResponseEntity<Account> authenticateUser(@PathVariable String username, @PathVariable String password) {
+    public ResponseEntity<Account> authenticateUser(@PathVariable String username, @PathVariable String plainPassword) {
         // GET /login/?username=username&password=password
         try {
             Account[] databaseAccounts = accountDAO.findAccounts(username);
             // This means account does exist in system
             if(databaseAccounts.length != 0) {
                 // Create a temporary account. Only one account with the username can exist so ID doesn't matter
-                UserAccount tempAccount = new UserAccount(-100, username, password);
+                UserAccount tempAccount = new UserAccount(-100, username, plainPassword);
                 for(Account databaseAccount : databaseAccounts) {
                     // Same username and hashed password
                     if(databaseAccount.equals(tempAccount)) {
