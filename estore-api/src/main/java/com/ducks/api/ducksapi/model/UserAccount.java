@@ -1,5 +1,7 @@
 package com.ducks.api.ducksapi.model;
 
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -7,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  * @author Travis Hill
  */
-
+@Component
 public class UserAccount extends Account {
 
     @JsonProperty("id")

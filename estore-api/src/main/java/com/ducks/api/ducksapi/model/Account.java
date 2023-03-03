@@ -1,4 +1,5 @@
 package com.ducks.api.ducksapi.model;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  * @author Travis Hill
  */
+
 public abstract class Account {
 
         @JsonProperty("id")
