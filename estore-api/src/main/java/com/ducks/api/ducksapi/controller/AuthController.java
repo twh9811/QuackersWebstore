@@ -44,14 +44,15 @@ public class AuthController {
      * 
      * Responds to the GET request for a {@linkplain Account account} attempting to login to the site
      * 
-     * @param account A Login attempt by the user (not linked to the database)
+     * @param username The username of the login attempt
+     * @param password The password of the user attempt
      * @return The account in the database if attempt successful
      * 
      * HttpStatus OK if the authentication was successful
      * HttpStatus CONFLICT if the authentication failed
      * HttpStatus NOT_FOUND if the login attempt was for an account was not found in the database
      */
-    @GetMapping("/login")
+    @GetMapping("/login/")
     public ResponseEntity<Account> authenticateUser(@PathVariable String username, @PathVariable String password) {
         // GET /login/?username=username&password=password
         try {
