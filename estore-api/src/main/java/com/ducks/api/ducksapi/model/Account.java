@@ -20,34 +20,15 @@ public abstract class Account {
         @JsonProperty("plainPassword")
         private String plainPassword;
 
-        @JsonProperty("hashedPassword")
-        private int hashedPassword;
-
         @JsonProperty("adminStatus")
         private boolean adminStatus;
 
-    // Initial account creation, never want to store plain password anywhere. Only able to be yoinked in transit
+    // Used for creating new Account objects in the DAO.
     public Account(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("plainPassword") String plainPassword) {
         this.id = id;
         this.username = username;
-        this.hashedPassword = plainPassword.hashCode();
+        this.plainPassword = plainPassword;
         this.adminStatus = false;
-    }
-
-    // Used for creating new Account objects in the DAO. Don't want to have a getter for plaintext password.
-    public Account(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("hashedPassword") int hashedPassword) {
-        this.id = id;
-        this.username = username;
-        this.hashedPassword = hashedPassword;
-        this.adminStatus = false;
-    }
-
-     // Creates an admin account.
-     public Account() {
-        this.id = 0;
-        this.username = "admin";
-        this.hashedPassword = "admin".hashCode();
-        this.adminStatus = true;
     }
 
     /**
@@ -73,18 +54,18 @@ public abstract class Account {
     }
 
     /**
-     * @return the hashed password of the account
+     * @return the password of the account
      */
-    public int getHashedPassword() {
-        return hashedPassword;
+    public String getPassword() {
+        return plainPassword;
     }
 
     /**
-     * Changes the hashed password of an account
-     * @param hashedPassword The hashed passworld the account should change to.
+     * Changes the password of an account
+     * @param newPassword The passworld the account should change to.
      */
-    public void setHashedPassword(int hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    public void setPassword(String newPassword) {
+        this.plainPassword = newPassword;
     }
 
     /**
@@ -99,8 +80,7 @@ public abstract class Account {
      * @param statusType The type of status the account should be changed to
      */
     public void setAdminStatus(boolean statusType) {
-        // If you aren't an admin, you can't change account status.
-        if(this.adminStatus) {
+        if(this.username.equals("admin")) {
             this.adminStatus = statusType;
         }
     }
@@ -110,7 +90,7 @@ public abstract class Account {
      */
     @Override
     public String toString() {
-        return username + ":" + hashedPassword;
+        return username + ":" + plainPassword;
     }
 
     /**
@@ -120,7 +100,7 @@ public abstract class Account {
     public boolean equals(Object obj) {
         if(obj instanceof Account) {
             Account other = (Account) obj;
-            return (this.username.equals(other.getUsername()) && this.hashedPassword == other.getHashedPassword());
+            return (this.username.equals(other.getUsername()) && this.plainPassword == other.getPassword());
         } 
         return false;
     }

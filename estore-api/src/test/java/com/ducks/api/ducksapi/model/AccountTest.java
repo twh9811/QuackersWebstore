@@ -19,39 +19,17 @@ public class AccountTest {
         // Setup
         int expectedID = 1;
         String expectedUsername = "admin";
-        String plainPassword = "password123";
-        int expectedHashPassword = plainPassword.hashCode();
+        String expectedPassword = "password123";
         boolean expectedAdminStatus = false;
 
         // Invoke
-        Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
+        Account account = new UserAccount(expectedID, expectedUsername, expectedPassword);
 
         //Analyze
 
         assertEquals(expectedID, account.getId());
         assertEquals(expectedUsername, account.getUsername());
-        assertEquals(expectedHashPassword, account.getHashedPassword());
-        assertEquals(expectedID, account.getId());
-        assertEquals(expectedAdminStatus, account.getAdminStatus());
-    }
-
-    @Test
-    public void testConstructorHashedPassword() {
-        // Setup
-        int expectedID = 1;
-        String expectedUsername = "admin";
-        String plainPassword = "password123";
-        int expectedHashPassword = plainPassword.hashCode();
-        boolean expectedAdminStatus = false;
-
-        // Invoke
-        Account account = new UserAccount(expectedID, expectedUsername, expectedHashPassword);
-
-        //Analyze
-
-        assertEquals(expectedID, account.getId());
-        assertEquals(expectedUsername, account.getUsername());
-        assertEquals(expectedHashPassword, account.getHashedPassword());
+        assertEquals(expectedPassword, account.getPassword());
         assertEquals(expectedID, account.getId());
         assertEquals(expectedAdminStatus, account.getAdminStatus());
     }
@@ -61,8 +39,7 @@ public class AccountTest {
         // Setup
         int expectedID = 0;
         String expectedUsername = "admin";
-        String plainPassword = "admin";
-        int expectedHashPassword = plainPassword.hashCode();
+        String expectedPassword = "admin";
         boolean expectedAdminStatus = true;
 
         // Invoke
@@ -72,7 +49,7 @@ public class AccountTest {
 
         assertEquals(expectedID, account.getId());
         assertEquals(expectedUsername, account.getUsername());
-        assertEquals(expectedHashPassword, account.getHashedPassword());
+        assertEquals(expectedPassword, account.getPassword());
         assertEquals(expectedID, account.getId());
         assertEquals(expectedAdminStatus, account.getAdminStatus());
     }
@@ -95,7 +72,7 @@ public class AccountTest {
     }
 
     @Test
-    public void testSetHashedPassword() {
+    public void testsetPassword() {
           // Setup
           int expectedID = 1;
           String expectedUsername = "admin";
@@ -103,13 +80,12 @@ public class AccountTest {
 
           Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
 
-          String newPassword = "password";
-          int expectedHashPassword = newPassword.hashCode();
+          String expectedPassword = "password";
           // Invoke
-          account.setHashedPassword(expectedHashPassword);
+          account.setPassword(expectedPassword);
           //Analyze
   
-          assertEquals(expectedHashPassword, account.getHashedPassword());
+          assertEquals(expectedPassword, account.getPassword());
     }
 
     @Test
@@ -153,7 +129,7 @@ public class AccountTest {
         
         Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
         
-        String expectedString = expectedUsername + ":" + account.getHashedPassword();
+        String expectedString = expectedUsername + ":" + account.getPassword();
         // Invoke
         String actual_string = account.toString();
         //Analyze
@@ -166,7 +142,7 @@ public class AccountTest {
         // Setup
         Account account = new OwnerAccount();
         
-        String expectedString = "admin:" + account.getHashedPassword();
+        String expectedString = "admin:" + account.getPassword();
         // Invoke
         String actual_string = account.toString();
         //Analyze

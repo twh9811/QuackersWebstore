@@ -111,7 +111,7 @@ public class AccountFileDAOTest {
         assertEquals(successResult.getClass(), UserAccount.class);
         assertEquals(createdAccount.getId(), 4);
         assertEquals(createdAccount.getUsername(), "Timmy");
-        assertEquals(createdAccount.getHashedPassword(), "password".hashCode());
+        assertEquals(createdAccount.getPassword(), "password");
         assertEquals(createdAccount.getAdminStatus(), false);
     }
 
@@ -130,7 +130,7 @@ public class AccountFileDAOTest {
         assertEquals(createdAccount.getClass(), OwnerAccount.class);
         assertEquals(createdAccount.getId(), 0);
         assertEquals(createdAccount.getUsername(), "admin");
-        assertEquals(createdAccount.getHashedPassword(), "admin".hashCode());
+        assertEquals(createdAccount.getPassword(), "admin");
         assertEquals(createdAccount.getAdminStatus(), true);
     }
 
@@ -174,7 +174,6 @@ public class AccountFileDAOTest {
         Account account = accountFileDAO.getAccount(1);
         int accountID = account.getId();
         String newPassword = "password12345";
-        int newPasswordHash = newPassword.hashCode();
         // Invoke
         boolean successChange = accountFileDAO.changePassword(accountID, "password", newPassword);
         boolean failChangeWrongID = accountFileDAO.changePassword(999, "password", newPassword);
@@ -183,7 +182,7 @@ public class AccountFileDAOTest {
         // Analyze
         Account updatedAccount = accountFileDAO.getAccount(accountID);
         assertEquals(successChange, true);
-        assertEquals(updatedAccount.getHashedPassword(), newPasswordHash);
+        assertEquals(updatedAccount.getPassword(), newPassword);
         assertEquals(failChangeWrongID, false);
         assertEquals(failChangeWrongOriginalPassword, false);
         

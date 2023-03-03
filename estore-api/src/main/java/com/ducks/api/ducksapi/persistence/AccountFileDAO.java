@@ -195,7 +195,7 @@ public class AccountFileDAO implements AccountDAO{
                 }
             }
             // If it doesn't already exist we can create the account
-            Account newAccount = new UserAccount(nextID(), account.getUsername(), account.getHashedPassword());
+            Account newAccount = new UserAccount(nextID(), account.getUsername(), account.getPassword());
             accounts.put(newAccount.getId(), newAccount);
             // Save changes to the database
             save();
@@ -243,13 +243,11 @@ public class AccountFileDAO implements AccountDAO{
             // Checks if account is in database
             if(accounts.containsKey(id)) {
                 Account account = getAccount(id);
-                int checkHash = originalPass.hashCode();
-                int currentHash = account.getHashedPassword();
+                String currPassword = account.getPassword();
                 // checks if they have permission to change password
-                if(checkHash == currentHash) {
-                    int newhash = newPass.hashCode();
+                if(originalPass.equals(currPassword)) {
                     //changes password
-                    account.setHashedPassword(newhash);
+                    account.setPassword(newPass);
                     // Save changes to database
                     return save();
                 }
