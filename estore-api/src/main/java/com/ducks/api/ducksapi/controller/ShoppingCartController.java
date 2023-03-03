@@ -32,6 +32,8 @@ public class ShoppingCartController {
         this.cartDao = cartDao;
     }
 
+
+
     // TODO: Change this.
     @GetMapping("")
     public ResponseEntity<ShoppingCart> getShoppingCart() {
@@ -44,4 +46,19 @@ public class ShoppingCartController {
         }
     }
 
+    /**
+     * Responds to the GET request for all {@linkplain ShoppingCart Shopping carts}
+     * 
+     * @return ResponseEntity with array of {@link Duck ducks} objects (may be empty) and
+     * HTTP status of OK<br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @GetMapping("")
+    public ResponseEntity<ShoppingCart[]> getShoppingCarts(){
+        LOG.info(msg: "GET /inventory");
+        try{
+            ShoppingCart[] cart = cartDao.getShoppingCarts();
+            if
+        }
+    }
 }
