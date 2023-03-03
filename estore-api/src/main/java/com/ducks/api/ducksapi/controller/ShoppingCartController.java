@@ -76,7 +76,14 @@ public class ShoppingCartController {
         }
     }
 
-    
+    /**
+     * Creates a {@linkplain ShoppingCart shoppingCart}
+     * @param hero - The {@link ShoppingCart shoppingCart} to create
+     * 
+     * @return ResponseEntity with created {@link ShoppingCart shoppingCart} object and HTTP status of CREATED<br>
+     * ResponseEntity with HTTP status of CONFLICT if {@link ShoppingCart shoppingCart} object already exists<br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
     @PostMapping("")
     public ResponseEntity<ShoppingCart> createShoppingCart(@RequestBody ShoppingCart cart) {
         LOG.info("POST /shopping " + cart);
