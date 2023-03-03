@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.ducks.api.ducksapi.model.Account;
 import com.ducks.api.ducksapi.model.UserAccount;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author Travis Hill
  */
 
+@Component
 public class AccountFileDAO implements AccountDAO{
 
     Map<Integer, Account> accounts; // Creates a local cache of account objects so the file doesn't have to
@@ -36,7 +38,7 @@ public class AccountFileDAO implements AccountDAO{
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public AccountFileDAO(@Value("${accounts.file}") String filename, ObjectMapper objectMapper) throws IOException{
+    public AccountFileDAO(@Value("${accounts.file}")String filename, ObjectMapper objectMapper) throws IOException{
         this.filename = filename;
         this.objectMapper = objectMapper;
         load();
