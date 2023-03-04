@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -124,7 +123,6 @@ public class AuthController {
         // curl.exe -X PUT -H 'Content-Type:application/json' 'http://localhost:8080/logout' -d '{\"type\":\"UserAccount\", \"id\":1,\"username\":\"TEST\",\"plainPassword\":\"TEST\"}'
         try {
             Account updatedAccount = accountDAO.updateAccount(account);
-            System.out.println(updatedAccount);
             // Account saved successfully
             if(updatedAccount != null) {
                 return new ResponseEntity<>(HttpStatus.OK);
