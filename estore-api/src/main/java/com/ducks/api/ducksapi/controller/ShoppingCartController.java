@@ -21,6 +21,16 @@ import com.ducks.api.ducksapi.model.Duck;
 import com.ducks.api.ducksapi.model.ShoppingCart;
 import com.ducks.api.ducksapi.persistence.ShoppingCartDAO;
 
+
+/**
+ * Handles the REST API requests for the Shopping Cart resource
+ * <p>
+ * {@literal @}RestController Spring annotation identifies this class as a REST API
+ * method handler to the Spring framework
+ * 
+ * @author Andrew Le
+ */
+
 @RestController
 @RequestMapping("shopping")
 public class ShoppingCartController {
