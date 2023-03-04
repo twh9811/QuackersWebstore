@@ -1,7 +1,5 @@
 package com.ducks.api.ducksapi.model;
 
-import java.beans.Transient;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
