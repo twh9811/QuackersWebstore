@@ -133,7 +133,6 @@ public class DuckFileDAOTest {
         assertEquals(actual, duck);
     }
 
-    // Used to be testSaveException
     @Test
     public void testCreateDuplicateName() throws IOException {
         doThrow(new IOException())
@@ -143,9 +142,6 @@ public class DuckFileDAOTest {
         Duck duck = new Duck(102, "Wi-Fire", 10, "9.99", Size.SMALL, Colors.ORANGE, 0, 0, 0, 0, 0);
 
         assertNull(duckFileDAO.createDuck(duck), "createDuck did not return null");
-        /*assertThrows(IOException.class,
-                () -> duckFileDAO.createDuck(duck),
-                "IOException not thrown");*/
     }
 
     @Test
