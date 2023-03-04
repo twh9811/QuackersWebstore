@@ -49,14 +49,28 @@ public class ShoppingCartController {
         this.cartDao = cartDao;
     }
 
-
-
+    /**
+     * Retrieves a {@linkplain ShoppingCart shopping cart} with the given customer id
+     * 
+     * @param id The id of the {@linkplain ShoppingCart shopping cart} to get
+     * 
+     * @return a {@linkplain ShoppingCart shopping cart} object with the matching id
+     * <br>
+     * null if no {@linkplain ShoppingCart shopping cart} with a matching id is found
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
     // TODO: Change this.
-    @GetMapping("")
-    public ResponseEntity<ShoppingCart> getShoppingCart() {
-        LOG.info("GET /shopping");
+    @GetMapping("/shopping/{id}")
+    public ResponseEntity<ShoppingCart> getShoppingCart(@PathVariable int id) {
+        LOG.info("GET /shopping/" + id);
         try {
-            return new ResponseEntity<ShoppingCart>(cartDao.getShoppingCart(2), HttpStatus.I_AM_A_TEAPOT);
+            ShoppingCart cart = cartDao.getShoppingCart(id);
+            if (cart != null) {
+                return new ResponseEntity<ShoppingCart>(cart,HttpStatus.OK);
+            } else {
+                return new ResponseEntity<ShoppingCart>(HttpStatus.NOT_FOUND);
+            }
         } catch (IOException ioe) {
             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
