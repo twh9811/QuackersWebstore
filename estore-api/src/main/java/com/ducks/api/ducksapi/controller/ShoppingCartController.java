@@ -127,6 +127,15 @@ public class ShoppingCartController {
 
     }
 
+    /**
+     * Deletes a {@linkplain ShoppingCart shoppingCart} with the given id
+     * 
+     * @param id The id of the {@link ShoppingCart shoppingCart} to deleted
+     * 
+     * @return ResponseEntity HTTP status of OK if deleted<br>
+     * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
     @DeleteMapping("/cart/{id}")
     public ResponseEntity<Duck> deleteShoppingCart(@PathVariable int id) {
         LOG.info("DELETE /shopping/cart/" + id);
