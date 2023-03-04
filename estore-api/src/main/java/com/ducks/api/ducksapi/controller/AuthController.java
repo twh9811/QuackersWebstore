@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ducks.api.ducksapi.persistence.AccountDAO;
 
@@ -25,6 +27,7 @@ import com.ducks.api.ducksapi.model.UserAccount;
  */
 
 @RestController
+@RequestMapping("login")
 public class AuthController {
     private AccountDAO accountDAO;
 
@@ -40,7 +43,7 @@ public class AuthController {
     }
 
 
-    @PostMapping("/login")
+    @PostMapping("/account")
     public ResponseEntity<Account> createUser(@RequestBody Account account) {
         // GET /login/?username=username&password=password
         try {
@@ -69,15 +72,15 @@ public class AuthController {
      * HttpStatus CONFLICT if the authentication failed
      * HttpStatus NOT_FOUND if the login attempt was for an account was not found in the database
      */
-    @GetMapping("/login")
-    public ResponseEntity<Account> authenticateUser(@PathVariable String username, @PathVariable String plainPassword) {
+    @GetMapping("/")
+    public ResponseEntity<Account> authenticateUser(@RequestParam String username, @RequestParam String password) {
         // GET /login/?username=username&password=password
         try {
             Account[] databaseAccounts = accountDAO.findAccounts(username);
             // This means account does exist in system
             if(databaseAccounts.length != 0) {
                 // Create a temporary account. Only one account with the username can exist so ID doesn't matter
-                UserAccount tempAccount = new UserAccount(-100, username, plainPassword);
+                UserAccount tempAccount = new UserAccount(-100, username, password);
                 for(Account databaseAccount : databaseAccounts) {
                     // Same username and hashed password
                     if(databaseAccount.equals(tempAccount)) {

@@ -112,7 +112,7 @@ public abstract class Account {
     public boolean equals(Object obj) {
         if(obj instanceof Account) {
             Account other = (Account) obj;
-            return (this.username.equals(other.getUsername()) && this.plainPassword == other.getPassword());
+            return (this.username.equals(other.getUsername()) && this.plainPassword.equals(other.getPassword()));
         } 
         return false;
     }
