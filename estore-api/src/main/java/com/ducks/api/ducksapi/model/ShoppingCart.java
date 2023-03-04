@@ -22,7 +22,7 @@ public class ShoppingCart {
     private final int customerId;
 
     @JsonProperty("items")
-    private Map<Integer, Integer> items;
+    private Map<String, Integer> items;
 
     /**
      * Creates a new shopping cart with the given item list
@@ -31,7 +31,7 @@ public class ShoppingCart {
      * @param items      The items to add to the shopping cart
      */
     public ShoppingCart(@JsonProperty("customerId") int customerId,
-            @JsonProperty("items") Map<Integer, Integer> items) throws IllegalArgumentException {
+            @JsonProperty("items") Map<String, Integer> items) throws IllegalArgumentException {
         this.customerId = customerId;
 
         if (!isItemsMapValid(items)) {
@@ -47,7 +47,7 @@ public class ShoppingCart {
      * @param customerId The customer id that the shopping cart belongs to
      */
     public ShoppingCart(int customerId) {
-        this(customerId, new HashMap<Integer, Integer>());
+        this(customerId, new HashMap<String, Integer>());
     }
 
     /**
@@ -62,7 +62,7 @@ public class ShoppingCart {
      * 
      * @return An set of duck ids
      */
-    public Set<Integer> getItems() {
+    public Set<String> getItems() {
         return items.keySet();
     }
 
@@ -91,11 +91,11 @@ public class ShoppingCart {
      *                                  id
      */
     public int getItemAmount(Integer duckId) throws IllegalArgumentException {
-        if (!this.items.containsKey(duckId)) {
+        if (!this.items.containsKey(duckId.toString())) {
             throw new IllegalArgumentException("There is no duck with the id " + duckId + " in the shopping cart");
         }
 
-        return this.items.get(duckId);
+        return this.items.get(duckId.toString());
     }
 
     /**
@@ -121,8 +121,8 @@ public class ShoppingCart {
         }
 
         for (Integer duckId : duckIds) {
-            int quantity = items.containsKey(duckId) ? items.get(duckId) + 1 : 1;
-            items.put(duckId, quantity);
+            int quantity = items.containsKey(duckId.toString()) ? items.get(duckId.toString()) + 1 : 1;
+            items.put(duckId.toString(), quantity);
         }
     }
 
@@ -149,13 +149,13 @@ public class ShoppingCart {
      * @param quantity The amount of the duck being added to the cart
      * @throws IllegalArgumentException If the quantity is less than or equal to 0
      */
-    public void addItemAmount(int duckId, int quantity) throws IllegalArgumentException {
+    public void addItemAmount(Integer duckId, int quantity) throws IllegalArgumentException {
         if (quantity <= 0) {
             throw new IllegalArgumentException("The entered quantity must be greater than 0");
         }
 
-        int newQuantity = items.containsKey(duckId) ? items.get(duckId) + quantity : quantity;
-        items.put(duckId, newQuantity);
+        int newQuantity = items.containsKey(duckId.toString()) ? items.get(duckId.toString()) + quantity : quantity;
+        items.put(duckId.toString(), newQuantity);
     }
 
     /**
@@ -188,11 +188,11 @@ public class ShoppingCart {
         ArrayList<Integer> invalidIds = new ArrayList<>();
 
         for (Integer duckId : duckIds) {
-            if (!this.items.containsKey(duckId)) {
+            if (!this.items.containsKey(duckId.toString())) {
                 invalidIds.add(duckId);
                 continue;
             }
-            this.items.remove(duckId);
+            this.items.remove(duckId.toString());
         }
 
         if (invalidIds.size() != 0) {
@@ -229,8 +229,8 @@ public class ShoppingCart {
      *                                  If the quantity attempting to be removed
      *                                  exceeds the amount in the cart.
      */
-    public void removeItemAmount(int duckId, int quantity) throws IllegalArgumentException {
-        if (!this.items.containsKey(duckId)) {
+    public void removeItemAmount(Integer duckId, int quantity) throws IllegalArgumentException {
+        if (!this.items.containsKey(duckId.toString())) {
             throw new IllegalArgumentException("There is no duck with the id " + duckId + " in the shopping cart");
         }
 
@@ -238,18 +238,18 @@ public class ShoppingCart {
             throw new IllegalArgumentException("The entered quantity must be greater than 0");
         }
 
-        int shoppingQuantity = this.items.get(duckId);
+        int shoppingQuantity = this.items.get(duckId.toString());
         if (shoppingQuantity < quantity) {
             String exFormat = "Attempted to remove %d of the duck with the id %d but only %d exist in the shopping cart";
             throw new IllegalArgumentException(String.format(exFormat, quantity, duckId, shoppingQuantity));
         }
 
         if (shoppingQuantity - quantity == 0) {
-            this.items.remove(duckId);
+            this.items.remove(duckId.toString());
             return;
         }
 
-        this.items.put(duckId, shoppingQuantity - quantity);
+        this.items.put(duckId.toString(), shoppingQuantity - quantity);
     }
 
     /**
@@ -281,7 +281,7 @@ public class ShoppingCart {
      * @param itemsMap The map being checked
      * @return true if valid
      */
-    private boolean isItemsMapValid(Map<Integer, Integer> itemsMap) {
+    private boolean isItemsMapValid(Map<String, Integer> itemsMap) {
         long invalidItemCount = itemsMap.values()
                 .stream()
                 .filter(value -> (value <= 0))

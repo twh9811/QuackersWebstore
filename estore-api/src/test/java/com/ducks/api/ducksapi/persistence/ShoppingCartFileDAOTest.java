@@ -119,8 +119,8 @@ public class ShoppingCartFileDAOTest {
     @Test
     public void testCreateShoppingCart() {
         // Setup
-        Map<Integer, Integer> items = new HashMap<>();
-        items.put(1, 10);
+        Map<String, Integer> items = new HashMap<>();
+        items.put("1", 10);
 
         ShoppingCart newCart = new ShoppingCart(3, items);
 
@@ -140,8 +140,8 @@ public class ShoppingCartFileDAOTest {
         // Setup
         int customerId = 1;
 
-        Map<Integer, Integer> items = new HashMap<>();
-        items.put(1, 10);
+        Map<String, Integer> items = new HashMap<>();
+        items.put("1", 10);
 
         ShoppingCart newCart = new ShoppingCart(customerId, items);
 
@@ -161,8 +161,8 @@ public class ShoppingCartFileDAOTest {
         // Setup
         int customerId = 1;
 
-        Map<Integer, Integer> items = new HashMap<>();
-        items.put(1, 10);
+        Map<String, Integer> items = new HashMap<>();
+        items.put("1", 10);
 
         ShoppingCart cart = new ShoppingCart(customerId, items);
         // Invoke
@@ -180,8 +180,8 @@ public class ShoppingCartFileDAOTest {
         // Setup
         int customerId = 7;
 
-        Map<Integer, Integer> items = new HashMap<>();
-        items.put(1, 10);
+        Map<String, Integer> items = new HashMap<>();
+        items.put("1", 10);
 
         ShoppingCart cart = new ShoppingCart(customerId, items);
         // Invoke
