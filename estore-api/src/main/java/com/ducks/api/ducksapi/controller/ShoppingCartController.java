@@ -102,11 +102,11 @@ public class ShoppingCartController {
     }
 
     /**
-     * Updates the {@linkplain Duck duck} with the provided {@linkplain Duck duck} object, if it exists
+     * Updates the {@linkplain ShoppingCart shoppingCart} with the provided {@linkplain ShoppingCart shoppingCart} object, if it exists
      * 
-     * @param duck The {@link Duck duck} to update
+     * @param cart The {@link ShoppingCart shoppingCart} to update
      * 
-     * @return ResponseEntity with updated {@link Duck duck} object and HTTP status of OK if updated<br>
+     * @return ResponseEntity with updated {@link ShoppingCart shoppingCart} object and HTTP status of OK if updated<br>
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
@@ -127,7 +127,20 @@ public class ShoppingCartController {
 
     }
 
-    
+    @DeleteMapping("/cart/{id}")
+    public ResponseEntity<Duck> deleteShoppingCart(@PathVariable int id) {
+        LOG.info("DELETE /shopping/cart/" + id);
+        try{
+            if(cartDao.deleteShoppingCart(id)) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch(IOException ioe) {
+            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }   
 
 
