@@ -1,1 +1,1 @@
-[{"type":"UserAccount","id":1,"username":"test","plainPassword":null,"password":"ooogas","adminStatus":false}]
+[{"type":"UserAccount","id":1,"username":"TEST","plainPassword":"TEST","adminStatus":false}]

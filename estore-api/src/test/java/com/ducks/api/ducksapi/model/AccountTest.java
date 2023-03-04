@@ -29,7 +29,7 @@ public class AccountTest {
 
         assertEquals(expectedID, account.getId());
         assertEquals(expectedUsername, account.getUsername());
-        assertEquals(expectedPassword, account.getPassword());
+        assertEquals(expectedPassword, account.getPlainPassword());
         assertEquals(expectedID, account.getId());
         assertEquals(expectedAdminStatus, account.getAdminStatus());
     }
@@ -49,7 +49,7 @@ public class AccountTest {
 
         assertEquals(expectedID, account.getId());
         assertEquals(expectedUsername, account.getUsername());
-        assertEquals(expectedPassword, account.getPassword());
+        assertEquals(expectedPassword, account.getPlainPassword());
         assertEquals(expectedID, account.getId());
         assertEquals(expectedAdminStatus, account.getAdminStatus());
     }
@@ -85,7 +85,7 @@ public class AccountTest {
           account.setPassword(expectedPassword);
           //Analyze
   
-          assertEquals(expectedPassword, account.getPassword());
+          assertEquals(expectedPassword, account.getPlainPassword());
     }
 
     @Test
@@ -129,7 +129,7 @@ public class AccountTest {
         
         Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
         
-        String expectedString = expectedUsername + ":" + account.getPassword();
+        String expectedString = expectedUsername + ":" + account.getPlainPassword();
         // Invoke
         String actual_string = account.toString();
         //Analyze
@@ -142,7 +142,7 @@ public class AccountTest {
         // Setup
         Account account = new OwnerAccount();
         
-        String expectedString = "admin:" + account.getPassword();
+        String expectedString = "admin:" + account.getPlainPassword();
         // Invoke
         String actual_string = account.toString();
         //Analyze

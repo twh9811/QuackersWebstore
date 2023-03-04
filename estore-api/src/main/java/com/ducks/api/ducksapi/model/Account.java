@@ -1,5 +1,7 @@
 package com.ducks.api.ducksapi.model;
 
+import java.beans.Transient;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -68,7 +70,7 @@ public abstract class Account {
     /**
      * @return the password of the account
      */
-    public String getPassword() {
+    public String getPlainPassword() {
         return plainPassword;
     }
 
@@ -112,7 +114,7 @@ public abstract class Account {
     public boolean equals(Object obj) {
         if(obj instanceof Account) {
             Account other = (Account) obj;
-            return (this.username.equals(other.getUsername()) && this.plainPassword.equals(other.getPassword()));
+            return (this.username.equals(other.getUsername()) && this.plainPassword.equals(other.getPlainPassword()));
         } 
         return false;
     }
