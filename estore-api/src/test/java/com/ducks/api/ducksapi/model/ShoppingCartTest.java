@@ -22,19 +22,19 @@ public class ShoppingCartTest {
     @Test
     public void testConstructorWithValidMap() {
         int expected_customer_id = 10;
-        Map<Integer, Integer> expected_items = new HashMap<>();
+        Map<String, Integer> expected_items = new HashMap<>();
 
-        expected_items.put(1, 1);
-        expected_items.put(2, 2);
-        expected_items.put(3, 3);
+        expected_items.put("1", 1);
+        expected_items.put("2", 2);
+        expected_items.put("3", 3);
 
         ShoppingCart cart = new ShoppingCart(expected_customer_id, expected_items);
 
         assertEquals(expected_customer_id, cart.getCustomerId(), "Customer id is incorrect");
         assertEquals(expected_items.size(), cart.getItems().size(), "Items map has an incorrect size");
 
-        for (Integer duckId : expected_items.keySet()) {
-            assertEquals(expected_items.get(duckId), cart.getItemAmount(duckId),
+        for (String duckId : expected_items.keySet()) {
+            assertEquals(expected_items.get(duckId), cart.getItemAmount(Integer.parseInt(duckId)),
                     "Duck with id " + duckId + " has an incorrect quantity");
 
         }
@@ -43,11 +43,11 @@ public class ShoppingCartTest {
     @Test
     public void testConstructorWithInvalidMap() {
         int expected_customer_id = 10;
-        Map<Integer, Integer> expected_items = new HashMap<>();
+        Map<String, Integer> expected_items = new HashMap<>();
 
-        expected_items.put(1, 1);
-        expected_items.put(2, -2);
-        expected_items.put(3, 3);
+        expected_items.put("1", 1);
+        expected_items.put("2", -2);
+        expected_items.put("3", 3);
 
         assertThrows(IllegalArgumentException.class,
                 () -> new ShoppingCart(expected_customer_id, expected_items),
@@ -66,26 +66,26 @@ public class ShoppingCartTest {
     @Test
     public void testGetItemsAndCustomerId() {
         int expected_customer_id = 10;
-        Map<Integer, Integer> expected_items = new HashMap<>();
+        Map<String, Integer> expected_items = new HashMap<>();
 
-        expected_items.put(1, 1);
-        expected_items.put(2, 2);
-        expected_items.put(3, 3);
+        expected_items.put("1", 1);
+        expected_items.put("2", 2);
+        expected_items.put("3", 3);
 
         ShoppingCart cart = new ShoppingCart(expected_customer_id, expected_items);
         assertEquals(expected_customer_id, cart.getCustomerId(), "Customer id is incorrect");
         assertEquals(expected_items.size(), cart.getItems().size(), "Cart size is incorrect");
 
-        for (Integer duckId : expected_items.keySet()) {
+        for (String duckId : expected_items.keySet()) {
             String errMsg = "Duck with id " + duckId + " has an incorrect quantity";
-            assertEquals(expected_items.get(duckId), cart.getItemAmount(duckId), errMsg);
+            assertEquals(expected_items.get(duckId), cart.getItemAmount(Integer.parseInt(duckId)), errMsg);
         }
     }
 
     @Test
     public void testGetItemAmount() {
-        Map<Integer, Integer> expected_items = new HashMap<>();
-        expected_items.put(1, 1);
+        Map<String, Integer> expected_items = new HashMap<>();
+        expected_items.put("1", 1);
 
         Duck duck = new Duck(1, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
         Duck duckTwo = new Duck(2, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
@@ -93,8 +93,8 @@ public class ShoppingCartTest {
         ShoppingCart cart = new ShoppingCart(1, expected_items);
 
         // Valid getItemAmount
-        assertEquals(expected_items.get(1), cart.getItemAmount(1), "Duck 1 by Id's quantity is incorrect");
-        assertEquals(expected_items.get(1), cart.getItemAmount(duck), "Duck 1 by Obj's quantity is incorrect");
+        assertEquals(expected_items.get("1"), cart.getItemAmount(1), "Duck 1 by Id's quantity is incorrect");
+        assertEquals(expected_items.get("1"), cart.getItemAmount(duck), "Duck 1 by Obj's quantity is incorrect");
 
         // Invalid getItemAmount
         assertThrows(IllegalArgumentException.class, () -> cart.getItemAmount(2),
@@ -185,7 +185,7 @@ public class ShoppingCartTest {
         assertEquals(expected_items.get(2), cart.getItemAmount(2), "Duck 3's quantity is incorrect");
 
         // addItemAmount - Duck - Null
-        assertThrows(IllegalArgumentException.class, () -> cart.addItemAmount(null, 100),
+        assertThrows(IllegalArgumentException.class, () -> cart.addItemAmount((Duck) null, 100),
                 "IllegalArgumentException was not thrown");
         assertEquals(expected_items.size(), cart.getItems().size(), "Cart size is incorrect");
         assertEquals(expected_items.get(2), cart.getItemAmount(duckTwo), "Duck 3's quantity is incorrect");
@@ -325,7 +325,7 @@ public class ShoppingCartTest {
         assertEquals(expected_items.get(3), cart.getItemAmount(3), "Duck 3's quantity is incorrect");
 
         // removeItemAmount - Duck - Null
-        assertThrows(IllegalArgumentException.class, () -> cart.removeItemAmount(null, 100),
+        assertThrows(IllegalArgumentException.class, () -> cart.removeItemAmount((Duck) null, 100),
                 "IllegalArgumentException was not thrown");
         assertEquals(expected_items.size(), cart.getItems().size(), "Cart size is incorrect");
         assertEquals(expected_items.get(3), cart.getItemAmount(duckThree), "Duck 3's quantity is incorrect");
@@ -359,14 +359,14 @@ public class ShoppingCartTest {
     @Test
     public void testEquals() {
         int customerId = 10;
-        Map<Integer, Integer> items = new HashMap<>();
-        Map<Integer, Integer> otherItems = new HashMap<>();
+        Map<String, Integer> items = new HashMap<>();
+        Map<String, Integer> otherItems = new HashMap<>();
 
-        items.put(1, 13);
-        items.put(2, 19);
-        items.put(3, 21);
+        items.put("1", 13);
+        items.put("2", 19);
+        items.put("3", 21);
 
-        otherItems.put(1, 19);
+        otherItems.put("1", 19);
 
         ShoppingCart cartOne = new ShoppingCart(customerId, items);
         ShoppingCart cartTwo = new ShoppingCart(customerId, new HashMap<>(items));
@@ -387,11 +387,11 @@ public class ShoppingCartTest {
     @Test
     public void testToString() {
         int customerId = 10;
-        Map<Integer, Integer> items = new HashMap<>();
+        Map<String, Integer> items = new HashMap<>();
 
-        items.put(1, 13);
-        items.put(2, 19);
-        items.put(3, 21);
+        items.put("1", 13);
+        items.put("2", 19);
+        items.put("3", 21);
 
         ShoppingCart cart = new ShoppingCart(customerId, items);
 
