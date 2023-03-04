@@ -127,7 +127,6 @@ public class AuthController {
             System.out.println(updatedAccount);
             // Account saved successfully
             if(updatedAccount != null) {
-                System.out.println("logout success");
                 return new ResponseEntity<>(HttpStatus.OK);
             }
             // Account did not save
