@@ -101,6 +101,15 @@ public class ShoppingCartController {
         }
     }
 
+    /**
+     * Updates the {@linkplain Duck duck} with the provided {@linkplain Duck duck} object, if it exists
+     * 
+     * @param duck The {@link Duck duck} to update
+     * 
+     * @return ResponseEntity with updated {@link Duck duck} object and HTTP status of OK if updated<br>
+     * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
     @PostMapping("")
     public ResponseEntity<ShoppingCart> updateShoppingCart(ShoppingCart cart) {
         LOG.info("PUT /shopping " + cart);
@@ -117,5 +126,8 @@ public class ShoppingCartController {
         }
 
     }
+
+    
 }   
+
 
