@@ -30,7 +30,7 @@ import com.ducks.api.ducksapi.persistence.ShoppingCartDAO;
  */
 
 @RestController
-@RequestMapping("shopping")
+@RequestMapping("cart")
 public class ShoppingCartController {
     
     private static final Logger LOG = Logger.getLogger(ShoppingCartController.class.getName());
@@ -60,7 +60,7 @@ public class ShoppingCartController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<ShoppingCart> getShoppingCart(@PathVariable int id) {
-        LOG.info("GET /shopping/" + id);
+        LOG.info("GET /cart/" + id);
         try {
             ShoppingCart cart = cartDao.getShoppingCart(id);
             if (cart != null) {
@@ -83,7 +83,7 @@ public class ShoppingCartController {
      */
     @GetMapping("")
     public ResponseEntity<ShoppingCart[]> getShoppingCarts(){
-        LOG.info("GET /shopping");
+        LOG.info("GET /cart");
         try{
             ShoppingCart[] carts = cartDao.getShoppingCarts();
             if(carts != null) {
@@ -107,7 +107,7 @@ public class ShoppingCartController {
      */
     @PostMapping("")
     public ResponseEntity<ShoppingCart> createShoppingCart(@RequestBody ShoppingCart cart) {
-        LOG.info("POST /shopping " + cart);
+        LOG.info("POST /cart " + cart);
         try{
             ShoppingCart newCart = cartDao.createShoppingCart(cart);
             if (newCart != null) {
@@ -132,8 +132,8 @@ public class ShoppingCartController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PutMapping("")
-    public ResponseEntity<ShoppingCart> updateShoppingCart(ShoppingCart cart) {
-        LOG.info("PUT /shopping " + cart);
+    public ResponseEntity<ShoppingCart> updateShoppingCart(@RequestBody ShoppingCart cart) {
+        LOG.info("PUT /cart " + cart);
         try {
             ShoppingCart updateCart = cartDao.updateShoppingCart(cart);
             if(updateCart != null) {
@@ -157,9 +157,9 @@ public class ShoppingCartController {
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @DeleteMapping("/cart/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Duck> deleteShoppingCart(@PathVariable int id) {
-        LOG.info("DELETE /shopping/cart/" + id);
+        LOG.info("DELETE /cart/" + id);
         try{
             if(cartDao.deleteShoppingCart(id)) {
                 return new ResponseEntity<>(HttpStatus.OK);
