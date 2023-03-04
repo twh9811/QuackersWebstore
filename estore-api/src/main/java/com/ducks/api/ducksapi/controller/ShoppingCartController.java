@@ -100,5 +100,22 @@ public class ShoppingCartController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-}
+
+    @PostMapping("")
+    public ResponseEntity<ShoppingCart> updateShoppingCart(ShoppingCart cart) {
+        LOG.info("PUT /shopping " + cart);
+        try {
+            ShoppingCart updateCart = cartDao.updateShoppingCart(cart);
+            if(updateCart != null) {
+                return new ResponseEntity<ShoppingCart>(updateCart, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch(IOException ioe) {
+            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+}   
 
