@@ -1,0 +1,13 @@
+<h2>{{message}}</h2>
+
+<div>
+    <label for="username">Username: 
+        <input type="text" id="username" name="username" [(ngModel)]="username">
+    </label>
+    <br>
+    <label for="password">Password:
+        <input type="password" id="password" name="password" [(ngModel)]="password">
+    </label>
+    <br>
+    <button type="button" (click)="onSubmit(username,password)">Submit</button>
+</div>
