@@ -121,4 +121,8 @@ public class ShoppingCart {
         return String.format(FORMAT, this.customerId, itemsString);
     }
 
+    public Object thenReturn(Object object) {
+        return null;
+    }
+
 }
