@@ -60,7 +60,6 @@ public class ShoppingCartController {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    // TODO: Change this.
     @GetMapping("/shopping/{id}")
     public ResponseEntity<ShoppingCart> getShoppingCart(@PathVariable int id) {
         LOG.info("GET /shopping/" + id);
