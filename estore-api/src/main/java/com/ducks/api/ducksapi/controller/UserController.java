@@ -28,7 +28,7 @@ import com.ducks.api.ducksapi.model.UserAccount;
 
 @RestController
 @RequestMapping("/")
-public class AuthController {
+public class UserController {
     private AccountDAO accountDAO;
 
     /**
@@ -38,7 +38,7 @@ public class AuthController {
      * 
      * This dependency is injected by the Spring Framework
     */
-    public AuthController(AccountDAO accountDAO) {
+    public UserController(AccountDAO accountDAO) {
         this.accountDAO = accountDAO;
     }
 
