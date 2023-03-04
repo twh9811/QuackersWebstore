@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -25,15 +26,15 @@ public class ShoppingCart {
     @JsonProperty("items")
     private Map<String, Integer> items;
 
-
     /**
      * Creates a new shopping cart with the given item list
      * 
      * @param customerId The customer id that the shopping cart belongs to
      * @param items      The items to add to the shopping cart
      */
-   
-    public ShoppingCart(@JsonProperty("customerId") int customerId, @JsonProperty("items") Map<String, Integer> items) throws IllegalArgumentException {
+    @JsonCreator
+    public ShoppingCart(@JsonProperty("customerId") int customerId, @JsonProperty("items") Map<String, Integer> items)
+            throws IllegalArgumentException {
         this.customerId = customerId;
 
         if (!isItemsMapValid(items)) {
@@ -42,7 +43,6 @@ public class ShoppingCart {
         }
         this.items = items;
     }
-
 
     /**
      * Creates a new shopping cart with an empty item list
@@ -66,12 +66,8 @@ public class ShoppingCart {
      * @return An set of duck ids
      */
     @Transient
-    public Set<String> getItemIdsInCart() {
+    public Set<String> getItems() {
         return items.keySet();
-    }
-
-    public Map<String, Integer> getItems() {
-        return items;
     }
 
     /**
@@ -82,7 +78,6 @@ public class ShoppingCart {
      * @throws IllegalArgumentException If the duck is null, or if thrown by
      *                                  getItemAmount(int)
      */
-    @Transient
     public int getItemAmount(Duck duck) throws IllegalArgumentException {
         if (duck == null) {
             throw new IllegalArgumentException("The passed duck can not be null");
@@ -99,7 +94,6 @@ public class ShoppingCart {
      * @throws IllegalArgumentException If the cart does not contain a duck with the
      *                                  id
      */
-    @Transient
     public int getItemAmount(Integer duckId) throws IllegalArgumentException {
         if (!this.items.containsKey(duckId.toString())) {
             throw new IllegalArgumentException("There is no duck with the id " + duckId + " in the shopping cart");
@@ -114,7 +108,6 @@ public class ShoppingCart {
      * @param ducks The Duck objects to add
      * @throws IllegalArgumentException If thrown by addItems(int...)
      */
-    @Transient
     public void addItems(Duck... ducks) throws IllegalArgumentException {
         Integer[] duckIds = convertDuckArrayToIdArray(ducks);
         addItems(duckIds);
@@ -126,7 +119,6 @@ public class ShoppingCart {
      * @param duckIds The duck ids to add
      * @throws IllegalArgumentException If the duck id array is empty
      */
-    @Transient
     public void addItems(Integer... duckIds) throws IllegalArgumentException {
         if (duckIds.length == 0) {
             throw new IllegalArgumentException("There must be at least one duck id in the entered array");
@@ -146,7 +138,6 @@ public class ShoppingCart {
      * @throws IllegalArgumentException If the duck is null or if thrown by
      *                                  addItemAmount(int, int)
      */
-    @Transient
     public void addItemAmount(Duck duck, int quantity) throws IllegalArgumentException {
         if (duck == null) {
             throw new IllegalArgumentException("The passed duck can not be null");
@@ -162,7 +153,6 @@ public class ShoppingCart {
      * @param quantity The amount of the duck being added to the cart
      * @throws IllegalArgumentException If the quantity is less than or equal to 0
      */
-    @Transient
     public void addItemAmount(Integer duckId, int quantity) throws IllegalArgumentException {
         if (quantity <= 0) {
             throw new IllegalArgumentException("The entered quantity must be greater than 0");
@@ -178,7 +168,6 @@ public class ShoppingCart {
      * @param ducks The duck objects to remove
      * @throws IllegalArgumentException If thrown by removeItems(int...)
      */
-    @Transient
     public void removeItems(Duck... ducks) throws IllegalArgumentException {
         Integer[] duckIds = convertDuckArrayToIdArray(ducks);
         removeItems(duckIds);
@@ -192,7 +181,6 @@ public class ShoppingCart {
      *                                  shopping cart, or if the duck id array is
      *                                  empty
      */
-    @Transient
     public void removeItems(Integer... duckIds) throws IllegalArgumentException {
         if (duckIds.length == 0) {
             throw new IllegalArgumentException("There must be at least one duck id in the entered array");
@@ -226,7 +214,6 @@ public class ShoppingCart {
      * @throws IllegalArgumentException If the duck is null or if thrown by
      *                                  removeItemAmount(int, int)
      */
-    @Transient
     public void removeItemAmount(Duck duck, int quantity) throws IllegalArgumentException {
         if (duck == null) {
             throw new IllegalArgumentException("The passed duck can not be null");
@@ -246,7 +233,6 @@ public class ShoppingCart {
      *                                  If the quantity attempting to be removed
      *                                  exceeds the amount in the cart.
      */
-    @Transient
     public void removeItemAmount(Integer duckId, int quantity) throws IllegalArgumentException {
         if (!this.items.containsKey(duckId.toString())) {
             throw new IllegalArgumentException("There is no duck with the id " + duckId + " in the shopping cart");
@@ -273,7 +259,6 @@ public class ShoppingCart {
     /**
      * Clears the items in the shopping cart
      */
-    @Transient
     public void clearItems() {
         this.items.clear();
     }
@@ -285,7 +270,6 @@ public class ShoppingCart {
      * @param ducks The duck array being converted
      * @return The newly created array of ids
      */
-    @Transient
     private Integer[] convertDuckArrayToIdArray(Duck[] ducks) {
         return Arrays.asList(ducks)
                 .stream()
@@ -301,7 +285,6 @@ public class ShoppingCart {
      * @param itemsMap The map being checked
      * @return true if valid
      */
-    @Transient
     private boolean isItemsMapValid(Map<String, Integer> itemsMap) {
         long invalidItemCount = itemsMap.values()
                 .stream()
@@ -314,7 +297,6 @@ public class ShoppingCart {
      * {@inheritDoc}
      */
     @Override
-    @Transient
     public boolean equals(Object obj) {
         if (!(obj instanceof ShoppingCart)) {
             return false;
@@ -328,7 +310,6 @@ public class ShoppingCart {
      * {@inheritDoc}
      */
     @Override
-    @Transient
     public String toString() {
         // Converts each map entry to a string in the form key=value
         // Then, joins them on ', '
