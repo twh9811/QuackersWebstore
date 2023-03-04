@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +28,7 @@ import com.ducks.api.ducksapi.model.UserAccount;
  */
 
 @RestController
-@RequestMapping("login")
+@RequestMapping("/")
 public class AuthController {
     private AccountDAO accountDAO;
 
@@ -42,15 +43,22 @@ public class AuthController {
         this.accountDAO = accountDAO;
     }
 
-
-    @PostMapping("/account")
+    /**
+     * Responds to the POST request for a {@linkplain Account account} being created
+     * 
+     * @param account The {@link Account account} to create
+     * @return ResponseEntity with created {@link Account account} object and HTTP status of CREATED<br>
+     * ResponseEntity with HTTP status of CONFLICT if {@link Account account} object already exists<br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @PostMapping("/accounts")
     public ResponseEntity<Account> createUser(@RequestBody Account account) {
-        // GET /login/?username=username&password=password
+        // curl.exe -X POST -H 'Content-Type:application/json' 'http://localhost:8080/accounts' -d '{\"type\":\"UserAccount\", \"id\":1,\"username\":\"TEST\",\"plainPassword\":\"TEST\"}'
         try {
             Account newAccount = accountDAO.createAccount(account);
             // Username doesn't already exist in system, OK to create account
             if(newAccount != null) {
-                return new ResponseEntity<Account>(newAccount, HttpStatus.OK);
+                return new ResponseEntity<Account>(newAccount, HttpStatus.CREATED);
             }
             // Account exists in the system already.
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -63,18 +71,20 @@ public class AuthController {
     /**
      * 
      * Responds to the GET request for a {@linkplain Account account} attempting to login to the site
+     * We want to get the database account to load all their data.
      * 
      * @param username The username of the login attempt
      * @param password The password of the login attempt
-     * @return The account in the database if attempt successful
+     * @return The account in the database if attempt successful with all saved data
      * 
      * HttpStatus OK if the authentication was successful
      * HttpStatus CONFLICT if the authentication failed
      * HttpStatus NOT_FOUND if the login attempt was for an account was not found in the database
+     * HttpStatus INTERNAL_SERVER_ERROR otherwise.
      */
-    @GetMapping("/")
-    public ResponseEntity<Account> authenticateUser(@RequestParam String username, @RequestParam String password) {
-        // GET /login/?username=username&password=password
+    @GetMapping("/login")
+    public ResponseEntity<Account> loginUser(@RequestParam String username, @RequestParam String password) {
+        // curl.exe -X GET 'http://localhost:8080/login?username=TEST&password=TEST'
         try {
             Account[] databaseAccounts = accountDAO.findAccounts(username);
             // This means account does exist in system
@@ -94,6 +104,34 @@ public class AuthController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         // Something went wrong not related to user authentication.
+        } catch(IOException ioe) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Responds to the POST request for a {@linkplain Account account} attempting to logout of the site
+     * Saves current changes to account
+     * 
+     * @param account The account to be updated.
+     * @return 
+     * HttpStatus OK if the account was saved successfully
+     * HttpStatus CONFLICT if the account failed to save
+     * HttpStatus INTERNAL_SERVER_ERROR otherwise.
+     */
+    @PutMapping("/logout")
+    public ResponseEntity<Account> logoutUser(@RequestBody Account account) {
+        // curl.exe -X PUT -H 'Content-Type:application/json' 'http://localhost:8080/logout' -d '{\"type\":\"UserAccount\", \"id\":1,\"username\":\"TEST\",\"plainPassword\":\"TEST\"}'
+        try {
+            Account updatedAccount = accountDAO.updateAccount(account);
+            System.out.println(updatedAccount);
+            // Account saved successfully
+            if(updatedAccount != null) {
+                System.out.println("logout success");
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            // Account did not save
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         } catch(IOException ioe) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
