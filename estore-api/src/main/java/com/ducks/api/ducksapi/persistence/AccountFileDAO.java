@@ -29,7 +29,6 @@ public class AccountFileDAO implements AccountDAO{
                                        // written to the file
     private static int nextID; // The next ID to assign to a account
     private String filename; //Filename to read and write to
-    
 
     /**
      * Creates a Account File Data Access Object
@@ -196,12 +195,11 @@ public class AccountFileDAO implements AccountDAO{
                 }
             }
             Account newAccount;
-            // This account should be the only admin account made by the FileDAO. The rest should be made be the pre-made admin account.
+            // This account should be the only admin account made by the FileDAO. The rest should be made via the pre-made admin account and setAdminStatus.
             if(account.getUsername().equals("admin")) {
                 newAccount = new OwnerAccount();
             // Create regular user account
             } else {
-                // If it doesn't already exist we can create the account
                 newAccount = new UserAccount(nextID(), account.getUsername(), account.getPlainPassword());
             }
             
@@ -264,6 +262,5 @@ public class AccountFileDAO implements AccountDAO{
             // Account not in database, can't change password
             return false;
         }
-        
     }
 }
