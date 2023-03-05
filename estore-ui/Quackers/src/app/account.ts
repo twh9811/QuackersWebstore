@@ -1,6 +1,6 @@
 export interface Account {
     id: number;
     username: string;
-    password: string;
+    plainPassword: string;
     adminStatus: boolean;
 }

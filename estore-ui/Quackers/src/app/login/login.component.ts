@@ -23,9 +23,9 @@ export class LoginComponent {
   redirect() {
     if(this.account != undefined) {
       if(this.account.username == "admin") {
-      this.router.navigate(['/adminPage'])
+      this.router.navigate(['/adminPage/' + this.account.id])
       } else {
-      this.router.navigate(['/customerPage'])
+      this.router.navigate(['/customerPage/' + this.account.id])
       }
     } else {
       this.failure = "Login failed, try again"

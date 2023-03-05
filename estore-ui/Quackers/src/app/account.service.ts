@@ -48,8 +48,18 @@ export class AccountService {
       tap(_ => console.log('${account.username logged out}')), catchError(this.handleError<any>('logout')));
   }
 
+  /**
+   * Gets account of the specified ID
+   * 
+   * @param id The ID of the account you want to get.
+   * @returns The account with the matching ID
+   */
   getAccount(id : number ) {
-    
+    const url = this.apiURL + '/' + id;
+    console.log(url);
+    return this.http.get<Account>(url).pipe(
+      tap(_ => console.log('got account ' + id)), catchError(this.handleError<any>('get account'))
+    );
   }
 
    /**
