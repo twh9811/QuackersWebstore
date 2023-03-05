@@ -175,4 +175,27 @@ public class ShoppingCartControllerTest {
         assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
     }
 
+    @Test
+    public void testCreateShoppingCartHandleException() throws IOException { // createShoppingCart may throw IOException
+        // Setup
+        // Duck duck1 = new Duck(99, "Galactic Agent", 10, "9.99", Size.MEDIUM,
+        // Colors.BLUE, 0, 0, 0, 0, 0);
+        // Duck duck2 = new Duck(11, "Quackers", 10, "0.99", Size.SMALL, Colors.RED, 0,
+        // 0, 0, 0, 0);
+        HashMap<String, Integer> items = new HashMap<>();
+        items.put("1", 10);
+        items.put("2", 20);
+
+        ShoppingCart cart = new ShoppingCart(0, items);
+
+        // When createHero is called on the Mock Hero DAO, throw an IOException
+        doThrow(new IOException()).when(mockCartDAO).createShoppingCart(cart);
+
+        // Invoke
+        ResponseEntity<ShoppingCart> response = cartController.createShoppingCart(cart);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+
 }
