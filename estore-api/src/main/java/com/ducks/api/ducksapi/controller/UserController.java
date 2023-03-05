@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -130,6 +131,31 @@ public class UserController {
             // Account did not save. Most likely an empty account body was entered (not logged in)
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         } catch(IOException ioe) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+     /**
+     * Responds to the GET request for a {@linkplain Account account}
+     * 
+     * @param id The id used to locate the {@link Account account}
+     * @return The account in the database
+     * 
+     * HttpStatus OK if account was found
+     * HttpStatus NOT_FOUND if the account was not found
+     * HttpStatus INTERNAL_SERVER_ERROR otherwise.
+     */
+    @GetMapping("/account/{id}")
+    public ResponseEntity<Account> getAccount(@PathVariable int id) {
+    // curl.exe -X GET 'http://localhost:8080/account/TESTID
+        try {
+            Account account = accountDAO.getAccount(id);
+            if(account != null) {
+                return new ResponseEntity<Account>(account, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch(IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
