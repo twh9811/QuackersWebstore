@@ -1,38 +1,36 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Account } from '../account';
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent {
   message = "Please login to our store to continue :)"
 
-  account: Account = {
-    id: null,
-    username: "",
-    password: "",
-    adminStatus: null
-  };
+  account: Account | undefined;
+  
+  username : string = '';
+  password : string = '';
 
-  username : String = '';
-  password : String = '';
-
-  constructor(private router : Router) {}
+  constructor(private router : Router, private accountService : AccountService) {}
 
   redirect() {
-    if(this.username == "admin") {
+    if(this.account != undefined) {
+      if(this.account.username == "admin") {
       this.router.navigate(['/adminPage'])
-    } else {
+      } else {
       this.router.navigate(['/customerPage'])
+      }
     }
   }
 
-  onSubmit(username : String, password : String) {
-      this.username = username;
-      this.password = password;
+  onSubmit(username : string, password : string) {
+      this.accountService.login(username, password).subscribe(account => this.account = account)
       this.redirect();
   }
 
