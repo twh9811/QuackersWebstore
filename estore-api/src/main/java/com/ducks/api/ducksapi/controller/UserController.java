@@ -127,7 +127,7 @@ public class UserController {
             if(updatedAccount != null) {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
-            // Account did not save
+            // Account did not save. Most likely an empty account body was entered (not logged in)
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         } catch(IOException ioe) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
