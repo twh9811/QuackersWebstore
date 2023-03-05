@@ -18,6 +18,15 @@ import org.springframework.http.ResponseEntity;
 import com.ducks.api.ducksapi.model.ShoppingCart;
 import com.ducks.api.ducksapi.persistence.ShoppingCartDAO;
 
+/**
+ * Handles the REST API requests for the Shopping Cart resource
+ * <p>
+ * {@literal @}RestController Spring annotation identifies this class as a REST API
+ * method handler to the Spring framework
+ * 
+ * @author Beining Zhou, Andrew Le
+ */
+
 @Tag("Controller-tier")
 public class ShoppingCartControllerTest {
     private ShoppingCartController cartController;
