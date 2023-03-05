@@ -57,7 +57,7 @@ public class ShoppingCartControllerTest {
     }
 
     @Test
-    public void testGetShoppingCartNotFound() throws Exception { // createShoppingCart may throw IOException
+    public void testGetShoppingCartNotFound() throws Exception { // getShoppingCart may throw IOException
         // Setup
         int CustomerId = 99;
         // When the customer id is passed in, our mock Cart DAO will return null,
@@ -128,6 +128,51 @@ public class ShoppingCartControllerTest {
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+
+    @Test
+    public void testCreateShoppingCart() throws IOException { // createShoppingCart may throw IOException
+        // Setup
+        // Duck duck1 = new Duck(99, "Galactic Agent", 10, "9.99", Size.MEDIUM,
+        // Colors.BLUE, 0, 0, 0, 0, 0);
+        // Duck duck2 = new Duck(11, "Quackers", 10, "0.99", Size.SMALL, Colors.RED, 0,
+        // 0, 0, 0, 0);
+        HashMap<String, Integer> items = new HashMap<>();
+        items.put("1", 10);
+        items.put("2", 20);
+
+        ShoppingCart cart = new ShoppingCart(0, items);
+
+        // when createShoppingCart is called, return true simulating successful
+        // creation and save
+        when(mockCartDAO.createShoppingCart(cart)).thenReturn(cart);
+
+        // Invoke
+        ResponseEntity<ShoppingCart> response = cartController.createShoppingCart(cart);
+
+        // Analyze
+        assertEquals(HttpStatus.CREATED,response.getStatusCode());
+        assertEquals(cart,response.getBody());
+    }
+
+    @Test
+    public void testCreateShoppingCartFailed() throws IOException { // createShoppingCart may throw IOException
+        // Setup
+        // Duck duck1 = new Duck(99, "Galactic Agent", 10, "9.99", Size.MEDIUM,
+        // Colors.BLUE, 0, 0, 0, 0, 0);
+        // Duck duck2 = new Duck(11, "Quackers", 10, "0.99", Size.SMALL, Colors.RED, 0,
+        // 0, 0, 0, 0);
+        HashMap<String, Integer> items = new HashMap<>();
+        items.put("1", 10);
+        items.put("2", 20);
+
+        ShoppingCart cart = new ShoppingCart(0, items);
+
+        // Invoke
+        ResponseEntity<ShoppingCart> response = cartController.createShoppingCart(cart);
+
+        // Analyze
+        assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
     }
 
 }
