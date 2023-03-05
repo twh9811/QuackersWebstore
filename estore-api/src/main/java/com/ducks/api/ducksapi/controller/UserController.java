@@ -145,9 +145,9 @@ public class UserController {
      * HttpStatus NOT_FOUND if the account was not found
      * HttpStatus INTERNAL_SERVER_ERROR otherwise.
      */
-    @GetMapping("/account/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Account> getAccount(@PathVariable int id) {
-    // curl.exe -X GET 'http://localhost:8080/account/TESTID
+    // curl.exe -X GET 'http://localhost:8080/TESTID
         try {
             Account account = accountDAO.getAccount(id);
             if(account != null) {
