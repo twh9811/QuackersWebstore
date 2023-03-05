@@ -87,4 +87,36 @@ public class ShoppingCartControllerTest {
 
     }
 
+    @Test 
+    public void testGetShoppingCarts() throws IOException { // getShoppingCarts may throw IOException
+        // Setup
+        // Duck duck1 = new Duck(99, "Galactic Agent", 10, "9.99", Size.MEDIUM,
+        // Colors.BLUE, 0, 0, 0, 0, 0);
+        // Duck duck2 = new Duck(11, "Quackers", 10, "0.99", Size.SMALL, Colors.RED, 0,
+        // 0, 0, 0, 0);
+        HashMap<String, Integer> items_0 = new HashMap<>();
+        items_0.put("1", 10);
+        items_0.put("2", 20);
+
+        HashMap<String, Integer> items_1 = new HashMap<>();
+        items_1.put("1", 10);
+        items_1.put("2", 20);
+
+        ShoppingCart[] carts = new ShoppingCart[2];
+        carts[0] = new ShoppingCart(0, items_0);
+        carts[1] = new ShoppingCart(1, items_1);
+
+        // When getShoppingCarts is called return the Shopping Carts created above
+        when(mockCartDAO.getShoppingCarts()).thenReturn(carts);
+
+        // Invoke
+        ResponseEntity<ShoppingCart[]> response = cartController.getShoppingCarts();
+
+        // Analyse
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(carts, response.getBody());
+    }
+
+    
+
 }
