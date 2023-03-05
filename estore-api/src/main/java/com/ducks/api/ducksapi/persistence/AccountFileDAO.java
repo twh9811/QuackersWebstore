@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.ducks.api.ducksapi.model.Account;
+import com.ducks.api.ducksapi.model.OwnerAccount;
 import com.ducks.api.ducksapi.model.UserAccount;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -194,8 +195,16 @@ public class AccountFileDAO implements AccountDAO{
                     return null;
                 }
             }
-            // If it doesn't already exist we can create the account
-            Account newAccount = new UserAccount(nextID(), account.getUsername(), account.getPlainPassword());
+            Account newAccount;
+            // This account should be the only admin account made by the FileDAO. The rest should be made be the pre-made admin account.
+            if(account.getUsername().equals("admin")) {
+                newAccount = new OwnerAccount();
+            // Create regular user account
+            } else {
+                // If it doesn't already exist we can create the account
+                newAccount = new UserAccount(nextID(), account.getUsername(), account.getPlainPassword());
+            }
+            
             accounts.put(newAccount.getId(), newAccount);
             // Save changes to the database
             save();
