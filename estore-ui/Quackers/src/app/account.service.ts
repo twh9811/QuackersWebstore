@@ -48,6 +48,10 @@ export class AccountService {
       tap(_ => console.log('${account.username logged out}')), catchError(this.handleError<any>('logout')));
   }
 
+  getAccount(id : number ) {
+    
+  }
+
    /**
    * Handle Http operation that failed.
    * Let the app continue.
