@@ -33,7 +33,6 @@ export class LoginComponent {
   onSubmit(username : String, password : String) {
       this.username = username;
       this.password = password;
-      this.isLoggedIn = true;
       this.redirect();
   }
 
