@@ -30,9 +30,10 @@ export class AccountService {
    * If the account doesn't exist, returns Http Not Found
    */
   login(username : string, password : string): Observable<Account> {
-    const url = '${this.apiURL}/login?username=${username}&password=${password}';
+    // this does not work
+    //const url = '${this.apiURL}/login?username=${username}&password=${password}';
+    // this does work
     const url2 = this.apiURL + '/login?username=' + username + '&password=' + password;
-    console.log(url2);
     return this.http.get<Account>(url2).pipe(
       tap(_ => console.log('${username} logged in')), catchError(this.handleError<Account>('login')));
   }

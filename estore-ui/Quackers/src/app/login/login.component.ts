@@ -11,6 +11,7 @@ import { AccountService } from '../account.service';
 
 export class LoginComponent {
   message = "Please login to our store to continue :)"
+  failure = "";
 
   account: Account | undefined;
   
@@ -26,15 +27,22 @@ export class LoginComponent {
       } else {
       this.router.navigate(['/customerPage'])
       }
+    } else {
+      this.failure = "Login failed, try again"
     }
   }
 
   onSubmit() {
-    this.accountService.login(this.username, this.password).subscribe(account => this.account = account);
+    this.accountService.login(this.username, this.password).subscribe(account => {
+      this.account = account; 
+      this.update();
+    });
+  }
+
+  // Updates the account variable to prevent double clicking
+  update() {
     console.log(this.account);
     this.redirect();
   }
-
-  
 
 }
