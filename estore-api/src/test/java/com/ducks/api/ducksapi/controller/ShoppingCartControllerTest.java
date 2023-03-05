@@ -117,6 +117,17 @@ public class ShoppingCartControllerTest {
         assertEquals(carts, response.getBody());
     }
 
-    
+    @Test
+    public void testGetShoppingCartsHandleException() throws IOException { // getShoppingCarts may throw IOException
+        // Setup
+        // When getShoppingCarts is called on the Mock Dao, throw an exception
+        doThrow(new IOException()).when(mockCartDAO).getShoppingCarts();
+
+        // Invoke
+        ResponseEntity<ShoppingCart[]> response = cartController.getShoppingCarts();
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
 
 }
