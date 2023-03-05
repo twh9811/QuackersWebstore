@@ -29,9 +29,10 @@ export class LoginComponent {
     }
   }
 
-  onSubmit(username : string, password : string) {
-      this.accountService.login(username, password).subscribe(account => this.account = account)
-      this.redirect();
+  onSubmit() {
+    this.accountService.login(this.username, this.password).subscribe(account => this.account = account);
+    console.log(this.account);
+    this.redirect();
   }
 
   

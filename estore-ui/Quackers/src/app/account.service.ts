@@ -10,11 +10,11 @@ import { Account } from './account';
   providedIn: 'root'
 })
 export class AccountService {
-  private apiURL = 'http://localhost:8080'
+  private apiURL = 'http://localhost:8080';
   
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
-  }
+  };
 
   constructor(private http: HttpClient) { }
 
@@ -30,8 +30,10 @@ export class AccountService {
    * If the account doesn't exist, returns Http Not Found
    */
   login(username : string, password : string): Observable<Account> {
-    const url = '${this.apiURL}/login?username=${username}&password=${password}'
-    return this.http.get<Account>(this.apiURL).pipe(
+    const url = '${this.apiURL}/login?username=${username}&password=${password}';
+    const url2 = this.apiURL + '/login?username=' + username + '&password=' + password;
+    console.log(url2);
+    return this.http.get<Account>(url2).pipe(
       tap(_ => console.log('${username} logged in')), catchError(this.handleError<Account>('login')));
   }
 
