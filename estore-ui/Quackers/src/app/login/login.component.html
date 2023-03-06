@@ -9,7 +9,8 @@
         <input type="password" id="password" name="password" [(ngModel)]="password">
     </label>
     <br>
-    <span>{{failure}}</span>
+    <span>{{feedback}}</span>
     <br>
-    <button type="button" (click)="onSubmit()">Submit</button>
+    <button type="button" (click)="onLogin()">Login</button>
+    <button type="button" (click)="onRegister(username, password)">Register</button>
 </div>

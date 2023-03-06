@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { HttpStatusCode } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
 
@@ -11,7 +13,7 @@ import { AccountService } from '../account.service';
 
 export class LoginComponent {
   message = "Please login to our store to continue :)"
-  failure = "";
+  feedback = "";
 
   account: Account | undefined;
   
@@ -28,21 +30,46 @@ export class LoginComponent {
       this.router.navigate(['/customerPage/' + this.account.id])
       }
     } else {
-      this.failure = "Login failed, try again"
+      this.feedback = "Login failed, try again or register"
     }
   }
 
-  onSubmit() {
+  onLogin() {
     this.accountService.login(this.username, this.password).subscribe(account => {
       this.account = account; 
       this.update();
+      this.redirect();
     });
   }
 
-  // Updates the account variable to prevent double clicking
+  onRegister(username : string, password : string) {
+    // Create account with placeholders for type, id, and admin status. These DONT matter.
+    // These will be reformated with proper values in AccountFileDAO based on username.
+    this.account = {
+      type: "UserAccount",
+      id : -1,
+      username : username,
+      plainPassword : password,
+      adminStatus : false
+    };
+
+    this.accountService.createUser(this.account).subscribe(account => {
+      this.account = account;
+      this.update();
+      // Account creation failed since account is now undefined. This means username already exists since it relies on null being returned from the DAO
+      if(this.account == undefined) {
+        this.feedback = "Account creation failed, username already exists."
+      } else if (this.account.username == "admin") {
+        this.feedback = ""
+      } else {
+        this.feedback = "Account created, please login.";
+      }
+    });
+  }
+
+  // Updates the account variables (prevents double clicking buttons)
   update() {
     console.log(this.account);
-    this.redirect();
   }
 
 }

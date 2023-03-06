@@ -56,9 +56,21 @@ export class AccountService {
    */
   getAccount(id : number ) {
     const url = this.apiURL + '/' + id;
-    console.log(url);
     return this.http.get<Account>(url).pipe(
       tap(_ => console.log('got account ' + id)), catchError(this.handleError<any>('get account'))
+    );
+  }
+
+  /**
+   * Creates the account and stores it in the database
+   * 
+   * @param account The account we want to create
+   * @returns The newly created account in the database
+   */
+  createUser(account : Account ) {
+    const url = this.apiURL + '/accounts';
+    return this.http.post<Account>(url, account, this.httpOptions).pipe(
+      tap(_ => console.log('created account ' + account)), catchError(this.handleError<any>('create account'))
     );
   }
 
