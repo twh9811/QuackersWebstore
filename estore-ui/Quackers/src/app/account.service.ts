@@ -31,11 +31,9 @@ export class AccountService {
    */
   login(username : string, password : string): Observable<Account> {
     // this does not work
-    //const url = '${this.apiURL}/login?username=${username}&password=${password}';
-    // this does work
-    const url2 = this.apiURL + '/login?username=' + username + '&password=' + password;
-    return this.http.get<Account>(url2).pipe(
-      tap(_ => console.log('${username} logged in')), catchError(this.handleError<Account>('login')));
+    const url = `${this.apiURL}/login?username=${username}&password=${password}`;
+    return this.http.get<Account>(url).pipe(
+      tap(_ => console.log(`${username} logged in`)), catchError(this.handleError<Account>('login')));
   }
 
   /**
@@ -45,7 +43,7 @@ export class AccountService {
    */
   logout(account : Account): Observable<any> {
     return this.http.put(this.apiURL, account, this.httpOptions).pipe(
-      tap(_ => console.log('${account.username logged out}')), catchError(this.handleError<any>('logout')));
+      tap(_ => console.log(`${account.username} logged out`)), catchError(this.handleError<any>('logout')));
   }
 
   /**
@@ -55,9 +53,9 @@ export class AccountService {
    * @returns The account with the matching ID
    */
   getAccount(id : number ) {
-    const url = this.apiURL + '/' + id;
+    const url = `${this.apiURL}/${id}`;
     return this.http.get<Account>(url).pipe(
-      tap(_ => console.log('got account ' + id)), catchError(this.handleError<any>('get account'))
+      tap(_ => console.log(`got account ${id}`)), catchError(this.handleError<any>('get account'))
     );
   }
 
@@ -68,9 +66,9 @@ export class AccountService {
    * @returns The newly created account in the database
    */
   createUser(account : Account ) {
-    const url = this.apiURL + '/accounts';
+    const url = `${this.apiURL}/accounts`;
     return this.http.post<Account>(url, account, this.httpOptions).pipe(
-      tap(_ => console.log('created account ' + account)), catchError(this.handleError<any>('create account'))
+      tap(_ => console.log(`created account ${account}`)), catchError(this.handleError<any>('create account'))
     );
   }
 
