@@ -154,13 +154,23 @@ public class ShoppingCart {
      * @throws IllegalArgumentException If the quantity is less than or equal to 0
      */
     public void addItemAmount(Integer duckId, int quantity) throws IllegalArgumentException {
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("The entered quantity must be greater than 0");
-        }
+            if (!this.items.containsKey(duckId.toString())) {
+                throw new IllegalArgumentException("There is no duck with the id " + duckId + " in the shopping cart");
+            }
 
-        int newQuantity = items.containsKey(duckId.toString()) ? items.get(duckId.toString()) + quantity : quantity;
-        items.put(duckId.toString(), newQuantity);
-    }
+            if (quantity <= 0) {
+                throw new IllegalArgumentException("The entered quantity must be greater than 0");
+            }
+
+            int shoppingQuantity = this.items.get(duckId.toString());
+            if (shoppingQuantity > quantity) {
+                String exFormat = "Attempted to add %d of the duck with the id %d but only %d exist in the shopping cart";
+                throw new IllegalArgumentException(String.format(exFormat, quantity, duckId, shoppingQuantity));
+            }
+
+            this.items.put(duckId.toString(), shoppingQuantity + quantity);
+        }
+    
 
     /**
      * Removes the given ducks from the shopping cart
