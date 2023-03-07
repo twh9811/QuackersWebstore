@@ -12,6 +12,7 @@ import { HttpClientModule} from '@angular/common/http';
 import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
 import { ProductModifyComponent } from './product-modify/product-modify.component';
 import { ProductCreateComponent } from './product-create/product-create.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ProductCreateComponent } from './product-create/product-create.componen
     InventoryManagementComponent,
     ProductModifyComponent,
     ProductCreateComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,

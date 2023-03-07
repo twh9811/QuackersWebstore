@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators'
@@ -44,9 +44,9 @@ export class ProductService {
    * 
    * @param id The id of the duck being deleted
    */
-  deleteDuck(id: number): void {
+  deleteDuck(id: number): Observable<Duck | HttpResponse<Object>> {
     const url = `${this.apiURL}/inventory/product/${id}`;
-    this.http.delete<Duck>(url).pipe(tap(_ => console.log(`Duck with Id ${id} deleted`)), catchError(this.handleError<Duck>('deleteDuck')));
+    return this.http.delete(url, { observe: 'response' }).pipe(tap(_ => console.log(`Duck with Id ${id} deleted`)), catchError(this.handleError<Duck>('deleteDuck')));
   }
 
   /**

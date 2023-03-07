@@ -1,6 +1,8 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Duck } from '../duck';
+import { NotificationService } from '../notification.service';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -11,7 +13,7 @@ import { ProductService } from '../product.service';
 export class InventoryManagementComponent {
   ducks: Duck[] = [];
 
-  constructor(private router: Router, private productService: ProductService) { }
+  constructor(private router: Router, private productService: ProductService, private notificationService: NotificationService) { }
 
   /**
    * Loads the ducks array when the page is opened
@@ -50,7 +52,22 @@ export class InventoryManagementComponent {
    */
   deleteDuck(duck: Duck) {
     this.ducks = this.ducks.filter(a_duck => a_duck != duck);
-    this.productService.deleteDuck(duck.id);
+    this.productService.deleteDuck(duck.id).subscribe(responseObj => {
+      let httpResponse: HttpResponse<any> = (responseObj as HttpResponse<any>);
+
+      switch (httpResponse.status) {
+        case 200:
+          this.notificationService.add(`Successfully deleted the duck with the id ${duck.id}.`, 3);
+          break;
+        case 404:
+          this.notificationService.add(`Failed to delete the duck with the id ${duck.id} because it does not exist!`);
+          break;
+        default:
+          this.notificationService.add(`Failed to delete the duck with the id ${duck.id} because something went wrong.`);
+          console.error(httpResponse.statusText);
+      }
+
+    })
   }
 
   /**
