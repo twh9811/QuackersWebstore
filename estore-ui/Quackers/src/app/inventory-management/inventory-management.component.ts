@@ -18,7 +18,7 @@ export class InventoryManagementComponent {
   /**
    * Loads the ducks array when the page is opened
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.getDucks();
   }
 
@@ -34,14 +34,14 @@ export class InventoryManagementComponent {
    * 
    * @param id The id of the duck
    */
-  goToDuckModification(id: number) {
+  goToDuckModification(id: number): void {
     this.router.navigate([`/inventory/${id}`]);
   }
 
   /**
    * Sends the user to the duck creation screen
    */
-  goToDuckCreation() {
+  goToDuckCreation(): void {
     this.router.navigate(['/inventory/create']);
   }
 
@@ -50,7 +50,7 @@ export class InventoryManagementComponent {
    * 
    * @param duck The duck being deleted
    */
-  deleteDuck(duck: Duck) {
+  deleteDuck(duck: Duck): void {
     this.ducks = this.ducks.filter(a_duck => a_duck != duck);
     this.productService.deleteDuck(duck.id).subscribe(httpResponse => {
       switch (httpResponse.status) {
@@ -70,7 +70,7 @@ export class InventoryManagementComponent {
   /**
    * Logs out the user (this will be moved eventually)
    */
-  logout() {
+  logout(): void {
     this.router.navigate(['']);
   }
 }

@@ -36,7 +36,7 @@ export class NotificationService {
    * 
    * @param index The index of the notification
    */
-  deleteAt(index: number) {
+  deleteAt(index: number): void {
     this.notifications = this.notifications.filter((_, notificationIndex) => notificationIndex != index);
     this.notificationChange.next(this.notifications);
   }
@@ -46,7 +46,7 @@ export class NotificationService {
    * 
    * @param notifiction The notification being deleted
    */
-  deleteNotification(notifiction: String) {
+  deleteNotification(notifiction: String): void {
     this.notifications = this.notifications.filter((a_notif) => a_notif != notifiction);
     this.notificationChange.next(this.notifications);
   }
@@ -54,7 +54,7 @@ export class NotificationService {
   /**
    * Clears the notifications
    */
-  clear() {
+  clear(): void {
     this.notifications = [];
     this.notificationChange.next(this.notifications);
   }

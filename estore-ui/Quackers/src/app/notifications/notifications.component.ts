@@ -13,14 +13,14 @@ export class NotificationsComponent {
 
   constructor(public notificationService: NotificationService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.notificationService.notificationChange.subscribe(data => {
       this.notifications = data;
       this.shouldUpdate = true;
     })
   }
 
-  update() {
+  update(): void {
     this.shouldUpdate = false;
   }
 }
