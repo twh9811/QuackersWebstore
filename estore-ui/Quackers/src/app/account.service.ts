@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 
 import { Observable,of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators'
@@ -30,7 +30,6 @@ export class AccountService {
    * If the account doesn't exist, returns Http Not Found
    */
   login(username : string, password : string): Observable<Account> {
-    // this does not work
     const url = `${this.apiURL}/login?username=${username}&password=${password}`;
     return this.http.get<Account>(url).pipe(
       tap(_ => console.log(`${username} logged in`)), catchError(this.handleError<Account>('login')));
@@ -52,7 +51,7 @@ export class AccountService {
    * @param id The ID of the account you want to get.
    * @returns The account with the matching ID
    */
-  getAccount(id : number ) {
+  getAccount(id : number) : Observable<Account>{
     const url = `${this.apiURL}/${id}`;
     return this.http.get<Account>(url).pipe(
       tap(_ => console.log(`got account ${id}`)), catchError(this.handleError<any>('get account'))
@@ -65,7 +64,7 @@ export class AccountService {
    * @param account The account we want to create
    * @returns The newly created account in the database
    */
-  createUser(account : Account ) {
+  createUser(account : Account) : Observable<Account> {
     const url = `${this.apiURL}/accounts`;
     return this.http.post<Account>(url, account, this.httpOptions).pipe(
       tap(_ => console.log(`created account ${account}`)), catchError(this.handleError<any>('create account'))
