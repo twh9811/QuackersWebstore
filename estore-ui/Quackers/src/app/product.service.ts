@@ -44,9 +44,9 @@ export class ProductService {
    * 
    * @param id The id of the duck being deleted
    */
-  deleteDuck(id: number): Observable<Duck | HttpResponse<Object>> {
+  deleteDuck(id: number): Observable<HttpResponse<any>> {
     const url = `${this.apiURL}/inventory/product/${id}`;
-    return this.http.delete(url, { observe: 'response' }).pipe(tap(_ => console.log(`Duck with Id ${id} deleted`)), catchError(this.handleError<Duck>('deleteDuck')));
+    return this.http.delete(url, { observe: 'response' }).pipe(tap(_ => console.log(`Duck with Id ${id} deleted`)), catchError(this.handleError<HttpResponse<Object>>('deleteDuck')));
   }
 
   /**

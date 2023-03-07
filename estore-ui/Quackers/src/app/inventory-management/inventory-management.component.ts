@@ -52,9 +52,7 @@ export class InventoryManagementComponent {
    */
   deleteDuck(duck: Duck) {
     this.ducks = this.ducks.filter(a_duck => a_duck != duck);
-    this.productService.deleteDuck(duck.id).subscribe(responseObj => {
-      let httpResponse: HttpResponse<any> = (responseObj as HttpResponse<any>);
-
+    this.productService.deleteDuck(duck.id).subscribe(httpResponse => {
       switch (httpResponse.status) {
         case 200:
           this.notificationService.add(`Successfully deleted the duck with the id ${duck.id}.`, 3);
@@ -66,7 +64,6 @@ export class InventoryManagementComponent {
           this.notificationService.add(`Failed to delete the duck with the id ${duck.id} because something went wrong.`);
           console.error(httpResponse.statusText);
       }
-
     })
   }
 
