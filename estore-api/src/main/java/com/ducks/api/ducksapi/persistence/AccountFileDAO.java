@@ -29,6 +29,7 @@ public class AccountFileDAO implements AccountDAO{
                                        // written to the file
     private static int nextID; // The next ID to assign to a account
     private String filename; //Filename to read and write to
+    private Account adminAccount = new OwnerAccount(); // Reserved owner account.
 
     /**
      * Creates a Account File Data Access Object
@@ -42,6 +43,7 @@ public class AccountFileDAO implements AccountDAO{
         this.filename = filename;
         this.objectMapper = objectMapper;
         load();
+        createAccount(adminAccount);
     }
 
     /**
