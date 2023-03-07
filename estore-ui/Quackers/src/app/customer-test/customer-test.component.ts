@@ -25,7 +25,7 @@ export class CustomerTestComponent {
     this.accountService.getAccount(id).subscribe(account => this.account = account);
   }
 
-  logout() {
+  logout() : void {
     this.router.navigate([''])
   }
 }

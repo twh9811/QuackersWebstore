@@ -22,19 +22,19 @@ export class LoginComponent {
 
   constructor(private router : Router, private accountService : AccountService) {}
 
-  redirect() {
-    if(this.account != undefined) {
+  redirect() : void {
+    if(this.account) {
       if(this.account.username == "admin") {
-      this.router.navigate(['/adminPage/' + this.account.id])
+        this.router.navigate(['/adminPage/' + this.account.id])
       } else {
-      this.router.navigate(['/customerPage/' + this.account.id])
+        this.router.navigate(['/customerPage/' + this.account.id])
       }
     } else {
       this.feedback = "Login failed, try again or register"
     }
   }
 
-  onLogin() {
+  onLogin() : void {
     this.accountService.login(this.username, this.password).subscribe(account => {
       this.account = account; 
       this.update();
@@ -42,7 +42,7 @@ export class LoginComponent {
     });
   }
 
-  onRegister(username : string, password : string) {
+  onRegister(username : string, password : string) : void {
     // Create account with placeholders for type, id, and admin status. These DONT matter.
     // These will be reformated with proper values in AccountFileDAO based on username.
     this.account = {
@@ -68,7 +68,7 @@ export class LoginComponent {
   }
 
   // Updates the account variables (prevents double clicking buttons)
-  update() {
+  update() : void {
     console.log(this.account);
   }
 
