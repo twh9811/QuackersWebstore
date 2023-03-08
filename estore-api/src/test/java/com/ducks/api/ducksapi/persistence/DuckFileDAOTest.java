@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import com.ducks.api.ducksapi.model.Colors;
 import com.ducks.api.ducksapi.model.Duck;
+import com.ducks.api.ducksapi.model.DuckOutfit;
 import com.ducks.api.ducksapi.model.Size;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -44,9 +45,10 @@ public class DuckFileDAOTest {
         mockObjectMapper = mock(ObjectMapper.class);
         testDucks = new Duck[3];
         // Modified constructors to test attributes @Travis 2/15
-        testDucks[0] = new Duck(99, "Wi-Fire", 12, "9.99", Size.MEDIUM, Colors.BLUE, 0, 0, 0, 0, 0);
-        testDucks[1] = new Duck(100, "Galactic Agent", 11, "19.99", Size.SMALL, Colors.RED, 0, 0, 0, 0, 0);
-        testDucks[2] = new Duck(101, "Ice Gladiator", 10, "29.99", Size.EXTRA_LARGE, Colors.GREEN, 0, 0, 0, 0, 0);
+        DuckOutfit outfit = new DuckOutfit(0, 0, 0, 0, 0);
+        testDucks[0] = new Duck(99, "Wi-Fire", 12, "9.99", Size.MEDIUM, Colors.BLUE, outfit);
+        testDucks[1] = new Duck(100, "Galactic Agent", 11, "19.99", Size.SMALL, Colors.RED, outfit);
+        testDucks[2] = new Duck(101, "Ice Gladiator", 10, "29.99", Size.EXTRA_LARGE, Colors.GREEN, outfit);
 
         // When the object mapper is supposed to read from the file
         // the mock object mapper will return the duck array above
@@ -105,7 +107,7 @@ public class DuckFileDAOTest {
     @Test
     public void testCreateDuck() {
         // Setup
-        Duck duck = new Duck(102, "Wonder-Person", 10, "9.99", Size.MEDIUM, Colors.BLUE, 0, 0, 0, 0, 0);
+        Duck duck = new Duck(102, "Wonder-Person", 10, "9.99", Size.MEDIUM, Colors.BLUE, new DuckOutfit(0, 0, 0, 0, 0));
 
         // Invoke
         Duck result = assertDoesNotThrow(() -> duckFileDAO.createDuck(duck),
@@ -121,7 +123,7 @@ public class DuckFileDAOTest {
     @Test
     public void testUpdateDuck() {
         // Setup
-        Duck duck = new Duck(99, "Galactic Agent", 10, "9.99", Size.LARGE, Colors.INDIGO, 0, 0, 0, 0, 0);
+        Duck duck = new Duck(99, "Galactic Agent", 10, "9.99", Size.LARGE, Colors.INDIGO, new DuckOutfit(0, 0, 0, 0, 0));
 
         // Invoke
         Duck result = assertDoesNotThrow(() -> duckFileDAO.updateDuck(duck),
@@ -139,7 +141,7 @@ public class DuckFileDAOTest {
                 .when(mockObjectMapper)
                 .writeValue(any(File.class), any(Duck[].class));
 
-        Duck duck = new Duck(102, "Wi-Fire", 10, "9.99", Size.SMALL, Colors.ORANGE, 0, 0, 0, 0, 0);
+        Duck duck = new Duck(102, "Wi-Fire", 10, "9.99", Size.SMALL, Colors.ORANGE, new DuckOutfit(0, 0, 0, 0, 0));
 
         assertNull(duckFileDAO.createDuck(duck), "createDuck did not return null");
     }
@@ -167,7 +169,7 @@ public class DuckFileDAOTest {
     @Test
     public void testUpdateDuckNotFound() {
         // Setup
-        Duck duck = new Duck(98, "Bolt", 10, "9.99", Size.LARGE, Colors.YELLOW, 0, 0, 0, 0, 0);
+        Duck duck = new Duck(98, "Bolt", 10, "9.99", Size.LARGE, Colors.YELLOW, new DuckOutfit(0, 0, 0, 0, 0));
 
         // Invoke
         Duck result = assertDoesNotThrow(() -> duckFileDAO.updateDuck(duck),
