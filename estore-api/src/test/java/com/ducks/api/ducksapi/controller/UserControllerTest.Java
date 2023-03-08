@@ -95,12 +95,45 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testLogoutUser() throws IOException { //logoutuser may throw IOException
+    public void testDeleteAccount() throws IOException { // deleteAccount may throw IOException
         // Setup
-        Account user = new UserAccount(11, "eric", "162534");
+        int accountId = 11;
+        // when deleteHero is called return true, simulating successful deletion
+        when(mockAccountDAO.deleteAccount(accountId)).thenReturn(true);
 
-        // When createUser is called on the Mock Account DAO, throw an IOException
-        doThrow(new IOException()).when(mockAccountDAO).
+        // Invoke
+        ResponseEntity<Account> response = accountController.deleteAccount(accountId);
+
+        // Analyze
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+    }
+
+    @Test
+    public void testDeleteAccountNotFound() throws IOException { // deleteAccount may throw IOException
+        // Setup
+        int accountId = 11;
+        // when deleteHero is called return true, simulating successful deletion
+        when(mockAccountDAO.deleteAccount(accountId)).thenReturn(true);
+
+        // Invoke
+        ResponseEntity<Account> response = accountController.deleteAccount(accountId);
+
+        // Analyze
+        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+    }
+
+    @Test
+    public void testDeleteHeroHandleException() throws IOException { // deleteHero may throw IOException
+        // Setup
+        int accountId = 11;
+        // when deleteHero is called return true, simulating successful deletion
+        when(mockAccountDAO.deleteAccount(accountId)).thenReturn(true);
+
+        // Invoke
+        ResponseEntity<Account> response = accountController.deleteAccount(accountId);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
     
 }
