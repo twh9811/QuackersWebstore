@@ -98,7 +98,7 @@ public class UserControllerTest {
     public void testDeleteAccount() throws IOException { // deleteAccount may throw IOException
         // Setup
         int accountId = 11;
-        // when deleteHero is called return true, simulating successful deletion
+        // when deleteAccount is called return true, simulating successful deletion
         when(mockAccountDAO.deleteAccount(accountId)).thenReturn(true);
 
         // Invoke
@@ -112,7 +112,7 @@ public class UserControllerTest {
     public void testDeleteAccountNotFound() throws IOException { // deleteAccount may throw IOException
         // Setup
         int accountId = 11;
-        // when deleteHero is called return true, simulating successful deletion
+        // when deleteAccount is called return true, simulating successful deletion
         when(mockAccountDAO.deleteAccount(accountId)).thenReturn(true);
 
         // Invoke
@@ -123,10 +123,10 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testDeleteHeroHandleException() throws IOException { // deleteHero may throw IOException
+    public void testDeleteAccountHandleException() throws IOException { // deleteAccount may throw IOException
         // Setup
         int accountId = 11;
-        // when deleteHero is called return true, simulating successful deletion
+        // when deleteAccount is called return true, simulating successful deletion
         when(mockAccountDAO.deleteAccount(accountId)).thenReturn(true);
 
         // Invoke
