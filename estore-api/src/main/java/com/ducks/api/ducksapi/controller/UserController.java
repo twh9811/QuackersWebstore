@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -159,4 +160,74 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * Responds to the GET request for all {@linkplain Account account}
+     * 
+     * @return ResponseEntity with array of {@link Account account} objects (may be empty) and
+     * HTTP status of OK<br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @GetMapping("")
+    public ResponseEntity<Account[]> getAccounts() {
+    // curl.exe -X GET 'http://localhost:8080/
+        try {
+            Account[] account = accountDAO.getAccounts();
+            return new ResponseEntity<Account[]>(account,HttpStatus.OK);
+
+        }
+        catch(IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Deletes a {@linkplain Account account} with the given id
+     * 
+     * @param id The id of the {@link Account account} to deleted
+     * 
+     * @return ResponseEntity HTTP status of OK if deleted<br>
+     * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Account> deleteAccount(@PathVariable int id) {
+    // curl.exe -X DELETE 'http://localhost:8080/TESTID
+        try {
+            boolean AccountDeleted = accountDAO.deleteAccount(id);
+            if (AccountDeleted == true)
+                return new ResponseEntity<Account>(HttpStatus.OK);
+            else
+                return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+        }
+        catch(IOException e) {
+            return new ResponseEntity<Account>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Updates the {@linkplain Hero hero} with the provided {@linkplain Hero hero} object, if it exists
+     * 
+     * @param hero The {@link Hero hero} to update
+     * 
+     * @return ResponseEntity with updated {@link Hero hero} object and HTTP status of OK if updated<br>
+     * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @PutMapping("")
+    public ResponseEntity<Account> updateAccount(@RequestBody Account account) {
+        // curl.exe -X PUT 'http://localhost:8080/TESTID
+        try {
+            Account AccountUpdated = AccountDAO.updateAccount(account);
+            if (AccountUpdated != null)
+                return new ResponseEntity<Account>(HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch(IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }

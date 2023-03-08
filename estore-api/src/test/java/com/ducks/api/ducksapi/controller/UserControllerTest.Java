@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 
 import com.ducks.api.ducksapi.model.Account;
 import com.ducks.api.ducksapi.persistence.AccountDAO;
+import com.ducks.api.ducksapi.model.UserAccount;
+
 
 /**
  * Handles the REST API requests for the User resource
@@ -48,7 +50,7 @@ public class UserControllerTest {
     @Test
     public void testCreateUser() throws IOException { // createUser may throw IOException
         // Setup
-        Account user = new Account(11, "sam", "123456", false);
+        Account user = new UserAccount(11, "sam", "123456");
 
         // when createUser is called, return true simulating successful
         // creation and save
@@ -61,20 +63,44 @@ public class UserControllerTest {
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(user, response.getBody());
     }
-    /** 
+    
     @Test
     public void testCreateUserFailed() throws IOException { // createUser may throw IOException
         // Setup
-        Duck duck = new Duck(99, "Bolt", 10, "9.99", Size.SMALL, Colors.RED, 0, 0, 0, 0, 0);
-        // when createDuck is called, return false simulating failed
+        Account user = new UserAccount(11, "dereck", "654321");
+        // when createUser is called, return false simulating failed
         // creation and save
-        when(mockDuckDAO.createDuck(duck)).thenReturn(null);
+        when(mockAccountDAO.createAccount(user)).thenReturn(null);
 
         // Invoke
-        ResponseEntity<Duck> response = duckController.createDuck(duck);
+        ResponseEntity<Account> response = accountController.createUser(user);
 
         // Analyze
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
-    */
+
+    @Test
+    public void testCreateUserHandleException() throws IOException { // createUser may throw IOException
+        // Setup
+        Account user = new UserAccount(11, "eric", "162534");
+
+        // When createUser is called on the Mock Account DAO, throw an IOException
+        doThrow(new IOException()).when(mockAccountDAO).createAccount(user);
+
+        // Invoke
+        ResponseEntity<Account> response = accountController.createUser(user);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    @Test
+    public void testLogoutUser() throws IOException { //logoutuser may throw IOException
+        // Setup
+        Account user = new UserAccount(11, "eric", "162534");
+
+        // When createUser is called on the Mock Account DAO, throw an IOException
+        doThrow(new IOException()).when(mockAccountDAO).
+    }
+    
 }
