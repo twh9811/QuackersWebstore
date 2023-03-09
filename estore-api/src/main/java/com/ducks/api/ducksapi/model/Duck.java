@@ -1,5 +1,6 @@
 package com.ducks.api.ducksapi.model;
 
+import java.beans.Transient;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,7 +17,7 @@ public class Duck {
     static final String STRING_FORMAT = "Duck [id=%d, name=%s, quantity=%d, price=%s, size=%s, color=%s, hatUID=%d, shirtUID=%d, shoesUID=%d, handitemUID=%d, jewelryUID=%d]";
 
     @JsonProperty("id")
-    private int id;
+    private final int id;
 
     @JsonProperty("name")
     private String name;
@@ -33,61 +34,38 @@ public class Duck {
     @JsonProperty("color")
     private Colors color;
 
-    @JsonProperty("hatUID")
-    private int hatUID;
-
-    @JsonProperty("shirtUID")
-    private int shirtUID;
-
-    @JsonProperty("shoesUID")
-    private int shoesUID;
-
-    @JsonProperty("handItemUID")
-    private int handItemUID;
-
-    @JsonProperty("jewelryUID")
-    private int jewelryUID;
+    @JsonProperty("outfit")
+    private DuckOutfit outfit;
 
     /**
      * Create a Duck with the given id and name
      * 
-     * @param id          The id of the Duck
-     * @param name        The name of the Duck
-     * @param quantity    The number of ducks available
-     * @param price       The price of the Duck
-     * @param size        The size of the Duck
-     * @param color       The color of the duck
-     * @param hatUID      The ID of the hat the Duck is wearing
-     * @param shirtUID    The ID of the shirt the Duck is wearing
-     * @param shoesUID    The ID of the shoes the Duck is wearing
-     * @param handItemUID The ID of the item the Duck is holding in their hand
-     *                    (feet?)
-     * @param jewelryUID  The ID of the jewerly the Duck is wearing
+     * @param id       The id of the Duck
+     * @param name     The name of the Duck
+     * @param quantity The number of ducks available
+     * @param price    The price of the Duck
+     * @param size     The size of the Duck
+     * @param color    The color of the duck
      * 
-     *                    {@literal @}JsonProperty is used in serialization and
-     *                    deserialization
-     *                    of the JSON object to the Java object in mapping the
-     *                    fields. If a field
-     *                    is not provided in the JSON object, the Java field gets
-     *                    the default Java
-     *                    value, i.e. 0 for int
+     * 
+     *                 {@literal @}JsonProperty is used in serialization and
+     *                 deserialization
+     *                 of the JSON object to the Java object in mapping the
+     *                 fields. If a field
+     *                 is not provided in the JSON object, the Java field gets
+     *                 the default Java
+     *                 value, i.e. 0 for int
      */
     public Duck(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("quantity") int quantity,
             @JsonProperty("price") String price, @JsonProperty("size") Size size, @JsonProperty("color") Colors color,
-            @JsonProperty("hatUID") int hatUID,
-            @JsonProperty("shirtUID") int shirtUID, @JsonProperty("shoesUID") int shoesUID,
-            @JsonProperty("handItemUID") int handItemUID, @JsonProperty("jewelryUID") int jewelryUID) {
+            @JsonProperty("outfit") DuckOutfit outfit) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
         this.size = size;
         this.color = color;
-        this.hatUID = hatUID;
-        this.shirtUID = shirtUID;
-        this.shoesUID = shoesUID;
-        this.handItemUID = handItemUID;
-        this.jewelryUID = jewelryUID;
+        this.outfit = outfit;
     }
 
     /**
@@ -193,13 +171,31 @@ public class Duck {
     }
 
     /**
-     * Sets the Unique Identifier of the Hat the Duck is wearing - necessary for
-     * JSON object to Java object deserialization
+     * Sets a duck's outfit - necessary for JSON object to Java object
+     * deserialization
+     * 
+     * @param outfit The new outfit
+     */
+    public void setOutfit(DuckOutfit outfit) {
+        this.outfit = outfit;
+    }
+
+    /**
+     * Gets a duck's outfit
+     * 
+     * @return The duck's outfit
+     */
+    public DuckOutfit getOutfit() {
+        return this.outfit;
+    }
+
+    /**
+     * Sets the Unique Identifier of the Hat the Duck is wearing
      * 
      * @param hatUID The Unique Identifier of the Hat the Duck is wearing.
      */
     public void setHatUID(int hatUID) {
-        this.hatUID = hatUID;
+        this.outfit.setHatUID(hatUID);
     }
 
     /**
@@ -207,18 +203,18 @@ public class Duck {
      * 
      * @return The Unique Identifier of the Hat the Duck is wearing.
      */
+    @Transient
     public int getHatUID() {
-        return hatUID;
+        return outfit.getHatUID();
     }
 
     /**
-     * Sets the Unique Identifier of the Shirt the Duck is wearing - necessary for
-     * JSON object to Java object deserialization
+     * Sets the Unique Identifier of the Shirt the Duck is wearing
      * 
      * @param shirtUID The Unique Identifier of the Shirt the Duck is wearing.
      */
     public void setShirtUID(int shirtUID) {
-        this.shirtUID = shirtUID;
+        this.outfit.setShirtUID(shirtUID);
     }
 
     /**
@@ -226,39 +222,40 @@ public class Duck {
      * 
      * @return The Unique Identifier of the Shirt the Duck is wearing.
      */
+    @Transient
     public int getShirtUID() {
-        return shirtUID;
+        return this.outfit.getShirtUID();
     }
 
     /**
-     * Sets the Unique Identifier of the Shoes the Duck is wearing - necessary for
-     * JSON object to Java object deserialization
+     * Sets the Unique Identifier of the Shoes the Duck is wearing
      * 
      * @param shoesUID The Unique Identifier of the Shoes the Duck is wearing.
      */
     public void setShoesUID(int shoesUID) {
-        this.shoesUID = shoesUID;
+        this.outfit.setShoesUID(shoesUID);
     }
 
     /**
-     * Retrieves the Unique Identifier of the Shoes the Duck is wearing - necessary
-     * for JSON object to Java object deserialization
+     * Retrieves the Unique Identifier of the Shoes the Duck is wearing
      * 
      * @return shoesUID The Unique Identifier of the Shoes the Duck is wearing.
      */
+    @Transient
     public int getShoesUID() {
-        return shoesUID;
+        return this.outfit.getShoesUID();
     }
 
     /**
      * Sets the Unique Identifier of the item the Duck is holding in their hand
-     * (feet?) - necessary for JSON object to Java object deserialization
+     * (feet?)
      * 
      * @param handItemUID The Unique Identifier of the item the Duck is holding in
      *                    their hand (feet?)
      */
+
     public void setHandItemUID(int handItemUID) {
-        this.handItemUID = handItemUID;
+        this.outfit.setHandItemUID(handItemUID);
     }
 
     /**
@@ -268,18 +265,18 @@ public class Duck {
      * @return handItemUID The Unique Identifier of the item the Duck is holding in
      *         their hand (feet?)
      */
+    @Transient
     public int getHandItemUID() {
-        return handItemUID;
+        return this.outfit.getHandItemUID();
     }
 
     /**
-     * Sets the Unique Identifier of the jewelry the Duck is wearing - necessary for
-     * JSON object to Java object deserialization
+     * Sets the Unique Identifier of the jewelry the Duck is wearing
      * 
      * @param jewelryUID The Unique Identifier of the jewelry the Duck is wearing
      */
     public void setJewelryUID(int jewelryUID) {
-        this.jewelryUID = jewelryUID;
+        this.outfit.setJewelryUID(jewelryUID);
     }
 
     /**
@@ -287,8 +284,9 @@ public class Duck {
      * 
      * @return jewelryUID The Unique Identifier of the jewelry the Duck is wearing
      */
+    @Transient
     public int getJewelryUID() {
-        return jewelryUID;
+        return this.outfit.getJewelryUID();
     }
 
     /**
@@ -296,15 +294,14 @@ public class Duck {
      */
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Duck))
+        if (!(obj instanceof Duck)) {
             return false;
-        
+        }
+
         Duck other = (Duck) obj;
         return this.id == other.id && this.name.equals(other.name) && this.quantity == other.quantity
-                && this.price == other.price
-                && this.size == other.size && this.color == other.color && this.hatUID == other.hatUID
-                && this.shirtUID == other.shirtUID && this.handItemUID == other.handItemUID
-                && this.jewelryUID == other.jewelryUID;
+                && this.price == other.price && this.size == other.size && this.color == other.color
+                && this.outfit.equals(other.outfit);
     }
 
     /**
@@ -312,7 +309,7 @@ public class Duck {
      */
     @Override
     public String toString() {
-        return String.format(STRING_FORMAT, id, name, quantity, price, size, color, hatUID, shirtUID, shoesUID,
-                handItemUID, jewelryUID);
+        return String.format(STRING_FORMAT, id, name, quantity, price, size, color, outfit.getHatUID(),
+                outfit.getShirtUID(), outfit.getShoesUID(), outfit.getHandItemUID(), outfit.getJewelryUID());
     }
 }

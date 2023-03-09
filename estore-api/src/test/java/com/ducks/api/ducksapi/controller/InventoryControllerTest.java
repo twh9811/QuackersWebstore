@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.ducks.api.ducksapi.model.Colors;
 import com.ducks.api.ducksapi.model.Duck;
+import com.ducks.api.ducksapi.model.DuckOutfit;
 import com.ducks.api.ducksapi.model.Size;
 import com.ducks.api.ducksapi.persistence.DuckDAO;
 
@@ -25,6 +27,8 @@ import com.ducks.api.ducksapi.persistence.DuckDAO;
  */
 @Tag("Controller-tier")
 public class InventoryControllerTest {
+    private static final Random RANDOM = new Random();
+
     private InventoryController duckController;
     private DuckDAO mockDuckDAO;
 
@@ -38,10 +42,26 @@ public class InventoryControllerTest {
         duckController = new InventoryController(mockDuckDAO);
     }
 
+    /**
+     * Generates a duck with completely RANDOM values
+     * @return The generated duck
+     */
+    private Duck generateDuck() {
+        String name = String.valueOf(RANDOM.nextInt(100));
+        int id = RANDOM.nextInt(1000);
+        int quantiy = RANDOM.nextInt(1000);
+        String price = String.valueOf(RANDOM.nextInt(1000));
+        Size size = Size.values()[RANDOM.nextInt(Size.values().length)];
+        Colors color = Colors.values()[RANDOM.nextInt(Colors.values().length)];
+        DuckOutfit outfit = new DuckOutfit(RANDOM.nextInt(20), RANDOM.nextInt(20), RANDOM.nextInt(20), RANDOM.nextInt(20),RANDOM.nextInt(20));
+
+        return new Duck(id, name, quantiy, price, size, color, outfit);
+    }
+
     @Test
     public void testGetDuck() throws IOException { // getDuck may throw IOException
         // Setup
-        Duck duck = new Duck(99, "Galactic Agent", 10, "9.99", Size.MEDIUM, Colors.BLUE, 0, 0, 0, 0, 0);
+        Duck duck = generateDuck();
         // When the same id is passed in, our mock Duck DAO will return the Duck object
         when(mockDuckDAO.getDuck(duck.getId())).thenReturn(duck);
 
@@ -90,7 +110,7 @@ public class InventoryControllerTest {
     @Test
     public void testCreateDuck() throws IOException { // createDuck may throw IOException
         // Setup
-        Duck duck = new Duck(99, "Wi-Fire", 10, "9.99", Size.LARGE, Colors.GREEN, 0, 0, 0, 0, 0);
+        Duck duck = generateDuck();
         // when createDuck is called, return true simulating successful
         // creation and save
         when(mockDuckDAO.createDuck(duck)).thenReturn(duck);
@@ -106,7 +126,7 @@ public class InventoryControllerTest {
     @Test
     public void testCreateDuckFailed() throws IOException { // createDuck may throw IOException
         // Setup
-        Duck duck = new Duck(99, "Bolt", 10, "9.99", Size.SMALL, Colors.RED, 0, 0, 0, 0, 0);
+        Duck duck = generateDuck();
         // when createDuck is called, return false simulating failed
         // creation and save
         when(mockDuckDAO.createDuck(duck)).thenReturn(null);
@@ -121,7 +141,7 @@ public class InventoryControllerTest {
     @Test
     public void testCreateDuckHandleException() throws IOException { // createDuck may throw IOException
         // Setup
-        Duck duck = new Duck(99, "Ice Gladiator", 10, "9.99", Size.MEDIUM, Colors.INDIGO, 0, 0, 0, 0, 0);
+        Duck duck = generateDuck();
 
         // When createDuck is called on the Mock Duck DAO, throw an IOException
         doThrow(new IOException()).when(mockDuckDAO).createDuck(duck);
@@ -136,7 +156,7 @@ public class InventoryControllerTest {
     @Test
     public void testUpdateDuck() throws IOException { // updateDuck may throw IOException
         // Setup
-        Duck duck = new Duck(99, "Wi-Fire", 10, "9.99", Size.MEDIUM, Colors.BLUE, 0, 0, 0, 0, 0);
+        Duck duck = generateDuck();
         // when updateDuck is called, return true simulating successful
         // update and save
         when(mockDuckDAO.updateDuck(duck)).thenReturn(duck);
@@ -154,7 +174,7 @@ public class InventoryControllerTest {
     @Test
     public void testUpdateDuckFailed() throws IOException { // updateDuck may throw IOException
         // Setup
-        Duck duck = new Duck(99, "Galactic Agent", 10, "9.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
+        Duck duck = generateDuck();
         // when updateDuck is called, return true simulating successful
         // update and save
         when(mockDuckDAO.updateDuck(duck)).thenReturn(null);
@@ -169,7 +189,7 @@ public class InventoryControllerTest {
     @Test
     public void testUpdateDuckHandleException() throws IOException { // updateDuck may throw IOException
         // Setup
-        Duck duck = new Duck(99, "Galactic Agent", 10, "9.99", Size.MEDIUM, Colors.YELLOW, 0, 0, 0, 0, 0);
+        Duck duck = generateDuck();
         // When updateDuck is called on the Mock Duck DAO, throw an IOException
         doThrow(new IOException()).when(mockDuckDAO).updateDuck(duck);
 
@@ -184,8 +204,8 @@ public class InventoryControllerTest {
     public void testGetDucks() throws IOException { // getDucks may throw IOException
         // Setup
         Duck[] ducks = new Duck[2];
-        ducks[0] = new Duck(99, "Bolt", 11, "9.99", Size.EXTRA_LARGE, Colors.ORANGE, 0, 0, 0, 0, 0);
-        ducks[1] = new Duck(100, "The Great Iguana", 10, "29.99", Size.MEDIUM, Colors.BLUE, 0, 0, 0, 0, 0);
+        ducks[0] = generateDuck();
+        ducks[1] = generateDuck();
         // When getDucks is called return the ducks created above
         when(mockDuckDAO.getDucks()).thenReturn(ducks);
 
@@ -215,8 +235,8 @@ public class InventoryControllerTest {
         // Setup
         String searchString = "la";
         Duck[] ducks = new Duck[2];
-        ducks[0] = new Duck(99, "Galactic Agent", 10, "9.99", Size.MEDIUM, Colors.BLUE, 0, 0, 0, 0, 0);
-        ducks[1] = new Duck(100, "Ice Gladiator", 12, "19.99", Size.SMALL, Colors.INDIGO, 0, 0, 0, 0, 0);
+        ducks[0] = generateDuck();
+        ducks[1] = generateDuck();
         // When findDucks is called with the search string, return the two
         /// ducks above
         when(mockDuckDAO.findDucks(searchString)).thenReturn(ducks);

@@ -107,9 +107,9 @@ public class InventoryController {
      * Example: Find all ducks that contain the text "ma"
      * GET http://localhost:8080/inventory/?name=ma
      */
-    @GetMapping("/")
+    @GetMapping("/search")
     public ResponseEntity<Duck[]> searchDucks(@RequestParam String name) {
-        LOG.info("GET /inventory/?name="+name);
+        LOG.info("GET /inventory/search?name="+name);
         try {
             Duck[] ducks = duckDao.findDucks(name);
             if(ducks != null) {

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +20,20 @@ import org.junit.jupiter.api.Test;
  */
 @Tag("Model-tier")
 public class ShoppingCartTest {
+
+    private Duck duckOne;
+    private Duck duckTwo;
+    private Duck duckThree;
+
+    @BeforeEach
+    public void setupShoppingCartTest() {
+        DuckOutfit outfit = new DuckOutfit(0, 0, 0, 0, 0);
+
+        duckOne = new Duck(1, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, outfit);
+        duckTwo = new Duck(2, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, outfit);
+        duckThree = new Duck(3, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, outfit);
+    }
+
     @Test
     public void testConstructorWithValidMap() {
         int expected_customer_id = 10;
@@ -87,14 +102,11 @@ public class ShoppingCartTest {
         Map<String, Integer> expected_items = new HashMap<>();
         expected_items.put("1", 1);
 
-        Duck duck = new Duck(1, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
-        Duck duckTwo = new Duck(2, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
-
         ShoppingCart cart = new ShoppingCart(1, expected_items);
 
         // Valid getItemAmount
         assertEquals(expected_items.get("1"), cart.getItemAmount(1), "Duck 1 by Id's quantity is incorrect");
-        assertEquals(expected_items.get("1"), cart.getItemAmount(duck), "Duck 1 by Obj's quantity is incorrect");
+        assertEquals(expected_items.get("1"), cart.getItemAmount(duckOne), "Duck 1 by Obj's quantity is incorrect");
 
         // Invalid getItemAmount
         assertThrows(IllegalArgumentException.class, () -> cart.getItemAmount(2),
@@ -109,10 +121,6 @@ public class ShoppingCartTest {
     public void testAddItems() {
         Map<Integer, Integer> expected_items = new HashMap<>();
         ShoppingCart cart = new ShoppingCart(1);
-
-        Duck duckOne = new Duck(1, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
-        Duck duckTwo = new Duck(2, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
-        Duck duckThree = new Duck(3, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
 
         // addItems - Id
         expected_items.put(1, 1);
@@ -160,8 +168,6 @@ public class ShoppingCartTest {
         Map<Integer, Integer> expected_items = new HashMap<>();
         ShoppingCart cart = new ShoppingCart(1);
 
-        Duck duckTwo = new Duck(2, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
-
         // addItemAmount - Id
         expected_items.put(1, 6);
         cart.addItemAmount(1, 6);
@@ -195,10 +201,6 @@ public class ShoppingCartTest {
     public void testRemoveItems() {
         Map<Integer, Integer> expected_items = new HashMap<>();
         ShoppingCart cart = new ShoppingCart(1);
-
-        Duck duckOne = new Duck(1, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
-        Duck duckTwo = new Duck(2, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
-        Duck duckThree = new Duck(3, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
 
         cart.addItemAmount(duckOne, 10);
         cart.addItemAmount(duckTwo, 20);
@@ -283,10 +285,6 @@ public class ShoppingCartTest {
     public void testRemoveItemAmount() {
         Map<Integer, Integer> expected_items = new HashMap<>();
         ShoppingCart cart = new ShoppingCart(1);
-
-        Duck duckOne = new Duck(1, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
-        Duck duckTwo = new Duck(2, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
-        Duck duckThree = new Duck(3, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, 0, 0, 0, 0, 0);
 
         cart.addItemAmount(duckOne, 10);
         cart.addItemAmount(duckTwo, 20);
