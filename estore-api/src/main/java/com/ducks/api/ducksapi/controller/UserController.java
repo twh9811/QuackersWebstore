@@ -205,7 +205,8 @@ public class UserController {
         }
     }
 
-    /**
+    /** 
+    
      * Updates the {@linkplain Hero hero} with the provided {@linkplain Hero hero} object, if it exists
      * 
      * @param hero The {@link Hero hero} to update
@@ -213,7 +214,7 @@ public class UserController {
      * @return ResponseEntity with updated {@link Hero hero} object and HTTP status of OK if updated<br>
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     */
+     
     @PutMapping("")
     public ResponseEntity<Account> updateAccount(@RequestBody Account account) {
         // curl.exe -X PUT 'http://localhost:8080/TESTID
@@ -228,6 +229,6 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    */
 
 }

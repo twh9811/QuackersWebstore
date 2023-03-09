@@ -136,4 +136,20 @@ public class UserControllerTest {
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
     
+    @Test
+    public void testLoginUser() throws IOException { // loginUser may throw IO Exception
+        // Setup
+        Account user = new UserAccount(11, "sam", "123456");
+        // when createUser is called, return true simulating successful
+        // creation and save
+        when(mockAccountDAO.createAccount(user)).thenReturn(user);
+        // when login is called, return true simulating succesful login
+        when(mockAccountDAO.loginUser(user.getUsername(), user.getPlainPassword())).thenReturn(true);
+
+        // Invoke
+        ResponseEntity<Account> resposne = accountController.loginUser(user.getUsername(), user.getPlainPassword());
+
+        // Analyze
+        assertEquals(HttpStatus.OK, resposne.getStatusCode());
+    }
 }
