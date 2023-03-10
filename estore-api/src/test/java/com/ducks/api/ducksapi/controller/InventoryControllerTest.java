@@ -1,6 +1,7 @@
 package com.ducks.api.ducksapi.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -160,11 +161,12 @@ public class InventoryControllerTest {
         // when updateDuck is called, return true simulating successful
         // update and save
         when(mockDuckDAO.updateDuck(duck)).thenReturn(duck);
-        ResponseEntity<Duck> response = duckController.updateDuck(duck);
+        
+        // Update Duck
         duck.setName("Bolt");
 
         // Invoke
-        response = duckController.updateDuck(duck);
+        ResponseEntity<Duck> response = duckController.updateDuck(duck);
 
         // Analyze
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -218,6 +220,19 @@ public class InventoryControllerTest {
     }
 
     @Test
+    public void testGetDucksNoDucks() throws IOException {
+        // When getDucks is called return the ducks created above
+        when(mockDuckDAO.getDucks()).thenReturn(null);
+
+        // Invoke
+        ResponseEntity<Duck[]> response = duckController.getDucks();
+
+        // Analyze
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    @Test
     public void testGetDucksHandleException() throws IOException { // getDucks may throw IOException
         // Setup
         // When getDucks is called on the Mock Duck DAO, throw an IOException
@@ -247,6 +262,38 @@ public class InventoryControllerTest {
         // Analyze
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ducks, response.getBody());
+    }
+
+    @Test
+    public void testSearchDucksNotFound() throws IOException { // findDucks may throw IOException
+        // Setup
+        String searchString = "la";
+        // When findDucks is called with the search string, return the two
+        /// ducks above
+        when(mockDuckDAO.findDucks(searchString)).thenReturn(new Duck[0]);
+
+        // Invoke
+        ResponseEntity<Duck[]> response = duckController.searchDucks(searchString);
+
+        // Analyze
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    @Test
+    public void testSearchDucksNull() throws IOException { // findDucks may throw IOException
+        // Setup
+        String searchString = "la";
+        // When findDucks is called with the search string, return the two
+        /// ducks above
+        when(mockDuckDAO.findDucks(searchString)).thenReturn(null);
+
+        // Invoke
+        ResponseEntity<Duck[]> response = duckController.searchDucks(searchString);
+
+        // Analyze
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        assertNull(response.getBody());
     }
 
     @Test
