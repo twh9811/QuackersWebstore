@@ -1,1 +1,38 @@
 <p>product-create works!</p>
+
+<form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <div>
+        <label for="name_input">Name</label><br>
+        <input id="name_input" type="text" formControlName="name" required><br><br>
+    </div>
+    <div>
+        <label for="quantity_input">Quantity</label><br>
+        <input id="quantity_input" type="text" formControlName="quantity" required><br><br>
+    </div>
+    <div>
+        <label for="price_input">Price</label><br>
+        <input id="price_input" type="text" formControlName="price" required><br><br>
+    </div>
+    <div>
+        <label for="size_input">Size</label><br>
+        <select name="size_input" id="size_input" formControlName="size" required>
+            <option value="SMALL">Small</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="LARGE">Large</option>
+            <option value="EXTRA_LARGE">Extra Large</option>
+        </select><br><br>
+    </div>
+    <div>
+        <label for="color_input">Color</label><br>
+        <select name="color_input" id="color_input" formControlName="color" required>
+            <option value="RED">Red</option>
+            <option value="ORANGE">Orange</option>
+            <option value="YELOW">Yellow</option>
+            <option value="GREEN">Green</option>
+            <option value="BLUE">Blue</option>
+            <option value="INDIGO">Indigo</option>
+            <option value="VIOLET">Violet</option>
+        </select><br><br>
+    </div>
+    <button id="submit_btn">Submit</button>
+</form>

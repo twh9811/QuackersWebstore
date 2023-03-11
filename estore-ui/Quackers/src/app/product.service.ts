@@ -46,7 +46,22 @@ export class ProductService {
    */
   deleteDuck(id: number): Observable<HttpResponse<any>> {
     const url = `${this.apiURL}/inventory/product/${id}`;
-    return this.http.delete(url, { observe: 'response' }).pipe(tap(_ => console.log(`Duck with Id ${id} deleted`)), catchError(this.handleError<HttpResponse<Object>>('deleteDuck')));
+    return this.http.delete(url, { observe: 'response' }).pipe(tap(_ => console.log(`Duck with Id ${id} deleted`)), catchError(this.handleError<HttpResponse<any>>('deleteDuck')));
+  }
+
+  /**
+   * Creates a duck
+   * 
+   * @param duck The duck object that is being created
+   * @returns An http response object in which the newly created duck is returned (if there are no error) and the response itself
+   */
+  createDuck(duck: Duck): Observable<HttpResponse<any>> {
+    const url = `${this.apiURL}/inventory/product`;
+
+    // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
+    return this.http.post<HttpResponse<any>>(url, duck, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+      .pipe(tap(_ => console.log(`Created duck`)),
+        catchError(this.handleError<HttpResponse<any>>('deleteDuck', true)));
   }
 
   /**
@@ -54,11 +69,12 @@ export class ProductService {
    * Let the app continue.
    *
    * @param operation - name of the operation that failed
+   * @param shouldReturnError whether the error should be returned and not logged
    * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = 'operation', result?: T): any {
+  private handleError<T>(operation = 'operation', shouldReturnError: boolean = false, result?: T,): any {
     return (error: any): Observable<T> => {
-
+      if (shouldReturnError) return of(error as T);
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
