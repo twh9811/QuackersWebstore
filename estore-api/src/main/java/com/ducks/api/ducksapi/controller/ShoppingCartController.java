@@ -97,11 +97,11 @@ public class ShoppingCartController {
         LOG.info("GET /cart");
         try {
             ShoppingCart[] carts = cartDao.getShoppingCarts();
-            if (carts != null) {
+            if (carts != null && carts.length != 0) {
                 return new ResponseEntity<>(carts, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(carts, HttpStatus.NO_CONTENT);
             }
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (IOException ioe) {
             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -156,6 +156,7 @@ public class ShoppingCartController {
 
     /**
      * Retrieves a {@link ShoppingCart cart}'s invalid duck ids
+     * 
      * @param id The id of the cart
      * @return 200 + List<String>, if the cart is found and has invalid duck ids
      *         204, if the cart is found and has no invalid duck ids
@@ -186,7 +187,7 @@ public class ShoppingCartController {
                 badIds.add(duckIdStr);
             }
 
-            if(badIds.size() == 0) {
+            if (badIds.size() == 0) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<List<String>>(badIds, HttpStatus.OK);
