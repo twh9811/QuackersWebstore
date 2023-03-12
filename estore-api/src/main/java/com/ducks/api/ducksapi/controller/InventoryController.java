@@ -77,8 +77,8 @@ public class InventoryController {
      * Responds to the GET request for all {@linkplain Duck ducks}
      * 
      * @return ResponseEntity with array of {@link Duck ducks} objects (may be
-     *         empty) and
-     *         HTTP status of OK<br>
+     *         empty) and HTTP status of OK<br>
+     *         ResponseEntity with HTTP status of NOT_FOUND if no ducks are found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("")
@@ -86,7 +86,7 @@ public class InventoryController {
         LOG.info("GET /inventory");
         try {
             Duck[] ducks = duckDao.getDucks();
-            if (ducks != null) {
+            if (ducks != null && ducks.length != 0) {
                 return new ResponseEntity<Duck[]>(ducks, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -106,10 +106,9 @@ public class InventoryController {
      *             {@link Duck ducks}
      * 
      * @return ResponseEntity with array of {@link Duck duck} objects (may be empty)
-     *         and
-     *         HTTP status of OK<br>
+     *         and HTTP status of OK<br>
+     *         ResponseEntity with HTTP status of NOT_FOUND if no ducks are found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     *         <p>
      *         Example: Find all ducks that contain the text "ma"
      *         GET http://localhost:8080/inventory/?name=ma
      */

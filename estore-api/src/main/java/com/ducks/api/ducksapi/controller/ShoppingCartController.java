@@ -1,12 +1,16 @@
 package com.ducks.api.ducksapi.controller;
 
 import java.io.IOException;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.ducks.api.ducksapi.model.Duck;
+import com.ducks.api.ducksapi.model.ShoppingCart;
+import com.ducks.api.ducksapi.persistence.DuckDAO;
+import com.ducks.api.ducksapi.persistence.ShoppingCartDAO;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +22,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ducks.api.ducksapi.model.Duck;
-import com.ducks.api.ducksapi.model.ShoppingCart;
-import com.ducks.api.ducksapi.persistence.DuckDAO;
-import com.ducks.api.ducksapi.persistence.ShoppingCartDAO;
 
 /**
  * Handles the REST API requests for the Shopping Cart resource
