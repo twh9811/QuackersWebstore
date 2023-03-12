@@ -144,7 +144,7 @@ public class UserControllerTest {
         // creation and save
         when(mockAccountDAO.createAccount(user)).thenReturn(user);
         // when login is called, return true simulating succesful login
-        when(mockAccountDAO.loginUser(user.getUsername(), user.getPlainPassword())).thenReturn(true);
+        when(accountController.loginUser(user.getUsername(), user.getPlainPassword())).thenReturn(true);
 
         // Invoke
         ResponseEntity<Account> resposne = accountController.loginUser(user.getUsername(), user.getPlainPassword());
