@@ -45,8 +45,7 @@ public class ShoppingCartController {
      * Creates a REST API controller to reponds to shopping cart requests
      * 
      * @param cartDao The {@link ShoppingCatDAO Cart Data Access Object} to perform
-     *                CRUD operations
-     *                <br>
+     *                CRUD operations<br>
      *                This dependency is injected by the Spring Framework
      */
     public ShoppingCartController(ShoppingCartDAO cartDao, DuckDAO duckDAO) {
@@ -60,9 +59,9 @@ public class ShoppingCartController {
      * 
      * @param id The id of the {@linkplain ShoppingCart shopping cart} to get
      * 
-     * @return a {@linkplain ShoppingCart shopping cart} object with the matching id
-     *         <br>
-     *         null if no {@linkplain ShoppingCart shopping cart} with a matching id
+     * @return 200 + a {@linkplain ShoppingCart shopping cart} object with the
+     *         matching id <br>
+     *         204 if no {@linkplain ShoppingCart shopping cart} with a matching id
      *         is found
      * 
      * @throws IOException if an issue with underlying storage
@@ -87,8 +86,8 @@ public class ShoppingCartController {
      * Responds to the GET request for all {@linkplain ShoppingCart Shopping carts}
      * 
      * @return ResponseEntity with array of {@link ShoppingCart Shopping carts}
-     *         objects (may be empty) and
-     *         HTTP status of OK<br>
+     *         objects (may be empty) and HTTP status of OK<br>
+     *         ResponseEntity with HTTP status of NOT_FOUND if no carts are found
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("")
