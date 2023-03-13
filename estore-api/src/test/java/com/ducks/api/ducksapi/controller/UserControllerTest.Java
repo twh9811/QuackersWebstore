@@ -201,4 +201,48 @@ public class UserControllerTest {
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
+
+    @Test
+    public void testGetAccount() throws IOException {  // getAccount may throw IOException
+        // Setup
+        Account account = new UserAccount(11, "sam", "123456");
+        // When the same id is passed in, our mock Account DAO will return the Account object
+        when(mockAccountDAO.getAccount(account.getId())).thenReturn(account);
+
+        // Invoke
+        ResponseEntity<Account> response = userController.getAccount(account.getId());
+
+        // Analyze
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(account,response.getBody());
+    }
+
+    @Test
+    public void testGetAccountNotFound() throws Exception { // createAccount may throw IOException
+        // Setup
+        int accountId = 99;
+        // When the same id is passed in, our mock Account DAO will return null, simulating
+        // no Account found
+        when(mockAccountDAO.getAccount(accountId)).thenReturn(null);
+
+        // Invoke
+        ResponseEntity<Account> response = userController.getAccount(accountId);
+
+        // Analyze
+        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+    }
+
+    @Test
+    public void testGetAccountHandleException() throws Exception { // createAccount may throw IOException
+        // Setup
+        int accountId = 99;
+        // When getAccount is called on the Mock Account DAO, throw an IOException
+        doThrow(new IOException()).when(mockAccountDAO).getAccount(accountId);
+
+        // Invoke
+        ResponseEntity<Account> response = userController.getAccount(accountId);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
 }
