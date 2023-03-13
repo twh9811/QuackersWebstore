@@ -11,20 +11,21 @@ export class LoginComponent {
   message = "Please login to our store to continue :)"
 
   account: Account = {
-    id: null,
+    id: -1,
     username: "",
-    password: "",
-    adminStatus: null
+    password: -1,
+    adminStatus: false
   };
 
   username : String = '';
   password : String = '';
+  isLoggedIn: Boolean = false;
 
   constructor(private router : Router) {}
 
   redirect() {
     if(this.username == "admin") {
-      this.router.navigate(['/adminPage'])
+      this.router.navigate(['/inventory'])
     } else {
       this.router.navigate(['/customerPage'])
     }
