@@ -151,7 +151,7 @@ public class AccountFileDAOTest {
 
         // Analyze 
         Account databaseUpdatedAccount = accountFileDAO.getAccount(1);
-        assertEquals(failResult, null);
+        assertNull(failResult);
         assertEquals(successResult.getClass(), UserAccount.class);
         assertEquals(databaseUpdatedAccount, updatedAccount);
     }
@@ -166,8 +166,8 @@ public class AccountFileDAOTest {
         boolean failResult = accountFileDAO.deleteAccount(40);
          
         //Analyze
-        assertEquals(successResult, true);
-        assertEquals(failResult, false);
+        assertTrue(successResult);
+        assertFalse(failResult);
         assertEquals(accountFileDAO.accounts.size(), testAccounts.length - 1);
     }
 
