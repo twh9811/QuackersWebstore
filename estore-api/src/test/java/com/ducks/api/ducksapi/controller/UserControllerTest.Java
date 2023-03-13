@@ -127,7 +127,7 @@ public class UserControllerTest {
         // Setup
         int accountId = 11;
         // when deleteAccount is called return true, simulating successful deletion
-        //when(mockAccountDAO.deleteAccount(accountId)).thenReturn(true);
+        when(mockAccountDAO.deleteAccount(accountId)).thenReturn(true);
 
         // Invoke
         ResponseEntity<Account> response = userController.deleteAccount(accountId);
@@ -135,17 +135,18 @@ public class UserControllerTest {
         // Analyze
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
+
     
     @Test
     public void testLoginUser() throws IOException { // loginUser may throw IO Exception
         // Setup
-        Account user = new UserAccount(11, "sam", "123456");
+        Account account = new UserAccount(11, "sam", "123456");
         // when createUser is called, return true simulating successful
         // creation and save
         when(mockAccountDAO.createAccount(user)).thenReturn(user);
         
         // when login is called, return true simulating succesful login
-
+        when(userController.)
         //when(userController.loginUser(user.getUsername(), user.getPlainPassword())).thenReturn(true);
 
 
@@ -154,5 +155,50 @@ public class UserControllerTest {
 
         // Analyze
         assertEquals(HttpStatus.OK, resposne.getStatusCode());
+    }
+    
+
+    @Test
+    public void testLogoutUser() throws IOException { // logoutUser may throw IO Exception
+        // Setup
+        Account account = new UserAccount(11, "sam", "123456");
+
+        // when updateAccount is called return true, simulating successful update and save
+        when(mockAccountDAO.updateAccount(account)).thenReturn(account);
+        
+        //invoke
+        ResponseEntity<Account> response = userController.logoutUser(account);
+
+        // Analyze
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+
+    }
+
+    @Test
+    public void testLogoutUserFailed() throws IOException { // logoutUser may throw IO Exception
+        // Setup
+        Account account = new UserAccount(11, "sam", "123456");
+        // when updateAccount is called return true, simulating successful update and save
+        when(mockAccountDAO.updateAccount(account)).thenReturn(null);
+        
+        //invoke
+        ResponseEntity<Account> response = userController.logoutUser(account);
+
+        // Analyze
+        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+    }
+
+    @Test
+    public void testLogoutUserHandleException() throws IOException { // logoutUser may throw IOException
+        // Setup
+        Account account = new UserAccount(11, "sam", "123456");
+        // When updateAccount is called on the Mock Account DAO, throw an IOException
+        doThrow(new IOException()).when(mockAccountDAO).updateAccount(account);
+
+        // Invoke
+        ResponseEntity<Account> response = userController.logoutUser(account);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
 }
