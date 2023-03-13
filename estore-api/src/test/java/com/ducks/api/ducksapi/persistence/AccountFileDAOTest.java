@@ -7,6 +7,9 @@ import com.ducks.api.ducksapi.model.OwnerAccount;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -107,12 +110,12 @@ public class AccountFileDAOTest {
 
         //Analyze
         Account createdAccount = accountFileDAO.getAccount(successResult.getId());;
-        assertEquals(failResult, null);
-        assertEquals(successResult.getClass(), UserAccount.class);
-        assertEquals(createdAccount.getId(), 4);
-        assertEquals(createdAccount.getUsername(), "Timmy");
-        assertEquals(createdAccount.getPlainPassword(), "password");
-        assertEquals(createdAccount.getAdminStatus(), false);
+        assertNull(failResult);
+        assertEquals(UserAccount.class, successResult.getClass());
+        assertEquals(4, createdAccount.getId());
+        assertEquals("Timmy", createdAccount.getUsername());
+        assertEquals("password", createdAccount.getPlainPassword());
+        assertFalse(createdAccount.getAdminStatus());
     }
 
     @Test
@@ -125,13 +128,14 @@ public class AccountFileDAOTest {
         Account failResult = accountFileDAO.createAccount(failAccount);
 
         //Analyze
-        Account createdAccount = accountFileDAO.getAccount(0);;
-        assertEquals(failResult, null);
-        assertEquals(createdAccount.getClass(), OwnerAccount.class);
-        assertEquals(createdAccount.getId(), 0);
-        assertEquals(createdAccount.getUsername(), "admin");
-        assertEquals(createdAccount.getPlainPassword(), "admin");
-        assertEquals(createdAccount.getAdminStatus(), true);
+        Account createdAccount = accountFileDAO.getAccount(0);
+
+        assertNull(failResult);
+        assertEquals(OwnerAccount.class, createdAccount.getClass());
+        assertEquals(0, createdAccount.getId());
+        assertEquals("admin", createdAccount.getUsername());
+        assertEquals("admin", createdAccount.getPlainPassword());
+        assertTrue(createdAccount.getAdminStatus());
     }
 
     @Test
@@ -181,12 +185,10 @@ public class AccountFileDAOTest {
 
         // Analyze
         Account updatedAccount = accountFileDAO.getAccount(accountID);
-        assertEquals(successChange, true);
-        assertEquals(updatedAccount.getPlainPassword(), newPassword);
-        assertEquals(failChangeWrongID, false);
-        assertEquals(failChangeWrongOriginalPassword, false);
-        
-
+        assertTrue(successChange);
+        assertEquals(newPassword, updatedAccount.getPlainPassword());
+        assertFalse(failChangeWrongID);
+        assertFalse(failChangeWrongOriginalPassword);
     }
 
 }
