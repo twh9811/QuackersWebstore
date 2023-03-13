@@ -1,2 +1,8 @@
 <p>customer-test works!</p>
+<div *ngIf="account" routerLink="/{{account.id}}">
+    <div><span>id: </span>{{account.id}}</div>
+    <div><span>username: </span>{{account.username}}</div>
+    <div><span>password: </span>{{account.plainPassword}}</div>
+    <div><span>admin: </span>{{account.adminStatus}}</div>
+</div>
 <button type="button" (click)="logout()">Logout</button>

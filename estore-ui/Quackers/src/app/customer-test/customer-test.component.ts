@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+
+import { AccountService } from '../account.service';
+import { Account } from '../account';
 
 @Component({
   selector: 'app-customer-test',
@@ -7,9 +12,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./customer-test.component.css']
 })
 export class CustomerTestComponent {
-  constructor(private router : Router) {}
+  account : Account | undefined;
 
-  logout() {
+  constructor(private router : Router, private route : ActivatedRoute, private accountService : AccountService, private location : Location) {}
+
+  ngOnInit() : void {
+    this.getAccount();
+  }
+
+  getAccount() : void {
+    const id = parseInt(this.route.snapshot.paramMap.get('id')!);
+    this.accountService.getAccount(id).subscribe(account => this.account = account);
+  }
+
+  logout() : void {
     this.router.navigate([''])
   }
 }

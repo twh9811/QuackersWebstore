@@ -7,8 +7,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.ducks.api.ducksapi.model.Account;
+import com.ducks.api.ducksapi.model.OwnerAccount;
 import com.ducks.api.ducksapi.model.UserAccount;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -18,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author Travis Hill
  */
 
+@Component
 public class AccountFileDAO implements AccountDAO{
 
     Map<Integer, Account> accounts; // Creates a local cache of account objects so the file doesn't have to
@@ -26,7 +29,7 @@ public class AccountFileDAO implements AccountDAO{
                                        // written to the file
     private static int nextID; // The next ID to assign to a account
     private String filename; //Filename to read and write to
-    
+    private Account adminAccount = new OwnerAccount(); // Reserved owner account.
 
     /**
      * Creates a Account File Data Access Object
@@ -36,10 +39,11 @@ public class AccountFileDAO implements AccountDAO{
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public AccountFileDAO(@Value("${accounts.file}") String filename, ObjectMapper objectMapper) throws IOException{
+    public AccountFileDAO(@Value("${accounts.file}")String filename, ObjectMapper objectMapper) throws IOException{
         this.filename = filename;
         this.objectMapper = objectMapper;
         load();
+        createAccount(adminAccount);
     }
 
     /**
@@ -192,8 +196,15 @@ public class AccountFileDAO implements AccountDAO{
                     return null;
                 }
             }
-            // If it doesn't already exist we can create the account
-            Account newAccount = new UserAccount(nextID(), account.getUsername(), account.getHashedPassword());
+            Account newAccount;
+            // This account should be the only admin account made by the FileDAO. The rest should be made via the pre-made admin account and setAdminStatus.
+            if(account.getUsername().equals("admin")) {
+                newAccount = new OwnerAccount();
+            // Create regular user account
+            } else {
+                newAccount = new UserAccount(nextID(), account.getUsername(), account.getPlainPassword());
+            }
+            
             accounts.put(newAccount.getId(), newAccount);
             // Save changes to the database
             save();
@@ -241,13 +252,11 @@ public class AccountFileDAO implements AccountDAO{
             // Checks if account is in database
             if(accounts.containsKey(id)) {
                 Account account = getAccount(id);
-                int checkHash = originalPass.hashCode();
-                int currentHash = account.getHashedPassword();
+                String currPassword = account.getPlainPassword();
                 // checks if they have permission to change password
-                if(checkHash == currentHash) {
-                    int newhash = newPass.hashCode();
+                if(originalPass.equals(currPassword)) {
                     //changes password
-                    account.setHashedPassword(newhash);
+                    account.setPassword(newPass);
                     // Save changes to database
                     return save();
                 }
@@ -255,6 +264,5 @@ public class AccountFileDAO implements AccountDAO{
             // Account not in database, can't change password
             return false;
         }
-        
     }
 }

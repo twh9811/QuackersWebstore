@@ -1,5 +1,6 @@
 package com.ducks.api.ducksapi.model;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -30,8 +32,9 @@ public class ShoppingCart {
      * @param customerId The customer id that the shopping cart belongs to
      * @param items      The items to add to the shopping cart
      */
-    public ShoppingCart(@JsonProperty("customerId") int customerId,
-            @JsonProperty("items") Map<String, Integer> items) throws IllegalArgumentException {
+    @JsonCreator
+    public ShoppingCart(@JsonProperty("customerId") int customerId, @JsonProperty("items") Map<String, Integer> items)
+            throws IllegalArgumentException {
         this.customerId = customerId;
 
         if (!isItemsMapValid(items)) {
@@ -62,6 +65,7 @@ public class ShoppingCart {
      * 
      * @return An set of duck ids
      */
+    @Transient
     public Set<String> getItems() {
         return items.keySet();
     }
