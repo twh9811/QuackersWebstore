@@ -140,21 +140,61 @@ public class UserControllerTest {
     @Test
     public void testLoginUser() throws IOException { // loginUser may throw IO Exception
         // Setup
-        Account account = new UserAccount(11, "sam", "123456");
-        // when createUser is called, return true simulating successful
-        // creation and save
-        when(mockAccountDAO.createAccount(user)).thenReturn(user);
-        
-        // when login is called, return true simulating succesful login
-        when(userController.)
-        //when(userController.loginUser(user.getUsername(), user.getPlainPassword())).thenReturn(true);
-
+        Account[] accounts = new Account[1];
+        accounts[0] = new UserAccount(11, "sam", "123456");
+        // when findAccounts is called, return a list of accounts simulating success
+        when(mockAccountDAO.findAccounts(accounts[0].getUsername())).thenReturn(accounts);
 
         // Invoke
-        ResponseEntity<Account> resposne = userController.loginUser(user.getUsername(), user.getPlainPassword());
+        ResponseEntity<Account> response = userController.loginUser(accounts[0].getUsername(), accounts[0].getPlainPassword());
 
         // Analyze
-        assertEquals(HttpStatus.OK, resposne.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void testLoginUserConflict() throws IOException { // loginUser may throw IO Exception
+        // Setup
+        Account[] accounts = new Account[1];
+        accounts[0] = new UserAccount(11, "sam", "123456");
+        // when findAccounts is called, return a list of accounts simulating success
+        when(mockAccountDAO.findAccounts(accounts[0].getUsername())).thenReturn(accounts);
+
+        // Invoke
+        ResponseEntity<Account> response = userController.loginUser(accounts[0].getUsername(), accounts[0].getPlainPassword());
+        
+        // Analyze
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+    @Test
+    public void testLoginUserNotFound() throws IOException { // loginUser may throw IO Exception
+        // Setup
+        Account[] accounts = new Account[1];
+        accounts[0] = new UserAccount(11, "sam", "123456");
+        // when findAccounts is called, return a list of accounts simulating success
+        when(mockAccountDAO.findAccounts(accounts[0].getUsername())).thenReturn(accounts);
+
+        // Invoke
+        ResponseEntity<Account> response = userController.loginUser(accounts[0].getUsername(), accounts[0].getPlainPassword());
+        
+        // Analyze
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void testLoginUserHandleException() throws IOException { // loginUser may throw IO Exception
+        // Setup
+        Account[] accounts = new Account[1];
+        accounts[0] = new UserAccount(11, "sam", "123456");
+        // when findAccounts is called, return a list of accounts simulating success
+        doThrow(new IOException()).when(mockAccountDAO).findAccounts(accounts[0].getUsername());
+
+        // Invoke
+        ResponseEntity<Account> response = userController.loginUser(accounts[0].getUsername(), accounts[0].getPlainPassword());
+        
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
     
 
