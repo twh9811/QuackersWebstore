@@ -190,8 +190,7 @@ public class DuckFileDAO implements DuckDAO {
                     return null;
                 }
             }
-            Duck newDuck = new Duck(nextId(), duck.getName(), duck.getQuantity(), duck.getPrice(), duck.getSize(), duck.getColor(), duck.getHatUID(),
-                    duck.getShirtUID(), duck.getShoesUID(), duck.getHandItemUID(), duck.getJewelryUID());
+            Duck newDuck = new Duck(nextId(), duck.getName(), duck.getQuantity(), duck.getPrice(), duck.getSize(), duck.getColor(), duck.getOutfit());
             ducks.put(newDuck.getId(), newDuck);
             save(); // may throw an IOException
             return newDuck;
