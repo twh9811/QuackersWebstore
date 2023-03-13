@@ -1,5 +1,8 @@
 package com.ducks.api.ducksapi.model;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 
 /** 
@@ -7,6 +10,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  * @author Travis Hill
  */
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = UserAccount.class, name = "UserAccount"),
+    @JsonSubTypes.Type(value = OwnerAccount.class, name = "OwnerAccount")
+})
 public abstract class Account {
 
         @JsonProperty("id")
@@ -18,34 +27,20 @@ public abstract class Account {
         @JsonProperty("plainPassword")
         private String plainPassword;
 
-        @JsonProperty("hashedPassword")
-        private int hashedPassword;
-
         @JsonProperty("adminStatus")
         private boolean adminStatus;
 
-    // Initial account creation, never want to store plain password anywhere. Only able to be yoinked in transit
-    public Account(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("plainPassword") String plainPassword) {
+    /**
+     * Needed for Spring to run the server. Needs Public Default Constructor.
+     */
+    public Account() {}
+
+    // Used for creating new Account objects in the DAO.
+    public Account(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("plainPassword") String plainPassword, @JsonProperty("adminStatus") boolean adminStatus) {
         this.id = id;
         this.username = username;
-        this.hashedPassword = plainPassword.hashCode();
-        this.adminStatus = false;
-    }
-
-    // Used for creating new Account objects in the DAO. Don't want to have a getter for plaintext password.
-    public Account(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("hashedPassword") int hashedPassword) {
-        this.id = id;
-        this.username = username;
-        this.hashedPassword = hashedPassword;
-        this.adminStatus = false;
-    }
-
-     // Creates an admin account.
-     public Account() {
-        this.id = 0;
-        this.username = "admin";
-        this.hashedPassword = "admin".hashCode();
-        this.adminStatus = true;
+        this.plainPassword = plainPassword;
+        this.adminStatus = adminStatus;
     }
 
     /**
@@ -71,18 +66,18 @@ public abstract class Account {
     }
 
     /**
-     * @return the hashed password of the account
+     * @return the password of the account
      */
-    public int getHashedPassword() {
-        return hashedPassword;
+    public String getPlainPassword() {
+        return plainPassword;
     }
 
     /**
-     * Changes the hashed password of an account
-     * @param hashedPassword The hashed passworld the account should change to.
+     * Changes the password of an account
+     * @param newPassword The passworld the account should change to.
      */
-    public void setHashedPassword(int hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    public void setPassword(String newPassword) {
+        this.plainPassword = newPassword;
     }
 
     /**
@@ -97,8 +92,7 @@ public abstract class Account {
      * @param statusType The type of status the account should be changed to
      */
     public void setAdminStatus(boolean statusType) {
-        // If you aren't an admin, you can't change account status.
-        if(this.adminStatus) {
+        if(this.username.equals("admin")) {
             this.adminStatus = statusType;
         }
     }
@@ -108,7 +102,18 @@ public abstract class Account {
      */
     @Override
     public String toString() {
-        return username + ":" + hashedPassword;
+        return username + ":" + plainPassword;
     }
 
+    /**
+     * ID and admin status don't matter in this regard. This is solely for login verification purposes.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Account) {
+            Account other = (Account) obj;
+            return (this.username.equals(other.getUsername()) && this.plainPassword.equals(other.getPlainPassword()));
+        } 
+        return false;
+    }
 }

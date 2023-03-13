@@ -1,6 +1,8 @@
 package com.ducks.api.ducksapi.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -19,39 +21,17 @@ public class AccountTest {
         // Setup
         int expectedID = 1;
         String expectedUsername = "admin";
-        String plainPassword = "password123";
-        int expectedHashPassword = plainPassword.hashCode();
+        String expectedPassword = "password123";
         boolean expectedAdminStatus = false;
 
         // Invoke
-        Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
+        Account account = new UserAccount(expectedID, expectedUsername, expectedPassword);
 
         //Analyze
 
         assertEquals(expectedID, account.getId());
         assertEquals(expectedUsername, account.getUsername());
-        assertEquals(expectedHashPassword, account.getHashedPassword());
-        assertEquals(expectedID, account.getId());
-        assertEquals(expectedAdminStatus, account.getAdminStatus());
-    }
-
-    @Test
-    public void testConstructorHashedPassword() {
-        // Setup
-        int expectedID = 1;
-        String expectedUsername = "admin";
-        String plainPassword = "password123";
-        int expectedHashPassword = plainPassword.hashCode();
-        boolean expectedAdminStatus = false;
-
-        // Invoke
-        Account account = new UserAccount(expectedID, expectedUsername, expectedHashPassword);
-
-        //Analyze
-
-        assertEquals(expectedID, account.getId());
-        assertEquals(expectedUsername, account.getUsername());
-        assertEquals(expectedHashPassword, account.getHashedPassword());
+        assertEquals(expectedPassword, account.getPlainPassword());
         assertEquals(expectedID, account.getId());
         assertEquals(expectedAdminStatus, account.getAdminStatus());
     }
@@ -61,8 +41,7 @@ public class AccountTest {
         // Setup
         int expectedID = 0;
         String expectedUsername = "admin";
-        String plainPassword = "admin";
-        int expectedHashPassword = plainPassword.hashCode();
+        String expectedPassword = "admin";
         boolean expectedAdminStatus = true;
 
         // Invoke
@@ -72,7 +51,7 @@ public class AccountTest {
 
         assertEquals(expectedID, account.getId());
         assertEquals(expectedUsername, account.getUsername());
-        assertEquals(expectedHashPassword, account.getHashedPassword());
+        assertEquals(expectedPassword, account.getPlainPassword());
         assertEquals(expectedID, account.getId());
         assertEquals(expectedAdminStatus, account.getAdminStatus());
     }
@@ -95,7 +74,7 @@ public class AccountTest {
     }
 
     @Test
-    public void testSetHashedPassword() {
+    public void testSetPassword() {
           // Setup
           int expectedID = 1;
           String expectedUsername = "admin";
@@ -103,13 +82,12 @@ public class AccountTest {
 
           Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
 
-          String newPassword = "password";
-          int expectedHashPassword = newPassword.hashCode();
+          String expectedPassword = "password";
           // Invoke
-          account.setHashedPassword(expectedHashPassword);
+          account.setPassword(expectedPassword);
           //Analyze
   
-          assertEquals(expectedHashPassword, account.getHashedPassword());
+          assertEquals(expectedPassword, account.getPlainPassword());
     }
 
     @Test
@@ -153,7 +131,7 @@ public class AccountTest {
         
         Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
         
-        String expectedString = expectedUsername + ":" + account.getHashedPassword();
+        String expectedString = expectedUsername + ":" + account.getPlainPassword();
         // Invoke
         String actual_string = account.toString();
         //Analyze
@@ -166,12 +144,44 @@ public class AccountTest {
         // Setup
         Account account = new OwnerAccount();
         
-        String expectedString = "admin:" + account.getHashedPassword();
+        String expectedString = "admin:" + account.getPlainPassword();
         // Invoke
         String actual_string = account.toString();
         //Analyze
           
         assertEquals(expectedString, actual_string);
+    }
+
+    @Test
+    public void testEqualsUser() {
+        // Setup
+        int id1 = 1;
+        String user1 = "notadmin";
+        String pass1 = "password123";
+        
+        Account account = new UserAccount(id1, user1, pass1);
+
+        int id3 = 1;
+        String user3 = "notadmin1";
+        String pass3 = "password123";
+        
+        Account diffUsername = new UserAccount(id3, user3, pass3);
+
+        int id4 = 1;
+        String user4 = "notadmin";
+        String pass4 = "password1234";
+        
+        Account diffPassword = new UserAccount(id4, user4, pass4);
+    
+        // Invoke
+        boolean successTest = account.equals(account);
+        boolean diffUsernameFail = account.equals(diffUsername);
+        boolean diffPasswordFail = account.equals(diffPassword);
+        //Analyze
+          
+        assertTrue(successTest);
+        assertFalse(diffUsernameFail);
+        assertFalse(diffPasswordFail);
     }
     
 }
