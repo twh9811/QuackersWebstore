@@ -245,4 +245,34 @@ public class UserControllerTest {
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
+    
+    @Test
+    public void testgetAccounts() throws IOException { // getAccounts may throw IOException
+        // Setup
+        Account[] Accounts = new Account[2];
+        Accounts[0] = new UserAccount(11, "sam", "123456");
+        Accounts[1] = new UserAccount(11, "eric", "162534");
+        // When getAccounts is called return the Accounts created above
+        when(mockAccountDAO.getAccounts()).thenReturn(Accounts);
+
+        // Invoke
+        ResponseEntity<Account[]> response = userController.getAccounts();
+
+        // Analyze
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(Accounts,response.getBody());
+    }
+
+    @Test
+    public void testGetAccountsHandleException() throws IOException { // getAccounts may throw IOException
+        // Setup
+        // When getAccounts is called on the Mock Hero DAO, throw an IOException
+        doThrow(new IOException()).when(mockAccountDAO).getAccounts();
+
+        // Invoke
+        ResponseEntity<Account[]> response = userController.getAccounts();
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
 }
