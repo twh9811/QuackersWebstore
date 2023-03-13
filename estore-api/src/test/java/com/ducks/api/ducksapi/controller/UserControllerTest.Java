@@ -288,18 +288,18 @@ public class UserControllerTest {
     @Test
     public void testgetAccounts() throws IOException { // getAccounts may throw IOException
         // Setup
-        Account[] Accounts = new Account[2];
-        Accounts[0] = new UserAccount(11, "sam", "123456");
-        Accounts[1] = new UserAccount(11, "eric", "162534");
+        Account[] accounts = new Account[2];
+        accounts[0] = new UserAccount(11, "sam", "123456");
+        accounts[1] = new UserAccount(11, "eric", "162534");
         // When getAccounts is called return the Accounts created above
-        when(mockAccountDAO.getAccounts()).thenReturn(Accounts);
+        when(mockAccountDAO.getAccounts()).thenReturn(accounts);
 
         // Invoke
         ResponseEntity<Account[]> response = userController.getAccounts();
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(Accounts,response.getBody());
+        assertEquals(accounts,response.getBody());
     }
 
     @Test
@@ -313,5 +313,19 @@ public class UserControllerTest {
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+
+    @Test
+    public void testGetAccountsEmpty() throws IOException { // getAccounts may throw IOException
+        // Setup
+        Account[] accounts = new Account[0];
+        // When getAccounts is called on the Mock Hero DAO, throw an IOException
+        when(mockAccountDAO.getAccounts()).thenReturn(accounts);
+
+        // Invoke
+        ResponseEntity<Account[]> response = userController.getAccounts();
+
+        // Analyze
+        assertEquals(HttpStatus.NO_CONTENT,response.getStatusCode());
     }
 }

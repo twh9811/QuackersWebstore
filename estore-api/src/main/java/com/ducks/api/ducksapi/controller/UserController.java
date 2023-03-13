@@ -172,9 +172,12 @@ public class UserController {
     public ResponseEntity<Account[]> getAccounts() {
     // curl.exe -X GET 'http://localhost:8080/
         try {
-            Account[] account = accountDAO.getAccounts();
-            return new ResponseEntity<Account[]>(account,HttpStatus.OK);
-
+            Account[] accounts = accountDAO.getAccounts();
+            if(accounts.length != 0) {
+                return new ResponseEntity<Account[]>(accounts,HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
         }
         catch(IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -194,11 +197,12 @@ public class UserController {
     public ResponseEntity<Account> deleteAccount(@PathVariable int id) {
     // curl.exe -X DELETE 'http://localhost:8080/TESTID
         try {
-            boolean AccountDeleted = accountDAO.deleteAccount(id);
-            if (AccountDeleted == true)
+            boolean accountDeleted = accountDAO.deleteAccount(id);
+            if (accountDeleted) {
                 return new ResponseEntity<Account>(HttpStatus.OK);
-            else
+            } else {
                 return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+            }
         }
         catch(IOException e) {
             return new ResponseEntity<Account>(HttpStatus.INTERNAL_SERVER_ERROR);
