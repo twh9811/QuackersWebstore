@@ -10,15 +10,13 @@ import { AdminTestComponent } from './admin-test/admin-test.component';
 import { CustomerTestComponent } from './customer-test/customer-test.component';
 
 import { HttpClientModule} from '@angular/common/http';
-import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AdminTestComponent,
-    CustomerTestComponent,
-    ShoppingCartComponent
+    CustomerTestComponent
   ],
   imports: [
     BrowserModule,
