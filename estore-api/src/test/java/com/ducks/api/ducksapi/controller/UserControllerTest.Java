@@ -112,8 +112,8 @@ public class UserControllerTest {
     public void testDeleteAccountNotFound() throws IOException { // deleteAccount may throw IOException
         // Setup
         int accountId = 11;
-        // when deleteAccount is called return true, simulating successful deletion
-        when(mockAccountDAO.deleteAccount(accountId)).thenReturn(true);
+        // when deleteAccount is called return false, simulating failed deletion
+        when(mockAccountDAO.deleteAccount(accountId)).thenReturn(false);
 
         // Invoke
         ResponseEntity<Account> response = userController.deleteAccount(accountId);
@@ -126,14 +126,14 @@ public class UserControllerTest {
     public void testDeleteAccountHandleException() throws IOException { // deleteAccount may throw IOException
         // Setup
         int accountId = 11;
-        // when deleteAccount is called return true, simulating successful deletion
-        when(mockAccountDAO.deleteAccount(accountId)).thenReturn(true);
+        // when deleteAccount is called return false, simulating failed deletion
+        when(mockAccountDAO.deleteAccount(accountId)).thenThrow(new IOException());
 
         // Invoke
         ResponseEntity<Account> response = userController.deleteAccount(accountId);
 
         // Analyze
-        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
 
     
@@ -161,7 +161,7 @@ public class UserControllerTest {
         when(mockAccountDAO.findAccounts(accounts[0].getUsername())).thenReturn(accounts);
 
         // Invoke
-        ResponseEntity<Account> response = userController.loginUser(accounts[0].getUsername(), accounts[0].getPlainPassword());
+        ResponseEntity<Account> response = userController.loginUser(accounts[0].getUsername(), "wrongpassword");
         
         // Analyze
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
@@ -169,14 +169,13 @@ public class UserControllerTest {
 
     @Test
     public void testLoginUserNotFound() throws IOException { // loginUser may throw IO Exception
-        // Setup
-        Account[] accounts = new Account[1];
-        accounts[0] = new UserAccount(11, "sam", "123456");
-        // when findAccounts is called, return a list of accounts simulating success
-        when(mockAccountDAO.findAccounts(accounts[0].getUsername())).thenReturn(accounts);
+       // Setup
+       Account[] emptyResult = new Account[0];
+       // when findAccounts is called, return a list of accounts simulating success
+       when(mockAccountDAO.findAccounts("notsam")).thenReturn(emptyResult);
 
         // Invoke
-        ResponseEntity<Account> response = userController.loginUser(accounts[0].getUsername(), accounts[0].getPlainPassword());
+        ResponseEntity<Account> response = userController.loginUser("notsam", "fake");
         
         // Analyze
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -225,7 +224,7 @@ public class UserControllerTest {
         ResponseEntity<Account> response = userController.logoutUser(account);
 
         // Analyze
-        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+        assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
     }
 
     @Test
