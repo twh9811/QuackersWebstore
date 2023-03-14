@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
 
   redirect() : void {
     if(this.account) {
+      this.setSession(this.account);
       if(this.account.username == "admin") {
         this.router.navigate(['/adminPage'])
       } else {
@@ -42,7 +43,6 @@ export class LoginComponent implements OnInit {
     this.accountService.login(this.username, this.password).subscribe(account => {
       this.account = account; 
       this.update();
-      this.setSession(this.account);
       this.redirect();
     });
   }
