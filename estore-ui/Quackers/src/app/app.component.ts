@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Quackers Duck Emporium';
+
+  // router needs to be public for angular to compile (used in app.component.html)
+  constructor(public router: Router) {}
+
+  logout() : void {
+    this.router.navigate([''])
+  }
 }

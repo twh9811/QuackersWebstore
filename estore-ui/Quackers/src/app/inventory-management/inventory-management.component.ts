@@ -1,9 +1,12 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Account } from '../account';
+import { AccountService } from '../account.service';
 import { Duck } from '../duck';
 import { NotificationService } from '../notification.service';
 import { ProductService } from '../product.service';
+import { SessionService } from '../session.service';
 
 @Component({
   selector: 'app-inventory-management',
@@ -11,15 +14,31 @@ import { ProductService } from '../product.service';
   styleUrls: ['./inventory-management.component.css']
 })
 export class InventoryManagementComponent implements OnInit {
+  private _account: Account | undefined = undefined;
   ducks: Duck[] = [];
 
-  constructor(private router: Router, private productService: ProductService, private notificationService: NotificationService) { }
+
+  constructor(private router: Router,
+    private productService: ProductService,
+    private notificationService: NotificationService,
+    private accountService: AccountService,
+    private sessionService: SessionService) { }
 
   /**
    * Loads the ducks array when the page is opened
    */
   ngOnInit(): void {
-    this.getDucks();
+    if (!this.sessionService.session) {
+      this.validateAuthorization();
+      return;
+    }
+
+    // Waits for account to be retrieved before doing anything else
+    this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
+      this._account = account;
+      this.validateAuthorization();
+      this.getDucks();
+    });
   }
 
   /**
@@ -39,6 +58,17 @@ export class InventoryManagementComponent implements OnInit {
   }
 
   /**
+  * Validates that a user is an admin
+  * If not, they are sent back to the login page
+  */
+  private validateAuthorization(): void {
+    if (!this._account?.adminStatus) {
+      this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
+      this.router.navigate(['/'])
+    }
+  }
+
+  /**
    * Deletes a given duck
    * 
    * @param duck The duck being deleted
@@ -51,19 +81,12 @@ export class InventoryManagementComponent implements OnInit {
           this.notificationService.add(`Successfully deleted the duck with the id ${duck.id}.`, 3);
           break;
         case 404:
-          this.notificationService.add(`Failed to delete the duck with the id ${duck.id} because it does not exist!`);
+          this.notificationService.add(`Failed to delete the duck with the id ${duck.id} because it does not exist!`, 3);
           break;
         default:
-          this.notificationService.add(`Failed to delete the duck with the id ${duck.id} because something went wrong.`);
+          this.notificationService.add(`Failed to delete the duck with the id ${duck.id} because something went wrong.`, 3);
           console.error(httpResponse.statusText);
       }
     })
-  }
-
-  /**
-   * Logs out the user (this will be moved eventually)
-   */
-  logout(): void {
-    this.router.navigate(['']);
   }
 }

@@ -2,9 +2,13 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { last, lastValueFrom, Observable, of } from 'rxjs';
+import { Account } from '../account';
+import { AccountService } from '../account.service';
 import { Duck, DuckOutfit } from '../duck';
 import { NotificationService } from '../notification.service';
 import { ProductService } from '../product.service';
+import { SessionService } from '../session.service';
 
 
 @Component({
@@ -13,6 +17,7 @@ import { ProductService } from '../product.service';
   styleUrls: ['./product-create-modify.component.css']
 })
 export class ProductCreateComponent implements OnInit {
+  private _account: Account | undefined = undefined;
   private _duckId: number | undefined = undefined;
 
   createForm = this.formBuilder.group({
@@ -33,13 +38,25 @@ export class ProductCreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location) { }
+    private accountService: AccountService,
+    private sessionService: SessionService) { }
 
   ngOnInit(): void {
-    this.retrieveDuckId();
-    if (this._duckId) {
-      this.loadDuck();
+    if (!this.sessionService.session) {
+      this.validateAuthorization();
+      return;
     }
+
+    // Waits for account to be retrieved before doing anything else
+    this.accountService.getAccount(this.sessionService.session?.id).subscribe(account => {
+      this._account = account;
+
+      this.validateAuthorization();
+      this.retrieveDuckId();
+      if (this._duckId) {
+        this.loadDuck();
+      }
+    })
   }
 
   /**
@@ -87,6 +104,17 @@ export class ProductCreateComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/inventory'])
+  }
+
+  /**
+   * Validates that a user is an admin
+   * If not, they are sent back to the login page
+   */
+  private validateAuthorization(): void {
+    if (!this._account?.adminStatus) {
+      this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
+      this.router.navigate(['/'])
+    }
   }
 
   /**
