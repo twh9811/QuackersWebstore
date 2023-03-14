@@ -4,7 +4,8 @@
             <span class="control-group-header">General</span>
             <div class="form-control-container">
                 <label for="name_input">Name</label><br>
-                <input class="form-control" id="name_input" type="text" formControlName="name" required><br><br>
+                <input class="form-control" id="name_input" type="text" formControlName="name" pattern="^\s*\S+.*$"
+                    required><br><br>
             </div>
             <div class="form-control-container">
                 <label for="quantity_input">Quantity</label><br>
@@ -13,7 +14,8 @@
             </div>
             <div class="form-control-container">
                 <label for="price_input">Price</label><br>
-                <input class="form-control" id="price_input" type="text" formControlName="price" required><br><br>
+                <input class="form-control" id="price_input" type="text" formControlName="price"
+                    pattern="^\$\d+(\.\d+)?$" required><br><br>
             </div>
             <div class="form-control-container">
                 <label for="size_input">Size</label><br>

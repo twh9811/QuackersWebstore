@@ -92,7 +92,12 @@ export class ProductCreateComponent implements OnInit {
         case 409:
           this.notificationService.add(`A duck already exists with the name ${formDuck.name}!`, 3);
           break;
-        // Both Duck Creation and Update Reaponse
+        // Both Duck Creation and Update Response - Shouldn't be possible due to form validation
+        case 400:
+          let actionStr = this._duckId ? "update the given duck" : "create the duck";
+          this.notificationService.add(`Failed to ${actionStr} due to a bad value being entered!`, 3);
+          break;
+        // Both Duck Creation and Update Response
         case 500:
           this.notificationService.add(`Something went wrong. Please try again later!`, 3);
           break;
@@ -187,9 +192,28 @@ export class ProductCreateComponent implements OnInit {
     // Sets the type of name to the type of the attributes in <controls>
     let name: keyof typeof controls;
     for (name in controls) {
-      if (controls[name].invalid) {
-        this.notificationService.add(`${name} is invalid!`, 3);
+      let control = controls[name];
+      if (!control.invalid) {
+        continue;
       }
+
+      if (typeof control.value === "number") {
+        this.notificationService.add(`${name} must be greater than or equal to 0!`, 3);
+        continue;
+      }
+
+      switch (name) {
+        case "name":
+          this.notificationService.add(`${name} must not be empty or blank!`, 3);
+          break;
+        case "price":
+          this.notificationService.add(`${name} must not be empty or blank and must be in the format $x.xx or $x!`, 3)
+          break;
+        default:
+          this.notificationService.add(`${name} is a required field!`, 3)
+          break;
+      }
+
     }
 
   }
