@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 
 import { AccountService } from '../account.service';
 import { Account } from '../account';
+import { Session } from '../session';
+import { SessionService } from '../session.service';
 
 @Component({
   selector: 'app-admin-test',
@@ -14,15 +16,14 @@ import { Account } from '../account';
 export class AdminTestComponent implements OnInit{
   account : Account | undefined;
 
-  constructor(private router : Router, private route : ActivatedRoute, private accountService : AccountService, private location : Location) {}
+  constructor(private router : Router, private accountService : AccountService, private session : SessionService) {}
 
   ngOnInit() : void {
     this.getAccount();
   }
 
   getAccount() : void {
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!);
-    this.accountService.getAccount(id).subscribe(account => this.account = account);
+    this.accountService.getAccount(this.session.session.id).subscribe(account => this.account = account);
   }
 
   logout() : void {

@@ -5,9 +5,9 @@ import { CustomerTestComponent } from './customer-test/customer-test.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  { path: "", redirectTo: "/login", pathMatch: "full"},
-  { path: 'adminPage/:id', component: AdminTestComponent },
-  { path: 'customerPage/:id', component: CustomerTestComponent },
+  { path: "", redirectTo: "login", pathMatch: "full"},
+  { path: 'adminPage', component: AdminTestComponent },
+  { path: 'customerPage', component: CustomerTestComponent },
   { path: "login", component : LoginComponent}
 ];
 
