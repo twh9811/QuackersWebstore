@@ -10,13 +10,15 @@ import { AdminTestComponent } from './admin-test/admin-test.component';
 import { CustomerTestComponent } from './customer-test/customer-test.component';
 
 import { HttpClientModule} from '@angular/common/http';
+import { ChangePageTestComponent } from './change-page-test/change-page-test.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AdminTestComponent,
-    CustomerTestComponent
+    CustomerTestComponent,
+    ChangePageTestComponent
   ],
   imports: [
     BrowserModule,
