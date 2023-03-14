@@ -13,7 +13,7 @@ import { SessionService } from '../session.service';
 
 export class LoginComponent implements OnInit {
   message = "Please login to our store to continue :)";
-  feedback = "";
+  feedback = "Fields cannot be empty, enter your information";
 
   account: Account | undefined;
   
