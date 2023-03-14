@@ -24,7 +24,7 @@ export class LoginComponent {
   redirect() : void {
     if(this.account) {
       if(this.account.username == "admin") {
-        this.router.navigate(['/adminPage/' + this.account.id])
+        this.router.navigate(['/inventory/'])
       } else {
         this.router.navigate(['/customerPage/' + this.account.id])
       }

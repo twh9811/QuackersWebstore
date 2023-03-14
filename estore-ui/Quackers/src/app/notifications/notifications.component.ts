@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../notification.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { NotificationService } from '../notification.service';
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.css']
 })
-export class NotificationsComponent {
+export class NotificationsComponent implements OnInit {
 
   notifications: string[] = [];
   shouldUpdate: boolean = false;

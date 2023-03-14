@@ -10,8 +10,7 @@ import { CustomerTestComponent } from './customer-test/customer-test.component';
 
 import { HttpClientModule} from '@angular/common/http';
 import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
-import { ProductModifyComponent } from './product-modify/product-modify.component';
-import { ProductCreateComponent } from './product-create/product-create.component';
+import { ProductCreateComponent } from './product-create-modify/product-create-modify.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
@@ -20,7 +19,6 @@ import { NotificationsComponent } from './notifications/notifications.component'
     LoginComponent,
     CustomerTestComponent,
     InventoryManagementComponent,
-    ProductModifyComponent,
     ProductCreateComponent,
     NotificationsComponent,
   ],
@@ -34,4 +32,5 @@ import { NotificationsComponent } from './notifications/notifications.component'
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

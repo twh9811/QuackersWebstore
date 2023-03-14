@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Duck } from '../duck';
 import { NotificationService } from '../notification.service';
@@ -10,7 +10,7 @@ import { ProductService } from '../product.service';
   templateUrl: './inventory-management.component.html',
   styleUrls: ['./inventory-management.component.css']
 })
-export class InventoryManagementComponent {
+export class InventoryManagementComponent implements OnInit {
   ducks: Duck[] = [];
 
   constructor(private router: Router, private productService: ProductService, private notificationService: NotificationService) { }
@@ -35,14 +35,7 @@ export class InventoryManagementComponent {
    * @param id The id of the duck
    */
   goToDuckModification(id: number): void {
-    this.router.navigate([`/inventory/${id}`]);
-  }
-
-  /**
-   * Sends the user to the duck creation screen
-   */
-  goToDuckCreation(): void {
-    this.router.navigate(['/inventory/create']);
+    this.router.navigate([`/inventory/product/${id}`]);
   }
 
   /**

@@ -10,7 +10,7 @@ import { Duck } from './duck';
   providedIn: 'root'
 })
 export class ProductService {
-  private apiURL = 'http://localhost:8080';
+  private apiURL = 'http://localhost:8080/inventory';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -24,7 +24,7 @@ export class ProductService {
    * @returns An array of Ducks containing all of the ducks in the inventory
    */
   getDucks(): Observable<Duck[]> {
-    const url = `${this.apiURL}/inventory`;
+    const url = `${this.apiURL}`;
     return this.http.get<Duck[]>(url).pipe(tap(_ => console.log("Ducks retrieved")), catchError(this.handleError<Duck[]>('getProducts')));
   }
 
@@ -35,7 +35,7 @@ export class ProductService {
    * @returns The duck if found otherwise an empty duck
    */
   getDuck(id: number): Observable<Duck> {
-    const url = `${this.apiURL}/inventory/${id}`;
+    const url = `${this.apiURL}/product/${id}`;
     return this.http.get<Duck>(url).pipe(tap(_ => console.log(`Duck with Id ${id} retrieved`)), catchError(this.handleError<Duck>('getProduct')));
   }
 
@@ -45,7 +45,7 @@ export class ProductService {
    * @param id The id of the duck being deleted
    */
   deleteDuck(id: number): Observable<HttpResponse<any>> {
-    const url = `${this.apiURL}/inventory/product/${id}`;
+    const url = `${this.apiURL}/product/${id}`;
     return this.http.delete(url, { observe: 'response' }).pipe(tap(_ => console.log(`Duck with Id ${id} deleted`)), catchError(this.handleError<HttpResponse<any>>('deleteDuck')));
   }
 
@@ -56,12 +56,21 @@ export class ProductService {
    * @returns An http response object in which the newly created duck is returned (if there are no error) and the response itself
    */
   createDuck(duck: Duck): Observable<HttpResponse<any>> {
-    const url = `${this.apiURL}/inventory/product`;
+    const url = `${this.apiURL}/product`;
 
     // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
     return this.http.post<HttpResponse<any>>(url, duck, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
       .pipe(tap(_ => console.log(`Created duck`)),
-        catchError(this.handleError<HttpResponse<any>>('deleteDuck', true)));
+        catchError(this.handleError<HttpResponse<any>>('ceateDuck', true)));
+  }
+
+  updateDuck(duck: Duck): Observable<HttpResponse<any>> {
+    const url = `${this.apiURL}/product`;
+
+    // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
+    return this.http.put<HttpResponse<any>>(url, duck, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+      .pipe(tap(_ => console.log(`Updated duck`)),
+        catchError(this.handleError<HttpResponse<any>>('updateDuck', true)));
   }
 
   /**
