@@ -16,8 +16,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.ducks.api.ducksapi.model.Colors;
 import com.ducks.api.ducksapi.model.Duck;
+import com.ducks.api.ducksapi.model.DuckOutfit;
 import com.ducks.api.ducksapi.model.ShoppingCart;
+import com.ducks.api.ducksapi.model.Size;
 import com.ducks.api.ducksapi.persistence.DuckDAO;
 import com.ducks.api.ducksapi.persistence.DuckFileDAO;
 import com.ducks.api.ducksapi.persistence.ShoppingCartDAO;
@@ -34,9 +37,12 @@ import com.ducks.api.ducksapi.persistence.ShoppingCartDAO;
 
 @Tag("Controller-tier")
 public class ShoppingCartControllerTest {
-    private ShoppingCartController cartController;
     private ShoppingCartDAO mockCartDAO;
     private DuckDAO mockDuckDAO;
+    private ShoppingCartController cartController;
+
+    private Duck duckOne;
+    private Duck duckTwo;
 
     /**
      * Before each test, create a new InventoryController object and inject
@@ -47,6 +53,23 @@ public class ShoppingCartControllerTest {
         mockCartDAO = mock(ShoppingCartDAO.class);
         mockDuckDAO = mock(DuckFileDAO.class);
         cartController = new ShoppingCartController(mockCartDAO, mockDuckDAO);
+
+        duckOne = new Duck(
+                1,
+                "Cool Duck",
+                10,
+                "$0.99",
+                Size.LARGE,
+                Colors.BLUE,
+                new DuckOutfit(0, 0, 0, 0, 0));
+        duckTwo = new Duck(
+                2,
+                "Cool Duck 2",
+                10,
+                "$1.99",
+                Size.LARGE,
+                Colors.BLUE,
+                new DuckOutfit(0, 0, 0, 0, 0));
     }
 
     @Test
@@ -211,9 +234,6 @@ public class ShoppingCartControllerTest {
 
     @Test
     public void testGetShoppingCartPrice() throws IOException {
-        Duck duckOne = new Duck(1, "Cool Duck", 10, "0.99", null, null, null);
-        Duck duckTwo = new Duck(1, "Cool Duck 2", 10, "1.99", null, null, null);
-
         HashMap<String, Integer> items = new HashMap<>();
         items.put("1", 10);
         items.put("2", 20);
@@ -232,8 +252,6 @@ public class ShoppingCartControllerTest {
 
     @Test
     public void testGetShoppingCartPriceInvalidDuck() throws IOException {
-        Duck duckOne = new Duck(1, "Cool Duck", 10, "0.99", null, null, null);
-
         HashMap<String, Integer> items = new HashMap<>();
         items.put("1", 10);
         items.put("2", 20);
@@ -277,8 +295,6 @@ public class ShoppingCartControllerTest {
 
     @Test
     public void testGetShoppingCartInvalidDuckIds() throws IOException {
-        Duck duckOne = new Duck(1, "Cool Duck", 10, "0.99", null, null, null);
-
         HashMap<String, Integer> items = new HashMap<>();
         items.put("1", 10);
         items.put("2", 20);
@@ -298,9 +314,6 @@ public class ShoppingCartControllerTest {
 
     @Test
     public void testGetShoppingCartInvalidDuckIdsNoInvalids() throws IOException {
-        Duck duckOne = new Duck(1, "Cool Duck", 10, "0.99", null, null, null);
-        Duck duckTwo = new Duck(1, "Cool Duck 2", 10, "1.99", null, null, null);
-
         HashMap<String, Integer> items = new HashMap<>();
         items.put("1", 10);
         items.put("2", 20);
@@ -421,6 +434,5 @@ public class ShoppingCartControllerTest {
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertNull(response.getBody());
     }
-
 
 }

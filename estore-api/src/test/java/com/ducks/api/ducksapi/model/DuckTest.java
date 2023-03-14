@@ -2,11 +2,7 @@ package com.ducks.api.ducksapi.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -20,8 +16,6 @@ import org.junit.jupiter.api.Test;
 @Tag("Model-tier")
 public class DuckTest {
 
-    // TODO: Add testEquals unit test
-
     private Duck testDuck;
     private Duck testDuckTwo;
 
@@ -29,7 +23,7 @@ public class DuckTest {
     public void setupDuckTest() {
         int expected_id = 99;
         int expected_quantity = 10;
-        String expected_price = "9.99";
+        String expected_price = "$9.99";
         String expected_name = "Wi-Fire";
         Colors expected_color = Colors.BLUE;
         Size expected_size = Size.SMALL;
@@ -57,7 +51,7 @@ public class DuckTest {
         // Setup
         int expected_id = 99;
         int expected_quantity = 10;
-        String expected_price = "9.99";
+        String expected_price = "$9.99";
         String expected_name = "Wi-Fire";
         Colors expected_color = Colors.BLUE;
         Size expected_size = Size.SMALL;
@@ -86,7 +80,7 @@ public class DuckTest {
         // Setup
         String expected_name = "Galactic Agent";
         int expected_quantity = 12;
-        String expected_price = "19.99";
+        String expected_price = "$19.99";
         Colors expected_color = Colors.RED;
         Size expected_size = Size.MEDIUM;
         int expected_hat_uid = 6;
@@ -148,90 +142,58 @@ public class DuckTest {
     }
 
     @Test
+    public void testDuckInvalid() {
+        // All null/-1
+        assertThrows(IllegalArgumentException.class, () -> new Duck(1, null, -1, null, null, null, null));
+        // Price & Name empty/DuckOutfit invalid
+        assertThrows(IllegalArgumentException.class, () -> new Duck(1, "", -1, "", null, null, new DuckOutfit(-1, 0, 0, 0, 0)));
+        // Price & Name blank
+        assertThrows(IllegalArgumentException.class, () -> new Duck(1, " ", -1, "3.99", null, null, null));
+        // Price doesn't match regex
+    }
+
+    @Test
     public void testDuckEquals()
             throws IllegalArgumentException, IllegalAccessException {
 
-        // Equal Ducks
-        assertEquals(testDuck, testDuckTwo);
+        Duck expected = new Duck(0, "Duck", 0, "$0.00", Size.LARGE, Colors.BLUE, new DuckOutfit(0, 0, 0, 0, 0));
+        Duck actual = new Duck(0, "Duck", 0, "$0.00", Size.LARGE, Colors.BLUE, new DuckOutfit(0, 0, 0, 0, 0));
 
-        testAllEqualPossibilitiesExceptFinal(testDuck, testDuckTwo);
+        // Test Equal
+        assertEquals(expected, actual);
 
-        // Different Id (Id is final)
+        // Test Not Equal Duck (Everything but Id)
+        actual.setName("Duc");
+        assertNotEquals(expected, actual);
+        actual.setName(expected.getName());
+
+        actual.setQuantity(1);
+        assertNotEquals(expected, actual);
+        actual.setQuantity(expected.getQuantity());
+
+        actual.setPrice("$1.99");
+        assertNotEquals(expected, actual);
+        actual.setPrice(expected.getPrice());
+
+        actual.setSize(Size.SMALL);
+        assertNotEquals(expected, actual);
+        actual.setSize(expected.getSize());
+
+        actual.setColor(Colors.GREEN);
+        assertNotEquals(expected, actual);
+        actual.setColor(expected.getColor());
+
+        actual.setOutfit(new DuckOutfit(1, 0, 0, 0, 0));
+        assertNotEquals(expected, actual);
+
+        // Test Not Equal Duck (Different Id - Id is final)
         Duck diffId = new Duck(testDuck.getId() - 1, testDuck.getName(), testDuck.getQuantity(), testDuck.getPrice(),
                 testDuck.getSize(), testDuck.getColor(), testDuck.getOutfit());
 
         assertNotEquals(testDuck, diffId);
-    }
 
-    @Test
-    public void testDuckOutfitEquals() throws IllegalArgumentException, IllegalAccessException {
-        testAllEqualPossibilitiesExceptFinal(testDuck.getOutfit(), testDuckTwo.getOutfit());
-    }
-
-    @Test
-    public void testDuckOutfitToString() {
-        DuckOutfit outfit = testDuck.getOutfit();
-        
-        // Setup
-        String expected_string = String.format(DuckOutfit.STRING_FORMAT, outfit.getHatUID(), outfit.getShirtUID(),
-                outfit.getShoesUID(), outfit.getHandItemUID(), outfit.getJewelryUID());
-
-        // InvokDe
-        String actual_string = outfit.toString();
-
-        // Analyze
-        assertEquals(expected_string, actual_string);
-    }
-
-    /**
-     * Tests the equals functionality by changing one field, testing equality, then
-     * resetting it
-     * Does not work for final fields
-     * 
-     * @param <T>      The type of the object being tested
-     * @param expected The expected object (not modified)
-     * @param actual   The actual object (modified but reset) must be equal to
-     *                 expected by equals definition
-     * @throws IllegalArgumentException If a field's value is attempted to be set to
-     *                                  an illegal value (I.e. an int being set to
-     *                                  null)
-     * @throws IllegalAccessException   If a field attempting to be accessed does
-     *                                  not exist
-     */
-    private <T> void testAllEqualPossibilitiesExceptFinal(T expected, T actual)
-            throws IllegalArgumentException, IllegalAccessException {
-        // Tests equality of equivalent objects
-        assertEquals(expected, actual);
-        // Tests equality of expected to a type other than <T>
-        assertNotEquals(expected, new Object());
-
-        Field[] fields = actual.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            // Gets the type of each field
-            Class<?> type = field.getType();
-
-            // Skips any field that is static or final (There's a way to do this with final
-            // but quite frankly not worth it)
-            if (Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers())) {
-                continue;
-            }
-
-            // Allows us to write directly to the field despite it being private
-            field.setAccessible(true);
-
-            // Sets the field's value to either -1 or null depending on whether it is a
-            // primitive type (i.e. int)
-            field.set(actual, type.isPrimitive() ? -1 : null);
-
-            // Checks that the expected and actual objects are not equal
-            assertNotEquals(expected, actual);
-
-            // Resets the object
-            field.set(actual, field.get(expected));
-
-            // Disables write access to the private fields
-            field.setAccessible(false);
-        }
+        // Test Not Equal (Object)
+        assertNotEquals(testDuck, new Object());
 
     }
 }
