@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
+import { SessionService } from '../session.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { AccountService } from '../account.service';
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   message = "Please login to our store to continue :)"
   feedback = "";
 
@@ -19,14 +20,19 @@ export class LoginComponent {
   username : string = '';
   password : string = '';
 
-  constructor(private router : Router, private accountService : AccountService) {}
+  constructor(private router : Router, private accountService : AccountService, private session : SessionService) {}
+
+  ngOnInit(): void {
+    this.session.session = { type : "", username : "", plainPassword : "", id : -1, adminStatus : false}
+  }
 
   redirect() : void {
     if(this.account) {
+      this.setSession(this.account);
       if(this.account.username == "admin") {
         this.router.navigate(['/inventory/'])
       } else {
-        this.router.navigate(['/customerPage/' + this.account.id])
+        this.router.navigate(['/customerPage'])
       }
     } else {
       this.feedback = "Login failed, try again or register"
@@ -39,6 +45,10 @@ export class LoginComponent {
       this.update();
       this.redirect();
     });
+  }
+
+  setSession(account : Account) : void {
+    this.session.session = {type : account.type , username : account.username, plainPassword : account.plainPassword, id : account.id, adminStatus : account.adminStatus}
   }
 
   onRegister(username : string, password : string) : void {

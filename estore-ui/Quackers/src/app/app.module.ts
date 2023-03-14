@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { CustomerTestComponent } from './customer-test/customer-test.component';
 
 import { HttpClientModule} from '@angular/common/http';
+import { ChangePageTestComponent } from './change-page-test/change-page-test.component';
 import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
 import { ProductCreateComponent } from './product-create-modify/product-create-modify.component';
 import { NotificationsComponent } from './notifications/notifications.component';
@@ -18,6 +19,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
     AppComponent,
     LoginComponent,
     CustomerTestComponent,
+    ChangePageTestComponent,
     InventoryManagementComponent,
     ProductCreateComponent,
     NotificationsComponent,

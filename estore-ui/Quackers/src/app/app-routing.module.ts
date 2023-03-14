@@ -4,6 +4,7 @@ import { CustomerTestComponent } from './customer-test/customer-test.component';
 import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
 import { LoginComponent } from './login/login.component';
 import { ProductCreateComponent } from './product-create-modify/product-create-modify.component';
+import { ChangePageTestComponent } from './change-page-test/change-page-test.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full"},
@@ -11,7 +12,8 @@ const routes: Routes = [
   { path: 'inventory/product', component: ProductCreateComponent},
   { path: 'inventory/product/:id', component: ProductCreateComponent},
   { path: 'customerPage', component: CustomerTestComponent },
-  { path: "login", component : LoginComponent}
+  { path: "login", component : LoginComponent},
+  { path: "changedPage", component : ChangePageTestComponent}
 ];
 
 @NgModule({
