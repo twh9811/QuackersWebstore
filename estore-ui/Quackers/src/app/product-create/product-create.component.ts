@@ -1,7 +1,7 @@
-import { HttpResponse } from '@angular/common/http';
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Duck } from '../duck';
+import { Duck, DuckOutfit } from '../duck';
 import { NotificationService } from '../notification.service';
 import { ProductService } from '../product.service';
 
@@ -14,13 +14,21 @@ import { ProductService } from '../product.service';
 export class ProductCreateComponent {
   createForm = this.formBuilder.group({
     name: '',
-    quantity: '',
+    quantity: 0,
     price: '',
     size: '',
     color: '',
+    hatUID: 0,
+    shirtUID: 0,
+    shoesUID: 0,
+    handItemUID: 0,
+    jewelryUID: 0
   })
 
-  constructor(private productService: ProductService, private notificationService: NotificationService, private formBuilder: FormBuilder) { }
+  constructor(private productService: ProductService,
+    private notificationService: NotificationService,
+    private formBuilder: FormBuilder,
+    private location: Location) { }
 
   // TODO: MAKE ENDPOINT TO RETRIEVE COLORS AND SIZES
   /**
@@ -33,12 +41,8 @@ export class ProductCreateComponent {
       return;
     }
 
-    // Cast to any so I can insert the id property
-    let formValues = this.createForm.value as any;
-    // Id doesn't matter so it's set to -1
-    formValues.id = -1;
-    // <formValues> now has the same fields as the Duck interface, so <formValues> can be passed to <productService#createDuck>
-    this.productService.createDuck(formValues as Duck).subscribe(response => {
+    let formDuck = this.convertFormToDuck();
+    this.productService.createDuck(formDuck).subscribe(response => {
       let status = response.status;
       switch (status) {
         case 201:
@@ -46,7 +50,7 @@ export class ProductCreateComponent {
           this.notificationService.add(`Created a duck with an id of ${duck.id}`, 3);
           break;
         case 409:
-          this.notificationService.add(`A duck already exists with the name ${formValues.name}!`, 3)
+          this.notificationService.add(`A duck already exists with the name ${formDuck.name}!`, 3)
           break;
         case 500:
           this.notificationService.add(`Something went wrong. Please try again later!`, 3)
@@ -64,11 +68,42 @@ export class ProductCreateComponent {
 
     // Sets the type of name to the type of the attributes in <controls>
     let name: keyof typeof controls;
-    for(name in controls) {
-      if(controls[name].invalid) {
+    for (name in controls) {
+      if (controls[name].invalid) {
         this.notificationService.add(`${name} is invalid!`, 3)
       }
     }
-   
+
+  }
+
+  /**
+   * Creates a duck object from the values provided in createForm
+   * 
+   * @returns The created duck object
+   */
+  convertFormToDuck(): Duck {
+    let formValue = this.createForm.value;
+
+    let duckOutfit: DuckOutfit = {
+      hatUID: formValue.hatUID as number,
+      shirtUID: formValue.shirtUID as number,
+      shoesUID: formValue.shoesUID as number,
+      handItemUID: formValue.handItemUID as number,
+      jewelryUID: formValue.jewelryUID as number,
+    }
+
+    return <Duck>{
+      id: -1,
+      name: formValue.name as string,
+      quantity: formValue.quantity as number,
+      price: formValue.price as string,
+      size: formValue.size as string,
+      color: formValue.color as string,
+      outfit: duckOutfit
+    }
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

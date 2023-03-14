@@ -1,38 +1,72 @@
-<p>product-create works!</p>
-
-<form [formGroup]="createForm" (ngSubmit)="onSubmit()">
-    <div>
-        <label for="name_input">Name</label><br>
-        <input id="name_input" type="text" formControlName="name" required><br><br>
+<form id="create-form" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <div id="control-group-container">
+        <div class="controls-container">
+            <span class="control-group-header">General</span>
+            <div class="form-control-container">
+                <label for="name_input">Name</label><br>
+                <input class="form-control" id="name_input" type="text" formControlName="name" required><br><br>
+            </div>
+            <div class="form-control-container">
+                <label for="quantity_input">Quantity</label><br>
+                <input class="form-control" id="quantity_input" type="number" formControlName="quantity" min="0"
+                    required><br><br>
+            </div>
+            <div class="form-control-container">
+                <label for="price_input">Price</label><br>
+                <input class="form-control" id="price_input" type="text" formControlName="price" required><br><br>
+            </div>
+            <div class="form-control-container">
+                <label for="size_input">Size</label><br>
+                <select class="form-control" id="size_input" formControlName="size" required>
+                    <option value="SMALL">Small</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="LARGE">Large</option>
+                    <option value="EXTRA_LARGE">Extra Large</option>
+                </select><br><br>
+            </div>
+            <div class="form-control-container">
+                <label for="color_input">Color</label><br>
+                <select class="form-control" id="color_input" formControlName="color" required>
+                    <option value="RED">Red</option>
+                    <option value="ORANGE">Orange</option>
+                    <option value="YELOW">Yellow</option>
+                    <option value="GREEN">Green</option>
+                    <option value="BLUE">Blue</option>
+                    <option value="INDIGO">Indigo</option>
+                    <option value="VIOLET">Violet</option>
+                </select><br><br>
+            </div>
+        </div>
+        <div class="controls-container">
+            <span class="control-group-header">Outfit</span>
+            <div class="form-control-container">
+                <label for="hat_input">Hat UID</label><br>
+                <input class="form-control" id="hat_input" type="number" formControlName="hatUID" min="0"
+                    required><br><br>
+            </div>
+            <div class="form-control-container">
+                <label for="shirt_input">Shirt UID</label><br>
+                <input class="form-control" id="shirt_input" type="number" formControlName="shirtUID" min="0"
+                    required><br><br>
+            </div>
+            <div class="form-control-container">
+                <label for="shoes_input">Shoes UID</label><br>
+                <input class="form-control" id="shoes_input" type="number" formControlName="shoesUID" min="0"
+                    required><br><br>
+            </div>
+            <div class="form-control-container">
+                <label for="hand_item_input">Hand Item UID</label><br>
+                <input class="form-control" id="hand_item_input" type="number" formControlName="handItemUID" min="0"
+                    required><br><br>
+            </div>
+            <div class="form-control-container">
+                <label for="jewelry_input">Jewelry UID</label><br>
+                <input class="form-control" id="jewelry_input" type="number" formControlName="jewelryUID" min="0"
+                    required><br><br>
+            </div>
+        </div>
     </div>
-    <div>
-        <label for="quantity_input">Quantity</label><br>
-        <input id="quantity_input" type="text" formControlName="quantity" required><br><br>
-    </div>
-    <div>
-        <label for="price_input">Price</label><br>
-        <input id="price_input" type="text" formControlName="price" required><br><br>
-    </div>
-    <div>
-        <label for="size_input">Size</label><br>
-        <select name="size_input" id="size_input" formControlName="size" required>
-            <option value="SMALL">Small</option>
-            <option value="MEDIUM">Medium</option>
-            <option value="LARGE">Large</option>
-            <option value="EXTRA_LARGE">Extra Large</option>
-        </select><br><br>
-    </div>
-    <div>
-        <label for="color_input">Color</label><br>
-        <select name="color_input" id="color_input" formControlName="color" required>
-            <option value="RED">Red</option>
-            <option value="ORANGE">Orange</option>
-            <option value="YELOW">Yellow</option>
-            <option value="GREEN">Green</option>
-            <option value="BLUE">Blue</option>
-            <option value="INDIGO">Indigo</option>
-            <option value="VIOLET">Violet</option>
-        </select><br><br>
-    </div>
-    <button id="submit_btn">Submit</button>
+    <button id="submit-btn">Submit</button>
 </form>
+<br>
+<button (click)="goBack()">Back</button>
