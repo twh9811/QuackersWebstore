@@ -30,15 +30,24 @@ public class DuckOutfit {
      * @param handItemUID The ID of the item the Duck is holding in their hand
      *                    (feet?)
      * @param jewelryUID  The ID of the jewerly the Duck is wearing
+     * 
+     * @throws IllegalArgumentException If any of the passed parameters are less
+     *                                  than 0
      */
     public DuckOutfit(@JsonProperty("hatUID") int hatUID,
             @JsonProperty("shirtUID") int shirtUID, @JsonProperty("shoesUID") int shoesUID,
-            @JsonProperty("handItemUID") int handItemUID, @JsonProperty("jewelryUID") int jewelryUID) {
+            @JsonProperty("handItemUID") int handItemUID, @JsonProperty("jewelryUID") int jewelryUID)
+            throws IllegalArgumentException {
         this.hatUID = hatUID;
         this.shirtUID = shirtUID;
         this.shoesUID = shoesUID;
         this.handItemUID = handItemUID;
         this.jewelryUID = jewelryUID;
+
+        String isValidResponse = isValid();
+        if (isValidResponse != null) {
+            throw new IllegalArgumentException(isValidResponse);
+        }
     }
 
     /**
@@ -138,6 +147,37 @@ public class DuckOutfit {
      */
     public int getJewelryUID() {
         return jewelryUID;
+    }
+
+    /**
+     * Checks whether all of the properties are valid.
+     * The class is considered invalid if any of the properties are less than 0
+     * 
+     * @return A string detailing what properties are invalid
+     */
+    protected String isValid() {
+        String issues = "";
+        if (hatUID < 0) {
+            issues += "hatUID must be equal to or greater than 0. ";
+        }
+
+        if (shirtUID < 0) {
+            issues += "shirtUID must be equal to or greater than 0. ";
+        }
+
+        if (shoesUID < 0) {
+            issues += "shoesUID must be equal to or greater than 0. ";
+        }
+
+        if (handItemUID < 0) {
+            issues += "handItemUID must be equal to or greater than 0. ";
+        }
+
+        if (jewelryUID < 0) {
+            issues += "jewelryUID must be equal to or greater than 0. ";
+        }
+
+        return issues.isEmpty() ? null : issues;
     }
 
     /**

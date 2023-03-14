@@ -46,19 +46,28 @@ public class Duck {
      * @param price    The price of the Duck
      * @param size     The size of the Duck
      * @param color    The color of the duck
+     * @throws IllegalArgumentException If name is null, empty, or blank.
+     *                                  If quanity is less than 0
+     *                                  If the price string is not in the form of
+     *                                  $x.xx or $x
+     *                                  If size/color/outfit is null
+     *                                  If the duckOutfit is considered invalid
      * 
      * 
-     *                 {@literal @}JsonProperty is used in serialization and
-     *                 deserialization
-     *                 of the JSON object to the Java object in mapping the
-     *                 fields. If a field
-     *                 is not provided in the JSON object, the Java field gets
-     *                 the default Java
-     *                 value, i.e. 0 for int
+     *                                  {@literal @}JsonProperty is used in
+     *                                  serialization and
+     *                                  deserialization
+     *                                  of the JSON object to the Java object in
+     *                                  mapping the
+     *                                  fields. If a field
+     *                                  is not provided in the JSON object, the Java
+     *                                  field gets
+     *                                  the default Java
+     *                                  value, i.e. 0 for int
      */
     public Duck(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("quantity") int quantity,
             @JsonProperty("price") String price, @JsonProperty("size") Size size, @JsonProperty("color") Colors color,
-            @JsonProperty("outfit") DuckOutfit outfit) {
+            @JsonProperty("outfit") DuckOutfit outfit) throws IllegalArgumentException {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -66,6 +75,11 @@ public class Duck {
         this.size = size;
         this.color = color;
         this.outfit = outfit;
+
+        String isValidResponse = isValid();
+        if (isValidResponse != null) {
+            throw new IllegalArgumentException(isValidResponse);
+        }
     }
 
     /**
@@ -287,6 +301,52 @@ public class Duck {
     @Transient
     public int getJewelryUID() {
         return this.outfit.getJewelryUID();
+    }
+
+    /**
+     * Checks whether all of the properties are valid.
+     * The class is considered invalid if any of the conditions are met:
+     * 
+     * If name is null, empty, or blank.
+     * If quanity is less than 0
+     * If the price string is not in the form of
+     * $x.xx or $x
+     * If size/color/outfit is null
+     * If the duckOutfit is considered invalid
+     * 
+     * @return A string detailing what properties are invalid
+     */
+    private String isValid() {
+        String issues = "";
+        // Empty is considered blank as per java
+        if (name == null || name.isBlank()) {
+            issues += "Name must not be null, empty, or blank. ";
+        }
+
+        if (quantity < 0) {
+            issues += "Quantity must be equal to or greater than 0. ";
+        }
+
+        // Regex Pattern matches only strings in the format of $x.xx or $x
+        if (price == null || !price.matches("^\\$\\d+(\\.\\d+)?$")) {
+            issues += "Price must not be not be null and must be in the following forms: ($x.xx or $x). ";
+        }
+
+        if (size == null) {
+            issues += "Size must not be null. ";
+        }
+
+        if (color == null) {
+            issues += "Color must not be null. ";
+        }
+
+        // Technically outfit should always be valid, but I will keep that check here
+        // anyway
+        if (outfit == null || outfit.isValid() != null) {
+            issues += "DuckOutfit must not be null and must be valid. ";
+        }
+
+        return issues.isEmpty() ? null : issues;
     }
 
     /**
