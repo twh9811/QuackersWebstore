@@ -11,6 +11,6 @@
     <br>
     <span>{{feedback}}</span>
     <br>
-    <button type="button" (click)="onLogin()">Login</button>
-    <button type="button" (click)="onRegister(username, password)">Register</button>
+    <button type="button" (click)="onLogin()" [disabled]="!username || !password">Login</button>
+    <button type="button" (click)="onRegister(username, password)" [disabled]="!username || !password">Register</button>
 </div>

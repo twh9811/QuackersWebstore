@@ -12,8 +12,8 @@ import { SessionService } from '../session.service';
 })
 
 export class LoginComponent implements OnInit {
-  message = "Please login to our store to continue :)"
-  feedback = "";
+  message = "Please login to our store to continue :)";
+  feedback = "Fields cannot be empty, enter your information";
 
   account: Account | undefined;
   
@@ -23,7 +23,12 @@ export class LoginComponent implements OnInit {
   constructor(private router : Router, private accountService : AccountService, private session : SessionService) {}
 
   ngOnInit(): void {
-    this.session.session = { type : "", username : "", plainPassword : "", id : -1, adminStatus : false}
+    this.session.session = { 
+    type : "", 
+    username : "", 
+    plainPassword : "", 
+    id : -1, 
+    adminStatus : false};
   }
 
   redirect() : void {
@@ -32,10 +37,10 @@ export class LoginComponent implements OnInit {
       if(this.account.username == "admin") {
         this.router.navigate(['/inventory/'])
       } else {
-        this.router.navigate(['/customerPage'])
+        this.router.navigate(['/customerPage']);
       }
     } else {
-      this.feedback = "Login failed, try again or register"
+      this.feedback = "Login failed, try again or register";
     }
   }
 
@@ -48,7 +53,12 @@ export class LoginComponent implements OnInit {
   }
 
   setSession(account : Account) : void {
-    this.session.session = {type : account.type , username : account.username, plainPassword : account.plainPassword, id : account.id, adminStatus : account.adminStatus}
+    this.session.session = {
+      type : account.type, 
+      username : account.username, 
+      plainPassword : account.plainPassword, 
+      id : account.id, 
+      adminStatus : account.adminStatus};
   }
 
   onRegister(username : string, password : string) : void {
@@ -67,9 +77,9 @@ export class LoginComponent implements OnInit {
       this.update();
       // Account creation failed since account is now undefined. This means username already exists since it relies on null being returned from the DAO
       if(this.account == undefined) {
-        this.feedback = "Account creation failed, username already exists."
+        this.feedback = "Account creation failed, username already exists.";
       } else if (this.account.username == "admin") {
-        this.feedback = ""
+        this.feedback = "";
       } else {
         this.feedback = "Account created, please login.";
       }
