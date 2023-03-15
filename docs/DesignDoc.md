@@ -274,6 +274,11 @@ their
 > have not had any testing yet. Highlight the issues found during
 > acceptance testing and if there are any concerns._
 
+All of the acceptance criteria tests for the user stories in Sprint 1 have passed.
+As of writing this in Sprint 2, the Epic for the Base Authentication System has all
+of its user stories completed with their acceptance criteria being met. All the user
+stories associated with the Shopping Cart Epic except for one have also met the acceptance criteria. The Shopping Cart Page is the only user story in the epic that does not meet acceptance criteria. This is because other front-end development had to occur to have the proper services available and our team is just now starting to develop the page. The Inventory Management Page Epic is currently undergoing testing and appears to have all its user stories meet the acceptance criteria. It is awaiting being merged into main before the Trello cards can be moved to Sprint 2 Done. The Customer View Page, which is not associated with any Epic, also does not meet any of the acceptance criteria yet. Just like with the Shopping Cart Page, other fundamental aspects of the back-end and front-end had to be developed so no progress could be made on it. However, now that these needs are granted development should be started now and the tests should be run and the acceptance criteria met by the time this sprint is done. There are no major concerns at the moment and we believe that all acceptance criteria for the user stories in Sprint 2 will be met and the user stories will be marked as completed before the sprint ends. Everything is going according to plan and we should be prepared for the demo.
+
 ### Unit Testing and Code Coverage
 
 ![Overall Code Coverage for Sprint 2](Sprint%202%20Code%20Coverage/Overall.png)
