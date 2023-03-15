@@ -270,12 +270,7 @@ their
 
 ### Unit Testing and Code Coverage
 
-> _**[Sprint 4]** Discuss your unit testing strategy. Report on the code
-coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets._
-
-> _**[Sprint 2 & 4]** **Include images of your code coverage report.** If there
-are any anomalies, discuss
-> those._
+![Overall Code Coverage for Sprint 2](Sprint%202%20Code%20Coverage/Overall.png)
+![Persistence Code Coverage for Sprint 2](Sprint%202%20Code%20Coverage/Persistence.png)
+![Model Code Coverage for Sprint 2](Sprint%202%20Code%20Coverage/Model.png)
+![Controller Code Coverage for Sprint 2](Sprint%202%20Code%20Coverage/Controller.png)
