@@ -163,6 +163,8 @@ updated and **properly labeled**
 > static models (UML class diagrams) with some details such as critical
 attributes and methods._
 >
+
+We have three main classes in our Model Tier and various smaller classes that are utilized in these main classes. These classes are Duck, ShoppingCart, and Account. Our entire website will revolve around these base classes. A user will create an <u>Account<u> to add a <u>Duck<u> to their <u>Shopping Cart<u> to be eventually purchased. The Duck class utilizes three smaller classes defined in the model tier: Colors, Size, and DuckOutfit. Both Colors and Size are enums meant to describe the constant color and size of the duck. DuckOutfit will describe the accessories a duck can have at the time of purchase. All these classes will affect the total price of the duck for the shopper. Account is an abstract class that has two subclasses, UserAccount and OwnerAccount which both inherits Account's base properties. A UserAccount is what a regular shopper will have when they register to the site. A OwnerAccount is created on startup and can not be regsitered or created directly. The UserAccount's ID is linked to their own Shopping Cart ID, an OwnerAccount's ID is not and they do not have access to a shopping cart.
 ![Model Tier UML Diagram](model-uml.png)
 
 ## OO Design Principles
