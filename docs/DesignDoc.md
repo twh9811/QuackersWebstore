@@ -47,6 +47,12 @@ This section describes the features of the application.
 > maybe Epics and critical Stories._
 
 ### Definition of MVP
+As of right now, our customers can select and search through a variety of 
+pre-made ducks from our store catalog and add or remove them from their shopping carts
+as they please. Users can register accounts to save their previous shopping sessions 
+and login at a later date to resume them. From an owners perspective, they have access
+to the whole store catalog and can add/remove new products or even update existing ones
+at the click of a button.
 
 > _**[Sprint 2 & 4]** Provide a simple description of the Minimum Viable
 Product._
