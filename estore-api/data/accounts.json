@@ -1,1 +1,2 @@
 [{"id": 1, "username" : "andrew", "plainPassword" : "1234", "hashedPassword" : "1234", "adminStatus": "false"}]
+[{"type":"OwnerAccount","id":0,"username":"admin","plainPassword":"admin","adminStatus":true}]

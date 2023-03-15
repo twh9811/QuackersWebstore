@@ -10,7 +10,8 @@ import { AdminTestComponent } from './admin-test/admin-test.component';
 import { CustomerTestComponent } from './customer-test/customer-test.component';
 
 import { HttpClientModule} from '@angular/common/http';
-import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component'
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { ChangePageTestComponent } from './change-page-test/change-page-test.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component'
     LoginComponent,
     AdminTestComponent,
     CustomerTestComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    ChangePageTestComponent
   ],
   imports: [
     BrowserModule,
