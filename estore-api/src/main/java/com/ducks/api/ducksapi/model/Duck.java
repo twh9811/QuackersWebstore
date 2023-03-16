@@ -26,7 +26,7 @@ public class Duck {
     private int quantity;
 
     @JsonProperty("price")
-    private String price;
+    private double price;
 
     @JsonProperty("size")
     private Size size;
@@ -46,19 +46,27 @@ public class Duck {
      * @param price    The price of the Duck
      * @param size     The size of the Duck
      * @param color    The color of the duck
+     * @throws IllegalArgumentException If name is null, empty, or blank.
+     *                                  If quanity is less than 0
+     *                                  If price is less than 0
+     *                                  If size/color/outfit is null
+     *                                  If the duckOutfit is considered invalid
      * 
      * 
-     *                 {@literal @}JsonProperty is used in serialization and
-     *                 deserialization
-     *                 of the JSON object to the Java object in mapping the
-     *                 fields. If a field
-     *                 is not provided in the JSON object, the Java field gets
-     *                 the default Java
-     *                 value, i.e. 0 for int
+     *                                  {@literal @}JsonProperty is used in
+     *                                  serialization and
+     *                                  deserialization
+     *                                  of the JSON object to the Java object in
+     *                                  mapping the
+     *                                  fields. If a field
+     *                                  is not provided in the JSON object, the Java
+     *                                  field gets
+     *                                  the default Java
+     *                                  value, i.e. 0 for int
      */
     public Duck(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("quantity") int quantity,
-            @JsonProperty("price") String price, @JsonProperty("size") Size size, @JsonProperty("color") Colors color,
-            @JsonProperty("outfit") DuckOutfit outfit) {
+            @JsonProperty("price") double price, @JsonProperty("size") Size size, @JsonProperty("color") Colors color,
+            @JsonProperty("outfit") DuckOutfit outfit) throws IllegalArgumentException {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -66,6 +74,11 @@ public class Duck {
         this.size = size;
         this.color = color;
         this.outfit = outfit;
+
+        String isValidResponse = isValid();
+        if (isValidResponse != null) {
+            throw new IllegalArgumentException(isValidResponse);
+        }
     }
 
     /**
@@ -119,16 +132,16 @@ public class Duck {
      * 
      * @return The price of the duck
      */
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
     /**
      * Sets the price of the duck
      * 
-     * @param price
+     * @param price The price of the duck
      */
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -287,6 +300,50 @@ public class Duck {
     @Transient
     public int getJewelryUID() {
         return this.outfit.getJewelryUID();
+    }
+
+    /**
+     * Checks whether all of the properties are valid.
+     * The class is considered invalid if any of the conditions are met:
+     * 
+     * If name is null, empty, or blank.
+     * If quanity is less than 0
+     * If price is less than 0
+     * If size/color/outfit is null
+     * If the duckOutfit is considered invalid
+     * 
+     * @return A string detailing what properties are invalid
+     */
+    private String isValid() {
+        String issues = "";
+        // Empty is considered blank as per java
+        if (name == null || name.isBlank()) {
+            issues += "Name must not be null, empty, or blank. ";
+        }
+
+        if (quantity < 0) {
+            issues += "Quantity must be equal to or greater than 0. ";
+        }
+
+        if (price < 0) {
+            issues += "Price must be greater than 0. ";
+        }
+
+        if (size == null) {
+            issues += "Size must not be null. ";
+        }
+
+        if (color == null) {
+            issues += "Color must not be null. ";
+        }
+
+        // Technically outfit should always be valid, but I will keep that check here
+        // anyway
+        if (outfit == null || outfit.isValid() != null) {
+            issues += "DuckOutfit must not be null and must be valid. ";
+        }
+
+        return issues.isEmpty() ? null : issues;
     }
 
     /**
