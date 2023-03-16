@@ -169,7 +169,7 @@ public class InventoryController {
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @PutMapping("")
+    @PutMapping("/product")
     public ResponseEntity<Duck> updateDuck(@RequestBody Duck duck) {
         LOG.info("PUT /inventory " + duck);
         try {
