@@ -12,6 +12,7 @@ import { CustomerTestComponent } from './customer-test/customer-test.component';
 import { HttpClientModule} from '@angular/common/http';
 import { ChangePageTestComponent } from './change-page-test/change-page-test.component';
 import { CatalogComponent } from './catalog/catalog.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CatalogComponent } from './catalog/catalog.component';
     AdminTestComponent,
     CustomerTestComponent,
     ChangePageTestComponent,
-    CatalogComponent
+    CatalogComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,

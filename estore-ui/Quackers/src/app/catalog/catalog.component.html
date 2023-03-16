@@ -1,1 +1,24 @@
 <p>catalog works!</p>
+<div class="header-btn-container">
+    <button id="create-btn" class="gen-btn" type="button" routerLink="/inventory/product">Create Product</button>
+</div>
+<div class="duck-container">
+    <div *ngFor="let duck of ducks">
+        <div class="duck-box">
+            <div class="duck-header">
+                <h2>{{duck.name}}</h2>
+                <hr>
+            </div>
+            <div class="duck-details">
+                <span>Id: {{duck.id}}</span><br>
+                <span>Quantity: {{duck.quantity}}</span><br>
+                <span>Price: ${{duck.price}}</span><br>
+                <div class="duck-btn-container">
+                    <button class="duck-modify-btn gen-btn" type="button" (click)="goToDuckModification(duck.id)">Modify</button>
+                    <button class="duck-remove-btn gen-btn" type="button" (click)="deleteDuck(duck)">Remove</button>
+                    <button class="duck-remove-btn gen-btn" type="button" (click)="deleteDuck(duck)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
