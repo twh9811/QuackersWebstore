@@ -60,7 +60,6 @@ export class ProductCreateComponent implements OnInit {
    * Called upon form submission
    */
   onSubmit(): void {
-    // For future Reference angular validation check this.createForm.valid and remove ngNativeValidate
     if (!this.createForm.valid) {
       this.handleInvalidForm();
       return;
@@ -85,7 +84,7 @@ export class ProductCreateComponent implements OnInit {
           let duck = response.body as Duck;
           this.notificationService.add(`Created a duck with an id of ${duck.id}`, 3);
           break;
-        // Duck Creation Response
+        // Both Duck Update and Creation Response
         case 409:
           this.notificationService.add(`A duck already exists with the name ${formDuck.name}!`, 3);
           break;
@@ -105,7 +104,7 @@ export class ProductCreateComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/inventory'])
+    this.router.navigate(['/inventory']);
   }
 
   /**

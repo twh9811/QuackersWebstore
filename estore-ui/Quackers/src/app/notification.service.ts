@@ -7,38 +7,36 @@ import { Subject } from 'rxjs';
 export class NotificationService {
 
   private notifications: string[] = [];
-  notificationChange: Subject<string[]> = new Subject();
+  private _notificationChange: Subject<string[]> = new Subject();
 
   constructor() { }
 
   /**
+   * Gets the _notificationChange object
+   * 
+   * @return The _notificationChange object
+   */
+  public get notificationChange(): Subject<string[]> {
+    return this._notificationChange;
+  }
+  /**
    * Adds a notification to the notifications array
    * 
    * @param notification The notification being added to the notifications array
-   * @param expireIn The amount of time in seconds to auto remove the notification. -1 will not auto delete
+   * @param expireIn The amount of time in seconds to auto remove the notification. 0 or less will not auto delete
    * @returns The index of the newly added notification
    */
-  add(notification: string, expireIn: number = -1): number {
-    let index = this.notifications.push(notification) - 1
+  add(notification: string, expireIn: number = -1): void {
+    this.notifications.push(notification);
     this.notificationChange.next(this.notifications);
 
-    if (expireIn > 0) {
-      setTimeout(() => {
-        this.deleteNotification(notification);
-      }, expireIn * 1000);
+    if (expireIn <= 0) {
+      return;
     }
 
-    return index;
-  }
-
-  /**
-   * Deletes a notification at a specific index
-   * 
-   * @param index The index of the notification
-   */
-  deleteAt(index: number): void {
-    this.notifications = this.notifications.filter((_, notificationIndex) => notificationIndex != index);
-    this.notificationChange.next(this.notifications);
+    setTimeout(() => {
+      this.deleteNotification(notification);
+    }, expireIn * 1000);
   }
 
   /**
