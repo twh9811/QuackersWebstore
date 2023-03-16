@@ -1,15 +1,12 @@
-import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { last, lastValueFrom, Observable, of } from 'rxjs';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { Duck, DuckOutfit } from '../duck';
 import { NotificationService } from '../notification.service';
 import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
-
 
 @Component({
   selector: 'app-product-create-modify',
@@ -23,7 +20,7 @@ export class ProductCreateComponent implements OnInit {
   createForm = this.formBuilder.group({
     name: '',
     quantity: 0,
-    price: '',
+    price: 0.00,
     size: '',
     color: '',
     hatUID: 0,
@@ -31,7 +28,7 @@ export class ProductCreateComponent implements OnInit {
     shoesUID: 0,
     handItemUID: 0,
     jewelryUID: 0
-  })
+  });
 
   constructor(private productService: ProductService,
     private notificationService: NotificationService,
@@ -81,7 +78,7 @@ export class ProductCreateComponent implements OnInit {
           break;
         // Duck Update Reponse - Not possible in theory 
         case 404:
-          this.notificationService.add(`Unable to find a duck with an id of ${this._duckId}`, 3)
+          this.notificationService.add(`Unable to find a duck with an id of ${this._duckId}`, 3);
           break;
         // Duck Creation Response
         case 201:
@@ -118,7 +115,7 @@ export class ProductCreateComponent implements OnInit {
   private validateAuthorization(): void {
     if (!this._account?.adminStatus) {
       this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
-      this.router.navigate(['/'])
+      this.router.navigate(['/']);
     }
   }
 
@@ -202,18 +199,12 @@ export class ProductCreateComponent implements OnInit {
         continue;
       }
 
-      switch (name) {
-        case "name":
-          this.notificationService.add(`${name} must not be empty or blank!`, 3);
-          break;
-        case "price":
-          this.notificationService.add(`${name} must not be empty or blank and must be in the format $x.xx or $x!`, 3)
-          break;
-        default:
-          this.notificationService.add(`${name} is a required field!`, 3)
-          break;
+      if (name === "name") {
+        this.notificationService.add(`${name} must not be empty or blank!`, 3);
+        continue;
       }
 
+      this.notificationService.add(`${name} is a required field!`, 3);
     }
 
   }
@@ -238,7 +229,7 @@ export class ProductCreateComponent implements OnInit {
       id: this._duckId ? this._duckId : -1,
       name: formValue.name as string,
       quantity: formValue.quantity as number,
-      price: formValue.price as string,
+      price: formValue.price as number,
       size: formValue.size as string,
       color: formValue.color as string,
       outfit: duckOutfit

@@ -1,4 +1,3 @@
-import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Account } from '../account';
@@ -64,7 +63,7 @@ export class InventoryManagementComponent implements OnInit {
   private validateAuthorization(): void {
     if (!this._account?.adminStatus) {
       this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
-      this.router.navigate(['/'])
+      this.router.navigate(['/']);
     }
   }
 

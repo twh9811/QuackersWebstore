@@ -5,7 +5,7 @@ export interface Duck {
     id: number,
     name: string,
     quantity: number,
-    price: string,
+    price: number,
     size: string,
     color: string,
     outfit: DuckOutfit

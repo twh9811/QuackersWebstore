@@ -14,8 +14,8 @@
             </div>
             <div class="form-control-container">
                 <label for="price_input">Price</label><br>
-                <input class="form-control" id="price_input" type="text" formControlName="price"
-                    pattern="^\$\d+(\.\d+)?$" required><br><br>
+                <input class="form-control" id="price_input" type="number" step="0.01" min="0.00" formControlName="price"
+                    required><br><br>
             </div>
             <div class="form-control-container">
                 <label for="size_input">Size</label><br>
