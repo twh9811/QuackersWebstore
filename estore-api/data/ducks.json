@@ -3,7 +3,7 @@
         "id": 11,
         "name": "Quackers",
         "quantity": 10,
-        "price": "$0.99",
+        "price": 0.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -18,7 +18,7 @@
         "id": 12,
         "name": "McChicken",
         "quantity": 11,
-        "price": "$1.99",
+        "price": 1.99,
         "size": "MEDIUM",
         "color": "ORANGE",
         "outfit": {
@@ -33,7 +33,7 @@
         "id": 13,
         "name": "Rooster",
         "quantity": 12,
-        "price": "$2.99",
+        "price": 2.99,
         "size": "LARGE",
         "color": "YELLOW",
         "outfit": {
@@ -48,7 +48,7 @@
         "id": 14,
         "name": "Egg Boy",
         "quantity": 13,
-        "price": "$3.99",
+        "price": 3.99,
         "size": "EXTRA_LARGE",
         "color": "GREEN",
         "outfit": {
@@ -63,7 +63,7 @@
         "id": 15,
         "name": "Hen",
         "quantity": 14,
-        "price": "$4.99",
+        "price": 4.99,
         "size": "LARGE",
         "color": "BLUE",
         "outfit": {
@@ -78,7 +78,7 @@
         "id": 16,
         "name": "Rubber Man",
         "quantity": 15,
-        "price": "$5.99",
+        "price": 5.99,
         "size": "MEDIUM",
         "color": "INDIGO",
         "outfit": {
@@ -93,7 +93,7 @@
         "id": 17,
         "name": "Quacky Boy",
         "quantity": 16,
-        "price": "$6.99",
+        "price": 6.99,
         "size": "SMALL",
         "color": "VIOLET",
         "outfit": {
@@ -108,7 +108,7 @@
         "id": 18,
         "name": "Cockle Doodle Doo",
         "quantity": 17,
-        "price": "$7.99",
+        "price": 7.99,
         "size": "MEDIUM",
         "color": "INDIGO",
         "outfit": {
@@ -123,7 +123,7 @@
         "id": 19,
         "name": "Chicken Sandwhich",
         "quantity": 18,
-        "price": "$8.99",
+        "price": 8.99,
         "size": "LARGE",
         "color": "BLUE",
         "outfit": {
@@ -138,7 +138,7 @@
         "id": 20,
         "name": "Rubber Duck",
         "quantity": 19,
-        "price": "$9.99",
+        "price": 9.99,
         "size": "EXTRA_LARGE",
         "color": "GREEN",
         "outfit": {
@@ -153,7 +153,7 @@
         "id": 21,
         "name": "Chicky Nugget",
         "quantity": 20,
-        "price": "$10.99",
+        "price": 10.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -168,7 +168,7 @@
         "id": 22,
         "name": "Chicky Nugget",
         "quantity": 21,
-        "price": "$11.99",
+        "price": 11.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -183,7 +183,7 @@
         "id": 23,
         "name": "Chicky Nugget",
         "quantity": 22,
-        "price": "$12.99",
+        "price": 12.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -198,7 +198,7 @@
         "id": 24,
         "name": "Mr Chicken",
         "quantity": 23,
-        "price": "$13.99",
+        "price": 13.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -213,7 +213,7 @@
         "id": 25,
         "name": "Mr Chicken",
         "quantity": 10,
-        "price": "$14.99",
+        "price": 14.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -228,7 +228,7 @@
         "id": 26,
         "name": "Mr Chicken",
         "quantity": 10,
-        "price": "$15.99",
+        "price": 15.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -243,7 +243,7 @@
         "id": 27,
         "name": "Mr Chicken",
         "quantity": 10,
-        "price": "$16.99",
+        "price": 16.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -258,7 +258,7 @@
         "id": 28,
         "name": "Mr Chickens",
         "quantity": 10,
-        "price": "$17.99",
+        "price": 17.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -273,7 +273,7 @@
         "id": 29,
         "name": "Mr Chicken",
         "quantity": 10,
-        "price": "$18.99",
+        "price": 18.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -288,7 +288,7 @@
         "id": 30,
         "name": "Mr Chicken",
         "quantity": 10,
-        "price": "$19.99",
+        "price": 19.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -303,7 +303,7 @@
         "id": 31,
         "name": "Mr Chickens",
         "quantity": 10,
-        "price": "$20.99",
+        "price": 20.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -318,7 +318,7 @@
         "id": 32,
         "name": "Mr Chicky Wicky",
         "quantity": 10,
-        "price": "$21.99",
+        "price": 21.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -333,7 +333,7 @@
         "id": 33,
         "name": "Mr Chicky Wicky",
         "quantity": 10,
-        "price": "$22.99",
+        "price": 22.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -348,7 +348,7 @@
         "id": 34,
         "name": "Mr Chicky McGee",
         "quantity": 10,
-        "price": "$23.99",
+        "price": 23.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -363,7 +363,7 @@
         "id": 35,
         "name": "Mr Chicky McGeez",
         "quantity": 10,
-        "price": "$24.99",
+        "price": 24.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {
@@ -378,7 +378,7 @@
         "id": 36,
         "name": "Mr Chicky McGeez Nuts",
         "quantity": 10,
-        "price": "$25.99",
+        "price": 25.99,
         "size": "SMALL",
         "color": "RED",
         "outfit": {

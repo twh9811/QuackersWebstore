@@ -137,8 +137,7 @@ public class ShoppingCartController {
                 }
 
                 int quantity = cart.getItemAmount(duckId);
-                String priceOnlyFloat = duck.getPrice().replace("$", "");
-                double price = quantity * Double.parseDouble(priceOnlyFloat);
+                double price = quantity * duck.getPrice();
 
                 total += price;
             }
