@@ -4,11 +4,6 @@ geometry: margin=1in
 
 # PROJECT Design Documentation
 
-> _The following template provides the headings for your Design
-> Documentation. As you edit each section make sure you remove these
-> commentary 'blockquotes'; the lines that start with a > character
-> and appear in the generated PDF in italics._
-
 ## Team Information
 
 * Team name: Quackers
@@ -42,20 +37,18 @@ ducks.
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story. Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
-
 ### Definition of MVP
-As of right now, our customers can select and search through a variety of 
-pre-made ducks from our store catalog and add or remove them from their shopping carts
-as they please. Users can register accounts to save their previous shopping sessions 
-and login at a later date to resume them. From an owners perspective, they have access
-to the whole store catalog and can add/remove new products or even update existing ones
-at the click of a button.
 
-> _**[Sprint 2 & 4]** Provide a simple description of the Minimum Viable
-Product._
+As of right now, our customers can select and search through a variety of
+pre-made ducks from our store catalog and add or remove them from their
+shopping carts
+as they please. Users can register accounts to save their previous shopping
+sessions
+and login at a later date to resume them. From an owners perspective, they have
+access
+to the whole store catalog and can add/remove new products or even update
+existing ones
+at the click of a button.
 
 ### MVP Features
 
@@ -153,18 +146,21 @@ attributes and methods._
 
 ### Model Tier
 
-> _**[Sprint 2, 3 & 4]** Provide a summary of this tier of your architecture.
-This
-> section will follow the same instructions that are given for the View
-> Tier above._
-
-> _At appropriate places as part of this narrative provide **one** or more
-updated and **properly labeled**
-> static models (UML class diagrams) with some details such as critical
-attributes and methods._
->
-
-We have three main classes in our Model Tier and various smaller classes that are utilized in these main classes. These classes are Duck, ShoppingCart, and Account. Our entire website will revolve around these base classes. A user will create an <u>Account<u> to add a <u>Duck<u> to their <u>Shopping Cart<u> to be eventually purchased. The Duck class utilizes three smaller classes defined in the model tier: Colors, Size, and DuckOutfit. Both Colors and Size are enums meant to describe the constant color and size of the duck. DuckOutfit will describe the accessories a duck can have at the time of purchase. All these classes will affect the total price of the duck for the shopper. Account is an abstract class that has two subclasses, UserAccount and OwnerAccount which both inherits Account's base properties. A UserAccount is what a regular shopper will have when they register to the site. A OwnerAccount is created on startup and can not be regsitered or created directly. The UserAccount's ID is linked to their own Shopping Cart ID, an OwnerAccount's ID is not and they do not have access to a shopping cart.
+We have three main classes in our Model Tier and various smaller classes that
+are utilized in these main classes. These classes are Duck, ShoppingCart, and
+Account. Our entire website will revolve around these base classes. A user will
+create an Account to add a Duck to their Shopping Cart
+to be eventually purchased. The Duck class utilizes three smaller classes
+defined in the model tier: Colors, Size, and DuckOutfit. Both Colors and Size
+are enums meant to describe the constant color and size of the duck. DuckOutfit
+will describe the accessories a duck can have at the time of purchase. All
+these classes will affect the total price of the duck for the shopper. Account
+is an abstract class that has two subclasses, UserAccount and OwnerAccount
+which both inherits Account's base properties. A UserAccount is what a regular
+shopper will have when they register to the site. A OwnerAccount is created on
+startup and can not be regsitered or created directly. The UserAccount's ID is
+linked to their own Shopping Cart ID, an OwnerAccount's ID is not and they do
+not have access to a shopping cart.
 ![Model Tier UML Diagram](model-uml.png)
 
 ## OO Design Principles
@@ -264,22 +260,29 @@ your team would explore if the team had additional time._
 
 ## Testing
 
-> _This section will provide information about the testing performed
-> and the results of the testing._
-
 ### Acceptance Testing
 
-> _**[Sprint 2 & 4]** Report on the number of user stories that have passed all
-their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
-
-All of the acceptance criteria tests for the user stories in Sprint 1 have passed.
-As of writing this in Sprint 2, the Epic for the Base Authentication System has all
-of its user stories completed with their acceptance criteria being met. All the user
-stories associated with the Shopping Cart Epic except for one have also met the acceptance criteria. The Shopping Cart Page is the only user story in the epic that does not meet acceptance criteria. This is because other front-end development had to occur to have the proper services available and our team is just now starting to develop the page. The Inventory Management Page Epic is currently undergoing testing and appears to have all its user stories meet the acceptance criteria. It is awaiting being merged into main before the Trello cards can be moved to Sprint 2 Done. The Customer View Page, which is not associated with any Epic, also does not meet any of the acceptance criteria yet. Just like with the Shopping Cart Page, other fundamental aspects of the back-end and front-end had to be developed so no progress could be made on it. However, now that these needs are granted development should be started now and the tests should be run and the acceptance criteria met by the time this sprint is done. There are no major concerns at the moment and we believe that all acceptance criteria for the user stories in Sprint 2 will be met and the user stories will be marked as completed before the sprint ends. Everything is going according to plan and we should be prepared for the demo.
+All of the acceptance criteria tests for the user stories in Sprint 1 have
+passed. As of writing this in Sprint 2, the Epic for the Base Authentication
+System has all of its user stories completed with their acceptance criteria
+being met. All the user stories associated with the Shopping Cart Epic except
+for one have also met the acceptance criteria. The Shopping Cart Page is the
+only user story in the epic that does not meet acceptance criteria. This is
+because other front-end development had to occur to have the proper services
+available and our team is just now starting to develop the page. The Inventory
+Management Page Epic is currently undergoing testing and appears to have all
+its user stories meet the acceptance criteria. It is awaiting being merged into
+main before the Trello cards can be moved to Sprint 2 Done. The Customer View
+Page, which is not associated with any Epic, also does not meet any of the
+acceptance criteria yet. Just like with the Shopping Cart Page, other
+fundamental aspects of the back-end and front-end had to be developed so no
+progress could be made on it. However, now that these needs are granted
+development should be started now and the tests should be run and the
+acceptance criteria met by the time this sprint is done. There are no major
+concerns at the moment and we believe that all acceptance criteria for the user
+stories in Sprint 2 will be met and the user stories will be marked as
+completed before the sprint ends. Everything is going according to plan and we
+should be prepared for the demo.
 
 ### Unit Testing and Code Coverage
 
