@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       if(this.account.username == "admin") {
         this.router.navigate(['/adminPage']);
       } else {
-        this.router.navigate(['/customerPage']);
+        this.router.navigate(['/catalog']);
       }
     } else {
       this.feedback = "Login failed, try again or register";
