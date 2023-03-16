@@ -29,9 +29,9 @@ public class ShoppingCartTest {
     public void setupShoppingCartTest() {
         DuckOutfit outfit = new DuckOutfit(0, 0, 0, 0, 0);
 
-        duckOne = new Duck(1, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, outfit);
-        duckTwo = new Duck(2, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, outfit);
-        duckThree = new Duck(3, "Name", 0, "0.99", Size.LARGE, Colors.BLUE, outfit);
+        duckOne = new Duck(1, "Name", 0, 0.99, Size.LARGE, Colors.BLUE, outfit);
+        duckTwo = new Duck(2, "Name", 0, 0.99, Size.LARGE, Colors.BLUE, outfit);
+        duckThree = new Duck(3, "Name", 0, 0.99, Size.LARGE, Colors.BLUE, outfit);
     }
 
     @Test
