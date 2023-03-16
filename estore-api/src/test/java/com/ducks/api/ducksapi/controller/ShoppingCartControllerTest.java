@@ -58,7 +58,7 @@ public class ShoppingCartControllerTest {
                 1,
                 "Cool Duck",
                 10,
-                "$0.99",
+                0.99,
                 Size.LARGE,
                 Colors.BLUE,
                 new DuckOutfit(0, 0, 0, 0, 0));
@@ -66,7 +66,7 @@ public class ShoppingCartControllerTest {
                 2,
                 "Cool Duck 2",
                 10,
-                "$1.99",
+                1.99,
                 Size.LARGE,
                 Colors.BLUE,
                 new DuckOutfit(0, 0, 0, 0, 0));

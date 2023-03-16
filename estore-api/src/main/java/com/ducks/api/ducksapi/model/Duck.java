@@ -26,7 +26,7 @@ public class Duck {
     private int quantity;
 
     @JsonProperty("price")
-    private String price;
+    private double price;
 
     @JsonProperty("size")
     private Size size;
@@ -48,8 +48,7 @@ public class Duck {
      * @param color    The color of the duck
      * @throws IllegalArgumentException If name is null, empty, or blank.
      *                                  If quanity is less than 0
-     *                                  If the price string is not in the form of
-     *                                  $x.xx or $x
+     *                                  If price is less than 0
      *                                  If size/color/outfit is null
      *                                  If the duckOutfit is considered invalid
      * 
@@ -66,7 +65,7 @@ public class Duck {
      *                                  value, i.e. 0 for int
      */
     public Duck(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("quantity") int quantity,
-            @JsonProperty("price") String price, @JsonProperty("size") Size size, @JsonProperty("color") Colors color,
+            @JsonProperty("price") double price, @JsonProperty("size") Size size, @JsonProperty("color") Colors color,
             @JsonProperty("outfit") DuckOutfit outfit) throws IllegalArgumentException {
         this.id = id;
         this.name = name;
@@ -133,16 +132,16 @@ public class Duck {
      * 
      * @return The price of the duck
      */
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
     /**
      * Sets the price of the duck
      * 
-     * @param price
+     * @param price The price of the duck
      */
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -309,8 +308,7 @@ public class Duck {
      * 
      * If name is null, empty, or blank.
      * If quanity is less than 0
-     * If the price string is not in the form of
-     * $x.xx or $x
+     * If price is less than 0
      * If size/color/outfit is null
      * If the duckOutfit is considered invalid
      * 
@@ -327,9 +325,8 @@ public class Duck {
             issues += "Quantity must be equal to or greater than 0. ";
         }
 
-        // Regex Pattern matches only strings in the format of $x.xx or $x
-        if (price == null || !price.matches("^\\$\\d+(\\.\\d+)?$")) {
-            issues += "Price must not be not be null and must be in the following forms: ($x.xx or $x). ";
+        if (price < 0) {
+            issues += "Price must be greater than 0. ";
         }
 
         if (size == null) {

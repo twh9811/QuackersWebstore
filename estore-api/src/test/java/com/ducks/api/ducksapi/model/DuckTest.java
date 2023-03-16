@@ -23,7 +23,7 @@ public class DuckTest {
     public void setupDuckTest() {
         int expected_id = 99;
         int expected_quantity = 10;
-        String expected_price = "$9.99";
+        double expected_price = 9.99;
         String expected_name = "Wi-Fire";
         Colors expected_color = Colors.BLUE;
         Size expected_size = Size.SMALL;
@@ -51,7 +51,7 @@ public class DuckTest {
         // Setup
         int expected_id = 99;
         int expected_quantity = 10;
-        String expected_price = "$9.99";
+        double expected_price = 9.99;
         String expected_name = "Wi-Fire";
         Colors expected_color = Colors.BLUE;
         Size expected_size = Size.SMALL;
@@ -80,7 +80,7 @@ public class DuckTest {
         // Setup
         String expected_name = "Galactic Agent";
         int expected_quantity = 12;
-        String expected_price = "$19.99";
+        double expected_price = 19.99;
         Colors expected_color = Colors.RED;
         Size expected_size = Size.MEDIUM;
         int expected_hat_uid = 6;
@@ -144,20 +144,19 @@ public class DuckTest {
     @Test
     public void testDuckInvalid() {
         // All null/-1
-        assertThrows(IllegalArgumentException.class, () -> new Duck(1, null, -1, null, null, null, null));
-        // Price & Name empty/DuckOutfit invalid
-        assertThrows(IllegalArgumentException.class, () -> new Duck(1, "", -1, "", null, null, new DuckOutfit(-1, 0, 0, 0, 0)));
-        // Price & Name blank
-        assertThrows(IllegalArgumentException.class, () -> new Duck(1, " ", -1, "3.99", null, null, null));
-        // Price doesn't match regex
+        assertThrows(IllegalArgumentException.class, () -> new Duck(1, null, -1, -1, null, null, null));
+        // Price empty/DuckOutfit invalid
+        assertThrows(IllegalArgumentException.class, () -> new Duck(1, "", -1, 0, null, null, new DuckOutfit(-1, 0, 0, 0, 0)));
+        // Price blank
+        assertThrows(IllegalArgumentException.class, () -> new Duck(1, " ", -1, 0, null, null, null));
     }
 
     @Test
     public void testDuckEquals()
             throws IllegalArgumentException, IllegalAccessException {
 
-        Duck expected = new Duck(0, "Duck", 0, "$0.00", Size.LARGE, Colors.BLUE, new DuckOutfit(0, 0, 0, 0, 0));
-        Duck actual = new Duck(0, "Duck", 0, "$0.00", Size.LARGE, Colors.BLUE, new DuckOutfit(0, 0, 0, 0, 0));
+        Duck expected = new Duck(0, "Duck", 0, 0.00, Size.LARGE, Colors.BLUE, new DuckOutfit(0, 0, 0, 0, 0));
+        Duck actual = new Duck(0, "Duck", 0, 0.00, Size.LARGE, Colors.BLUE, new DuckOutfit(0, 0, 0, 0, 0));
 
         // Test Equal
         assertEquals(expected, actual);
@@ -171,7 +170,7 @@ public class DuckTest {
         assertNotEquals(expected, actual);
         actual.setQuantity(expected.getQuantity());
 
-        actual.setPrice("$1.99");
+        actual.setPrice(1.99);
         assertNotEquals(expected, actual);
         actual.setPrice(expected.getPrice());
 
