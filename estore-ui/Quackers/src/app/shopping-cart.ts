@@ -1,6 +1,6 @@
 import { Duck } from "./duck"
 
 export interface Cart {
-    id: number;
+    customerId: number;
     items: Map<string, number>
   }
