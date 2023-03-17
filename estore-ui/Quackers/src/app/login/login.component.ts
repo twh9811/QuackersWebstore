@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     if(this.account) {
       this.setSession(this.account);
       if(this.account.username == "admin") {
-        this.router.navigate(['/adminPage']);
+        this.router.navigate(['/inventory/'])
       } else {
         this.router.navigate(['/catalog']);
       }

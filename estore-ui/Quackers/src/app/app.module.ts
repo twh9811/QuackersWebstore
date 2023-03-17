@@ -1,34 +1,40 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { Router } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { AdminTestComponent } from './admin-test/admin-test.component';
 import { CustomerTestComponent } from './customer-test/customer-test.component';
 
 import { HttpClientModule} from '@angular/common/http';
 import { ChangePageTestComponent } from './change-page-test/change-page-test.component';
+import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
+import { ProductCreateComponent } from './product-create-modify/product-create-modify.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 import { CatalogComponent } from './catalog/catalog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    AdminTestComponent,
     CustomerTestComponent,
     ChangePageTestComponent,
+    InventoryManagementComponent,
+    ProductCreateComponent,
+    NotificationsComponent,
     CatalogComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
