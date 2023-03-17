@@ -5,6 +5,7 @@ import { Observable,of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators'
 
 import { Account } from './account';
+import { Cart } from './shopping-cart';
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +59,12 @@ export class AccountService {
     );
   }
 
-  getCart()
+  getCart(id : number) : Observable<Cart>{
+    const url = `${this.apiURL}/${id}`;
+    return this.http.get<Account>(url).pipe(
+      tap(_ => console.log(`got account ${id}`)), catchError(this.handleError<any>('get account'))
+    );
+  }
 
   /**
    * Creates the account and stores it in the database

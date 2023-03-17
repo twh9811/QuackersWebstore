@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AccountService } from '../account.service';
 import { SessionService } from '../session.service';
 import { Account } from '../account';
@@ -15,11 +15,12 @@ import { NotificationService } from '../notification.service';
 })
 export class ShoppingCartComponent implements OnInit {
 
-  private _account: Account | undefined = undefined;
-  private _cart : Cart | undefined = undefined;
+  account : Account | undefined;
+  cart : Cart | undefined;
   ducks: Duck[] = [];
 
   constructor(private router: Router,
+    private route : ActivatedRoute,
     private productService: ProductService,
     private notificationService: NotificationService,
     private accountService: AccountService,
@@ -29,22 +30,19 @@ export class ShoppingCartComponent implements OnInit {
   * Loads the ducks array when the page is opened
   */
   ngOnInit() : void {
-    if (!this.sessionService.session) {
-      this.validateAuthorization();
-      return;
-    }
-
     // Waits for account to be retrieved before doing anything else
-    this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
-      this._account = account;
-      this.validateAuthorization();
-      this.getCart();
-      this.getDucks();
-    });
+    this.getAccount();
+    this.validateAuthorization();
+    this.getCart();
+    this.getDucks();
+  }
+
+  getAccount() : void {
+    this.accountService.getAccount(this.session.session.id).subscribe(account => this.account = account);
   }
 
   getCart(): void {
-    this.accountService.getCart().subscribe(_cart => this._cart = _cart);
+    this.accountService.getCart().subscribe(cart => this.cart = cart);
   }
 
   /**
@@ -59,7 +57,7 @@ export class ShoppingCartComponent implements OnInit {
   * If not, they are sent back to the login page
   */
   private validateAuthorization(): void {
-    if (!this._account?.adminStatus) {
+    if (!this.account?.adminStatus) {
       this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
       this.router.navigate(['/']);
     }
@@ -67,5 +65,44 @@ export class ShoppingCartComponent implements OnInit {
 
   logout() {
     this.router.navigate([''])
+  }
+}
+
+@Component({
+  selector: 'app-customer-test',
+  templateUrl: './customer-test.component.html',
+  styleUrls: ['./customer-test.component.css']
+})
+export class ShoppingCartComponent implements OnInit {
+  account : Account | undefined;
+  cart : Cart | undefined;
+  ducks: Duck[] = [];
+
+  constructor(private router : Router,
+    private route : ActivatedRoute,
+    private accountService : AccountService,
+    private session : SessionService,
+    private productService: ProductService,
+    private notificationService: NotificationService, ) {}
+
+  ngOnInit() : void {
+    this.getAccount();
+    this.getCart();
+    this.getDucks();
+  }
+
+  getAccount() : void {
+    this.accountService.getAccount(this.session.session.id).subscribe(account => this.account = account);
+  }
+
+  getCart(): void {
+    this.accountService.getCart(this.session.session.id).subscribe(cart => this.cart = cart);
+  }
+
+  /**
+   * Gets the ducks from the product service
+   */
+  getDucks(): void {
+    this.productService.getDucks().subscribe(ducks => this.ducks = ducks);
   }
 }
