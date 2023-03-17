@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { Duck } from '../duck';
-import { NotificationService } from '../notifications.service';
+import { NotificationService } from '../notification.service';
 import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
 
