@@ -29,6 +29,7 @@ export class ShoppingCartComponent implements OnInit {
     this.getAccount();
     this.getCart();
     this.getDucks();
+    
   }
 
   getAccount() : void {

@@ -12,7 +12,7 @@ import { Cart } from './shopping-cart';
 })
 export class AccountService {
   private apiURL = 'http://localhost:8080';
-  private cartURL = 'http://localhost:8080/cart';
+  //private cartURL = 'http://localhost:8080/cart';
   
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -61,7 +61,8 @@ export class AccountService {
   }
 
   getCart(id : number) : Observable<Cart>{
-    const url = `${this.cartURL}/${id}`;
+    const url = 'http://localhost:8080/cart/1'
+    //const url = `${this.apiURL}/cart/${id}`;
     return this.http.get<Cart>(url).pipe(
       tap(_ => console.log(`got cart ${id}`)), catchError(this.handleError<any>('get cart'))
     );
