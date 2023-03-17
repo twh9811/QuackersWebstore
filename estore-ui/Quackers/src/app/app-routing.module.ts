@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { ProductCreateComponent } from './product-create-modify/product-create-modify.component';
 import { ChangePageTestComponent } from './change-page-test/change-page-test.component';
 import { CatalogComponent } from './catalog/catalog.component';
+import { DuckDetailComponent } from './duck-detail/duck-detail.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full"},
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'customerPage', component: CustomerTestComponent },
   { path: "login", component : LoginComponent},
   { path: "changedPage", component : ChangePageTestComponent},
-  { path: "catalog", component : CatalogComponent}
+  { path: "catalog", component : CatalogComponent},
+  { path: "inventory/catalog/:id", component : DuckDetailComponent}
 ];
 
 @NgModule({

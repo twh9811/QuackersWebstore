@@ -15,6 +15,7 @@ import { ProductCreateComponent } from './product-create-modify/product-create-m
 import { CatalogComponent } from './catalog/catalog.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { DucksearchComponent } from './ducksearch/ducksearch.component';
+import { DuckDetailComponent } from './duck-detail/duck-detail.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DucksearchComponent } from './ducksearch/ducksearch.component';
     ProductCreateComponent,
     NotificationsComponent,
     CatalogComponent,
-    DucksearchComponent
+    DucksearchComponent,
+    DuckDetailComponent
   ],
   imports: [
     BrowserModule,

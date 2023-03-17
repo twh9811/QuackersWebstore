@@ -55,12 +55,20 @@ export class CatalogComponent implements OnInit{
       this.router.navigate(['/']);
     }
   }
-   /**
+  /**
    * Add a duck to shopping cart
    * 
    * @param duck The duck being added
    */
   addDuck(duck: Duck): void {
     
+  }
+  /**
+   * Show details for a duck
+   * 
+   * @param duck The duck being showed
+   */
+  showDuck(id: number): void {
+    this.router.navigate([`/catalog/${id}`]);
   }
 }

@@ -1,0 +1,43 @@
+#create-form {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+}
+
+#control-group-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.controls-container {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.control-group-header {
+    align-self: center;
+
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 20px;
+
+    padding: 0px 30px;
+    margin-bottom: 10px;
+    border-bottom: 1.5px solid black;
+}
+
+.form-control-container>label {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 16px;
+}
+
+.form-control {
+    box-sizing: border-box;
+    width: 150px;
+}
+
+#submit-btn {
+    align-self: center;
+    width: 150px;
+}
