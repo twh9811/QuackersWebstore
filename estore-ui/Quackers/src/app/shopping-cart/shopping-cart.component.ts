@@ -38,8 +38,13 @@ export class ShoppingCartComponent implements OnInit {
     this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
       this._account = account;
       this.validateAuthorization();
+      this.getCart();
       this.getDucks();
     });
+  }
+
+  getCart(): void {
+    this.accountService.getCart().subscribe(_cart => this._cart = _cart);
   }
 
   /**

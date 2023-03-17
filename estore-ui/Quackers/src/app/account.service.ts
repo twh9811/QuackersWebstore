@@ -58,7 +58,7 @@ export class AccountService {
     );
   }
 
-  
+  getCart()
 
   /**
    * Creates the account and stores it in the database
