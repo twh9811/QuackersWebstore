@@ -5,6 +5,7 @@ import { SessionService } from '../session.service';
 import { Account } from '../account';
 import { Cart } from '../shopping-cart';
 import { Duck } from '../duck';
+import { CartService } from '../shopping-cart.service';
 import { ProductService } from '../product.service';
 import { NotificationService } from '../notification.service';
 
@@ -21,6 +22,7 @@ export class ShoppingCartComponent implements OnInit {
   constructor(private router : Router,
     private route : ActivatedRoute,
     private accountService : AccountService,
+    private cartService : CartService,
     private session : SessionService,
     private productService: ProductService,
     private notificationService: NotificationService, ) {}
@@ -37,7 +39,7 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   getCart(): void {
-    this.accountService.getCart(this.session.session.id).subscribe(cart => this.cart = cart);
+    this.cartService.getCart(this.session.session.id).subscribe(cart => this.cart = cart);
   }
 
   /**
