@@ -140,6 +140,7 @@ public class InventoryController {
      *         ResponseEntity with HTTP status of CONFLICT if {@link Duck duck}
      *         object already exists<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     *         Will inherently throw a 400 if the duck is invalid
      */
     @PostMapping("/product")
     public ResponseEntity<Duck> createDuck(@RequestBody Duck duck) {
@@ -168,7 +169,7 @@ public class InventoryController {
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @PutMapping("")
+    @PutMapping("/product")
     public ResponseEntity<Duck> updateDuck(@RequestBody Duck duck) {
         LOG.info("PUT /inventory " + duck);
         try {

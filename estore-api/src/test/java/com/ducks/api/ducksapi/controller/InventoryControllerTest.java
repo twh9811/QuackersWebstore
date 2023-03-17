@@ -51,7 +51,7 @@ public class InventoryControllerTest {
         String name = String.valueOf(RANDOM.nextInt(100));
         int id = RANDOM.nextInt(1000);
         int quantiy = RANDOM.nextInt(1000);
-        String price = String.valueOf(RANDOM.nextInt(1000));
+        double price = RANDOM.nextInt(1000);
         Size size = Size.values()[RANDOM.nextInt(Size.values().length)];
         Colors color = Colors.values()[RANDOM.nextInt(Colors.values().length)];
         DuckOutfit outfit = new DuckOutfit(RANDOM.nextInt(20), RANDOM.nextInt(20), RANDOM.nextInt(20), RANDOM.nextInt(20),RANDOM.nextInt(20));
