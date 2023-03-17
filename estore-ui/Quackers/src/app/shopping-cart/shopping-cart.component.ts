@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AccountService } from '../account.service';
+import { SessionService } from '../session.service';
+
+import { Account } from '../account';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -7,8 +11,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent {
-  constructor(private router : Router) {}
 
+  account : Account | undefined;
+
+  constructor(private router : Router, private route : ActivatedRoute, private accountService : AccountService, private session : SessionService ) {}
+
+  ngOnInit() : void {
+    this.getAccount();
+  }
+
+  getAccount() : void {
+    this.accountService.getAccount(this.session.session.id).subscribe(account => this.account = account);
+  }
   logout() {
     this.router.navigate([''])
   }

@@ -1,1 +1,11 @@
 <p>shopping-cart works!</p>
+<div *ngIf="account">
+    <div><span>id: </span>{{account.id}}</div>
+    <div><span>username: </span>{{account.username}}</div>
+    <div><span>password: </span>{{account.plainPassword}}</div>
+    <div><span>admin: </span>{{account.adminStatus}}</div>
+</div>
+<nav>
+    <a routerLink="/changedPage">Test Data Persistence</a>
+    <a routerLink="/cart">Go to Shopping Cart </a>
+</nav>
