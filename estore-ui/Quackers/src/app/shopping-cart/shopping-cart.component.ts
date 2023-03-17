@@ -4,6 +4,7 @@ import { AccountService } from '../account.service';
 import { SessionService } from '../session.service';
 
 import { Account } from '../account';
+import 
 
 @Component({
   selector: 'app-shopping-cart',
@@ -17,7 +18,7 @@ export class ShoppingCartComponent {
   constructor(private router : Router, private route : ActivatedRoute, private accountService : AccountService, private session : SessionService ) {}
 
   ngOnInit() : void {
-    this.getAccount();
+    this.getCart();
   }
 
   getAccount() : void {
