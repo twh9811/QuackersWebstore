@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { HttpClientModule} from '@angular/common/http';
 import { ChangePageTestComponent } from './change-page-test/change-page-test.component';
 import { CatalogComponent } from './catalog/catalog.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { DucksearchComponent } from './ducksearch/ducksearch.component';
 
 @NgModule({
   declarations: [
@@ -22,11 +23,13 @@ import { NotificationsComponent } from './notifications/notifications.component'
     CustomerTestComponent,
     ChangePageTestComponent,
     CatalogComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    DucksearchComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule
   ],

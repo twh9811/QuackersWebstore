@@ -14,9 +14,7 @@
                 <span>Quantity: {{duck.quantity}}</span><br>
                 <span>Price: ${{duck.price}}</span><br>
                 <div class="duck-btn-container">
-                    <button class="duck-modify-btn gen-btn" type="button" (click)="goToDuckModification(duck.id)">Modify</button>
-                    <button class="duck-remove-btn gen-btn" type="button" (click)="deleteDuck(duck)">Remove</button>
-                    <button class="duck-remove-btn gen-btn" type="button" (click)="deleteDuck(duck)">Add to Cart</button>
+                    <button class="duck-add-btn gen-btn" type="button" (click)="addDuck(duck)">Add to Cart</button>
                 </div>
             </div>
         </div>

@@ -61,6 +61,6 @@ export class CatalogComponent implements OnInit{
    * @param duck The duck being added
    */
   addDuck(duck: Duck): void {
-    this.ducks = this.ducks.filter(a_duck => a_duck != duck);
+    
   }
 }
