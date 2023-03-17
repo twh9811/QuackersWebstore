@@ -14,66 +14,6 @@ import { NotificationService } from '../notification.service';
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent implements OnInit {
-
-  account : Account | undefined;
-  cart : Cart | undefined;
-  ducks: Duck[] = [];
-
-  constructor(private router: Router,
-    private route : ActivatedRoute,
-    private productService: ProductService,
-    private notificationService: NotificationService,
-    private accountService: AccountService,
-    private sessionService: SessionService) { }
-
-  /**
-  * Loads the ducks array when the page is opened
-  */
-  ngOnInit() : void {
-    // Waits for account to be retrieved before doing anything else
-    this.getAccount();
-    this.validateAuthorization();
-    this.getCart();
-    this.getDucks();
-  }
-
-  getAccount() : void {
-    this.accountService.getAccount(this.session.session.id).subscribe(account => this.account = account);
-  }
-
-  getCart(): void {
-    this.accountService.getCart().subscribe(cart => this.cart = cart);
-  }
-
-  /**
-   * Gets the ducks from the product service
-   */
-  getDucks(): void {
-    this.productService.getDucks().subscribe(ducks => this.ducks = ducks);
-  }
-  
-  /**
-  * Validates that a user is an admin
-  * If not, they are sent back to the login page
-  */
-  private validateAuthorization(): void {
-    if (!this.account?.adminStatus) {
-      this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
-      this.router.navigate(['/']);
-    }
-  }
-
-  logout() {
-    this.router.navigate([''])
-  }
-}
-
-@Component({
-  selector: 'app-customer-test',
-  templateUrl: './customer-test.component.html',
-  styleUrls: ['./customer-test.component.css']
-})
-export class ShoppingCartComponent implements OnInit {
   account : Account | undefined;
   cart : Cart | undefined;
   ducks: Duck[] = [];
