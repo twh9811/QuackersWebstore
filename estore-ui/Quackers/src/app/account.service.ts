@@ -58,6 +58,8 @@ export class AccountService {
     );
   }
 
+  
+
   /**
    * Creates the account and stores it in the database
    * 

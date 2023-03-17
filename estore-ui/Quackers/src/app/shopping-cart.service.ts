@@ -10,7 +10,7 @@ import { Cart } from './shopping-cart'
 @Injectable({
   providedIn: 'root'
 })
-export class ShoppingCartService {
+export class CartService {
 
   private apiURL = 'http://localhost:8080';
   
@@ -20,8 +20,18 @@ export class ShoppingCartService {
 
   constructor(private http: HttpClient) { }
 
-  getDuck(account : Account) : Observable<Cart>{
 
+  getAccount(id: number) : Observable<Account> {
+    const url = `${this.apiURL}/${id}`;
+    return this.http.get<Account>(url).pipe(
+      tap(_ => console.log(`got account ${id}`)), catchError(this.handleError<any>('get account'))
+    );
+  }
+
+  getCart() : Observable<Cart> {
+    const account = this.getAccount;
+    const url = `${this.apiURL}/${account.id}`;
+    return this.http.get<Cart>(url).pipe(tap(__ => console.log(`got cart ${account.id}`)), catchError(this.handleError<any>('get cart')))
   }
 
   /**
@@ -43,4 +53,5 @@ export class ShoppingCartService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
 }
