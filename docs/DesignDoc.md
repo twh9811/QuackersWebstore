@@ -41,14 +41,11 @@ This section describes the features of the application.
 
 As of right now, our customers can select and search through a variety of
 pre-made ducks from our store catalog and add or remove them from their
-shopping carts
-as they please. Users can register accounts to save their previous shopping
-sessions
-and login at a later date to resume them. From an owners perspective, they have
-access
-to the whole store catalog and can add/remove new products or even update
-existing ones
-at the click of a button.
+shopping cartsas they please. Users can register accounts to save their 
+previous shopping sessions and login at a later date to resume them. 
+From an owners perspective, they have access to the whole store catalog 
+and can add/remove new products or even update existing ones at the click 
+of a button.
 
 ### MVP Features
 
@@ -65,10 +62,14 @@ This section describes the application domain.
 
 ![Domain Model](domain-model.png)
 
-> _**[Sprint 2 & 4]** Provide a high-level overview of the domain for this
-application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+As our goal is to make an e-store, our domain contains entities, such as products, 
+customer, shopping cart, and more. Products are connected to most things are our
+domain model, which exemplifies how important they are as an entity. For instance,
+products have to be added and removed from the shopping cart, and customers need to
+be able to view the products. Customers are also vital to our domain model, as we
+can't make money if customers cannot use our website. As seen in the model 
+above, customers can browse products, add items to shopping carts, complete 
+orders, and more.
 
 ## Architecture and Design
 
@@ -100,8 +101,17 @@ This section describes the web interface flow; this is how the user views and
 interacts
 with the e-store application.
 
-> _Provide a summary of the application's user interface. Describe, from
-> the user's perspective, the flow of the pages in the web application._
+Upon opening our website, the user will be greeted with a login page where they 
+can either log in or register. Users who log in with an admin account will
+be directed to the inventory management page. From this page, they will be able to
+create, modify, and delete products. If a non-admin attempts to access the inventory
+management page, they will be redirected to the login page. If the user logs in as a
+buyer, they will be redirected to a catalog page where they can view all of the
+available items. Furthermore, they can use a search box to filter through
+the available items. They are also able to add these items to their cart. Once they have
+added the items they want, they can proceed to the shopping cart to modify
+the quantity of each item and checkout. After checking out, they are directed to a page
+where they are given a receipt.
 
 ### View Tier
 
