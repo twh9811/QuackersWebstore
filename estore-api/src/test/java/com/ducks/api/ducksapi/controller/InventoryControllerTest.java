@@ -29,6 +29,7 @@ import com.ducks.api.ducksapi.persistence.DuckDAO;
 @Tag("Controller-tier")
 public class InventoryControllerTest {
     private static final Random RANDOM = new Random();
+    private static int NEXT_ID = 0;
 
     private InventoryController duckController;
     private DuckDAO mockDuckDAO;
@@ -45,16 +46,20 @@ public class InventoryControllerTest {
 
     /**
      * Generates a duck with completely RANDOM values
+     * 
      * @return The generated duck
      */
     private Duck generateDuck() {
         String name = String.valueOf(RANDOM.nextInt(100));
-        int id = RANDOM.nextInt(1000);
+        // This ensures that no two ducks can ever have the same id while these tests
+        // are being ran
+        int id = NEXT_ID++;
         int quantiy = RANDOM.nextInt(1000);
         double price = RANDOM.nextInt(1000);
         Size size = Size.values()[RANDOM.nextInt(Size.values().length)];
         Colors color = Colors.values()[RANDOM.nextInt(Colors.values().length)];
-        DuckOutfit outfit = new DuckOutfit(RANDOM.nextInt(20), RANDOM.nextInt(20), RANDOM.nextInt(20), RANDOM.nextInt(20),RANDOM.nextInt(20));
+        DuckOutfit outfit = new DuckOutfit(RANDOM.nextInt(20), RANDOM.nextInt(20), RANDOM.nextInt(20),
+                RANDOM.nextInt(20), RANDOM.nextInt(20));
 
         return new Duck(id, name, quantiy, price, size, color, outfit);
     }
@@ -155,15 +160,18 @@ public class InventoryControllerTest {
     }
 
     @Test
-    public void testUpdateDuck() throws IOException { // updateDuck may throw IOException
+    public void testUpdateDuckName() throws IOException { // updateDuck may throw IOException
         // Setup
+        String newName = "Bolt";
         Duck duck = generateDuck();
+
+        when(mockDuckDAO.getDuckByName(newName)).thenReturn(null);
         // when updateDuck is called, return true simulating successful
         // update and save
         when(mockDuckDAO.updateDuck(duck)).thenReturn(duck);
-        
+
         // Update Duck
-        duck.setName("Bolt");
+        duck.setName(newName);
 
         // Invoke
         ResponseEntity<Duck> response = duckController.updateDuck(duck);
@@ -171,6 +179,46 @@ public class InventoryControllerTest {
         // Analyze
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(duck, response.getBody());
+    }
+
+    @Test
+    public void testUpdateDuckProperty() throws IOException { // updateDuck may throw IOException
+        // Setup
+        Duck duck = generateDuck();
+
+        when(mockDuckDAO.getDuckByName(duck.getName())).thenReturn(duck);
+        // when updateDuck is called, return true simulating successful
+        // update and save
+        when(mockDuckDAO.updateDuck(duck)).thenReturn(duck);
+
+        // Update Duck
+        duck.setQuantity(duck.getQuantity() + 1);
+
+        // Invoke
+        ResponseEntity<Duck> response = duckController.updateDuck(duck);
+
+        // Analyze
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(duck, response.getBody());
+    }
+
+    @Test
+    public void testUpdateDuckConflict() throws IOException {
+        // Setup
+        Duck duck = generateDuck();
+        Duck duckTwo = generateDuck();
+
+        when(mockDuckDAO.getDuckByName(duckTwo.getName())).thenReturn(duckTwo);
+
+        // Update
+        duck.setName(duckTwo.getName());
+
+        // Invoke
+        ResponseEntity<Duck> response = duckController.updateDuck(duck);
+
+        // Analyze
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertNull(response.getBody());
     }
 
     @Test
@@ -220,9 +268,22 @@ public class InventoryControllerTest {
     }
 
     @Test
-    public void testGetDucksNoDucks() throws IOException {
+    public void testGetDucksNoDucksNull() throws IOException {
         // When getDucks is called return the ducks created above
         when(mockDuckDAO.getDucks()).thenReturn(null);
+
+        // Invoke
+        ResponseEntity<Duck[]> response = duckController.getDucks();
+
+        // Analyze
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    @Test
+    public void testGetDucksNoDucksEmpty() throws IOException {
+        // When getDucks is called return the ducks created above
+        when(mockDuckDAO.getDucks()).thenReturn(new Duck[0]);
 
         // Invoke
         ResponseEntity<Duck[]> response = duckController.getDucks();

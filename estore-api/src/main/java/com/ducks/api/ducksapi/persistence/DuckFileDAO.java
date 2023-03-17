@@ -174,6 +174,21 @@ public class DuckFileDAO implements DuckDAO {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public Duck getDuckByName(String name) {
+        synchronized (ducks) {
+            Duck[] duckArr = getDucksArray(name);
+            for (Duck duck : duckArr) {
+                if (duck.getName().equalsIgnoreCase(name)) {
+                    return duck;
+                }
+            }
+            return null;
+        }
+    }
+
+    /**
      ** {@inheritDoc}
      */
     @Override
@@ -182,15 +197,13 @@ public class DuckFileDAO implements DuckDAO {
             // We create a new duck object because the id field is immutable
             // and we need to assign the next unique id
             // Modified the constructor to handle duck accessories # Travis 2/15
-            Duck[] duckArr = getDucksArray(duck.getName());
-            for (Duck arrDuck : duckArr) {
-                String oldName = arrDuck.getName();
-                // duck already exists in inventory
-                if (oldName.equalsIgnoreCase(duck.getName())) {
-                    return null;
-                }
+            Duck foundDuck = getDuckByName(duck.getName());
+            if (foundDuck != null) {
+                return null;
             }
-            Duck newDuck = new Duck(nextId(), duck.getName(), duck.getQuantity(), duck.getPrice(), duck.getSize(), duck.getColor(), duck.getOutfit());
+
+            Duck newDuck = new Duck(nextId(), duck.getName(), duck.getQuantity(), duck.getPrice(), duck.getSize(),
+                    duck.getColor(), duck.getOutfit());
             ducks.put(newDuck.getId(), newDuck);
             save(); // may throw an IOException
             return newDuck;

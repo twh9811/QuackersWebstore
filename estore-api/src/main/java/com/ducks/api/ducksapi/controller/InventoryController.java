@@ -78,7 +78,8 @@ public class InventoryController {
      * 
      * @return ResponseEntity with array of {@link Duck ducks} objects (may be
      *         empty) and HTTP status of OK<br>
-     *         ResponseEntity with HTTP status of NOT_FOUND if no ducks are found<br>
+     *         ResponseEntity with HTTP status of NOT_FOUND if no ducks are
+     *         found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("")
@@ -107,7 +108,8 @@ public class InventoryController {
      * 
      * @return ResponseEntity with array of {@link Duck duck} objects (may be empty)
      *         and HTTP status of OK<br>
-     *         ResponseEntity with HTTP status of NOT_FOUND if no ducks are found<br>
+     *         ResponseEntity with HTTP status of NOT_FOUND if no ducks are
+     *         found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      *         Example: Find all ducks that contain the text "ma"
      *         GET http://localhost:8080/inventory/?name=ma
@@ -173,6 +175,12 @@ public class InventoryController {
     public ResponseEntity<Duck> updateDuck(@RequestBody Duck duck) {
         LOG.info("PUT /inventory " + duck);
         try {
+            // Makes sure that a duck with this name & different id does not already exist
+            Duck foundDuck = duckDao.getDuckByName(duck.getName());
+            if (foundDuck != null && foundDuck.getId() != duck.getId()) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+
             Duck updateDuck = duckDao.updateDuck(duck);
             if (updateDuck != null) {
                 return new ResponseEntity<Duck>(updateDuck, HttpStatus.OK);
