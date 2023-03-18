@@ -43,12 +43,12 @@ export class CatalogComponent implements OnInit {
       // Waits for the cart to load before loading the ducks
       // This prevents issues such as the cart not loading
       this.cartService.getCartAndCreate(this._account.id).then(cart => {
-        if(!cart) {
+        if (!cart) {
           this.router.navigate(['/']);
           this.notificationService.add("Unable to load your cart!", 3);
           return;
         }
-        
+
         this.cart = cart;
         this.getDucks();
       })
@@ -67,7 +67,7 @@ export class CatalogComponent implements OnInit {
   * If not, they are sent back to the login page
   */
   private validateAuthorization(): void {
-    if (this._account?.adminStatus) {
+    if (this._account?.adminStatus || !this._account) {
       this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
       this.router.navigate(['/']);
     }
@@ -79,17 +79,16 @@ export class CatalogComponent implements OnInit {
    * @param duckId The id of the duck being added
    */
   addDuck(duckId: number): void {
-
     this.productService.getDuck(duckId as number).subscribe(duck => {
 
       if (!duck || duck.quantity < 1) {
         this.notificationService.add(`Thee duck with the id of ${duckId} is no longer available!`, 3);
         return;
       }
-    
+
       this.cartService.addItem(this.cart!, duckId!, 1);
       this.cartService.updateCart(this.cart!).subscribe(response => {
-        if(response.status == 200) {
+        if (response.status == 200) {
           this.notificationService.add(`Successfully added one duck with the id of ${duckId} to your cart!`, 3);
           return;
         }

@@ -1,40 +1,35 @@
-#create-form {
+#duck-container {
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
 }
 
-#control-group-container {
+#duck-property-container {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
     gap: 20px;
 }
 
-.controls-container {
+.properties-container {
     display: flex;
     flex-flow: column wrap;
 }
 
-.control-group-header {
+.property-group-header {
     align-self: center;
 
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 20px;
+    font-size: 25px;
 
     padding: 0px 30px;
     margin-bottom: 10px;
     border-bottom: 1.5px solid black;
 }
 
-.form-control-container>label {
+.single-property-container {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 16px;
-}
-
-.form-control {
-    box-sizing: border-box;
-    width: 150px;
+    font-size: 20px;
 }
 
 .duck-btn-container {

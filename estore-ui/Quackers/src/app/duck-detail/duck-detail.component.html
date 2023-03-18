@@ -1,49 +1,60 @@
-<form id="create-form" [formGroup]="createForm" >
-    <div id="control-group-container">
-        <div class="controls-container">
-            <span class="control-group-header">General</span>
-            <div class="form-control-container">
-                <div><span>Name: </span><span>{{createForm.get('name')?.value}}</span></div>
+<div *ngIf="!duck">Loading the duck...</div>
+<div id="duck-container" *ngIf="duck">
+    <div id="duck-property-container">
+        <div class="properties-container">
+            <span class="property-group-header">General</span>
+            <div class="single-property-container">
+                <span>Name: </span>
+                <span>{{duck.name}}</span>
             </div>
-            <div class="form-control-container">
-                <div><span>Price: </span><span>{{createForm.get('price')?.value}}</span></div>
+            <div class="single-property-container">
+                <span>Price: </span>
+                <span>{{duck.price}}</span>
             </div>
-            <div class="form-control-container">
-                <div><span>Quantity Available: </span><span>{{createForm.get('quantity')?.value}}</span></div>
+            <div class="single-property-container">
+                <span>Quantity Available: </span>
+                <span>{{duck.quantity}}</span>
             </div>
-            <div class="form-control-container">
-                <div><span>Size: </span><span>{{createForm.get('size')?.value}}</span></div>
+            <div class="single-property-container">
+                <span>Size: </span>
+                <span>{{duck.size}}</span>
             </div>
-            <div class="form-control-container">
-                <div><span>Color: </span><span>{{createForm.get('color')?.value}}</span></div>
+            <div class="single-property-container">
+                <span>Color: </span>
+                <span>{{duck.color}}</span>
             </div>
         </div>
-        <div class="controls-container">
-            <span class="control-group-header">Outfit</span>
-            <div class="form-control-container">
-                <div><span>Hat UID: </span><span>{{createForm.get('hatUID')?.value}}</span></div>
+        <div class="properties-container">
+            <span class="property-group-header">Outfit</span>
+            <div class="single-property-container">
+                <span>Hat UID: </span>
+                <span>{{duck.outfit.hatUID}}</span>
             </div>
-            <div class="form-control-container">
-                <div><span>Shirt UID: </span><span>{{createForm.get('shirtUID')?.value}}</span></div>
+            <div class="single-property-container">
+                <span>Shirt UID: </span>
+                <span>{{duck.outfit.shirtUID}}</span>
             </div>
-            <div class="form-control-container">
-                <div><span>Shoes UID: </span><span>{{createForm.get('shoesUID')?.value}}</span></div>
+            <div class="single-property-container">
+                <span>Shoes UID: </span>
+                <span>{{duck.outfit.shoesUID}}</span>
             </div>
-            <div class="form-control-container">
-                <div><span>Hand Item UID: </span><span>{{createForm.get('handItemUID')?.value}}</span></div>
+            <div class="single-property-container">
+                <span>Hand Item UID: </span>
+                <span>{{duck.outfit.handItemUID}}</span>
             </div>
-            <div class="form-control-container">
-                <div><span>Jewelry UID: </span><span>{{createForm.get('jewelryUID')?.value}}</span></div>
-            </div>                        
+            <div class="single-property-container">
+                <span>Jewelry UID: </span>
+                <span>{{duck.outfit.jewelryUID}}</span>
+            </div>
         </div>
     </div>
-</form>
+</div>
 <br>
-<div class="add-to-cart-container">
-    <input type="number" min="1" max="{{createForm.get('quantity')?.value}}" value="1" class="quantity-input" id=quantityInput [(ngModel)]="quantityInput"> 
-    <button class="duck-add-btn gen-btn"(click)="addDuck()">Add to Cart</button>
-</div> 
+<div class="add-to-cart-container" *ngIf="duck">
+    <input type="number" min="1" max="{{duck.quantity}}" value="1" class="quantity-input" [(ngModel)]="quantityInput">
+    <button class="duck-add-btn gen-btn" (click)="addDuck()">Add to Cart</button>
+</div>
 <div class="duck-btn-container">
-    <button class="duck-add-btn gen-btn" type="button" (click)="goBack()">Go Back</button>     
+    <button class="duck-add-btn gen-btn" type="button" (click)="goBack()">Go Back</button>
     <button class="duck-add-btn gen-btn" type="button" *ngIf="cart" routerLink="/cart">Go to Cart</button>
 </div>
