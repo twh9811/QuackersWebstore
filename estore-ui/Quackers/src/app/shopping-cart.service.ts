@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-
 import { Observable,of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators'
-
 import { Cart } from './shopping-cart';
 
 @Injectable({
@@ -40,7 +38,7 @@ httpOptions = {
   }
 
   updateCart(cart : Cart): Observable<HttpResponse<any>> {
-    const url = `${this.apiURL}/cart`;
+    const url = `${this.apiURL}/`;
 
     // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
     return this.http.put<HttpResponse<any>>(url, cart, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
@@ -57,6 +55,7 @@ httpOptions = {
     );
 
   }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.

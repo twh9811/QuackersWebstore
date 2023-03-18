@@ -1,11 +1,7 @@
 <p>shopping-cart works!</p>
-<div *ngIf="account">
-    <div><span>hello </span>{{account.username}}</div>
-    <div><span>your customer id is</span>{{cart.customerId}}</div>
-    
-
+<div *ngIf="account && cart">
+    <div><span>Hello </span>{{account.username}}</div>
+    <div><span>Your Customer Id Is: </span>{{cart.customerId}}</div>
+    <br>
+    <div *ngFor="let duck of ducks">Name: {{duck.name}} - Quantity: {{getDuckQuantity(duck.id)}}</div>
 </div>
-<nav>
-    <a routerLink="/changedPage">Test Data Persistence</a>
-    <a routerLink="/cart">Go to Shopping Cart </a>
-</nav>
