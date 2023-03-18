@@ -175,29 +175,34 @@ not have access to a shopping cart.
 
 ## OO Design Principles
 
-### Open/Closed Principle (_**NEEDS DIAGRAM**_)
+### Open/Closed Principle
 
-The Open/Closed Principle is that software entities should be open for
-extension but closed for modification. Our Domain Analysis illustrates this by
-creating multiple states/ entities that can be used in other entities through
-extension but cannot be changed/ modified by them. An example of this is that
-the user account can include a shopping cart, but the shopping cart alone
-cannot modify the user account by itself. A way that we could possibly follow
-this principle better could be to either break down our design into more
-specific details by creating more entities
+The Open/Closed Principle is that software entities should be open for 
+extension but closed for modification. Our Model Tier UML diagram illustrates 
+this by creating multiple states/entities that can be used in other entities 
+through extension but cannot be changed/modified by them. 
 
-### Pure Fabrication (_**NEEDS DIAGRAM**_)
+An example of this is our Account class. Our Account class on its own is an
+abstract class that supplies basic functionality and necessary properties
+to classes that implement it, such as our UserAccount and OwnerAccount classes.
 
-This principle is applied in our design with our user account. This is merely a
-way to store a username, password, and payment information in an easy manner.
-Our authentication system is going to be handling all the creation,
-establishing, and verifying of the credentials within it. If the user account
-is being created, the authentication system will store it in its
-records. If an account already exists and somebody is trying to log in, then
-our authentication system will take the data from the user account in its
-records and parse it respectively with its own methods. If a user wants to
-delete their account, the authentication system removes it from its records. A
-user account has no functionality other than storing the data for an account.
+We could follow this principle better by either breaking down our design 
+into more specific components or by creating more entities that share
+functionality.
+
+### Pure Fabrication
+
+This principle is applied in our design with our user account, as seen above in
+the Model Tier UML diagram. This is merely a way to store a username, password, 
+and payment information in an easy manner. Our authentication system is going 
+to be handling all the creation, establishing, and verifying of the credentials 
+within it. If the user account is being created, the authentication system will 
+store it in its records. If an account already exists and somebody is trying to 
+log in, then our authentication system will take the data from the user account 
+in its records and parse it respectively with its own methods. If a user wants 
+to delete their account, the authentication system removes it from its records. 
+A user account has no functionality other than storing the data for an account.
+
 Our shopping cart would most likely serve to benefit from pure fabrication. We
 need something to handle the product methods. Right now, we would have to add
 multiple methods to our shopping cart class to gather all the information
@@ -210,7 +215,7 @@ applied in other situations than the checkout, such as showing the total value
 of all the items in the shopping cart when a user is not on the checkout
 screen.
 
-### Single Responsibility (_**NEEDS DIAGRAM**_)
+### Single Responsibility
 
 As of now, our design makes use of the single responsibility object-oriented
 design principle by separating our entity objects from our data accessor
@@ -224,7 +229,7 @@ multiple classes that would encompass all the original endpoints. Finally, our
 inventory class will serve as an information expert on products, allowing
 products to be added, removed, edited, and searched based on specific
 parameters. Separating our responsibilities like this makes our code more
-readable and easier to work on.<br><br>
+readable and easier to work on.
 
 To incorporate the single responsibility object-oriented design principle even
 more into our design, I suggest that for our duck class that the property
@@ -235,13 +240,15 @@ be saved in a profile entity object that is linked to the customer entity
 object. However, certain information, such as the customer’s name, would remain
 stored in the customer entity object.
 
-### Information Expert (_**REFERENCES MODEL UML**_)
+![Inventory Controller UML Diagram](inventory-controller-uml.png)
+
+### Information Expert
 
 The responsibility should be assigned to the object that has the information
 that allows the task to be completed.
 
 Applications:<br>
-The model tier UML diagrams above adhere to the information expert principle.
+The Model Tier UML diagram above adhere to the information expert principle.
 For example, in the shopping cart class, the shopping cart is given the
 responsibility of checking out and removing the item. This adheres to the
 principle because since the object holds the item, we can assign the
