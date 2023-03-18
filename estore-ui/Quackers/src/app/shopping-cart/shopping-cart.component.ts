@@ -40,9 +40,6 @@ export class ShoppingCartComponent implements OnInit {
       this.account = account;
       this.validateAuthorization();
       this.getCart();
-      if(!this.cart()) {
-        this.createCart();
-      }
     });
   }
 
@@ -51,7 +48,14 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   getCart(): void {
-    this.cartService.getCart(this.sessionService.session.id).subscribe(cart => this.cart = cart);
+    this.cartService.getCart(this.sessionService.session.id).subscribe(cart => {
+      if(cart) {
+         this.cart = cart;
+         return;
+      }
+  
+      this.createCart();
+    });
   }
 
   createCart() : void {
