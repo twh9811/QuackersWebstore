@@ -1,7 +1,8 @@
 <div class="header-btn-container">
-    <app-duck-search></app-duck-search>
+    <app-duck-search *ngIf="ducks.length != 0"></app-duck-search>
 </div>
-<div class="duck-container">
+<div *ngIf="ducks.length == 0">Loading ducks...</div>
+<div class="duck-container" *ngIf="ducks.length != 0">
     <div *ngFor="let duck of ducks">
         <div class="duck-box">
             <div class="duck-header">
@@ -19,3 +20,4 @@
         </div>
     </div>
 </div>
+<button routerLink="/cart" *ngIf="cart">Go to Cart</button><br>

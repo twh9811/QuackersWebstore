@@ -96,7 +96,7 @@ export class ProductService {
   
   /** Log a ProductService message with the MessageService */
   private log(notification: string) {
-    this.notificatinService.add(`HeroService: ${notification}`);
+    this.notificatinService.add(`ProductService: ${notification}`, 3);
   }
   /**
    * Handle http operations that failed.
