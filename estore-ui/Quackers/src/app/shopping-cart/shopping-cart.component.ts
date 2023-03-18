@@ -15,8 +15,10 @@ import { NotificationService } from '../notification.service';
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent implements OnInit {
-  account! : Account;
-  cart : Cart | undefined;
+
+  private account: Account | undefined = undefined;
+  private cart : Cart | undefined = undefined;
+  
   ducks: Duck[] = [];
 
   constructor(private router : Router,

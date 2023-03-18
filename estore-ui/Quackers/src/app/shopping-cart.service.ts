@@ -48,6 +48,8 @@ httpOptions = {
         catchError(this.handleError<HttpResponse<any>>('updateCart')));
   }
 
+  deleteCart(cart : Cart) : Observable<
+
 
   /**
    * Handle Http operation that failed.
