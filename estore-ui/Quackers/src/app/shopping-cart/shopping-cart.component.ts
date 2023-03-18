@@ -65,8 +65,8 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   clearCart() : void {
-    if(!this.getCart == undefined){
-      this.cart?.items.clear();
+    if(this.getCart){
+      this.cart.items.clear();
     this.cartService.updateCart(this.cart).subscribe(cart => this.cart = cart);
     }
   }
@@ -82,6 +82,6 @@ export class ShoppingCartComponent implements OnInit {
     }
   }
 
-  
+
 
 }
