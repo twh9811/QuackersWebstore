@@ -125,8 +125,20 @@ public class ShoppingCartControllerTest {
 
     @Test
     public void testGetShoppingCartsNoCarts() throws IOException{
-        // When getShoppingCarts is called return the Shopping Carts created above
+        // When getShoppingCarts is called return null
         when(mockCartDAO.getShoppingCarts()).thenReturn(null);
+
+        // Invoke
+        ResponseEntity<ShoppingCart[]> response = cartController.getShoppingCarts();
+
+        // Analyse
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    }
+
+    @Test
+    public void testGetShoppingCartsEmpty() throws IOException{
+        // When getShoppingCarts is called return an empty array
+        when(mockCartDAO.getShoppingCarts()).thenReturn(new ShoppingCart[0]);
 
         // Invoke
         ResponseEntity<ShoppingCart[]> response = cartController.getShoppingCarts();
@@ -214,7 +226,8 @@ public class ShoppingCartControllerTest {
         ShoppingCart cart = new ShoppingCart(customerId, items);
         when(mockCartDAO.updateShoppingCart(cart)).thenReturn(cart);
 
-        cart.removeItems(2);
+        items.remove("2");
+        cart.setItems(items);
 
         ResponseEntity<ShoppingCart> updateReponse = cartController.updateShoppingCart(cart);
 

@@ -171,6 +171,7 @@ shopper will have when they register to the site. A OwnerAccount is created on
 startup and can not be regsitered or created directly. The UserAccount's ID is
 linked to their own Shopping Cart ID, an OwnerAccount's ID is not and they do
 not have access to a shopping cart.
+
 ![Model Tier UML Diagram](model-uml.png)
 
 ## OO Design Principles
