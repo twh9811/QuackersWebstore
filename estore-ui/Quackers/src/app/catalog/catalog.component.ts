@@ -79,13 +79,22 @@ export class CatalogComponent implements OnInit {
    * @param duckId The id of the duck being added
    */
   addDuck(duckId: number): void {
+
     this.productService.getDuck(duckId as number).subscribe(duck => {
-      if (duck.quantity < 1) {
+
+      if (!duck || duck.quantity < 1) {
+        this.notificationService.add(`Thee duck with the id of ${duckId} is no longer available!`, 3);
         return;
       }
-      duck.quantity --;
+    
       this.cartService.addItem(this.cart!, duckId!, 1);
-      this.cartService.updateCart(this.cart!).subscribe();
+      this.cartService.updateCart(this.cart!).subscribe(response => {
+        if(response.status == 200) {
+          this.notificationService.add(`Successfully added one duck with the id of ${duckId} to your cart!`, 3);
+          return;
+        }
+        this.notificationService.add(`Failed to add the duck with the id of ${duckId} to your cart!`, 3);
+      });
     });
   }
 

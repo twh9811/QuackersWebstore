@@ -9,6 +9,9 @@
                 <div><span>Price: </span><span>{{createForm.get('price')?.value}}</span></div>
             </div>
             <div class="form-control-container">
+                <div><span>Quantity Available: </span><span>{{createForm.get('quantity')?.value}}</span></div>
+            </div>
+            <div class="form-control-container">
                 <div><span>Size: </span><span>{{createForm.get('size')?.value}}</span></div>
             </div>
             <div class="form-control-container">
@@ -37,7 +40,7 @@
 </form>
 <br>
 <div class="add-to-cart-container">
-    <input type="number" min="1" max="{{createForm.get('Quantity')}}" value="1" class="quantity-input" id=quantityInput> 
+    <input type="number" min="1" max="{{createForm.get('quantity')?.value}}" value="1" class="quantity-input" id=quantityInput [(ngModel)]="quantityInput"> 
     <button class="duck-add-btn gen-btn"(click)="addDuck()">Add to Cart</button>
 </div> 
 <div class="duck-btn-container">

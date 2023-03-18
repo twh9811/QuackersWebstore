@@ -87,7 +87,7 @@ export class ProductService {
       return of([]);
     }
     return this.http.get<Duck[]>(url).pipe(
-      tap( x => x.length ?
+      tap( x => x?.length ?
         this.log(`found ducks matching "${term}"`) :
         this.log(`no ducks matching "${term}"`)),
       catchError(this.handleError<Duck>('getProduct'))

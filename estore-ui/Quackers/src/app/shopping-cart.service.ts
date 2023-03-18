@@ -61,30 +61,28 @@ httpOptions = {
     );
   }
 
-  addItem(cart : Cart, itemId : number, quantity : number): Observable<Cart> {
-    if (!cart.items[itemId]) {
-      cart.items[itemId] = quantity;
-    }
-    cart.items[itemId] += quantity;
+  addItem(cart : Cart, itemId : number, quantity : number): Observable<HttpResponse<any>> {
+    let cartQuantity = cart.items[itemId] ? cart.items[itemId] + quantity : quantity;
+    cart.items[itemId] = cartQuantity;
     return this.updateCart(cart);
   }
 
-  updateCart(cart : Cart): Observable<any> {
-    const url = `${this.apiURL}/`;
-    return this.http.put(url, cart, this.httpOptions).pipe(
-      tap(_ => console.log(`Updated cart`)),
-      catchError(this.handleError<any>('updateCart'))
-    );
-  }
-
-  // updateCart(cart : Cart): Observable<HttpResponse<any>> {
+  // updateCart(cart : Cart): Observable<any> {
   //   const url = `${this.apiURL}/`;
-
-  //   // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
-  //   return this.http.put<HttpResponse<any>>(url, cart, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
-  //     .pipe(tap(_ => console.log(`Updated cart`)),
-  //       catchError(this.handleError<HttpResponse<any>>('updateCart')));
+  //   return this.http.put(url, cart, this.httpOptions).pipe(
+  //     tap(_ => console.log(`Updated cart`)),
+  //     catchError(this.handleError<any>('updateCart'))
+  //   );
   // }
+
+  updateCart(cart : Cart): Observable<HttpResponse<any>> {
+    const url = `${this.apiURL}/`;
+
+    // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
+    return this.http.put<HttpResponse<any>>(url, cart, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+      .pipe(tap(_ => console.log(`Updated cart`)),
+        catchError(this.handleError<HttpResponse<any>>('updateCart')));
+  }
 
   deleteCart(id : number) : Observable<Cart> {
     const url = `${this.apiURL}/${id}`;

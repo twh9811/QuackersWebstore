@@ -22,7 +22,7 @@ export class DuckDetailComponent implements OnInit {
   private _duckId: number | undefined = undefined;
   cart: Cart | undefined = undefined;
   duck: Duck | undefined = undefined;
-  //quantityInput : Number;
+  quantityInput : number = 1;
 
   createForm = this.formBuilder.group({
     name: '',
@@ -82,8 +82,19 @@ export class DuckDetailComponent implements OnInit {
 
   addDuck(): void {
     this.productService.getDuck(this._duckId as number).subscribe(duck => {
-      this.cartService.addItem(this.cart!, this._duckId!, 1);
-      this.cartService.updateCart(this.cart!).subscribe();
+      if(!duck) {
+        this.notificationService.add(`Thee duck with the id of ${this._duckId} is no longer available!`, 3);
+        return;
+      }
+
+      this.cartService.addItem(this.cart!, this._duckId!, this.quantityInput);
+      this.cartService.updateCart(this.cart!).subscribe(response => {
+        if(response.status == 200) {
+          this.notificationService.add(`Successfully added ${this.quantityInput} the duck(s) with the id of ${this._duckId!} to your cart!`, 3);
+          return;
+        }
+        this.notificationService.add(`Failed to add the duck with the id of ${this._duckId!} to your cart!`, 3);
+      });
     });
   }
 
