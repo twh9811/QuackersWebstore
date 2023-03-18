@@ -63,7 +63,7 @@ export class CatalogComponent implements OnInit {
   }
 
   /**
-  * Validates that a user is an admin
+  * Validates that a user is an customer
   * If not, they are sent back to the login page
   */
   private validateAuthorization(): void {
