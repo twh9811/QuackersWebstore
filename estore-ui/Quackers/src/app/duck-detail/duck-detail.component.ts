@@ -7,6 +7,8 @@ import { Duck, DuckOutfit } from '../duck';
 import { NotificationService } from '../notification.service';
 import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
+import { Cart } from '../shopping-cart';
+import { CartService } from '../shopping-cart.service';
 
 @Component({
   selector: 'app-duck-detail',
@@ -17,6 +19,9 @@ import { SessionService } from '../session.service';
 export class DuckDetailComponent implements OnInit {
   private _account: Account | undefined = undefined;
   private _duckId: number | undefined = undefined;
+  cart: Cart | undefined = undefined;
+  duck: Duck | undefined = undefined;
+
   createForm = this.formBuilder.group({
     name: '',
     quantity: 0,
@@ -36,7 +41,8 @@ export class DuckDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
-    private sessionService: SessionService) { }
+    private sessionService: SessionService,
+    private cartService: CartService) { }
 
   ngOnInit(): void {
     if (!this.sessionService.session) {
@@ -50,6 +56,9 @@ export class DuckDetailComponent implements OnInit {
       this._account = account;
 
       this.validateAuthorization();
+      this.cartService.getCartAndCreate(this._account.id).then((cart) => {
+        this.cart = cart;
+      });
       this.retrieveDuckId();
       if (this._duckId) {
         this.loadDuck();
@@ -59,6 +68,17 @@ export class DuckDetailComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/catalog']);
+  }
+
+  addDuck(): void {
+    this.productService.getDuck(this._duckId as number).subscribe(duck => {
+      if (duck.quantity < 1) {
+        this.handleInvalidDuckId(this._duckId);
+        return;
+      }
+      this.cartService.addItem(this.cart!, this._duckId!, 1);
+      this.cartService.updateCart(this.cart!).subscribe();
+    });
   }
 
   /**

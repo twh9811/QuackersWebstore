@@ -36,4 +36,4 @@
     </div>
 </form>
 <br>
-<button (click)="goBack()">Go Back</button><button (click)="goBack()">Add to cart</button>
+<button (click)="goBack()">Go Back</button><button (click)="addDuck()">Add to cart</button><button routerLink="/cart" *ngIf="cart">Go to Cart</button>

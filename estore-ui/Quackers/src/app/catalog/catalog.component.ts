@@ -78,8 +78,14 @@ export class CatalogComponent implements OnInit {
    * 
    * @param duck The duck being added
    */
-  addDuck(duck: Duck): void {
-
+  addDuck(duckId: number): void {
+    this.productService.getDuck(duckId as number).subscribe(duck => {
+      if (duck.quantity < 1) {
+        return;
+      }
+      this.cartService.addItem(this.cart!, duckId!, 1);
+      this.cartService.updateCart(this.cart!).subscribe();
+    });
   }
 
   /**
