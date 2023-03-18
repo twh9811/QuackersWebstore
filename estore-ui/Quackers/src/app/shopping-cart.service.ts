@@ -12,7 +12,7 @@ export class CartService {
 
   private apiURL = 'http://localhost:8080/cart';
 
-httpOptions = {
+  httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
@@ -66,14 +66,6 @@ httpOptions = {
     cart.items[itemId] = cartQuantity;
     return this.updateCart(cart);
   }
-
-  // updateCart(cart : Cart): Observable<any> {
-  //   const url = `${this.apiURL}/`;
-  //   return this.http.put(url, cart, this.httpOptions).pipe(
-  //     tap(_ => console.log(`Updated cart`)),
-  //     catchError(this.handleError<any>('updateCart'))
-  //   );
-  // }
 
   updateCart(cart : Cart): Observable<HttpResponse<any>> {
     const url = `${this.apiURL}/`;

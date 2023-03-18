@@ -8,18 +8,18 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { DuckDetailComponent } from './duck-detail/duck-detail.component';
 
 const routes: Routes = [
-  { path: "", redirectTo: "/login", pathMatch: "full"},
+  { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: 'inventory', component: InventoryManagementComponent },
-  { path: 'inventory/product', component: ProductCreateComponent},
-  { path: 'inventory/product/:id', component: ProductCreateComponent},
-  { path: "login", component : LoginComponent},
-  { path: "catalog", component : CatalogComponent},
-  { path: "catalog/:id", component : DuckDetailComponent},
-  { path: "cart", component : ShoppingCartComponent},
+  { path: 'inventory/product', component: ProductCreateComponent },
+  { path: 'inventory/product/:id', component: ProductCreateComponent },
+  { path: "login", component: LoginComponent },
+  { path: "catalog", component: CatalogComponent },
+  { path: "catalog/:id", component: DuckDetailComponent },
+  { path: "cart", component: ShoppingCartComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
