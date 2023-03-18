@@ -16,8 +16,8 @@ import { NotificationService } from '../notification.service';
 })
 export class ShoppingCartComponent implements OnInit {
 
-  private account: Account | undefined = undefined;
-  private cart : Cart | undefined = undefined;
+  account: Account | undefined = undefined;
+  cart : Cart | undefined = undefined;
   
   ducks: Duck[] = [];
 
