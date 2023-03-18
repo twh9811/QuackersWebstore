@@ -56,7 +56,7 @@ httpOptions = {
       catchError(this.handleError<Cart>('deleteHero'))
     );
 
-
+  }
   /**
    * Handle Http operation that failed.
    * Let the app continue.
