@@ -15,7 +15,7 @@ import { NotificationService } from '../notification.service';
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent implements OnInit {
-  account : Account | undefined;
+  account! : Account;
   cart : Cart | undefined;
   ducks: Duck[] = [];
 
@@ -33,14 +33,15 @@ export class ShoppingCartComponent implements OnInit {
       this.validateAuthorization();
       return;
     }
-
-    this.getAccount();
-    if( this.getCart() == undefined ){
-      this.createCart();
-    }
-    this.getCart();   
-    //turn the hashmap into somehting readable
-    this.viewCart(); 
+  
+    this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
+      this.account = account;
+      this.validateAuthorization();
+      this.getCart();
+      if(!this.cart()) {
+        this.createCart();
+      }
+    });
   }
 
   getAccount() : void {
@@ -65,10 +66,10 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   clearCart() : void {
-    if(this.getCart){
+    if(this.cart){
       this.cart.items.clear();
-    this.cartService.updateCart(this.cart).subscribe(cart => this.cart = cart);
-    }
+      this.cartService.updateCart(this.cart).subscribe(cart => this.cart = cart);
+  }
   }
 
   /**
