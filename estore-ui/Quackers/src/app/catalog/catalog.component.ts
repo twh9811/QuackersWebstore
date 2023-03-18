@@ -45,7 +45,7 @@ export class CatalogComponent implements OnInit {
       this.cartService.getCartAndCreate(this._account.id).then(cart => {
         if(!cart) {
           this.router.navigate(['/']);
-          this.notificationService.add("Unable to load your cart!", 5);
+          this.notificationService.add("Unable to load your cart!", 3);
           return;
         }
         
