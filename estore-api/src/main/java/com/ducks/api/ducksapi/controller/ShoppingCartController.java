@@ -1,16 +1,8 @@
 package com.ducks.api.ducksapi.controller;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.ducks.api.ducksapi.model.Duck;
-import com.ducks.api.ducksapi.model.ShoppingCart;
-import com.ducks.api.ducksapi.persistence.DuckDAO;
-import com.ducks.api.ducksapi.persistence.ShoppingCartDAO;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +14,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ducks.api.ducksapi.model.ShoppingCart;
+import com.ducks.api.ducksapi.persistence.ShoppingCartDAO;
 
 /**
  * Handles the REST API requests for the Shopping Cart resource
@@ -39,7 +34,6 @@ public class ShoppingCartController {
 
     private static final Logger LOG = Logger.getLogger(ShoppingCartController.class.getName());
     private ShoppingCartDAO cartDao;
-    private DuckDAO duckDAO;
 
     /**
      * Creates a REST API controller to reponds to shopping cart requests
@@ -48,9 +42,8 @@ public class ShoppingCartController {
      *                CRUD operations<br>
      *                This dependency is injected by the Spring Framework
      */
-    public ShoppingCartController(ShoppingCartDAO cartDao, DuckDAO duckDAO) {
+    public ShoppingCartController(ShoppingCartDAO cartDao) {
         this.cartDao = cartDao;
-        this.duckDAO = duckDAO;
     }
 
     /**
@@ -100,95 +93,6 @@ public class ShoppingCartController {
             }
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (IOException ioe) {
-            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    /**
-     * Retrieves a {@link ShoppingCart cart}'s price
-     * 
-     * @param id The id of the cart
-     * @return 200 + String, if the cart is found and has no invalid ducks
-     *         400, if the cart contains a bad duck id.
-     *         404, if the cart is not found
-     *         500, if there's an issue with serialization/deserialization
-     */
-    @GetMapping("/{id}/price")
-    public ResponseEntity<String> getShoppingCartPrice(@PathVariable int id) {
-        LOG.info("GET /cart/" + id + "/price");
-        try {
-            ShoppingCart cart = cartDao.getShoppingCart(id);
-            if (cart == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-
-            double total = 0.0;
-
-            // Used to add the item prices up
-            for (String duckIdStr : cart.getItems()) {
-                int duckId = Integer.parseInt(duckIdStr);
-
-                Duck duck = duckDAO.getDuck(duckId);
-                if (duck == null) {
-                    // Called if a duck no longer exists in inventory
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                }
-
-                int quantity = cart.getItemAmount(duckId);
-                double price = quantity * duck.getPrice();
-
-                total += price;
-            }
-
-            // Used to round the double to two decimal places (rounds upward)
-            DecimalFormat format = new DecimalFormat(".##");
-            return new ResponseEntity<String>(format.format(total), HttpStatus.OK);
-
-        } catch (IOException ioe) {
-            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    /**
-     * Retrieves a {@link ShoppingCart cart}'s invalid duck ids
-     * 
-     * @param id The id of the cart
-     * @return 200 + List<String>, if the cart is found and has invalid duck ids
-     *         204, if the cart is found and has no invalid duck ids
-     *         404, if the cart is not found
-     *         500, if there's an issue with serialization/deserialization
-     */
-    @GetMapping("/{id}/invalidDuckIds")
-    public ResponseEntity<List<String>> getShoppingCartInvalidDuckIds(@PathVariable int id) {
-        LOG.info("GET /cart/" + id + "/invalidDuckIds");
-        try {
-            ShoppingCart cart = cartDao.getShoppingCart(id);
-
-            if (cart == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-
-            List<String> badIds = new ArrayList<>();
-
-            // Loops through items to collect all invalid duck ids
-            for (String duckIdStr : cart.getItems()) {
-                int duckId = Integer.parseInt(duckIdStr);
-
-                Duck duck = duckDAO.getDuck(duckId);
-                if (duck != null) {
-                    continue;
-                }
-
-                badIds.add(duckIdStr);
-            }
-
-            if (badIds.size() == 0) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<List<String>>(badIds, HttpStatus.OK);
         } catch (IOException ioe) {
             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
