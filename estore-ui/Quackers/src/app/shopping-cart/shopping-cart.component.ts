@@ -74,7 +74,7 @@ export class ShoppingCartComponent implements OnInit {
   clearCart() : void {
     if(this.cart){
       this.cart.items.clear();
-      this.cartService.updateCart(this.cart).subscribe(cart => this.cart = cart);
+      this.cartService.updateCart(this.cart).subscribe();
   }
   }
 
