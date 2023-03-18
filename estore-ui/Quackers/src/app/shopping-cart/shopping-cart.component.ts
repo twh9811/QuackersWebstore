@@ -23,30 +23,52 @@ export class ShoppingCartComponent implements OnInit {
     private route : ActivatedRoute,
     private accountService : AccountService,
     private cartService : CartService,
-    private session : SessionService,
+    private sessionService : SessionService,
     private productService: ProductService,
     private notificationService: NotificationService, ) {}
 
   ngOnInit() : void {
+
+    if (!this.sessionService.session) {
+      this.validateAuthorization();
+      return;
+    }
+
     this.getAccount();
-    this.getCart();
-    this.getDucks();
-    
+    if( this.getCart() == undefined ){
+      this.createCart();
+    }
+    this.getCart();   
+    //turn the hashmap into somehting readable
+    this.viewCart(); 
   }
 
   getAccount() : void {
-    this.accountService.getAccount(this.session.session.id).subscribe(account => this.account = account);
+    this.accountService.getAccount(this.sessionService.session.id).subscribe(account => this.account = account);
   }
 
   getCart(): void {
-    this.cartService.getCart(this.session.session.id).subscribe(cart => this.cart = cart);
+    this.cartService.getCart(this.sessionService.session.id).subscribe(cart => this.cart = cart);
   }
 
-  /**
-   * Gets the ducks from the product service
-   */
-  getDucks(): void {
-    this.productService.getDucks().subscribe(ducks => this.ducks = ducks);
+  createCart() : void {
+    this.cart = {
+     customerId : this.sessionService.session.id,
+     items : new Map<string, number>()
+   };
+    this.cartService.createCart(this.cart).subscribe(cart => this.cart = cart);
+  }
+
+
+  viewCart() : void {
+
+  }
+
+  clearCart() : void {
+    if(!this.getCart == undefined){
+      this.cart?.items.clear();
+    this.cartService.updateCart(this.cart).subscribe(cart => this.cart = cart);
+    }
   }
 
   /**
@@ -59,5 +81,7 @@ export class ShoppingCartComponent implements OnInit {
       this.router.navigate(['/']);
     }
   }
+
+  
 
 }
