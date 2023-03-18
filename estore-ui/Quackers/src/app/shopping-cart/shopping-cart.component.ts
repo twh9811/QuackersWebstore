@@ -30,15 +30,27 @@ export class ShoppingCartComponent implements OnInit {
     private notificationService: NotificationService,) { }
 
   ngOnInit(): void {
+    // Validates that an account is indeed logged in
     if (!this.sessionService.session) {
       this.validateAuthorization();
       return;
     }
 
+    // Gets account and validates it's authorization before attempting to retrieve it's cart
     this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
       this.account = account;
       this.validateAuthorization();
-      this.getCart();
+      // Gets cart before attempting to load items from an undefined cart
+      this.cartService.getCartAndCreate(this.account.id).then((cart) => {
+        if(!cart) {
+          this.router.navigate(['/']);
+          this.notificationService.add("Unable to load your cart!", 3);
+          return;
+        }
+
+        this.cart = cart;
+        this.loadDucks();
+      });
     });
   }
 
@@ -60,42 +72,6 @@ export class ShoppingCartComponent implements OnInit {
    */
   clearCart(): void {
     this.updateCart(new Map<string, number>());
-  }
-
-  /**
-   * Retrieves the cart for the account currently logged in
-   */
-  private getCart(): void {
-    if(!this.account) return;
-
-    this.cartService.getCart(this.account.id).subscribe(cart => {
-      if(!cart) {
-        this.createCart();
-        return;
-      }     
-
-      this.cart = cart;
-      this.loadDucks();
-    });
-  }
-
-  /**
-   * Creates a shopping cart
-   */
-  private createCart(): void {
-    this.cart = <Cart>{
-      customerId: this.sessionService.session.id,
-      items: new Map<string, number>()
-    };
-
-    // Creates the cart, if something goes wrong it sets the cart to undefined and errors
-    this.cartService.createCart(this.cart).subscribe(cart => {
-      if (cart) return;
-    
-      // If something goes wrong (idk how it would but still)
-      this.cart = undefined;
-      this.notificationService.add("Uh Oh! Unable to create a cart", 3);
-    });
   }
 
   /**
@@ -158,6 +134,7 @@ export class ShoppingCartComponent implements OnInit {
         continue;
       }
 
+      // Updates Quantity
       itemMap.set(key, duck.quantity);
     }
 
@@ -188,5 +165,4 @@ export class ShoppingCartComponent implements OnInit {
       this.router.navigate(['/']);
     }
   }
-
 }

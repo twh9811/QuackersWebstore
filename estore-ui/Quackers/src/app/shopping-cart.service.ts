@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import { Observable,of } from 'rxjs';
+import { firstValueFrom, Observable,of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators'
 import { Cart } from './shopping-cart';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +16,36 @@ httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private notificationService: NotificationService) { }
 
   getCart(id : number) : Observable<Cart>{
     const url = `${this.apiURL}/${id}`;
     return this.http.get<Cart>(url).pipe(
       tap(_ => console.log(`got cart ${id}`)), catchError(this.handleError<any>('get cart'))
     );
+  }
+
+    /**
+   * Gets a cart for the user with the given id. If the cart doesn't exist,
+   * it will attempt to create one
+   * 
+   * @param id The id of the user
+   * @returns A promise containing the cart or undefined if unable to create one
+   */
+  async getCartAndCreate(id: number): Promise<Cart | undefined> {
+    let cart = await firstValueFrom(this.getCart(id));
+    if(cart) return cart;
+
+    const newCart = <Cart>{
+      customerId: id,
+      items: new Object()
+    };
+
+    cart = await firstValueFrom(this.createCart(newCart))
+    if(cart) return cart;
+
+    this.notificationService.add(`Unable to create a cart for the user with an id of ${id}`, 3);
+    return undefined;
   }
 
   /**
