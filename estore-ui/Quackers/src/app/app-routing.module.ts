@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: "login", component : LoginComponent},
   { path: "changedPage", component : ChangePageTestComponent},
   { path: "catalog", component : CatalogComponent},
-  { path: "inventory/catalog/:id", component : DuckDetailComponent}
+  { path: "catalog/:id", component : DuckDetailComponent}
 ];
 
 @NgModule({

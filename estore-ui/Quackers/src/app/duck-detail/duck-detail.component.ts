@@ -41,6 +41,7 @@ export class DuckDetailComponent implements OnInit {
   ngOnInit(): void {
     if (!this.sessionService.session) {
       this.validateAuthorization();
+      this.loadDuck();
       return;
     }
 
@@ -56,63 +57,16 @@ export class DuckDetailComponent implements OnInit {
     })
   }
 
-  /**
-   * Called upon form submission
-   */
-  onSubmit(): void {
-    if (!this.createForm.valid) {
-      this.handleInvalidForm();
-      return;
-    }
-
-    let formDuck = this.convertFormToDuck();
-    let observable = this._duckId ? this.productService.updateDuck(formDuck) : this.productService.createDuck(formDuck);
-
-    observable.subscribe(response => {
-      let status = response.status;
-      switch (status) {
-        // Duck Update Response
-        case 200:
-          this.notificationService.add(`Successfully updated the duck with an id of ${this._duckId}`, 3);
-          break;
-        // Duck Update Reponse - Not possible in theory 
-        case 404:
-          this.notificationService.add(`Unable to find a duck with an id of ${this._duckId}`, 3);
-          break;
-        // Duck Creation Response
-        case 201:
-          let duck = response.body as Duck;
-          this.notificationService.add(`Created a duck with an id of ${duck.id}`, 3);
-          break;
-        // Both Duck Update and Creation Response
-        case 409:
-          this.notificationService.add(`A duck already exists with the name ${formDuck.name}!`, 3);
-          break;
-        // Both Duck Creation and Update Response - Shouldn't be possible due to form validation
-        case 400:
-          let actionStr = this._duckId ? "update the given duck" : "create the duck";
-          this.notificationService.add(`Failed to ${actionStr} due to a bad value being entered!`, 3);
-          break;
-        // Both Duck Creation and Update Response
-        case 500:
-          this.notificationService.add(`Something went wrong. Please try again later!`, 3);
-          break;
-      }
-    });
-
-    this.goBack();
-  }
-
   goBack(): void {
-    this.router.navigate(['/inventory']);
+    this.router.navigate(['/catalog']);
   }
 
   /**
-   * Validates that a user is an admin
+   * Validates that a user is a customer
    * If not, they are sent back to the login page
    */
   private validateAuthorization(): void {
-    if (!this._account?.adminStatus) {
+    if (this._account?.adminStatus) {
       this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
       this.router.navigate(['/']);
     }
@@ -178,60 +132,4 @@ export class DuckDetailComponent implements OnInit {
   }
 
 
-  /**
-   * Finds the invalid controls and sends a notification that tells the user to fix the invalid controls
-   */
-  private handleInvalidForm(): void {
-    const invalid = [];
-    const controls = this.createForm.controls;
-
-    // Sets the type of name to the type of the attributes in <controls>
-    let name: keyof typeof controls;
-    for (name in controls) {
-      let control = controls[name];
-      if (!control.invalid) {
-        continue;
-      }
-
-      if (typeof control.value === "number") {
-        this.notificationService.add(`${name} must be greater than or equal to 0!`, 3);
-        continue;
-      }
-
-      if (name === "name") {
-        this.notificationService.add(`${name} must not be empty or blank!`, 3);
-        continue;
-      }
-
-      this.notificationService.add(`${name} is a required field!`, 3);
-    }
-
-  }
-
-  /**
-   * Creates a duck object from the values provided in createForm
-   * 
-   * @returns The created duck object
-   */
-  private convertFormToDuck(): Duck {
-    let formValue = this.createForm.value;
-
-    let duckOutfit: DuckOutfit = {
-      hatUID: formValue.hatUID as number,
-      shirtUID: formValue.shirtUID as number,
-      shoesUID: formValue.shoesUID as number,
-      handItemUID: formValue.handItemUID as number,
-      jewelryUID: formValue.jewelryUID as number,
-    };
-
-    return <Duck>{
-      id: this._duckId ? this._duckId : -1,
-      name: formValue.name as string,
-      quantity: formValue.quantity as number,
-      price: formValue.price as number,
-      size: formValue.size as string,
-      color: formValue.color as string,
-      outfit: duckOutfit
-    };
-  }
 }

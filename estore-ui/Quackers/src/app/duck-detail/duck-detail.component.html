@@ -1,74 +1,39 @@
-<form id="create-form" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+<form id="create-form" [formGroup]="createForm" >
     <div id="control-group-container">
         <div class="controls-container">
             <span class="control-group-header">General</span>
             <div class="form-control-container">
-                <label for="name_input">Name</label><br>
-                <input class="form-control" id="name_input" type="text" formControlName="name" pattern="^\s*\S+.*$"
-                    required><br><br>
+                <div><span>Name: </span><span>{{createForm.get('name')?.value}}</span></div>
             </div>
             <div class="form-control-container">
-                <label for="quantity_input">Quantity</label><br>
-                <input class="form-control" id="quantity_input" type="number" formControlName="quantity" min="0"
-                    required><br><br>
+                <div><span>Price: </span><span>{{createForm.get('price')?.value}}</span></div>
             </div>
             <div class="form-control-container">
-                <label for="price_input">Price</label><br>
-                <input class="form-control" id="price_input" type="number" step="0.01" min="0.00" formControlName="price"
-                    required><br><br>
+                <div><span>Size: </span><span>{{createForm.get('size')?.value}}</span></div>
             </div>
             <div class="form-control-container">
-                <label for="size_input">Size</label><br>
-                <select class="form-control" id="size_input" formControlName="size" required>
-                    <option value="SMALL">Small</option>
-                    <option value="MEDIUM">Medium</option>
-                    <option value="LARGE">Large</option>
-                    <option value="EXTRA_LARGE">Extra Large</option>
-                </select><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="color_input">Color</label><br>
-                <select class="form-control" id="color_input" formControlName="color" required>
-                    <option value="RED">Red</option>
-                    <option value="ORANGE">Orange</option>
-                    <option value="YELLOW">Yellow</option>
-                    <option value="GREEN">Green</option>
-                    <option value="BLUE">Blue</option>
-                    <option value="INDIGO">Indigo</option>
-                    <option value="VIOLET">Violet</option>
-                </select><br><br>
+                <div><span>Color: </span><span>{{createForm.get('color')?.value}}</span></div>
             </div>
         </div>
         <div class="controls-container">
             <span class="control-group-header">Outfit</span>
             <div class="form-control-container">
-                <label for="hat_input">Hat UID</label><br>
-                <input class="form-control" id="hat_input" type="number" formControlName="hatUID" min="0"
-                    required><br><br>
+                <div><span>Hat UID: </span><span>{{createForm.get('hatUID')?.value}}</span></div>
             </div>
             <div class="form-control-container">
-                <label for="shirt_input">Shirt UID</label><br>
-                <input class="form-control" id="shirt_input" type="number" formControlName="shirtUID" min="0"
-                    required><br><br>
+                <div><span>Shirt UID: </span><span>{{createForm.get('shirtUID')?.value}}</span></div>
             </div>
             <div class="form-control-container">
-                <label for="shoes_input">Shoes UID</label><br>
-                <input class="form-control" id="shoes_input" type="number" formControlName="shoesUID" min="0"
-                    required><br><br>
+                <div><span>Shoes UID: </span><span>{{createForm.get('shoesUID')?.value}}</span></div>
             </div>
             <div class="form-control-container">
-                <label for="hand_item_input">Hand Item UID</label><br>
-                <input class="form-control" id="hand_item_input" type="number" formControlName="handItemUID" min="0"
-                    required><br><br>
+                <div><span>Hand Item UID: </span><span>{{createForm.get('handItemUID')?.value}}</span></div>
             </div>
             <div class="form-control-container">
-                <label for="jewelry_input">Jewelry UID</label><br>
-                <input class="form-control" id="jewelry_input" type="number" formControlName="jewelryUID" min="0"
-                    required><br><br>
+                <div><span>Jewelry UID: </span><span>{{createForm.get('jewelryUID')?.value}}</span></div>
             </div>
         </div>
     </div>
-    <button id="submit-btn">Submit</button>
 </form>
 <br>
-<button (click)="goBack()">Back to Inventory Management Page</button>
+<button (click)="goBack()">Go Back</button><button (click)="goBack()">Add to cart</button>
