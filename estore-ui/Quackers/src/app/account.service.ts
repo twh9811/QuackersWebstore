@@ -12,7 +12,6 @@ import { Cart } from './shopping-cart';
 })
 export class AccountService {
   private apiURL = 'http://localhost:8080';
-  //private cartURL = 'http://localhost:8080/cart';
   
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})

@@ -48,4 +48,16 @@ export class ShoppingCartComponent implements OnInit {
   getDucks(): void {
     this.productService.getDucks().subscribe(ducks => this.ducks = ducks);
   }
+
+  /**
+  * Validates that a user is a customer
+  * If not, they are sent back to the login page
+  */
+  private validateAuthorization(): void {
+    if (this.account?.adminStatus) {
+      this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
+      this.router.navigate(['/']);
+    }
+  }
+
 }

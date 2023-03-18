@@ -11,11 +11,12 @@ import { Cart } from './shopping-cart';
 })
 export class CartService {
 
+  private apiURL = 'http://localhost:8080/cart';
+
   constructor(private http: HttpClient) { }
 
   getCart(id : number) : Observable<Cart>{
-    const url = 'http://localhost:8080/cart/1'
-    //const url = `${this.apiURL}/cart/${id}`;
+    const url = `${this.apiURL}/${id}`;
     return this.http.get<Cart>(url).pipe(
       tap(_ => console.log(`got cart ${id}`)), catchError(this.handleError<any>('get cart'))
     );
