@@ -1,8 +1,6 @@
 package com.ducks.api.ducksapi.model;
 
 import java.beans.Transient;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -61,221 +59,21 @@ public class ShoppingCart {
     }
 
     /**
-     * Gets all of the items (ducks) in the shopping cart
+     * Gets the items map
      * 
-     * @return An set of duck ids
+     * @return The items map
      */
-    @Transient
-    public Set<String> getItems() {
-        return items.keySet();
+    public Map<String, Integer> getItems() {
+        return items;
     }
 
     /**
-     * Gets the amount of an item in a shopping cart
+     * Sets the items map
      * 
-     * @param duck The duck for which the quantity is being retrieved
-     * @return The amount of the item in the cart
-     * @throws IllegalArgumentException If the duck is null, or if thrown by
-     *                                  getItemAmount(int)
+     * @param items The new map
      */
-    public int getItemAmount(Duck duck) throws IllegalArgumentException {
-        if (duck == null) {
-            throw new IllegalArgumentException("The passed duck can not be null");
-        }
-
-        return getItemAmount(duck.getId());
-    }
-
-    /**
-     * Gets the amount of an item in a shopping cart
-     * 
-     * @param duckId The id of the duck
-     * @return The amount of the item in the shopping cart
-     * @throws IllegalArgumentException If the cart does not contain a duck with the
-     *                                  id
-     */
-    public int getItemAmount(Integer duckId) throws IllegalArgumentException {
-        if (!this.items.containsKey(duckId.toString())) {
-            throw new IllegalArgumentException("There is no duck with the id " + duckId + " in the shopping cart");
-        }
-
-        return this.items.get(duckId.toString());
-    }
-
-    /**
-     * Adds one of each of the given ducks to the shopping cart
-     * 
-     * @param ducks The Duck objects to add
-     * @throws IllegalArgumentException If thrown by addItems(int...)
-     */
-    public void addItems(Duck... ducks) throws IllegalArgumentException {
-        Integer[] duckIds = convertDuckArrayToIdArray(ducks);
-        addItems(duckIds);
-    }
-
-    /**
-     * Adds one of each given duck id to the cart
-     * 
-     * @param duckIds The duck ids to add
-     * @throws IllegalArgumentException If the duck id array is empty
-     */
-    public void addItems(Integer... duckIds) throws IllegalArgumentException {
-        if (duckIds.length == 0) {
-            throw new IllegalArgumentException("There must be at least one duck id in the entered array");
-        }
-
-        for (Integer duckId : duckIds) {
-            int quantity = items.containsKey(duckId.toString()) ? items.get(duckId.toString()) + 1 : 1;
-            items.put(duckId.toString(), quantity);
-        }
-    }
-
-    /**
-     * Adds a given amount of a given duck to the shopping cart
-     * 
-     * @param duck     The duck being added to the cart
-     * @param quantity The amount of the duck being added to the cart
-     * @throws IllegalArgumentException If the duck is null or if thrown by
-     *                                  addItemAmount(int, int)
-     */
-    public void addItemAmount(Duck duck, int quantity) throws IllegalArgumentException {
-        if (duck == null) {
-            throw new IllegalArgumentException("The passed duck can not be null");
-        }
-
-        addItemAmount(duck.getId(), quantity);
-    }
-
-    /**
-     * Adds a given amount of a given duck to the shopping cart
-     * 
-     * @param duckId   The duck id being added to the cart
-     * @param quantity The amount of the duck being added to the cart
-     * @throws IllegalArgumentException If the quantity is less than or equal to 0
-     */
-    public void addItemAmount(Integer duckId, int quantity) throws IllegalArgumentException {
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("The entered quantity must be greater than 0");
-        }
-
-        int newQuantity = items.containsKey(duckId.toString()) ? items.get(duckId.toString()) + quantity : quantity;
-        items.put(duckId.toString(), newQuantity);
-    }
-
-    /**
-     * Removes the given ducks from the shopping cart
-     * 
-     * @param ducks The duck objects to remove
-     * @throws IllegalArgumentException If thrown by removeItems(int...)
-     */
-    public void removeItems(Duck... ducks) throws IllegalArgumentException {
-        Integer[] duckIds = convertDuckArrayToIdArray(ducks);
-        removeItems(duckIds);
-    }
-
-    /**
-     * Removes the given duck ids from the shopping cart
-     * 
-     * @param duckIds The duck ids to remove
-     * @throws IllegalArgumentException If one of the ducks does not exist in the
-     *                                  shopping cart, or if the duck id array is
-     *                                  empty
-     */
-    public void removeItems(Integer... duckIds) throws IllegalArgumentException {
-        if (duckIds.length == 0) {
-            throw new IllegalArgumentException("There must be at least one duck id in the entered array");
-        }
-
-        // This list keeps track of invalidIds so they can provided in an error message
-        // when the loop completes. This allows us to delete all valid ducks from the
-        // cart before erroring, making it easier to deal with
-        ArrayList<Integer> invalidIds = new ArrayList<>();
-
-        for (Integer duckId : duckIds) {
-            if (!this.items.containsKey(duckId.toString())) {
-                invalidIds.add(duckId);
-                continue;
-            }
-            this.items.remove(duckId.toString());
-        }
-
-        if (invalidIds.size() != 0) {
-            String ids = invalidIds.stream().map(Object::toString).collect(Collectors.joining(", "));
-            throw new IllegalArgumentException(
-                    "Failed to remove the ducks with the following ids from the shopping cart: " + ids);
-        }
-    }
-
-    /**
-     * Removes a set amount of an item
-     * 
-     * @param duck     The duck being removed
-     * @param quantity The amount of the duck to remove
-     * @throws IllegalArgumentException If the duck is null or if thrown by
-     *                                  removeItemAmount(int, int)
-     */
-    public void removeItemAmount(Duck duck, int quantity) throws IllegalArgumentException {
-        if (duck == null) {
-            throw new IllegalArgumentException("The passed duck can not be null");
-        }
-        removeItemAmount(duck.getId(), quantity);
-    }
-
-    /**
-     * Removes a set amount of an item
-     * 
-     * @param duckId   The duck id to remove
-     * @param quantity The amount of the duck to remove
-     * @throws IllegalArgumentException If there is no duck with the given id in the
-     *                                  shopping cart.
-     *                                  If the quantity attempt to be removed is
-     *                                  less than or equal to 0.
-     *                                  If the quantity attempting to be removed
-     *                                  exceeds the amount in the cart.
-     */
-    public void removeItemAmount(Integer duckId, int quantity) throws IllegalArgumentException {
-        if (!this.items.containsKey(duckId.toString())) {
-            throw new IllegalArgumentException("There is no duck with the id " + duckId + " in the shopping cart");
-        }
-
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("The entered quantity must be greater than 0");
-        }
-
-        int shoppingQuantity = this.items.get(duckId.toString());
-        if (shoppingQuantity < quantity) {
-            String exFormat = "Attempted to remove %d of the duck with the id %d but only %d exist in the shopping cart";
-            throw new IllegalArgumentException(String.format(exFormat, quantity, duckId, shoppingQuantity));
-        }
-
-        if (shoppingQuantity - quantity == 0) {
-            this.items.remove(duckId.toString());
-            return;
-        }
-
-        this.items.put(duckId.toString(), shoppingQuantity - quantity);
-    }
-
-    /**
-     * Clears the items in the shopping cart
-     */
-    public void clearItems() {
-        this.items.clear();
-    }
-
-    /**
-     * Converts an array of ducks to an array of their ids. Also removes all null
-     * entries
-     * 
-     * @param ducks The duck array being converted
-     * @return The newly created array of ids
-     */
-    private Integer[] convertDuckArrayToIdArray(Duck[] ducks) {
-        return Arrays.asList(ducks)
-                .stream()
-                .filter(duck -> duck != null)
-                .map(Duck::getId)
-                .toArray(Integer[]::new);
+    public void setItems(Map<String, Integer> items) {
+        this.items = items;
     }
 
     /**
@@ -319,5 +117,4 @@ public class ShoppingCart {
                 .collect(Collectors.joining(", "));
         return String.format(FORMAT, this.customerId, itemsString);
     }
-
 }

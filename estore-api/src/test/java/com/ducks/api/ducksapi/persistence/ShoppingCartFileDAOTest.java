@@ -45,18 +45,9 @@ public class ShoppingCartFileDAOTest {
         mockObjectMapper = mock(ObjectMapper.class);
         testCarts = new ShoppingCart[3];
 
-        ShoppingCart cartOne = new ShoppingCart(0);
-        cartOne.addItemAmount(1, 30);
-        cartOne.addItemAmount(2, 20);
-        cartOne.addItemAmount(3, 10);
-
-        ShoppingCart cartTwo = new ShoppingCart(1);
-        cartTwo.addItemAmount(2, 5);
-        cartTwo.addItemAmount(3, 3);
-
-        ShoppingCart cartThree = new ShoppingCart(2);
-        cartOne.addItemAmount(1, 15);
-        cartOne.addItemAmount(3, 13);
+        ShoppingCart cartOne = new ShoppingCart(0, Map.of("1", 30, "2", 20, "3", 10));
+        ShoppingCart cartTwo = new ShoppingCart(1, Map.of("2", 5, "3", 3));
+        ShoppingCart cartThree = new ShoppingCart(2, Map.of("1", 15, "3", 15));
 
         testCarts[0] = cartOne;
         testCarts[1] = cartTwo;
