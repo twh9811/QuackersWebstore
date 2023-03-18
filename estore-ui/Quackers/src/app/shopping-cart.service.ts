@@ -48,7 +48,13 @@ httpOptions = {
         catchError(this.handleError<HttpResponse<any>>('updateCart')));
   }
 
-  deleteCart(cart : Cart) : Observable<
+  deleteCart(id : number) : Observable<Cart> {
+    const url = `${this.apiURL}/${id}`;
+
+    return this.http.delete<Cart>(url, this.httpOptions).pipe(
+      tap(_ => console.log(`deleted hero id=${id}`)),
+      catchError(this.handleError<Cart>('deleteHero'))
+    );
 
 
   /**
