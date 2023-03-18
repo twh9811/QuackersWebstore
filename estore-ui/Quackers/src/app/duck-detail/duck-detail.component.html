@@ -31,9 +31,16 @@
             </div>
             <div class="form-control-container">
                 <div><span>Jewelry UID: </span><span>{{createForm.get('jewelryUID')?.value}}</span></div>
-            </div>
+            </div>                        
         </div>
     </div>
 </form>
 <br>
-<button (click)="goBack()">Go Back</button><button (click)="addDuck()">Add to cart</button><button routerLink="/cart" *ngIf="cart">Go to Cart</button>
+<div class="add-to-cart-container">
+    <input type="number" min="1" max="{{createForm.get('Quantity')}}" value="1" class="quantity-input" id=quantityInput> 
+    <button class="duck-add-btn gen-btn"(click)="addDuck()">Add to Cart</button>
+</div> 
+<div class="duck-btn-container">
+    <button class="duck-add-btn gen-btn" type="button" (click)="goBack()">Go Back</button>     
+    <button class="duck-add-btn gen-btn" type="button" *ngIf="cart" routerLink="/cart">Go to Cart</button>
+</div>

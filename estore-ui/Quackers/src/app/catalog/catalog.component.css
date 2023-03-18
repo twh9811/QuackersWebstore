@@ -64,53 +64,6 @@ h2 {
     cursor: pointer;
 }
 
-.duck-modify-btn {
-    background-color: black;
-    border: 2px solid black;
-
-    color: white;
-
-}
-
-.duck-modify-btn:hover {
-    background-color: white;
-    border: 2.5px solid black;
-
-    color: black;
-}
-
-.duck-remove-btn {
-    background-color: black;
-    border: 2px solid black;
-
-    color: white;
-}
-
-.duck-remove-btn:hover {
-    background-color: #e74c3c;
-    border: 2.5px solid #e74c3c;
-
-    color: white;
-}
-
-#create-btn {
-    font-size: 15px;
-    background-color: #e67e22;
-
-    border-radius: 25px;
-    border: 2px solid #e67e22;
-
-    color: white;
-    width: 250px;
-}
-
-#create-btn:hover {
-    background-color: white;
-    border: 2.5px solid #e67e22;
-
-    color: #e67e22;
-}
-
 .duck-add-btn {
     background-color: black;
     border: 2px solid black;

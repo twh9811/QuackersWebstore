@@ -61,19 +61,19 @@ httpOptions = {
     );
   }
 
-  addItem(cart : Cart, itemId : number, quantity : 1): Observable<Cart> {
+  addItem(cart : Cart, itemId : number, quantity : number): Observable<Cart> {
     if (!cart.items[itemId]) {
-      cart.items[itemId] = 0;
+      cart.items[itemId] = quantity;
     }
     cart.items[itemId] += quantity;
     return this.updateCart(cart);
   }
-  
+
   updateCart(cart : Cart): Observable<any> {
     const url = `${this.apiURL}/`;
     return this.http.put(url, cart, this.httpOptions).pipe(
       tap(_ => console.log(`Updated cart`)),
-      catchError(this.handleError<any>('updateHero'))
+      catchError(this.handleError<any>('updateCart'))
     );
   }
 

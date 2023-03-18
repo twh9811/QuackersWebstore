@@ -10,6 +10,7 @@ import { SessionService } from '../session.service';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
 
+
 @Component({
   selector: 'app-duck-detail',
   templateUrl: './duck-detail.component.html',
@@ -21,6 +22,7 @@ export class DuckDetailComponent implements OnInit {
   private _duckId: number | undefined = undefined;
   cart: Cart | undefined = undefined;
   duck: Duck | undefined = undefined;
+  //quantityInput : Number;
 
   createForm = this.formBuilder.group({
     name: '',
@@ -59,6 +61,7 @@ export class DuckDetailComponent implements OnInit {
       this.cartService.getCartAndCreate(this._account.id).then((cart) => {
         this.cart = cart;
       });
+      //this.quantityInput = 0;
       this.retrieveDuckId();
       if (this._duckId) {
         this.loadDuck();
@@ -70,12 +73,15 @@ export class DuckDetailComponent implements OnInit {
     this.router.navigate(['/catalog']);
   }
 
+  // addDuck(quantityInput: number): void {
+  //   this.productService.getDuck(this._duckId as number).subscribe(duck => {
+  //     this.cartService.addItem(this.cart!, this._duckId!, quantityInput);
+  //     this.cartService.updateCart(this.cart!).subscribe();
+  //   });
+  // }
+
   addDuck(): void {
     this.productService.getDuck(this._duckId as number).subscribe(duck => {
-      if (duck.quantity < 1) {
-        this.handleInvalidDuckId(this._duckId);
-        return;
-      }
       this.cartService.addItem(this.cart!, this._duckId!, 1);
       this.cartService.updateCart(this.cart!).subscribe();
     });
