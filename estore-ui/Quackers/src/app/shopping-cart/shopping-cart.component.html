@@ -3,6 +3,7 @@
     <div id="customer-info">
         <span>Hello {{account.username}}!</span><br>
         <span *ngIf="!isCartEmpty()">Your cart is listed below.</span>
+        <span *ngIf="isCartEmpty()">Your cart is Empty.</span>
     </div>
     <div class="price-container">
         <span>Price: {{getCartTotal()}}</span>
