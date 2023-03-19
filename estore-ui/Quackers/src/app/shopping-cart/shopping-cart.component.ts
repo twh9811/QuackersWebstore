@@ -72,6 +72,11 @@ export class ShoppingCartComponent implements OnInit {
     return result ? result : undefined;
   }
 
+  /**
+   * Checks if the cart has no items
+   * 
+   * @returns True if the cart has no items, false otherwise (including if the cart is undefined)
+   */
   isCartEmpty(): boolean {
     if (!this.cart) return true;
     return Object.keys(this.cart.items).length == 0;
