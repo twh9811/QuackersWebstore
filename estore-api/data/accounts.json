@@ -1,1 +1,7 @@
-[{"type":"OwnerAccount","id":0,"username":"admin","plainPassword":"admin","adminStatus":true},{"type":"UserAccount","id":1,"username":"w","plainPassword":"www","adminStatus":false},{"type":"UserAccount","id":2,"username":"8","plainPassword":"8","adminStatus":false},{"type":"UserAccount","id":3,"username":"2","plainPassword":"2","adminStatus":false},{"type":"UserAccount","id":4,"username":"3","plainPassword":"3","adminStatus":false},{"type":"UserAccount","id":5,"username":"4","plainPassword":"4","adminStatus":false},{"type":"UserAccount","id":6,"username":"5","plainPassword":"5","adminStatus":false},{"type":"UserAccount","id":7,"username":"6","plainPassword":"6","adminStatus":false},{"type":"UserAccount","id":8,"username":"9","plainPassword":"9","adminStatus":false}]
+[{
+    "type": "OwnerAccount",
+    "id": 0,
+    "username": "admin",
+    "plainPassword": "admin",
+    "adminStatus": true
+}]
