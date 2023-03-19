@@ -1,1 +1,1 @@
-[{"type":"OwnerAccount","id":0,"username":"admin","plainPassword":"admin","adminStatus":true},{"type":"UserAccount","id":1,"username":"test","plainPassword":"test","adminStatus":false},{"type":"UserAccount","id":2,"username":"w","plainPassword":"www","adminStatus":false}]
+[{"type":"OwnerAccount","id":0,"username":"admin","plainPassword":"admin","adminStatus":true},{"type":"UserAccount","id":1,"username":"w","plainPassword":"www","adminStatus":false}]
