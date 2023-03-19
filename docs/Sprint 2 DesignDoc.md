@@ -47,14 +47,6 @@ From an owners perspective, they have access to the whole store catalog
 and can add/remove new products or even update existing ones at the click 
 of a button.
 
-### MVP Features
-
-> _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
-
-### Enhancements
-
-> _**[Sprint 4]** Describe what enhancements you have implemented for the
-project._
 
 ## Application Domain
 
@@ -113,46 +105,6 @@ added the items they want, they can proceed to the shopping cart to modify
 the quantity of each item and checkout. After checking out, they are directed to a page
 where they are given a receipt.
 
-### View Tier
-
-> _**[Sprint 4]** Provide a summary of the View Tier UI of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities. This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
-
-> _**[Sprint 4]** You must provide at least **2 sequence diagrams** as is
-relevant to a particular aspects
-> of the design that you are describing. For example, in e-store you might
-create a
-> sequence diagram of a customer searching for an item and adding to their
-cart.
-> As these can span multiple tiers, be sure to include an relevant HTTP
-requests from the client-side to the server-side
-> to help illustrate the end-to-end flow._
-
-> _**[Sprint 4]** To adequately show your system, you will need to present
-the **class diagrams** where relevant in your design. Some additional tips:_
->* _Class diagrams only apply to the **ViewModel** and **Model** Tier_
->* _A single class diagram of the entire system will not be effective. You may
-   start with one, but will be need to break it down into smaller sections to
-   account for requirements of each of the Tier static models below._
->* _Correct labeling of relationships with proper notation for the relationship
-   type, multiplicities, and navigation information will be important._
->* _Include other details such as attributes and method signatures that you
-   think are needed to support the level of detail in your discussion._
-
-### ViewModel Tier
-
-> _**[Sprint 4]** Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
-
-> _At appropriate places as part of this narrative provide **one** or more
-updated and **properly labeled**
-> static models (UML class diagrams) with some details such as critical
-attributes and methods._
->
-![Replace with your ViewModel Tier class diagram 1, etc.](model-placeholder.png)
 
 ### Model Tier
 
@@ -173,6 +125,7 @@ linked to their own Shopping Cart ID, an OwnerAccount's ID is not and they do
 not have access to a shopping cart.
 
 ![Model Tier UML Diagram](model-uml.png)
+
 
 ## OO Design Principles
 
@@ -263,18 +216,6 @@ profile object, It is appropriate to give the Accounts class the responsibility
 of updating the profile information. Thus, making the UML diagram adhere to
 the information expert principle.
 
-> _**[Sprint 3 & 4]** OO Design Principles should span across **all tiers.**_
-
-## Static Code Analysis/Future Design Improvements
-
-> _**[Sprint 4]** With the results from the Static Code Analysis exercise,
-> **Identify 3-4** areas within your code that have been flagged by the Static
-Code
-> Analysis Tool (SonarQube) and provide your analysis and recommendations.  
-> Include any relevant screenshot(s) with each area._
-
-> _**[Sprint 4]** Discuss **future** refactoring and other design improvements
-your team would explore if the team had additional time._
 
 ## Testing
 
