@@ -66,6 +66,7 @@ export class ShoppingCartComponent implements OnInit {
     if (!this.cart) {
       return undefined;
     }
+
     let result: number | undefined = this.cart.items[duckId];
     return result ? result : undefined;
   }
@@ -100,6 +101,7 @@ export class ShoppingCartComponent implements OnInit {
    */
   getCartTotal(): string {
     let cartTotal = 0;
+    //iterates over the current duck list to get the total price of the cart
     for( var duck of this.ducks ){
         var thisDuckPrice : number = 0;
         thisDuckPrice = parseFloat(this.getTotalDuckPrice(duck));
@@ -107,7 +109,6 @@ export class ShoppingCartComponent implements OnInit {
     }
   
     return cartTotal.toFixed(2);
-
   }
   /**
    * Removes a given amount of a given duck from the cart
@@ -136,7 +137,8 @@ export class ShoppingCartComponent implements OnInit {
     if (newQuantity == 0) {
       delete this.cart.items[duck.id];
       this.ducks = this.ducks.filter(arrDuck => arrDuck.id != duck.id);
-    } else {
+    } 
+    else {
       this.cart.items[duck.id] = newQuantity;
     }
 
@@ -164,14 +166,20 @@ export class ShoppingCartComponent implements OnInit {
    * Clears the items in the cart
    */
   clearCart(): void {
+    // if this cart does not exist then return
     if (!this.cart) return;
 
+    // sets the items and ducks to empty and then send it to the server
     this.cart.items = {}
     this.ducks = [];
     this.cartService.updateCart(this.cart).subscribe();
   }
 
+  /**
+   * Sends the user to the checkout page to purchase the items
+   */
   checkoutCart(): void{
+    // This method does nothing yet
     let nothing ="this method does nothing yet"
   }
 
@@ -237,6 +245,8 @@ export class ShoppingCartComponent implements OnInit {
   * If not, they are sent back to the login page
   */
   private validateAuthorization(): void {
+    // if this account's admin staus is true or the account is
+    // undefined, then the user is sent back to the login page
     if (this.account?.adminStatus || !this.account) {
       this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
       this.router.navigate(['/']);
