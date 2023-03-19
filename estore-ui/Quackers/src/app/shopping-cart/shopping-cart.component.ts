@@ -48,15 +48,6 @@ export class ShoppingCartComponent implements OnInit {
     });
   }
 
-  /*
-    TODO:
-      * ADD A CLEAR BUTTON - CLEARS THE CART (SEND SUCCESS MESSAGE)
-         * SHOULD NOT BE SHOWN IF CART IS EMPTY
-      * ADD A DUMMY CHECKOUT BUTTON
-         * SHOULD NOT BE SHOWN IF CART IS EMPTY
-      * IF CART IS EMPTY, DISPLAY MESSAGE SAYING IT IS EMPTY
-   */
-
   /**
    * Gets the quantity of a given duck in a cart
    * @param duckId The duckId we are retrieving the quantity for
