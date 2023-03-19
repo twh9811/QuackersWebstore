@@ -41,14 +41,11 @@ This section describes the features of the application.
 
 As of right now, our customers can select and search through a variety of
 pre-made ducks from our store catalog and add or remove them from their
-shopping carts
-as they please. Users can register accounts to save their previous shopping
-sessions
-and login at a later date to resume them. From an owners perspective, they have
-access
-to the whole store catalog and can add/remove new products or even update
-existing ones
-at the click of a button.
+shopping cartsas they please. Users can register accounts to save their 
+previous shopping sessions and login at a later date to resume them. 
+From an owners perspective, they have access to the whole store catalog 
+and can add/remove new products or even update existing ones at the click 
+of a button.
 
 ### MVP Features
 
@@ -65,10 +62,14 @@ This section describes the application domain.
 
 ![Domain Model](domain-model.png)
 
-> _**[Sprint 2 & 4]** Provide a high-level overview of the domain for this
-application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+As our goal is to make an e-store, our domain contains entities, such as products, 
+customer, shopping cart, and more. Products are connected to most things are our
+domain model, which exemplifies how important they are as an entity. For instance,
+products have to be added and removed from the shopping cart, and customers need to
+be able to view the products. Customers are also vital to our domain model, as we
+can't make money if customers cannot use our website. As seen in the model 
+above, customers can browse products, add items to shopping carts, complete 
+orders, and more.
 
 ## Architecture and Design
 
@@ -100,8 +101,17 @@ This section describes the web interface flow; this is how the user views and
 interacts
 with the e-store application.
 
-> _Provide a summary of the application's user interface. Describe, from
-> the user's perspective, the flow of the pages in the web application._
+Upon opening our website, the user will be greeted with a login page where they 
+can either log in or register. Users who log in with an admin account will
+be directed to the inventory management page. From this page, they will be able to
+create, modify, and delete products. If a non-admin attempts to access the inventory
+management page, they will be redirected to the login page. If the user logs in as a
+buyer, they will be redirected to a catalog page where they can view all of the
+available items. Furthermore, they can use a search box to filter through
+the available items. They are also able to add these items to their cart. Once they have
+added the items they want, they can proceed to the shopping cart to modify
+the quantity of each item and checkout. After checking out, they are directed to a page
+where they are given a receipt.
 
 ### View Tier
 
@@ -161,33 +171,39 @@ shopper will have when they register to the site. A OwnerAccount is created on
 startup and can not be regsitered or created directly. The UserAccount's ID is
 linked to their own Shopping Cart ID, an OwnerAccount's ID is not and they do
 not have access to a shopping cart.
+
 ![Model Tier UML Diagram](model-uml.png)
 
 ## OO Design Principles
 
-### Open/Closed Principle (_**NEEDS DIAGRAM**_)
+### Open/Closed Principle
 
-The Open/Closed Principle is that software entities should be open for
-extension but closed for modification. Our Domain Analysis illustrates this by
-creating multiple states/ entities that can be used in other entities through
-extension but cannot be changed/ modified by them. An example of this is that
-the user account can include a shopping cart, but the shopping cart alone
-cannot modify the user account by itself. A way that we could possibly follow
-this principle better could be to either break down our design into more
-specific details by creating more entities
+The Open/Closed Principle is that software entities should be open for 
+extension but closed for modification. Our Model Tier UML diagram illustrates 
+this by creating multiple states/entities that can be used in other entities 
+through extension but cannot be changed/modified by them. 
 
-### Pure Fabrication (_**NEEDS DIAGRAM**_)
+An example of this is our Account class. Our Account class on its own is an
+abstract class that supplies basic functionality and necessary properties
+to classes that implement it, such as our UserAccount and OwnerAccount classes.
 
-This principle is applied in our design with our user account. This is merely a
-way to store a username, password, and payment information in an easy manner.
-Our authentication system is going to be handling all the creation,
-establishing, and verifying of the credentials within it. If the user account
-is being created, the authentication system will store it in its
-records. If an account already exists and somebody is trying to log in, then
-our authentication system will take the data from the user account in its
-records and parse it respectively with its own methods. If a user wants to
-delete their account, the authentication system removes it from its records. A
-user account has no functionality other than storing the data for an account.
+We could follow this principle better by either breaking down our design 
+into more specific components or by creating more entities that share
+functionality.
+
+### Pure Fabrication
+
+This principle is applied in our design with our user account, as seen above in
+the Model Tier UML diagram. This is merely a way to store a username, password, 
+and payment information in an easy manner. Our authentication system is going 
+to be handling all the creation, establishing, and verifying of the credentials 
+within it. If the user account is being created, the authentication system will 
+store it in its records. If an account already exists and somebody is trying to 
+log in, then our authentication system will take the data from the user account 
+in its records and parse it respectively with its own methods. If a user wants 
+to delete their account, the authentication system removes it from its records. 
+A user account has no functionality other than storing the data for an account.
+
 Our shopping cart would most likely serve to benefit from pure fabrication. We
 need something to handle the product methods. Right now, we would have to add
 multiple methods to our shopping cart class to gather all the information
@@ -200,7 +216,7 @@ applied in other situations than the checkout, such as showing the total value
 of all the items in the shopping cart when a user is not on the checkout
 screen.
 
-### Single Responsibility (_**NEEDS DIAGRAM**_)
+### Single Responsibility
 
 As of now, our design makes use of the single responsibility object-oriented
 design principle by separating our entity objects from our data accessor
@@ -214,7 +230,7 @@ multiple classes that would encompass all the original endpoints. Finally, our
 inventory class will serve as an information expert on products, allowing
 products to be added, removed, edited, and searched based on specific
 parameters. Separating our responsibilities like this makes our code more
-readable and easier to work on.<br><br>
+readable and easier to work on.
 
 To incorporate the single responsibility object-oriented design principle even
 more into our design, I suggest that for our duck class that the property
@@ -225,13 +241,15 @@ be saved in a profile entity object that is linked to the customer entity
 object. However, certain information, such as the customer’s name, would remain
 stored in the customer entity object.
 
-### Information Expert (_**REFERENCES MODEL UML**_)
+![Inventory Controller UML Diagram](inventory-controller-uml.png)
+
+### Information Expert
 
 The responsibility should be assigned to the object that has the information
 that allows the task to be completed.
 
 Applications:<br>
-The model tier UML diagrams above adhere to the information expert principle.
+The Model Tier UML diagram above adhere to the information expert principle.
 For example, in the shopping cart class, the shopping cart is given the
 responsibility of checking out and removing the item. This adheres to the
 principle because since the object holds the item, we can assign the

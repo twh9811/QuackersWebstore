@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 public class DuckTest {
 
     private Duck testDuck;
-    private Duck testDuckTwo;
 
     @BeforeEach
     public void setupDuckTest() {
@@ -36,14 +35,10 @@ public class DuckTest {
         DuckOutfit outfitOne = new DuckOutfit(expected_hat_uid, expected_shirt_uid, expected_shoes_uid,
                 expected_handitem_uid, expected_jewelry_uid);
 
-        DuckOutfit outfitTwo = new DuckOutfit(expected_hat_uid, expected_shirt_uid, expected_shoes_uid,
-                expected_handitem_uid, expected_jewelry_uid);
         // Invoke
         testDuck = new Duck(expected_id, expected_name, expected_quantity, expected_price, expected_size,
                 expected_color, outfitOne);
 
-        testDuckTwo = new Duck(expected_id, expected_name, expected_quantity, expected_price, expected_size,
-                expected_color, outfitTwo);
     }
 
     @Test

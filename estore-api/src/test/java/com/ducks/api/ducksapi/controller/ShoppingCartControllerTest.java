@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -16,13 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.ducks.api.ducksapi.model.Colors;
-import com.ducks.api.ducksapi.model.Duck;
-import com.ducks.api.ducksapi.model.DuckOutfit;
 import com.ducks.api.ducksapi.model.ShoppingCart;
-import com.ducks.api.ducksapi.model.Size;
-import com.ducks.api.ducksapi.persistence.DuckDAO;
-import com.ducks.api.ducksapi.persistence.DuckFileDAO;
 import com.ducks.api.ducksapi.persistence.ShoppingCartDAO;
 
 /**
@@ -38,11 +31,7 @@ import com.ducks.api.ducksapi.persistence.ShoppingCartDAO;
 @Tag("Controller-tier")
 public class ShoppingCartControllerTest {
     private ShoppingCartDAO mockCartDAO;
-    private DuckDAO mockDuckDAO;
     private ShoppingCartController cartController;
-
-    private Duck duckOne;
-    private Duck duckTwo;
 
     /**
      * Before each test, create a new InventoryController object and inject
@@ -51,25 +40,7 @@ public class ShoppingCartControllerTest {
     @BeforeEach
     public void setupInventoryController() {
         mockCartDAO = mock(ShoppingCartDAO.class);
-        mockDuckDAO = mock(DuckFileDAO.class);
-        cartController = new ShoppingCartController(mockCartDAO, mockDuckDAO);
-
-        duckOne = new Duck(
-                1,
-                "Cool Duck",
-                10,
-                0.99,
-                Size.LARGE,
-                Colors.BLUE,
-                new DuckOutfit(0, 0, 0, 0, 0));
-        duckTwo = new Duck(
-                2,
-                "Cool Duck 2",
-                10,
-                1.99,
-                Size.LARGE,
-                Colors.BLUE,
-                new DuckOutfit(0, 0, 0, 0, 0));
+        cartController = new ShoppingCartController(mockCartDAO);
     }
 
     @Test
@@ -154,8 +125,20 @@ public class ShoppingCartControllerTest {
 
     @Test
     public void testGetShoppingCartsNoCarts() throws IOException{
-        // When getShoppingCarts is called return the Shopping Carts created above
+        // When getShoppingCarts is called return null
         when(mockCartDAO.getShoppingCarts()).thenReturn(null);
+
+        // Invoke
+        ResponseEntity<ShoppingCart[]> response = cartController.getShoppingCarts();
+
+        // Analyse
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    }
+
+    @Test
+    public void testGetShoppingCartsEmpty() throws IOException{
+        // When getShoppingCarts is called return an empty array
+        when(mockCartDAO.getShoppingCarts()).thenReturn(new ShoppingCart[0]);
 
         // Invoke
         ResponseEntity<ShoppingCart[]> response = cartController.getShoppingCarts();
@@ -233,129 +216,6 @@ public class ShoppingCartControllerTest {
     }
 
     @Test
-    public void testGetShoppingCartPrice() throws IOException {
-        HashMap<String, Integer> items = new HashMap<>();
-        items.put("1", 10);
-        items.put("2", 20);
-
-        ShoppingCart cart = new ShoppingCart(0, items);
-        // When the same id is passed in, our mock Cart DAO will return the cart object
-        when(mockCartDAO.getShoppingCart(cart.getCustomerId())).thenReturn(cart);
-        when(mockDuckDAO.getDuck(1)).thenReturn(duckOne);
-        when(mockDuckDAO.getDuck(2)).thenReturn(duckTwo);
-
-        // Invoke
-        ResponseEntity<String> response = cartController.getShoppingCartPrice(cart.getCustomerId());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("49.7", response.getBody());
-    }
-
-    @Test
-    public void testGetShoppingCartPriceInvalidDuck() throws IOException {
-        HashMap<String, Integer> items = new HashMap<>();
-        items.put("1", 10);
-        items.put("2", 20);
-
-        ShoppingCart cart = new ShoppingCart(0, items);
-        // When the same id is passed in, our mock Cart DAO will return the cart object
-        when(mockCartDAO.getShoppingCart(cart.getCustomerId())).thenReturn(cart);
-        when(mockDuckDAO.getDuck(1)).thenReturn(duckOne);
-        when(mockDuckDAO.getDuck(2)).thenReturn(null);
-
-        // Invoke
-        ResponseEntity<String> response = cartController.getShoppingCartPrice(cart.getCustomerId());
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertNull(response.getBody());
-    }
-
-    @Test
-    public void testGetShoppingCartPriceNotFound() throws IOException {
-        int customerId = 0;
-        when(mockCartDAO.getShoppingCart(customerId)).thenReturn(null);
-
-        // Invoke
-        ResponseEntity<String> response = cartController.getShoppingCartPrice(customerId);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertNull(response.getBody());
-    }
-
-    @Test
-    public void testGetShoppingCartPriceException() throws IOException {
-        int customerId = 0;
-
-        doThrow(new IOException()).when(mockCartDAO).getShoppingCart(customerId);
-
-        // Invoke
-        ResponseEntity<String> response = cartController.getShoppingCartPrice(customerId);
-
-        // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-        assertNull(response.getBody());
-    }
-
-    @Test
-    public void testGetShoppingCartInvalidDuckIds() throws IOException {
-        HashMap<String, Integer> items = new HashMap<>();
-        items.put("1", 10);
-        items.put("2", 20);
-        items.put("3", 20);
-
-        ShoppingCart cart = new ShoppingCart(0, items);
-        // When the same id is passed in, our mock Cart DAO will return the cart object
-        when(mockCartDAO.getShoppingCart(cart.getCustomerId())).thenReturn(cart);
-        when(mockDuckDAO.getDuck(1)).thenReturn(duckOne);
-        when(mockDuckDAO.getDuck(2)).thenReturn(null);
-
-        // Invoke
-        ResponseEntity<List<String>> response = cartController.getShoppingCartInvalidDuckIds(cart.getCustomerId());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(List.of("2", "3"), response.getBody());
-    }
-
-    @Test
-    public void testGetShoppingCartInvalidDuckIdsNoInvalids() throws IOException {
-        HashMap<String, Integer> items = new HashMap<>();
-        items.put("1", 10);
-        items.put("2", 20);
-
-        ShoppingCart cart = new ShoppingCart(0, items);
-        // When the same id is passed in, our mock Cart DAO will return the cart object
-        when(mockCartDAO.getShoppingCart(cart.getCustomerId())).thenReturn(cart);
-        when(mockDuckDAO.getDuck(1)).thenReturn(duckOne);
-        when(mockDuckDAO.getDuck(2)).thenReturn(duckTwo);
-
-        // Invoke
-        ResponseEntity<List<String>> response = cartController.getShoppingCartInvalidDuckIds(cart.getCustomerId());
-        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        assertNull(response.getBody());
-    }
-
-    @Test
-    public void testGetShoppingCartInvalidDuckIdsNotFound() throws IOException {
-        int customerId = 0;
-        when(mockCartDAO.getShoppingCart(customerId)).thenReturn(null);
-
-        // Invoke
-        ResponseEntity<List<String>> response = cartController.getShoppingCartInvalidDuckIds(customerId);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertNull(response.getBody());
-    }
-
-    @Test
-    public void testGetShoppingCartInvalidDuckIdsException() throws IOException {
-        int customerId = 0;
-
-        doThrow(new IOException()).when(mockCartDAO).getShoppingCart(customerId);
-
-        // Invoke
-        ResponseEntity<List<String>> response = cartController.getShoppingCartInvalidDuckIds(customerId);
-
-        // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-        assertNull(response.getBody());
-    }
-
-    @Test
     public void testUpdateShoppingCart() throws IOException {
         int customerId = 0;
 
@@ -366,7 +226,8 @@ public class ShoppingCartControllerTest {
         ShoppingCart cart = new ShoppingCart(customerId, items);
         when(mockCartDAO.updateShoppingCart(cart)).thenReturn(cart);
 
-        cart.removeItems(2);
+        items.remove("2");
+        cart.setItems(items);
 
         ResponseEntity<ShoppingCart> updateReponse = cartController.updateShoppingCart(cart);
 

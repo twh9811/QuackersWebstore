@@ -14,7 +14,6 @@
 .controls-container {
     display: flex;
     flex-flow: column wrap;
-    align-items: start;
 }
 
 .control-group-header {

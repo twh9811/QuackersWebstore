@@ -40,14 +40,7 @@ export class ShoppingCartComponent implements OnInit {
     this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
       this.account = account;
       this.validateAuthorization();
-      // Gets cart before attempting to load items from an undefined cart
       this.cartService.getCartAndCreate(this.account.id).then((cart) => {
-        if(!cart) {
-          this.router.navigate(['/']);
-          this.notificationService.add("Unable to load your cart!", 3);
-          return;
-        }
-
         this.cart = cart;
         this.loadDucks();
       });

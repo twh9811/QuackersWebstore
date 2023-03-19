@@ -12,7 +12,7 @@ export class CartService {
 
   private apiURL = 'http://localhost:8080/cart';
 
-httpOptions = {
+  httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
@@ -49,6 +49,29 @@ httpOptions = {
   }
 
   /**
+   * Gets a cart for the user with the given id. If the cart doesn't exist,
+   * it will attempt to create one
+   * 
+   * @param id The id of the user
+   * @returns A promise containing the cart or undefined if unable to create one
+   */
+  async getCartAndCreate(id: number): Promise<Cart | undefined> {
+    let cart = await firstValueFrom(this.getCart(id));
+    if(cart) return cart;
+
+    const newCart = <Cart>{
+      customerId: id,
+      items: new Object()
+    };
+
+    cart = await firstValueFrom(this.createCart(newCart))
+    if(cart) return cart;
+
+    this.notificationService.add(`Unable to create a cart for the user with an id of ${id}`, 3);
+    return undefined;
+  }
+
+  /**
    * Creates a cart
    * 
    * @param cart The Cart object that is being created
@@ -59,6 +82,12 @@ httpOptions = {
       tap((newCart: Cart) => console.log(`added cart w/ id=${newCart.customerId}`)),
       catchError(this.handleError<Cart>('addCart'))
     );
+  }
+
+  addItem(cart : Cart, itemId : number, quantity : number): Observable<HttpResponse<any>> {
+    let cartQuantity = cart.items[itemId] ? cart.items[itemId] + quantity : quantity;
+    cart.items[itemId] = cartQuantity;
+    return this.updateCart(cart);
   }
 
   updateCart(cart : Cart): Observable<HttpResponse<any>> {

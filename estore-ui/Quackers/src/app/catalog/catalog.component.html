@@ -1,0 +1,23 @@
+<div class="header-btn-container">
+    <app-duck-search *ngIf="ducks.length != 0"></app-duck-search>
+</div>
+<div *ngIf="ducks.length == 0">Loading ducks...</div>
+<div class="duck-container" *ngIf="ducks.length != 0">
+    <div *ngFor="let duck of ducks">
+        <div class="duck-box">
+            <div class="duck-header">
+                <h2>{{duck.name}}</h2>
+                <hr>
+            </div>
+            <div class="duck-details">
+                <span>Id: {{duck.id}}</span>
+                <span>Price: ${{duck.price}}</span><br>
+                <div class="duck-btn-container">
+                    <button class="duck-add-btn gen-btn" type="button" (click)="showDuck(duck.id)">Detail</button>
+                    <button class="duck-add-btn gen-btn" type="button" (click)="addDuck(duck.id)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button routerLink="/cart" *ngIf="cart">Go to Cart</button><br>

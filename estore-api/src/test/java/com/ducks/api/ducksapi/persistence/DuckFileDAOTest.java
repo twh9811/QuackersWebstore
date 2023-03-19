@@ -2,6 +2,7 @@ package com.ducks.api.ducksapi.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -43,12 +44,13 @@ public class DuckFileDAOTest {
     @BeforeEach
     public void setupDuckFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
-        testDucks = new Duck[3];
+        testDucks = new Duck[4];
         // Modified constructors to test attributes @Travis 2/15
         DuckOutfit outfit = new DuckOutfit(0, 0, 0, 0, 0);
         testDucks[0] = new Duck(99, "Wi-Fire", 12, 9.99, Size.MEDIUM, Colors.BLUE, outfit);
-        testDucks[1] = new Duck(100, "Galactic Agent", 11, 19.99, Size.SMALL, Colors.RED, outfit);
+        testDucks[1] = new Duck(100, "Galactic Agent 2", 11, 19.99, Size.SMALL, Colors.RED, outfit);
         testDucks[2] = new Duck(101, "Ice Gladiator", 10, 29.99, Size.EXTRA_LARGE, Colors.GREEN, outfit);
+        testDucks[3] = new Duck(102, "Galactic Agent", 10, 29.99, Size.EXTRA_LARGE, Colors.GREEN, outfit);
 
         // When the object mapper is supposed to read from the file
         // the mock object mapper will return the duck array above
@@ -75,9 +77,9 @@ public class DuckFileDAOTest {
         Duck[] ducks = duckFileDAO.findDucks("la");
 
         // Analyze
-        assertEquals(ducks.length, 2);
-        assertEquals(ducks[0], testDucks[1]);
-        assertEquals(ducks[1], testDucks[2]);
+        assertEquals(3, ducks.length);
+        assertEquals(testDucks[1], ducks[0]);
+        assertEquals(testDucks[2], ducks[1]);
     }
 
     @Test
@@ -86,7 +88,34 @@ public class DuckFileDAOTest {
         Duck duck = duckFileDAO.getDuck(99);
 
         // Analzye
-        assertEquals(duck, testDucks[0]);
+        assertEquals(testDucks[0], duck);
+    }
+
+    @Test
+    public void testGetDuckNotFound() {
+        // Invoke
+        Duck duck = duckFileDAO.getDuck(98);
+
+        // Analyze
+        assertEquals(null, duck);
+    }
+
+    @Test
+    public void testGetDuckByName() {
+        // Invoke
+        Duck duck = duckFileDAO.getDuckByName(testDucks[3].getName());
+
+        // Analyze
+        assertEquals(testDucks[3], duck);
+    }
+
+    @Test
+    public void testGetDuckByNameNonExistant() {
+        // Invoke
+        Duck duck = duckFileDAO.getDuckByName("I don't exist");
+
+        // Analyze
+        assertEquals(null, duck);
     }
 
     @Test
@@ -101,13 +130,14 @@ public class DuckFileDAOTest {
         // of the test ducks array - 1 (because of the delete)
         // Because ducks attribute of DuckFileDAO is package private
         // we can access it directly
-        assertEquals(duckFileDAO.ducks.size(), testDucks.length - 1);
+        assertEquals(testDucks.length - 1, duckFileDAO.ducks.size());
     }
 
     @Test
     public void testCreateDuck() {
         // Setup
-        Duck duck = new Duck(102, "Wonder-Person", 10, 9.99, Size.MEDIUM, Colors.BLUE, new DuckOutfit(0, 0, 0, 0, 0));
+        int id = testDucks[3].getId() + 1;
+        Duck duck = new Duck(id, "Wonder-Person", 10, 9.99, Size.MEDIUM, Colors.BLUE, new DuckOutfit(0, 0, 0, 0, 0));
 
         // Invoke
         Duck result = assertDoesNotThrow(() -> duckFileDAO.createDuck(duck),
@@ -147,23 +177,14 @@ public class DuckFileDAOTest {
     }
 
     @Test
-    public void testGetDuckNotFound() {
-        // Invoke
-        Duck duck = duckFileDAO.getDuck(98);
-
-        // Analyze
-        assertEquals(duck, null);
-    }
-
-    @Test
     public void testDeleteDuckNotFound() {
         // Invoke
         boolean result = assertDoesNotThrow(() -> duckFileDAO.deleteDuck(98),
                 "Unexpected exception thrown");
 
         // Analyze
-        assertEquals(result, false);
-        assertEquals(duckFileDAO.ducks.size(), testDucks.length);
+        assertFalse(result);
+        assertEquals(testDucks.length, duckFileDAO.ducks.size());
     }
 
     @Test
