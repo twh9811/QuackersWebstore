@@ -5,7 +5,7 @@
         <span *ngIf="!isCartEmpty()">Your cart is listed below.</span>
     </div>
     <div class="price-container">
-        <span>Price: $x.xx</span>
+        <span>Price: {{getCartTotal()}}</span>
     </div>
     <div class="duck-container">
         <div *ngFor="let duck of ducks">

@@ -94,6 +94,24 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   /**
+   * 
+   * Calculates the total price of all of the duck in a given cart
+   * 
+   * @param cart 
+   * @returns The total price of the cart as a string
+   */
+  getCartTotal(): string {
+    let cartTotal = 0;
+    for( var duck of this.ducks ){
+        var thisDuckPrice : number = 0;
+        thisDuckPrice = parseFloat(this.getTotalDuckPrice(duck));
+        cartTotal += thisDuckPrice; 
+    }
+  
+    return cartTotal.toFixed(2);
+
+  }
+  /**
    * Removes a given amount of a given duck from the cart
    * 
    * @param duck The duck whose quantity is being removed
