@@ -91,14 +91,13 @@ export class ShoppingCartComponent implements OnInit {
    * @returns The total price of the cart as a string
    */
   getCartTotal(): string {
-    let cartTotal = 0;
+    let cartTotal: number = 0;
     //iterates over the current duck list to get the total price of the cart
-    for( var duck of this.ducks ){
-        var thisDuckPrice : number = 0;
-        thisDuckPrice = parseFloat(this.getTotalDuckPrice(duck));
-        cartTotal += thisDuckPrice; 
+    for (const duck of this.ducks) {
+      const duckPrice = parseFloat(this.getTotalDuckPrice(duck));
+      cartTotal += duckPrice;
     }
-  
+
     return cartTotal.toFixed(2);
   }
   /**
@@ -128,13 +127,12 @@ export class ShoppingCartComponent implements OnInit {
     if (newQuantity == 0) {
       delete this.cart.items[duck.id];
       this.ducks = this.ducks.filter(arrDuck => arrDuck.id != duck.id);
-    } 
-    else {
+    } else {
       this.cart.items[duck.id] = newQuantity;
     }
 
     // Update the cart
-    this.cartService.updateCart(this.cart).subscribe((status) => {
+    this.cartService.updateCart(this.cart).subscribe(status => {
       // Send success if update was a success, error otherwise
       if (status.status == 200) {
         this.notificationService.add(`Successfully removed ${quantity} duck(s) with an id of ${duck.id} from your cart!`, 3);
@@ -161,17 +159,24 @@ export class ShoppingCartComponent implements OnInit {
     if (!this.cart) return;
 
     // sets the items and ducks to empty and then send it to the server
-    this.cart.items = {}
+    this.cart.items = {};
     this.ducks = [];
-    this.cartService.updateCart(this.cart).subscribe();
+    this.cartService.updateCart(this.cart).subscribe(status => {
+      if (status.status == 200) {
+        this.notificationService.add(`Successfully cleared your cart!`, 3);
+        return;
+      }
+
+      this.notificationService.add(`Failed to update your cart. Please try again!`, 3);
+    });
   }
 
   /**
    * Sends the user to the checkout page to purchase the items
    */
-  checkoutCart(): void{
+  checkoutCart(): void {
     // This method does nothing yet
-    let nothing ="this method does nothing yet"
+    this.notificationService.add("Checkout functionality has not been implemented yet!", 3);
   }
 
   /**
