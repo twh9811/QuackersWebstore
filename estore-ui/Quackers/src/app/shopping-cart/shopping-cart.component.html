@@ -33,6 +33,7 @@
     </div>
 </div>
 
-
-
+<span *ngIf="!isCartEmpty()">
+    <button class="back-btn gen-btn" (click)="clearCart()">Clear Cart</button>
+</span>
 <button class="back-btn gen-btn" (click)="goBack()">Back</button><br>
