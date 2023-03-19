@@ -47,7 +47,7 @@ export class CartService {
       items: new Object()
     };
 
-    cart = await firstValueFrom(this.createCart(newCart))
+    cart = await firstValueFrom(this.createCart(newCart));
     if (cart) return cart;
 
     this.notificationService.add(`Unable to create a cart for the user with an id of ${id}`, 3);

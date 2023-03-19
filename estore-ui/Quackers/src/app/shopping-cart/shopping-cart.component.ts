@@ -222,7 +222,7 @@ export class ShoppingCartComponent implements OnInit {
       }
 
       // Updates Quantity
-      this.cart.items[key] = duck.quantity
+      this.cart.items[key] = duck.quantity;
     }
 
     // Updates the cart if necessary
