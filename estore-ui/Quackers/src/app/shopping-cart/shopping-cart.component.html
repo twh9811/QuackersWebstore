@@ -3,10 +3,10 @@
     <div id="customer-info">
         <span>Hello {{account.username}}!</span><br>
         <span *ngIf="!isCartEmpty()">Your cart is listed below.</span>
-        <span *ngIf="isCartEmpty()">Your cart is Empty.</span>
+        <span *ngIf="isCartEmpty()">Your cart is empty.</span>
     </div>
-    <div class="price-container">
-        <span>Price: {{getCartTotal()}}</span>
+    <div class="price-container" *ngIf="!isCartEmpty()">
+        <span>Total Price: ${{getCartTotal()}}</span>
     </div>
     <div class="duck-container">
         <div *ngFor="let duck of ducks">
@@ -34,9 +34,9 @@
     </div>
 </div>
 
-<button class="back-btn gen-btn" (click)="goBack()">Back</button>
-
-<span *ngIf="!isCartEmpty()">
-    <button class="back-btn gen-btn" (click)="clearCart()">Clear Cart</button>
-    <button class="back-btn gen-btn" (click)="checkoutCart()">Checkout </button>
-</span><br>
+<div class="btn-controls">
+    <button class="back-btn gen-btn" (click)="goBack()">Back</button>
+    <button class="back-btn gen-btn" *ngIf="!isCartEmpty()" (click)="clearCart()">Clear Cart</button>
+    <button class="back-btn gen-btn" *ngIf="!isCartEmpty()" (click)="checkoutCart()">Checkout</button>
+</div>
+<br>
