@@ -1,14 +1,15 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AccountService } from '../account.service';
-import { SessionService } from '../session.service';
+import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { Account } from '../account';
-import { Cart } from '../shopping-cart';
+import { AccountService } from '../account.service';
 import { Duck } from '../duck';
-import { CartService } from '../shopping-cart.service';
-import { ProductService } from '../product.service';
 import { NotificationService } from '../notification.service';
-import { firstValueFrom, Observable } from 'rxjs';
+import { ProductService } from '../product.service';
+import { SessionService } from '../session.service';
+import { Cart } from '../shopping-cart';
+import { CartService } from '../shopping-cart.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -22,7 +23,7 @@ export class ShoppingCartComponent implements OnInit {
   ducks: Duck[] = [];
 
   constructor(private router: Router,
-    private route: ActivatedRoute,
+    private location: Location,
     private accountService: AccountService,
     private cartService: CartService,
     private sessionService: SessionService,
@@ -56,27 +57,26 @@ export class ShoppingCartComponent implements OnInit {
     if(!this.cart) {
       return undefined;
     }
-    let result: number | undefined = this.getCartItemMap().get(duckId.toString()); 
+    let result: number | undefined = this.cart.items[duckId];
     return result ? result : undefined;
   }
+
+  /**
+   * Sends the user back to the previous page
+   */
+  goBack(): void {
+    this.location.back();
+  }
+
 
   /**
    * Clears the items in the cart
    */
   clearCart(): void {
-    this.updateCart(new Map<string, number>());
-  }
+    if(!this.cart) return;
 
-  /**
-   * Gets the items from the cart in the form of a map (key=duckId, value=quantity)
-   * 
-   * @returns The cart item map
-   */
-  private getCartItemMap(): Map<string, number> {
-    if(!this.cart) {
-      return new Map<string, number>();
-    }
-    return new Map<string, number>(Object.entries(this.cart.items));
+    this.cart.items = {}
+    this.cartService.updateCart(this.cart).subscribe();
   }
 
   /**
@@ -89,10 +89,9 @@ export class ShoppingCartComponent implements OnInit {
     if (!this.cart) return;
 
     let shouldUpdate: boolean = false;
-    let itemMap = this.getCartItemMap();
 
     // Loops through the cart items
-    for(const [key, value] of itemMap) {
+    for(const [key, value] of Object.entries(this.cart.items)) {
       // Gets a duck for each key (a duckId)
       const duckId = Number.parseInt(key);
       // Waits for the value to be retrieved
@@ -101,7 +100,7 @@ export class ShoppingCartComponent implements OnInit {
       if(!duck) {
         shouldUpdate = true;
         this.notificationService.add(`The duck with the id ${key} is no longer available!`, 3);
-        itemMap.delete(key);
+        delete this.cart.items[key];
         continue;
       }
 
@@ -123,29 +122,18 @@ export class ShoppingCartComponent implements OnInit {
 
       // Deletes the duck from the map if the quantity available is 0
       if(duck.quantity == 0 || value == 0) {
-        itemMap.delete(key);
+        delete this.cart.items[key];
         continue;
       }
 
       // Updates Quantity
-      itemMap.set(key, duck.quantity);
+      this.cart.items[key] = duck.quantity
     }
 
     // Updates the cart if necessary
     if (shouldUpdate) {
-      this.updateCart(itemMap);
+      this.cartService.updateCart(this.cart).subscribe();
     }
-  }
-
-  /**
-   * Sends an update request for the cart
-   * @param itemMap The new item map
-   */
-  private updateCart(itemMap: Map<string, number>): void {
-    if(!this.cart) return;
-    // Converts the map to an object
-    this.cart.items = Object.fromEntries(itemMap);
-    this.cartService.updateCart(this.cart).subscribe();
   }
 
   /**
@@ -153,7 +141,7 @@ export class ShoppingCartComponent implements OnInit {
   * If not, they are sent back to the login page
   */
   private validateAuthorization(): void {
-    if (this.account?.adminStatus) {
+    if (this.account?.adminStatus || !this.account) {
       this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
       this.router.navigate(['/']);
     }

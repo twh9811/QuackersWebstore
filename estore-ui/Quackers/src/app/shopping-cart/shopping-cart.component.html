@@ -1,7 +1,8 @@
-<p>shopping-cart works!</p>
+<div *ngIf="!account || !cart">Loading your shopping cart...</div>
 <div *ngIf="account && cart">
     <div><span>Hello </span>{{account.username}}</div>
     <div><span>Your Customer Id Is: </span>{{cart.customerId}}</div>
     <br>
     <div *ngFor="let duck of ducks">Name: {{duck.name}} - Quantity: {{getDuckQuantity(duck.id)}}</div>
 </div>
+<button (click)="goBack()">Back</button>
