@@ -171,6 +171,10 @@ export class ShoppingCartComponent implements OnInit {
     this.cartService.updateCart(this.cart).subscribe();
   }
 
+  checkoutCart(): void{
+    let nothing ="this method does nothing yet"
+  }
+
   /**
    * Retrieves the ducks that match the ids in the shopping cart and stores them in the ducks array
    * If the duck doesn't exist, it is removed from the cart
