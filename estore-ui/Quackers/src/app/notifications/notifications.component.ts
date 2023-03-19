@@ -9,18 +9,14 @@ import { NotificationService } from '../notification.service';
 export class NotificationsComponent implements OnInit {
 
   notifications: string[] = [];
-  shouldUpdate: boolean = false;
 
   constructor(public notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.notificationService.notificationChange.subscribe(data => {
       this.notifications = data;
-      this.shouldUpdate = true;
     })
   }
 
-  update(): void {
-    this.shouldUpdate = false;
-  }
+ 
 }

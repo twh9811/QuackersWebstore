@@ -1,8 +1,38 @@
 <div *ngIf="!account || !cart">Loading your shopping cart...</div>
 <div *ngIf="account && cart">
-    <div><span>Hello </span>{{account.username}}</div>
-    <div><span>Your Customer Id Is: </span>{{cart.customerId}}</div>
-    <br>
-    <div *ngFor="let duck of ducks">Name: {{duck.name}} - Quantity: {{getDuckQuantity(duck.id)}}</div>
+    <div id="customer-info">
+        <span>Hello {{account.username}}!</span><br>
+        <span *ngIf="!isCartEmpty()">Your cart is listed below.</span>
+    </div>
+    <div class="price-container">
+        <span>Price: $x.xx</span>
+    </div>
+    <div class="duck-container">
+        <div *ngFor="let duck of ducks">
+            <div class="duck-box">
+                <div class="duck-header">
+                    <h2>{{duck.name}}</h2>
+                    <hr>
+                </div>
+                <div class="duck-content-container">
+                    <div class="duck-details">
+                        <span>Id: {{duck.id}}</span><br>
+                        <span>Quantity: {{getDuckQuantity(duck.id)}}</span><br>
+                        <span>Price: ${{getTotalDuckPrice(duck)}}</span><br>
+                        <span>(${{duck.price}} each)</span><br>
+
+                    </div>
+                    <div class="duck-btn-container">
+                        <input class="duck-quantity-input" type="number" min="1" max="{{getDuckQuantity(duck.id)!}}" value="1" #quantityInput>
+                        <button class="duck-remove-btn gen-btn" type="button" (click)="removeDuck(duck, quantityInput.value)">Remove</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
-<button (click)="goBack()">Back</button>
+
+
+
+<button class="back-btn gen-btn" (click)="goBack()">Back</button><br>
