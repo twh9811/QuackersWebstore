@@ -75,7 +75,7 @@ public class CheckoutController {
 
             Map<String, Duck> invalidItems = getInvalidItems(cart);
             // 422
-            if (invalidItems.size() != 0) {
+            if (!invalidItems.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
             }
         } catch (IOException ioe) {
@@ -106,7 +106,7 @@ public class CheckoutController {
 
             Map<String, Duck> invalidItems = getInvalidItems(cart);
             // 200
-            if (invalidItems.size() == 0) {
+            if (invalidItems.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
 
@@ -154,10 +154,10 @@ public class CheckoutController {
      * @param cart The cart being checked
      * @return All of the invalid items in the cart, if any
      */
-    private Map<String, Duck> getInvalidItems(ShoppingCart cart) throws IOException {
+    protected Map<String, Duck> getInvalidItems(ShoppingCart cart) throws IOException {
         Map<String, Integer> itemsMap = cart.getItems();
         // False is map is empty
-        if (itemsMap.size() == 0) {
+        if (itemsMap.isEmpty()) {
             return new HashMap<String, Duck>();
         }
 
