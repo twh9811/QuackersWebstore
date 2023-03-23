@@ -63,7 +63,7 @@ public class CheckoutController {
      *         404 if the cart does not exist
      *         500 if the cartDao or duckDao fails
      */
-    @PutMapping("/")
+    @PutMapping("/{id}")
     public ResponseEntity<ShoppingCart> checkout(@PathVariable int id) {
         LOG.info("GET /cart/checkout/" + id);
         try {
@@ -94,7 +94,7 @@ public class CheckoutController {
      *         404 if the cart does not exist
      *         500 if the dao fails
      */
-    @GetMapping("/validate")
+    @GetMapping("/validate/{id}")
     public ResponseEntity<ShoppingCart> validateCart(@PathVariable int id) {
         LOG.info("GET /cart/checkout/validate/" + id);
         try {
@@ -120,7 +120,7 @@ public class CheckoutController {
                 int cartQuantity = cartEntry.getValue();
 
                 // Item is not invalid
-                if (invalidItems.containsKey(cartDuckIdStr)) {
+                if (!invalidItems.containsKey(cartDuckIdStr)) {
                     newCartItems.put(cartDuckIdStr, cartQuantity);
                     continue;
                 }
@@ -137,8 +137,8 @@ public class CheckoutController {
                 newCartItems.put(cartDuckIdStr, invalidDuck.getQuantity());
             }
 
-            cart.setItems(newCartItems);
-            return new ResponseEntity<>(HttpStatus.OK);
+            ShoppingCart returnCart = new ShoppingCart(cart.getCustomerId(), newCartItems);
+            return new ResponseEntity<ShoppingCart>(returnCart, HttpStatus.OK);
         } catch (IOException ioe) {
             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
             // 500
