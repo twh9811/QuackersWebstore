@@ -75,7 +75,7 @@ public class CheckoutController {
 
             Map<String, Duck> invalidItems = getInvalidItems(cart);
             // 422
-            if (!invalidItems.isEmpty()) {
+            if (!invalidItems.isEmpty() || cart.getItems().isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
             }
 
@@ -97,10 +97,9 @@ public class CheckoutController {
 
             // 200
             return new ResponseEntity<>(HttpStatus.OK);
-
+        } catch (IOException | NullPointerException | NumberFormatException exc) {
             // Realisitically this NPE and NFE should never be thrown, but to prevent
             // any possibility of runtime crashes, I am catching them
-        } catch (IOException | NullPointerException | NumberFormatException exc) {
             LOG.log(Level.SEVERE, exc.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
