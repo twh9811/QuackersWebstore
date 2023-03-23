@@ -68,8 +68,15 @@ public class CheckoutController {
         LOG.info("GET /cart/checkout/" + id);
         try {
             ShoppingCart cart = cartDao.getShoppingCart(id);
+            // 404
             if (cart == null) {
                 return new ResponseEntity<ShoppingCart>(HttpStatus.NOT_FOUND);
+            }
+
+            Map<String, Duck> invalidItems = getInvalidItems(cart);
+            // 422
+            if (invalidItems.size() != 0) {
+                return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
             }
         } catch (IOException ioe) {
             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
@@ -92,15 +99,51 @@ public class CheckoutController {
         LOG.info("GET /cart/checkout/validate/" + id);
         try {
             ShoppingCart cart = cartDao.getShoppingCart(id);
+            // 404
             if (cart == null) {
                 return new ResponseEntity<ShoppingCart>(HttpStatus.NOT_FOUND);
             }
 
+            Map<String, Duck> invalidItems = getInvalidItems(cart);
+            // 200
+            if (invalidItems.size() == 0) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+
+            // 200 + new cart object
+            Map<String, Integer> cartItems = cart.getItems();
+            Map<String, Integer> newCartItems = new HashMap<>();
+
+            // Loops through the cart's items
+            for (Map.Entry<String, Integer> cartEntry : cartItems.entrySet()) {
+                String cartDuckIdStr = cartEntry.getKey();
+                int cartQuantity = cartEntry.getValue();
+
+                // Item is not invalid
+                if (invalidItems.containsKey(cartDuckIdStr)) {
+                    newCartItems.put(cartDuckIdStr, cartQuantity);
+                    continue;
+                }
+
+                Duck invalidDuck = invalidItems.get(cartDuckIdStr);
+                // Either Id is not a number or duck is no longer available
+                // Realistically, id should always be a number
+                if (invalidDuck == null) {
+                    continue;
+                }
+
+                // Item's requested quantity exceeds quantity available, so the amount requested
+                // will be changed to the amount available
+                newCartItems.put(cartDuckIdStr, invalidDuck.getQuantity());
+            }
+
+            cart.setItems(newCartItems);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException ioe) {
             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
+            // 500
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return null;
     }
 
     /**
@@ -119,6 +162,7 @@ public class CheckoutController {
         }
 
         Map<String, Duck> invalidItems = new HashMap<String, Duck>();
+        // Loops through the invalidItems map
         for (Map.Entry<String, Integer> entry : itemsMap.entrySet()) {
             String duckIdStr = entry.getKey();
             int quantity = entry.getValue();

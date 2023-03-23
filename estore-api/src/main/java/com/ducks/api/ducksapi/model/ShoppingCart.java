@@ -1,9 +1,7 @@
 package com.ducks.api.ducksapi.model;
 
-import java.beans.Transient;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
