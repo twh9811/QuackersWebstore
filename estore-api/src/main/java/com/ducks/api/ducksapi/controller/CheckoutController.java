@@ -96,7 +96,7 @@ public class CheckoutController {
             cartDao.updateShoppingCart(cart);
 
             // 200
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<ShoppingCart>(cart, HttpStatus.OK);
         } catch (IOException | NullPointerException | NumberFormatException exc) {
             // Realisitically this NPE and NFE should never be thrown, but to prevent
             // any possibility of runtime crashes, I am catching them
