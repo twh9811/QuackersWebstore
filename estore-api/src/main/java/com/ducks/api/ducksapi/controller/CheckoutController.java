@@ -55,7 +55,7 @@ public class CheckoutController {
     }
 
     /**
-     * Checksout a shopping cart; UPDATES the CART and the INVENTORY
+     * Checks out a shopping cart; UPDATES the CART and the INVENTORY
      * 
      * @param id The id of the cart
      * @return 200 if the cart has only valid items
@@ -78,11 +78,32 @@ public class CheckoutController {
             if (!invalidItems.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
             }
-        } catch (IOException ioe) {
-            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
+
+            // Loops through cart items
+            for (Map.Entry<String, Integer> entry : cart.getItems().entrySet()) {
+                // This must be a number for the cart to be valid
+                int duckId = Integer.parseInt(entry.getKey());
+                int quantityReq = entry.getValue();
+
+                // Duck can not be null for the cart to be valid
+                Duck duck = duckDao.getDuck(duckId);
+                duck.setQuantity(duck.getQuantity() - quantityReq);
+                duckDao.updateDuck(duck);
+            }
+
+            // Clear the items and update the cart
+            cart.setItems(new HashMap<>());
+            cartDao.updateShoppingCart(cart);
+
+            // 200
+            return new ResponseEntity<>(HttpStatus.OK);
+
+            // Realisitically this NPE and NFE should never be thrown, but to prevent
+            // any possibility of runtime crashes, I am catching them
+        } catch (IOException | NullPointerException | NumberFormatException exc) {
+            LOG.log(Level.SEVERE, exc.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return null;
     }
 
     /**
