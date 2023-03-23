@@ -1,7 +1,12 @@
 package com.ducks.api.ducksapi.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ducks.api.ducksapi.model.Duck;
 import com.ducks.api.ducksapi.model.ShoppingCart;
 import com.ducks.api.ducksapi.persistence.DuckDAO;
 import com.ducks.api.ducksapi.persistence.ShoppingCartDAO;
@@ -53,14 +59,22 @@ public class CheckoutController {
      * 
      * @param id The id of the cart
      * @return 200 if the cart has only valid items
-     *         400 if the cart is empty
-     *         403 if the cart contains invalid items
+     *         422 if the cart is empty or contains invalid items
      *         404 if the cart does not exist
      *         500 if the cartDao or duckDao fails
      */
     @PutMapping("/")
     public ResponseEntity<ShoppingCart> checkout(@PathVariable int id) {
         LOG.info("GET /cart/checkout/" + id);
+        try {
+            ShoppingCart cart = cartDao.getShoppingCart(id);
+            if (cart == null) {
+                return new ResponseEntity<ShoppingCart>(HttpStatus.NOT_FOUND);
+            }
+        } catch (IOException ioe) {
+            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return null;
     }
 
@@ -70,12 +84,67 @@ public class CheckoutController {
      * @param id The id of the cart
      * @return 200 if the cart has no invalid items
      *         200 + new cart object if the cart has invalid items
-     *         409 if the cart does not exist
+     *         404 if the cart does not exist
      *         500 if the dao fails
      */
     @GetMapping("/validate")
     public ResponseEntity<ShoppingCart> validateCart(@PathVariable int id) {
         LOG.info("GET /cart/checkout/validate/" + id);
+        try {
+            ShoppingCart cart = cartDao.getShoppingCart(id);
+            if (cart == null) {
+                return new ResponseEntity<ShoppingCart>(HttpStatus.NOT_FOUND);
+            }
+
+        } catch (IOException ioe) {
+            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return null;
+    }
+
+    /**
+     * Gets all invalid items in a cart. An invalid item is an item that
+     * is either no longer available in the inventory or has a quantity requested
+     * that exceeds the quantity available in the inventory
+     * 
+     * @param cart The cart being checked
+     * @return All of the invalid items in the cart, if any
+     */
+    private Map<String, Duck> getInvalidItems(ShoppingCart cart) throws IOException {
+        Map<String, Integer> itemsMap = cart.getItems();
+        // False is map is empty
+        if (itemsMap.size() == 0) {
+            return new HashMap<String, Duck>();
+        }
+
+        Map<String, Duck> invalidItems = new HashMap<String, Duck>();
+        for (Map.Entry<String, Integer> entry : itemsMap.entrySet()) {
+            String duckIdStr = entry.getKey();
+            int quantity = entry.getValue();
+
+            int duckId;
+            try {
+                duckId = Integer.parseInt(duckIdStr);
+            } catch (NumberFormatException ex) {
+                // Invalid if id is not a numbeer
+                invalidItems.put(duckIdStr, null);
+                continue;
+            }
+
+            Duck duck = duckDao.getDuck(duckId);
+            // Invalid if duck does not exist
+            if (duck == null) {
+                invalidItems.put(duckIdStr, null);
+                continue;
+            }
+
+            // Invalid if the requested quantity exceeds the quantity available
+            if (duck.getQuantity() < quantity) {
+                invalidItems.put(duckIdStr, duck);
+                continue;
+            }
+        }
+        return invalidItems;
     }
 }
