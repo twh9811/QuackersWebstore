@@ -81,11 +81,14 @@ public class CheckoutController {
 
             // Loops through cart items
             for (Map.Entry<String, Integer> entry : cart.getItems().entrySet()) {
-                // This must be a number for the cart to be valid
+                // Because of previous item validation, it is theoretically not possible for
+                // entry.getKey() to not be a number. Just in case, NPE is caught. 500 is the
+                // correct response
                 int duckId = Integer.parseInt(entry.getKey());
                 int quantityReq = entry.getValue();
 
-                // Duck can not be null for the cart to be valid
+                // Because of previous item validation, it is theoretically not possible for
+                // duck to be null. Just in case, NPE is caught. 500 is the correct response
                 Duck duck = duckDao.getDuck(duckId);
                 duck.setQuantity(duck.getQuantity() - quantityReq);
                 duckDao.updateDuck(duck);
