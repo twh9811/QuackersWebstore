@@ -52,6 +52,7 @@ public class UserController {
      * @param account The {@link Account account} to create
      * @return ResponseEntity with created {@link Account account} object and HTTP status of CREATED<br>
      * ResponseEntity with HTTP status of CONFLICT if {@link Account account} object already exists<br>
+     * ResponseEntity with HTTP status of NOT_ACCEPTABLE if {@link Account} has weak password
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PostMapping("/accounts")
@@ -61,7 +62,12 @@ public class UserController {
             Account newAccount = accountDAO.createAccount(account);
             // Username doesn't already exist in system, OK to create account
             if(newAccount != null) {
-                return new ResponseEntity<Account>(newAccount, HttpStatus.CREATED);
+                if(newAccount.validateStrongPassword()) {
+                    return new ResponseEntity<Account>(newAccount, HttpStatus.CREATED);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+                }
+                
             }
             // Account exists in the system already.
             return new ResponseEntity<>(HttpStatus.CONFLICT);
