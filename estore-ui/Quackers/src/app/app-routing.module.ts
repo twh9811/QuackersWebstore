@@ -17,7 +17,6 @@ const routes: Routes = [
   { path: "catalog", component: CatalogComponent },
   { path: "catalog/:id", component: DuckDetailComponent },
   { path: "cart", component: ShoppingCartComponent },
-  { path: "checkout", component: CheckoutComponent }
 ];
 
 @NgModule({
