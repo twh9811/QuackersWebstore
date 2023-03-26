@@ -82,8 +82,7 @@ public class Duck {
         if (isValidResponse != null) {
             throw new IllegalArgumentException(isValidResponse);
         } else {
-            priceObject = new Price(this);
-            this.price = priceObject.getPrice();
+            updatePrice();
         }
     }
 
