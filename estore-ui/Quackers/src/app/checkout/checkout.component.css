@@ -1,0 +1,56 @@
+#detail-form {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+}
+
+#control-group-container {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 100%;
+    min-height: 100%;
+    gap: 20px;
+}
+
+.controls-container {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.control-group-header {
+    align-self: center;
+    text-align: center;
+
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 20px;
+
+    padding: 0px 30px;
+    margin-bottom: 10px;
+    border-bottom: 1.5px solid black;
+}
+
+.form-control-container>input {
+    min-width: 200px;
+    min-height: 100%;
+}
+
+.form-control-container>label {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 16px;
+}
+
+.form-control {
+    box-sizing: border-box;
+    width: 150px;
+}
+
+#submit-btn {
+    align-self: center;
+    width: 150px;
+}

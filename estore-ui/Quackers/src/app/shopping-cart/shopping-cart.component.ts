@@ -176,7 +176,7 @@ export class ShoppingCartComponent implements OnInit {
    */
   checkoutCart(): void {
     // This method does nothing yet
-    this.notificationService.add("Checkout functionality has not been implemented yet!", 3);
+    this.router.navigate(['checkout']);
   }
 
   /**
