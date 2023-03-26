@@ -2,11 +2,11 @@
     
     <button class="home" routerLink="/catalog">Quackers Duck Emporium</button>
     <button *ngIf="this.router.url != '/login'" type="button" (click)="logout()">Logout</button>
-    <button routerLink="" *ngIf="this.router.url != '/login'" type="button">Make your own Duck (not implemented)</button>
+    <button routerLink="" *ngIf="this.router.url != '/login'" type="button">Account (not implemented)</button>
     
     <div class="adminCheck" *ngIf="checkAdminStatus() == false">
-        <button routerLink="" *ngIf="this.router.url != '/login'" type="button">Account (not implemented)</button>
         <button routerLink="/cart" *ngIf="this.router.url != '/login'" type="button">Go to Cart</button>
+        <button routerLink="" *ngIf="this.router.url != '/login'" type="button">Make your own Duck (not implemented)</button>
         <button routerLink="/catalog" *ngIf="this.router.url != '/login'">Catalog</button>
     </div>
 
