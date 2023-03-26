@@ -3,11 +3,7 @@ import { Router } from '@angular/router';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { SessionService } from '../session.service';
-import { Duck } from '../duck';
-import { NotificationService } from '../notification.service';
-import { ProductService } from '../product.service';
-import { Cart } from '../shopping-cart';
-import { CartService } from '../shopping-cart.service';
+
 
 
 @Component({
@@ -17,10 +13,9 @@ import { CartService } from '../shopping-cart.service';
 })
 export class NavigationBarComponent {
 
-  private _account: Account | undefined = undefined;
+  _account: Account | undefined = undefined;
+  adminStatus : boolean = false;
 
-  cart: Cart | undefined = undefined;
-  ducks: Duck[] = [];
 
   constructor(public router: Router,
     private accountService: AccountService,
@@ -34,6 +29,8 @@ export class NavigationBarComponent {
     // Waits for account to be retrieved before doing anything else
     this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
       this._account = account;
+      this.adminStatus = this.checkAdminStatus()
+
     });
   }
 
