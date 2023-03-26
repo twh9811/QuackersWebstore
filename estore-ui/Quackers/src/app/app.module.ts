@@ -14,6 +14,7 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { DucksearchComponent } from './ducksearch/ducksearch.component';
 import { DuckDetailComponent } from './duck-detail/duck-detail.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { DuckDetailComponent } from './duck-detail/duck-detail.component';
     NotificationsComponent,
     CatalogComponent,
     DucksearchComponent,
-    DuckDetailComponent
+    DuckDetailComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
