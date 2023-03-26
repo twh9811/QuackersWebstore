@@ -1,10 +1,13 @@
 package com.ducks.api.ducksapi.model;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Represents the price of duck.
  * 
  * @author Travis Hill
  */
+@Component
 public class Price {
     private double finalPrice;
     private double basePrice;
