@@ -1,7 +1,1 @@
-[{
-    "type": "OwnerAccount",
-    "id": 0,
-    "username": "admin",
-    "plainPassword": "admin",
-    "adminStatus": true
-}]
+[{"type":"OwnerAccount","id":0,"username":"admin","plainPassword":"admin","adminStatus":true},{"type":"UserAccount","id":1,"username":"a","plainPassword":"aaa","adminStatus":false}]

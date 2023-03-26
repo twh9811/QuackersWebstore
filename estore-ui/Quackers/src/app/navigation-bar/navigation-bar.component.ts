@@ -1,4 +1,13 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Account } from '../account';
+import { AccountService } from '../account.service';
+import { SessionService } from '../session.service';
+import { Duck } from '../duck';
+import { NotificationService } from '../notification.service';
+import { ProductService } from '../product.service';
+import { Cart } from '../shopping-cart';
+import { CartService } from '../shopping-cart.service';
 
 
 @Component({
@@ -8,4 +17,10 @@ import { Component } from '@angular/core';
 })
 export class NavigationBarComponent {
   
+  constructor(private router: Router,
+    private productService: ProductService,
+    private notificationService: NotificationService,
+    private accountService: AccountService,
+    private sessionService: SessionService,
+    private cartService: CartService) { }
 }
