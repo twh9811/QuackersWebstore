@@ -24,6 +24,27 @@ export class NavigationBarComponent {
     private sessionService: SessionService,
     private cartService: CartService) { }
 
+    private _account: Account | undefined = undefined;
+    account: Account | undefined;
+    isAdmin: boolean | undefined;
+
+    ngOnInit(): void {
+
+      //if the user is logged in then the site will Wait for account to be retrieved before doing anything else
+      if (this.router.url != '/login') {
+        this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
+          this._account = account;
+        });
+      }
+    }
+
+    checkAdminStatus() : boolean {
+      if (this._account?.adminStatus){
+        return true;
+      }
+      return false;
+    }
+
     logout() : void {
       this.router.navigate([''])
     }
