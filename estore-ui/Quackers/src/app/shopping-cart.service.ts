@@ -83,6 +83,7 @@ export class CartService {
 
   /**
    * Updates a given cart
+   * 
    * @param cart The cart being updated
    * @returns An HTTP response containing the status and updated cart object
    */
@@ -93,6 +94,32 @@ export class CartService {
     return this.http.put<HttpResponse<any>>(url, cart, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
       .pipe(tap(_ => console.log(`Updated cart`)),
         catchError(this.handleError<HttpResponse<any>>('updateCart')));
+  }
+
+  /**
+   * Validates a cart
+   * 
+   * @param id The id of the cart
+   * @returns Either just a response code or a newly validated cart
+   */
+  validateCart(id: number): Observable<HttpResponse<any>> {
+    const url = `${this.apiURL}/checkout/validate/${id}`;
+    return this.http.get<HttpResponse<any>>(url, { observe: 'response' })
+      .pipe(tap(_ => console.log(`Validated cart`)),
+        catchError(this.handleError<HttpResponse<any>>('validateCart')));
+  }
+
+  /**
+   * Checksout a cart
+   * 
+   * @param id The id of the cart
+   * @returns A response code with the updated cart (if successful)
+   */
+  checkoutCart(id: number): Observable<HttpResponse<any>> {
+    const url = `${this.apiURL}/checkout/checkout/${id}`;
+    return this.http.put<HttpResponse<any>>(url, { observe: 'response' })
+      .pipe(tap(_ => console.log(`Checked out cart`)),
+        catchError(this.handleError<HttpResponse<any>>('checkoutCart')));
   }
 
   /**
