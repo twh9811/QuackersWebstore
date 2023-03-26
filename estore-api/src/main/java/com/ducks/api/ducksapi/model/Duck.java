@@ -143,6 +143,14 @@ public class Duck {
     }
 
     /**
+     * Updates the price when any changes were made to the duck.
+     */
+    public void updatePrice() {
+        priceObject = new Price(this);
+        this.price = priceObject.getPrice();
+    }
+
+    /**
      * Sets the price of the duck
      * 
      * @param price The price of the duck
@@ -159,6 +167,7 @@ public class Duck {
      */
     public void setSize(Size size) {
         this.size = size;
+        updatePrice();
     }
 
     /**
@@ -178,6 +187,7 @@ public class Duck {
      */
     public void setColor(Colors color) {
         this.color = color;
+        updatePrice();
     }
 
     /**
@@ -197,6 +207,7 @@ public class Duck {
      */
     public void setOutfit(DuckOutfit outfit) {
         this.outfit = outfit;
+        updatePrice();
     }
 
     /**
@@ -215,6 +226,7 @@ public class Duck {
      */
     public void setHatUID(int hatUID) {
         this.outfit.setHatUID(hatUID);
+        updatePrice();
     }
 
     /**
@@ -234,6 +246,7 @@ public class Duck {
      */
     public void setShirtUID(int shirtUID) {
         this.outfit.setShirtUID(shirtUID);
+        updatePrice();
     }
 
     /**
@@ -253,6 +266,7 @@ public class Duck {
      */
     public void setShoesUID(int shoesUID) {
         this.outfit.setShoesUID(shoesUID);
+        updatePrice();
     }
 
     /**
@@ -275,6 +289,7 @@ public class Duck {
 
     public void setHandItemUID(int handItemUID) {
         this.outfit.setHandItemUID(handItemUID);
+        updatePrice();
     }
 
     /**
@@ -296,6 +311,7 @@ public class Duck {
      */
     public void setJewelryUID(int jewelryUID) {
         this.outfit.setJewelryUID(jewelryUID);
+        updatePrice();
     }
 
     /**

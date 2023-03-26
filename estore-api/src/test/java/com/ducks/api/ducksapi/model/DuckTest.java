@@ -75,7 +75,7 @@ public class DuckTest {
         // Setup
         String expected_name = "Galactic Agent";
         int expected_quantity = 12;
-        double expected_price = 19.99;
+        double expected_price = 16.00;
         Colors expected_color = Colors.RED;
         Size expected_size = Size.MEDIUM;
         int expected_hat_uid = 6;
