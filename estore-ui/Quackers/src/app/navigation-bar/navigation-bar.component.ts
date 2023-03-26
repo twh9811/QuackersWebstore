@@ -4,8 +4,6 @@ import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { SessionService } from '../session.service';
 
-
-
 @Component({
   selector: 'navigation-bar',
   templateUrl: './navigation-bar.component.html',
@@ -16,13 +14,13 @@ export class NavigationBarComponent implements OnInit {
   _account: Account | undefined = undefined;
   adminStatus : boolean = false;
 
-
+  // router needs to be public for angular to compile (used in app.component.html)
   constructor(public router: Router,
     private accountService: AccountService,
     private sessionService: SessionService) { }
 
   /**
-  * Loads the ducks array when the page is opened
+  * api will first check if an account currently exist and the admin status of the account
   */
   ngOnInit(): void {
     const navObservable = this.router.events.subscribe(event => {
@@ -40,17 +38,10 @@ export class NavigationBarComponent implements OnInit {
   }
 
   /**
-  * Validates that a user is an customer
-  * If not, they are sent back to the login page
-  
-  private validateAuthorization(): void {
-    if (this._account?.adminStatus || !this._account) {
-      this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
-      this.router.navigate(['/']);
-    }
-  }
+  * checks the admin status of the user
+  * 
+  * @returns True if the user is an admin, false otherwise (including if the cart is undefined)
   */
-
   checkAdminStatus() : boolean {
     if (this._account?.adminStatus || !this._account){
       return true;
@@ -58,6 +49,11 @@ export class NavigationBarComponent implements OnInit {
     return false;
   }
 
+  /**
+  * If called, the site will logout the user and
+  * redirect the user back to the login page
+  * 
+  */
   logout() : void {
     this.router.navigate([''])
   }
