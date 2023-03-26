@@ -1,14 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Account } from '../account';
-import { AccountService } from '../account.service';
 import { NotificationService } from '../notification.service';
-import { SessionService } from '../session.service';
+import { ReceiptComponent } from '../receipt/receipt.component';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ReceiptComponent } from '../receipt/receipt.component';
 import { CheckoutData } from './checkout-data';
 
 @Component({
@@ -19,7 +17,6 @@ import { CheckoutData } from './checkout-data';
 export class CheckoutComponent {
   private _account: Account = this.checkoutData.account;
   private _cart: Cart = this.checkoutData.cart;
-  test = new FormControl('', [Validators.required, Validators.email]);
 
   detailForm = this.formBuilder.group({
     email: '',
@@ -28,7 +25,7 @@ export class CheckoutComponent {
     address: '',
     apartment: '',
     city: '',
-    zipCode: 0,
+    zipCode: '',
     cardNumber: '',
     cvv: '',
     expiration: ''
@@ -45,7 +42,7 @@ export class CheckoutComponent {
   onSubmit(): void {
     if (!this.detailForm.valid) {
       this.handleInvalidForm();
-      //return;
+      return;
     }
 
     this.cartService.validateCart(this._account.id).subscribe(response => {
@@ -55,8 +52,7 @@ export class CheckoutComponent {
       switch (status) {
         case 200:
           if (body == null) {
-            this.openReceiptPrompt();
-            //this.handleValidCart();
+            this.handleValidCart();
             return;
           }
 
@@ -73,7 +69,7 @@ export class CheckoutComponent {
 
   }
 
-  goBack(): void {
+  closeDialog(): void {
     this.dialogRef.close();
   }
 
@@ -119,7 +115,7 @@ export class CheckoutComponent {
    */
   private handleInvalidCart(cart: Cart): void {
     this.cartService.updateCart(cart).subscribe(response => {
-      this.router.navigate(['cart']);
+      this.closeDialog();
 
       // Send success if update was a success, error otherwise
       if (response.status == 200) {

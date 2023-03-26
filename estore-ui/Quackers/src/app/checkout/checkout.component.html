@@ -1,70 +1,69 @@
-<h1 mat-dialog-title>Checkout</h1>
-<div>
-    <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Amount</mat-label>
-        <input matInput type="number" class="example-right-align" placeholder="0">
-        <span matTextPrefix>$&nbsp;</span>
-        <span matTextSuffix>.00</span>
-      </mat-form-field>
+<div id="container">
+    <h1 mat-dialog-title>Checkout</h1>
+    <form id="detail-form" [formGroup]="detailForm" (ngSubmit)="onSubmit()">
+        <div id="control-group-container">
+            <div class="controls-container">
+                <mat-label class="control-group-label">
+                    Contact Information
+                    <hr style="min-width: 100%;">
+                </mat-label>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="email" formControlName="email" required>
+                </mat-form-field>
+            </div>
+            <div class="controls-container">
+                <mat-label class="control-group-label">
+                    Shipping Address
+                    <hr style="min-width: 100%;">
+                </mat-label>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>First Name</mat-label>
+                    <input matInput type="text" formControlName="firstName" pattern="^\s*\S+.*$" required>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput type="text" formControlName="lastName" pattern="^\s*\S+.*$" required>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Address</mat-label>
+                    <input matInput type="text" formControlName="address" pattern="^\s*\S+.*$" required>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>City</mat-label>
+                    <input matInput type="text" formControlName="city" pattern="^\s*\S+.*$" required>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Zip Code</mat-label>
+                    <input matInput type="text" formControlName="zipCode" minlength="5" pattern="^\d{5}(?:[-\s]\d{4})?$"
+                        placeholder="12345" required>
+                </mat-form-field>
+            </div>
+            <div class="controls-container">
+                <mat-label class="control-group-label">
+                    Payment Information
+                    <hr style="min-width: 100%;">
+                </mat-label>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Credit Card Number</mat-label>
+                    <input matInput type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
+                        placeholder="XXXX XXXX XXXX XXXX" formControlName="cardNumber" maxlength="19" required>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Expiration Date</mat-label>
+                    <input matInput type="text" pattern="\d{2}\/\d{4}" placeholder="MM/YYYY"
+                        formControlName="expiration" maxlength="7" required>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>CVV</mat-label>
+                    <input matInput type="tel" inputmode="numeric" formControlName="cvv" minlength="3" maxlength="3"
+                        placeholder="XXX" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-dialog-actions>
+            <button mat-raised-button>Checkout</button>
+            <button mat-raised-button type="button" mat-dialog-close>Back</button>
+        </mat-dialog-actions>
+    </form>
 </div>
-<form id="detail-form" [formGroup]="detailForm" (ngSubmit)="onSubmit()" mat-dialog-content>
-    <div id="control-group-container">
-        <div class="controls-container">
-            <span class="control-group-header">Contact Information</span>
-            <div class="form-control-container">
-                <label for="email_input">Email</label><br>
-                <input class="form-control" id="email_input" type="email" formControlName="email" required><br><br>
-            </div>
-        </div>
-        <div class="controls-container">
-            <span class="control-group-header">Shipping Address</span>
-            <div class="form-control-container">
-                <label for="first_name_input">First Name</label><br>
-                <input class="form-control" id="first_name_input" type="text" formControlName="firstName"
-                    pattern="^\s*\S+.*$" required><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="last_name_input">Last Name</label><br>
-                <input class="form-control" id="last_name_input" type="text" formControlName="lastName"
-                    pattern="^\s*\S+.*$" required><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="address_input">Address</label><br>
-                <input class="form-control" id="address_input" type="text" formControlName="address"
-                    pattern="^\s*\S+.*$" required><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="city_input">City</label><br>
-                <input class="form-control" id="city_input" type="text" formControlName="city" pattern="^\s*\S+.*$"
-                    required><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="last_name_input">Zip Code</label><br>
-                <input class="form-control" id="zipCode" type="number" formControlName="lastName" min=0
-                    required><br><br>
-            </div>
-        </div>
-        <div class="controls-container">
-            <span class="control-group-header">Payment Information</span>
-            <div class="form-control-container">
-                <label for="card_input">Credit Card Number</label><br>
-                <input class="form-control" id="card_input" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
-                    placeholder="XXXX XXXX XXXX XXXX" formControlName="cardNumber" maxlength="19" required><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="expiration_input">Expiration Date</label><br>
-                <input class="form-control" id="expiration_input" type="text" pattern="\d{2}\/\d{4}"
-                    placeholder="MM/YYYY" formControlName="expiration" maxlength="7" required><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="cvv_input">CVV</label><br>
-                <input class="form-control" id="cvv_input" type="tel" inputmode="numeric" formControlName="cvv"
-                    minlength="3" maxlength="3" placeholder="XXX" required>
-            </div>
-        </div>
-    </div>
-    <mat-dialog-actions>
-        <button mat-raised-button>Checkout</button>
-        <button mat-raised-button type="button" mat-dialog-close>Back</button>
-    </mat-dialog-actions>
-</form>

@@ -179,9 +179,9 @@ export class ShoppingCartComponent implements OnInit {
   checkoutCart(): void {
     const dialogRef = this.dialog.open(CheckoutComponent,
       {
-        height: '100vh',
+        height: '100%',
         position: { top: '0%', right: '0%' },
-        data: { account: this.account, cart: this.cart }
+        data: { account: this.account, cart: this.cart },
       });
     dialogRef.afterClosed().subscribe(() => {
       document.body.style.overflow = 'visible';
