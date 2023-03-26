@@ -1,8 +1,9 @@
 <div class="topnav">
-    <a class="active" href="#home">Home</a>
-    <a href="#news">Catalog</a>
-    <a href="MakeDuck">Make Your Own Duck</a>
-    <a href="#account">Account</a>
-    <button routerLink="/cart">Go to Cart</button><br>
-    <a href="#about">Shopping Cart</a>
+    
+    <button class="home" routerLink="/catalog">Quackers Duck Emporium</button>
+    <button *ngIf="this.router.url != '/login'" type="button" (click)="logout()">Logout</button>
+    <button routerLink="/cart" *ngIf="this.router.url != '/login'" type="button">Go to Cart</button>
+    <button routerLink="" *ngIf="this.router.url != '/login'" type="button">Account (not implemented)</button>
+    <button routerLink="" *ngIf="this.router.url != '/login'" type="button">Make your own Duck (not implemented)</button>
+    <button routerLink="/catalog" *ngIf="this.router.url != '/login'" type="button">Catalog</button>
   </div>

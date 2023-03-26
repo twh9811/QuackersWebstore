@@ -16,11 +16,15 @@ import { CartService } from '../shopping-cart.service';
   styleUrls: ['./navigation-bar.component.css']
 })
 export class NavigationBarComponent {
-  
-  constructor(private router: Router,
+
+  constructor(public router: Router,
     private productService: ProductService,
     private notificationService: NotificationService,
     private accountService: AccountService,
     private sessionService: SessionService,
     private cartService: CartService) { }
+
+    logout() : void {
+      this.router.navigate([''])
+    }
 }
