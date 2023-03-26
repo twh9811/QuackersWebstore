@@ -23,11 +23,8 @@ export class NavigationBarComponent {
   ducks: Duck[] = [];
 
   constructor(public router: Router,
-    private productService: ProductService,
-    private notificationService: NotificationService,
     private accountService: AccountService,
-    private sessionService: SessionService,
-    private cartService: CartService) { }
+    private sessionService: SessionService) { }
 
   /**
   * Loads the ducks array when the page is opened
