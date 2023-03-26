@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { SessionService } from '../session.service';
@@ -25,7 +25,12 @@ export class NavigationBarComponent implements OnInit {
   * Loads the ducks array when the page is opened
   */
   ngOnInit(): void {
+    const navObservable = this.router.events.subscribe(event => {
+      if(!(event instanceof NavigationEnd)) return;
 
+      this.ngOnInit();
+      navObservable.unsubscribe();
+    })
     // Waits for account to be retrieved before doing anything else
     this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
       this._account = account;
