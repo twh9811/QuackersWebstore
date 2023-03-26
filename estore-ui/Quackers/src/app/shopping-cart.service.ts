@@ -106,7 +106,7 @@ export class CartService {
     const url = `${this.apiURL}/checkout/validate/${id}`;
     return this.http.get<HttpResponse<any>>(url, { observe: 'response' })
       .pipe(tap(_ => console.log(`Validated cart`)),
-        catchError(this.handleError<HttpResponse<any>>('validateCart')));
+        catchError(this.handleError<HttpResponse<any>>('validateCart', true)));
   }
 
   /**
@@ -116,22 +116,23 @@ export class CartService {
    * @returns A response code with the updated cart (if successful)
    */
   checkoutCart(id: number): Observable<HttpResponse<any>> {
-    const url = `${this.apiURL}/checkout/checkout/${id}`;
+    const url = `${this.apiURL}/checkout/${id}`;
     return this.http.put<HttpResponse<any>>(url, { observe: 'response' })
       .pipe(tap(_ => console.log(`Checked out cart`)),
-        catchError(this.handleError<HttpResponse<any>>('checkoutCart')));
+        catchError(this.handleError<HttpResponse<any>>('checkoutCart', true)));
   }
 
   /**
-   * Handle Http operation that failed.
+   * Handle http operations that failed.
    * Let the app continue.
    *
    * @param operation - name of the operation that failed
+   * @param shouldReturnError whether the error should be returned and not logged
    * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', shouldReturnError: boolean = false, result?: T,): any {
     return (error: any): Observable<T> => {
-
+      if (shouldReturnError) return of(error as T);
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
@@ -140,7 +141,7 @@ export class CartService {
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
-    };
+    }
   }
 
 }

@@ -6,6 +6,8 @@ import { AccountService } from '../account.service';
 import { NotificationService } from '../notification.service';
 import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
+import { Cart } from '../shopping-cart';
+import { CartService } from '../shopping-cart.service';
 
 @Component({
   selector: 'app-checkout',
@@ -28,7 +30,7 @@ export class CheckoutComponent {
     expiration: ''
   });
 
-  constructor(private productService: ProductService,
+  constructor(private cartService: CartService,
     private notificationService: NotificationService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -60,14 +62,89 @@ export class CheckoutComponent {
   }
 
   onSubmit(): void {
+    if (!this._account) {
+      return;
+    }
+
     if (!this.detailForm.valid) {
       this.handleInvalidForm();
       return;
     }
-    // Check validation of cart and form
-    // If invalid send back to cart and provide error
+
+    this.cartService.validateCart(this._account.id).subscribe(response => {
+      const status = response.status;
+      const body: Cart = response.body;
+
+      switch (status) {
+        case 200:
+          if (body == null) {
+            this.handleValidCart();
+            return;
+          }
+
+          this.handleInvalidCart(body);
+          break;
+        case 404:
+          this.notificationService.add("Please add items to your shopping cart before attempting to checkout.", 3)
+          break;
+        case 500:
+          this.notificationService.add("Uh Oh, something went wrong. Please try again.", 3);
+          break;
+      }
+    })
+
   }
 
+  private handleValidCart(): void {
+    if (!this._account) {
+      return;
+    }
+
+    // TODO: Make pop that gives receipt
+    this.cartService.checkoutCart(this._account.id).subscribe(response => {
+      const status = response.status;
+      console.log(status);
+      switch (status) {
+        // Theoretically shouldn't be possible due to validation before allowing checkout
+        case 422:
+          this.notificationService.add("Some of the items in your cart were no longer available. We are unable to checkout your case.", 3);
+          return;
+        // Theoretically shouldn't be possible due to validation before allowing checkout
+        case 404:
+          this.notificationService.add("Please add items to your shopping cart before attempting to checkout.", 3);
+          return;
+        case 500:
+          this.notificationService.add("Uh Oh, something went wrong. Please try again.", 3);
+          return;
+      }
+
+      // Success (for some reason status is undefined when it is 200. I do not know why)
+      this.router.navigate(['catalog']);
+      this.notificationService.add("Successfully checked out your items.", 3);
+    });
+  }
+
+  /**
+   * Updates the invalid cart to a valid one and sends a message to the user letting them know. Also redirects the user back to the cart page
+   * @param cart The validated cart
+   */
+  private handleInvalidCart(cart: Cart): void {
+    this.cartService.updateCart(cart).subscribe(response => {
+      this.router.navigate(['cart']);
+
+      // Send success if update was a success, error otherwise
+      if (response.status == 200) {
+        this.notificationService.add("Some of the items in your cart were no longer available. We have adjusted your cart to remove these items.", 3);
+        return;
+      }
+
+      this.notificationService.add("Uh Oh, we were unable to remove the invalid items from your cart.", 3);
+    });
+  }
+
+  /**
+   * Sends an error message detailing what form controls are invalid
+   */
   private handleInvalidForm(): void {
     const controls = this.detailForm.controls;
 
@@ -75,29 +152,29 @@ export class CheckoutComponent {
     let name: keyof typeof controls;
     for (name in controls) {
       let control = controls[name];
-      
+
       if (!control.invalid) {
         continue;
       }
 
       switch (name) {
         case "cardNumber":
-          this.notificationService.add(`${name} must be in the form XXXX XXXX XXXX XXXX!`, 3);
+          this.notificationService.add(`${name} must be in the form XXXX XXXX XXXX XXXX.`, 3);
           continue;
         case "expiration":
-          this.notificationService.add(`${name} must be in the form of MM/YYYY!`, 3);
+          this.notificationService.add(`${name} must be in the form of MM/YYYY.`, 3);
           continue;
         case "cvv":
-          this.notificationService.add(`${name} must be in the form of XXX!`, 3);
+          this.notificationService.add(`${name} must be in the form of XXX.`, 3);
           continue;
       }
 
       if (typeof control.value === "number") {
-        this.notificationService.add(`${name} must be greater than or equal to 0!`, 3);
+        this.notificationService.add(`${name} must be greater than or equal to 0.`, 3);
         continue;
       }
 
-      this.notificationService.add(`${name} is a required field!`, 3);
+      this.notificationService.add(`${name} is a required field.`, 3);
     }
   }
 
