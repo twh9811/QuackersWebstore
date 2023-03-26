@@ -37,6 +37,8 @@ public class Duck {
     @JsonProperty("outfit")
     private DuckOutfit outfit;
 
+    private Price priceObject;
+
     /**
      * Create a Duck with the given id and name
      * 
@@ -70,10 +72,11 @@ public class Duck {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
-        this.price = price;
         this.size = size;
         this.color = color;
         this.outfit = outfit;
+        priceObject = new Price(this);
+        this.price = priceObject.getPrice();
 
         String isValidResponse = isValid();
         if (isValidResponse != null) {

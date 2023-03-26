@@ -2,10 +2,8 @@ package com.ducks.api.ducksapi.model;
 
 public class Price {
     private double finalPrice;
-    private double basePrice = 5;
-    private double outfitPrice=  1;
-
-    private DuckOutfit outfit;
+    private double basePrice;
+    private double outfitPrice = 2.00;
 
 
     public Price(Duck duck) {
@@ -14,6 +12,9 @@ public class Price {
 
     private double calculatePrice(Duck duck) {
         DuckOutfit outfit = duck.getOutfit();
+        Colors color = duck.getColor();
+        Size size = duck.getSize();
+        basePrice = color.getPrice() + size.getPrice();
         int[] outfitAsArray = outfit.getOutfitAsArray();
         for(int i=0; i<outfitAsArray.length; i++) {
             // No customized option.
@@ -23,10 +24,7 @@ public class Price {
             basePrice += outfitPrice;
             System.out.println(basePrice);
         }
-        Colors color = duck.getColor();
-        Size size = duck.getSize();
-        basePrice = basePrice + size.getPrice() + color.getPrice();
-        return basePrice;
+        return this.basePrice;
     }
 
     public double getPrice() {

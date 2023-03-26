@@ -46,7 +46,7 @@ public class DuckTest {
         // Setup
         int expected_id = 99;
         int expected_quantity = 10;
-        double expected_price = 9.99;
+        double expected_price = 12.00;
         String expected_name = "Wi-Fire";
         Colors expected_color = Colors.BLUE;
         Size expected_size = Size.SMALL;
