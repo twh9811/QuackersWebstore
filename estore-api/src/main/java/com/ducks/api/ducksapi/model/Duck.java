@@ -75,12 +75,15 @@ public class Duck {
         this.size = size;
         this.color = color;
         this.outfit = outfit;
-        priceObject = new Price(this);
-        this.price = priceObject.getPrice();
+        // this is a placeholder to prevent the isValid from breaking
+        this.price = 1000000;
 
         String isValidResponse = isValid();
         if (isValidResponse != null) {
             throw new IllegalArgumentException(isValidResponse);
+        } else {
+            priceObject = new Price(this);
+            this.price = priceObject.getPrice();
         }
     }
 
