@@ -32,4 +32,14 @@ public enum Colors {
      * Violet Color
      */
     VIOLET;
+
+    private double price;
+
+    Colors() {
+        this.price = 1.00;
+    }
+
+    public double getPrice() {
+        return price;
+    }
 }
