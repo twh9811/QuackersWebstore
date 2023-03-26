@@ -19,7 +19,7 @@ public class PriceTest {
     public void setupDuckTest() {
         int expected_id = 99;
         int expected_quantity = 10;
-        double expected_price = 9.99;
+        double default_price = 0;
         String expected_name = "Wi-Fire";
         Colors expected_color = Colors.BLUE;
         Size expected_size = Size.SMALL;
@@ -33,7 +33,7 @@ public class PriceTest {
                 expected_handitem_uid, expected_jewelry_uid);
 
         // Invoke
-        testDuck = new Duck(expected_id, expected_name, expected_quantity, expected_price, expected_size,
+        testDuck = new Duck(expected_id, expected_name, expected_quantity, default_price, expected_size,
                 expected_color, outfitOne);
 
     }
@@ -177,5 +177,32 @@ public class PriceTest {
         testDuck.setSize(extraLarge);
         double expectedExtraLarge = 7.00 + 1.00 + 10.00;
         assertEquals(expectedExtraLarge, testDuck.getPrice());
+    }
+
+    @Test
+    public void customPriceTest() {
+        testDuck.setHatUID(1);
+        testDuck.setShirtUID(1);
+        testDuck.setShoesUID(1);
+        testDuck.setHandItemUID(1);
+        testDuck.setJewelryUID(1);
+        testDuck.setPrice(19.99);
+
+        double expectedPrice = 19.99;
+
+        assertEquals(expectedPrice, testDuck.getPrice());
+    }
+
+    @Test
+    public void defaultPriceTest() {
+        testDuck.setHatUID(1);
+        testDuck.setShirtUID(1);
+        testDuck.setShoesUID(1);
+        testDuck.setHandItemUID(1);
+        testDuck.setJewelryUID(1);
+        testDuck.setPrice(0.0);
+
+        double expectedPrice = 3.00 + 1.00 + 10.00;
+        assertEquals(expectedPrice, testDuck.getPrice());
     }
 }

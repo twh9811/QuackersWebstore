@@ -75,14 +75,13 @@ public class Duck {
         this.size = size;
         this.color = color;
         this.outfit = outfit;
-        // this is a placeholder to prevent the isValid from breaking
-        this.price = 1000000;
+        this.price = price;
 
         String isValidResponse = isValid();
         if (isValidResponse != null) {
             throw new IllegalArgumentException(isValidResponse);
         } else {
-            updatePrice();
+            updatePrice(price);
         }
     }
 
@@ -149,13 +148,27 @@ public class Duck {
         this.price = priceObject.getPrice();
     }
 
+     /**
+     * Custom price for duck, not based on attributes.
+     * 
+     * @param price The custom price of the duck
+     */
+    public void updatePrice(double price) {
+        if(price == 0) {
+            updatePrice();
+        } else {
+            priceObject = new Price(price);
+            this.price = priceObject.getPrice();
+        }
+    }
+
     /**
      * Sets the price of the duck
      * 
      * @param price The price of the duck
      */
     public void setPrice(Double price) {
-        this.price = price;
+        updatePrice(price);
     }
 
     /**
@@ -346,9 +359,9 @@ public class Duck {
             issues += "Quantity must be equal to or greater than 0. ";
         }
 
-        if (price < 0) {
-            issues += "Price must be greater than 0. ";
-        }
+        // if (price < 0) {
+        //     issues += "Price must be greater than 0. ";
+        // }
 
         if (size == null) {
             issues += "Size must not be null. ";

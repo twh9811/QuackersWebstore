@@ -13,6 +13,8 @@ public class Price {
     private double basePrice;
     private double outfitPrice = 2.00;
     
+    public Price() {}
+    
     /*
      * Creates a Price object that stores the price of a duck
      * 
@@ -20,6 +22,15 @@ public class Price {
      */
     public Price(Duck duck) {
         this.finalPrice = calculatePrice(duck);
+    }
+
+    /*
+     * Allows custom price to be input rather than calculating based on attributes
+     * 
+     * @param price The custom price wanted.
+     */
+    public Price(double price) {
+        this.finalPrice = price;
     }
 
     /**
@@ -40,7 +51,6 @@ public class Price {
                 continue;
             }
             basePrice += outfitPrice;
-            System.out.println(basePrice);
         }
         return this.basePrice;
     }
