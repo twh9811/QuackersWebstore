@@ -4,10 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { NotificationService } from '../notification.service';
-import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ReceiptComponent } from '../receipt/receipt.component';
 
 @Component({
   selector: 'app-checkout',
@@ -16,6 +17,7 @@ import { CartService } from '../shopping-cart.service';
 })
 export class CheckoutComponent {
   private _account: Account | undefined = undefined;
+  private _cart: Cart | undefined = undefined;
 
   detailForm = this.formBuilder.group({
     email: '',
@@ -33,7 +35,7 @@ export class CheckoutComponent {
   constructor(private cartService: CartService,
     private notificationService: NotificationService,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
+    private dialog: MatDialog,
     private router: Router,
     private accountService: AccountService,
     private sessionService: SessionService) { }
@@ -58,6 +60,9 @@ export class CheckoutComponent {
       this._account = account;
 
       this.validateAuthorization();
+      this.cartService.getCartAndCreate(this._account.id).then((cart) => {
+        this._cart = cart;
+      });
     })
   }
 
@@ -95,6 +100,16 @@ export class CheckoutComponent {
 
   }
 
+  private openReceiptPrompt(): void {
+    const dialogRef = this.dialog.open(ReceiptComponent, {
+      width: '250px',
+      data: { cart: this._cart! }
+    })
+  }
+
+  /**
+   * Handles cart checkout
+   */
   private handleValidCart(): void {
     if (!this._account) {
       return;
@@ -120,7 +135,7 @@ export class CheckoutComponent {
 
       // Success (for some reason status is undefined when it is 200. I do not know why)
       this.router.navigate(['catalog']);
-      this.notificationService.add("Successfully checked out your items.", 3);
+      this.openReceiptPrompt();
     });
   }
 

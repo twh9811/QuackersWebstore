@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Receipt</h1>
+<div *ngIf="ducks.length != 0">
+    <div *ngFor="let duck of ducks">
+        {{getDuckQuantity(duck.id)}} x {{duck.name}} - ${{getTotalDuckPrice(duck)}}
+    </div>
+    <div>
+        Total: ${{getCartTotal()}}
+    </div>
+    <br>
+</div>

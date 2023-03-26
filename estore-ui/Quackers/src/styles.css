@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 button {
     background-color: black;
     border: 2px solid black;
@@ -17,3 +19,5 @@ button:hover {
     border: 2.5px solid black;
     color: black;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; }
