@@ -177,10 +177,9 @@ export class ShoppingCartComponent implements OnInit {
    * Sends the user to the checkout page to purchase the items
    */
   checkoutCart(): void {
-    // This method does nothing yet
     const dialogRef = this.dialog.open(CheckoutComponent,
       {
-        height: '100%',
+        height: '100vh',
         position: { top: '0%', right: '0%' },
         data: { account: this.account, cart: this.cart }
       });
@@ -188,7 +187,6 @@ export class ShoppingCartComponent implements OnInit {
       document.body.style.overflow = 'visible';
     })
     document.body.style.overflow = 'hidden';
-    //this.router.navigate(['checkout']);
   }
 
   /**

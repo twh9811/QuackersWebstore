@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
@@ -19,6 +19,7 @@ import { CheckoutData } from './checkout-data';
 export class CheckoutComponent {
   private _account: Account = this.checkoutData.account;
   private _cart: Cart = this.checkoutData.cart;
+  test = new FormControl('', [Validators.required, Validators.email]);
 
   detailForm = this.formBuilder.group({
     email: '',
@@ -44,7 +45,7 @@ export class CheckoutComponent {
   onSubmit(): void {
     if (!this.detailForm.valid) {
       this.handleInvalidForm();
-      return;
+      //return;
     }
 
     this.cartService.validateCart(this._account.id).subscribe(response => {
@@ -54,7 +55,8 @@ export class CheckoutComponent {
       switch (status) {
         case 200:
           if (body == null) {
-            this.handleValidCart();
+            this.openReceiptPrompt();
+            //this.handleValidCart();
             return;
           }
 
@@ -77,7 +79,8 @@ export class CheckoutComponent {
 
   private openReceiptPrompt(): void {
     this.dialog.open(ReceiptComponent, {
-      width: '250px',
+      height: 'auto',
+      width: 'auto',
       data: { cart: this._cart! }
     })
   }

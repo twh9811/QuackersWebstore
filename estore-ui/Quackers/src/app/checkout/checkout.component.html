@@ -1,4 +1,12 @@
 <h1 mat-dialog-title>Checkout</h1>
+<div>
+    <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" class="example-right-align" placeholder="0">
+        <span matTextPrefix>$&nbsp;</span>
+        <span matTextSuffix>.00</span>
+      </mat-form-field>
+</div>
 <form id="detail-form" [formGroup]="detailForm" (ngSubmit)="onSubmit()" mat-dialog-content>
     <div id="control-group-container">
         <div class="controls-container">
@@ -56,7 +64,7 @@
         </div>
     </div>
     <mat-dialog-actions>
-        <button mat-button (click)="onSubmit()">Checkout</button>
-        <button mat-button type="button" mat-dialog-close>Back</button>
+        <button mat-raised-button>Checkout</button>
+        <button mat-raised-button type="button" mat-dialog-close>Back</button>
     </mat-dialog-actions>
 </form>

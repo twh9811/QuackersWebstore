@@ -1,10 +1,16 @@
 <h1 mat-dialog-title>Receipt</h1>
-<div *ngIf="ducks.length != 0">
-    <div *ngFor="let duck of ducks">
-        {{getDuckQuantity(duck.id)}} x {{duck.name}} - ${{getTotalDuckPrice(duck)}}
+<div *ngIf="ducks.length == 0" mat-dialog-content>Loading your receipt...</div>
+<div *ngIf="ducks.length != 0" mat-dialog-content>
+    <div style="min-width: 100%" *ngFor="let duck of ducks">
+        <span>{{getDuckQuantity(duck.id)}} x {{duck.name}}  </span>
+        <span style="margin-left: 10px; float: right;">${{getTotalDuckPrice(duck)}}</span>
     </div>
-    <div>
+    <hr>
+    <div style="text-align: right;">
         Total: ${{getCartTotal()}}
     </div>
     <br>
 </div>
+<mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

@@ -20,7 +20,12 @@ button:hover {
     color: black;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     margin: 0;
+    height: auto;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
