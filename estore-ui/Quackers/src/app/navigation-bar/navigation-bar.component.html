@@ -1,4 +1,4 @@
-<div *ngIf="!this._account">Loading The navigation bar or the user is in the login page...
+<div *ngIf="!this._account">
     <div class="topnav">
         <button class="home" routerLink="/catalog">Quackers Duck Emporium</button>
     </div>
@@ -17,7 +17,7 @@
         </div>
 
         <div class="adminCheck" *ngIf="checkAdminStatus() == true">
-            <button routerLink="" *ngIf="this.router.url != '/inventory'" type="button">Inventory</button>
+            <button routerLink="" *ngIf="this.router.url != '/login'" type="button">Inventory</button>
         </div>
     </div>   
 </div>
