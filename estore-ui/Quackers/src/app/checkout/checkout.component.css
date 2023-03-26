@@ -1,7 +1,8 @@
+
 #detail-form {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    min-width: 100%;
 }
 
 #control-group-container {
@@ -48,9 +49,14 @@
 .form-control {
     box-sizing: border-box;
     width: 150px;
-}
+}  
 
-#submit-btn {
-    align-self: center;
-    width: 150px;
+mat-dialog-actions {
+    display: flex;
+    flex: row wrap;
+    justify-content: center;
+
+    margin-top: 10px;
+    gap: 10px;
+    min-width: 100%;
 }

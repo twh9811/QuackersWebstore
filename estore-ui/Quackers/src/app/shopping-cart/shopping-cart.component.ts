@@ -10,7 +10,8 @@ import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
-
+import { MatDialog } from '@angular/material/dialog'
+import { CheckoutComponent } from '../checkout/checkout.component';
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
@@ -26,6 +27,7 @@ export class ShoppingCartComponent implements OnInit {
     private location: Location,
     private accountService: AccountService,
     private cartService: CartService,
+    private dialog: MatDialog,
     private sessionService: SessionService,
     private productService: ProductService,
     private notificationService: NotificationService,) { }
@@ -176,7 +178,17 @@ export class ShoppingCartComponent implements OnInit {
    */
   checkoutCart(): void {
     // This method does nothing yet
-    this.router.navigate(['checkout']);
+    const dialogRef = this.dialog.open(CheckoutComponent,
+      {
+        height: '100%',
+        position: { top: '0%', right: '0%' },
+        data: { account: this.account, cart: this.cart }
+      });
+    dialogRef.afterClosed().subscribe(() => {
+      document.body.style.overflow = 'visible';
+    })
+    document.body.style.overflow = 'hidden';
+    //this.router.navigate(['checkout']);
   }
 
   /**

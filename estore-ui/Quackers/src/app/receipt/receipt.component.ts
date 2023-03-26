@@ -16,7 +16,9 @@ export class ReceiptComponent implements OnInit {
   ducks: Duck[] = [];
   cart = this.receiptData.cart;
 
-  constructor(private productService: ProductService, @Inject(MAT_DIALOG_DATA) public receiptData: ReceiptData) { }
+  constructor(private productService: ProductService,
+    @Inject(MAT_DIALOG_DATA) public receiptData: ReceiptData
+  ) { }
 
   ngOnInit() {
     this.loadDucks();

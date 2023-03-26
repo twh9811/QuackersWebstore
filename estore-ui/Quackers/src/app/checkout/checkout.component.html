@@ -1,4 +1,5 @@
-<form id="detail-form" [formGroup]="detailForm" (ngSubmit)="onSubmit()">
+<h1 mat-dialog-title>Checkout</h1>
+<form id="detail-form" [formGroup]="detailForm" (ngSubmit)="onSubmit()" mat-dialog-content>
     <div id="control-group-container">
         <div class="controls-container">
             <span class="control-group-header">Contact Information</span>
@@ -39,21 +40,23 @@
             <span class="control-group-header">Payment Information</span>
             <div class="form-control-container">
                 <label for="card_input">Credit Card Number</label><br>
-                <input class="form-control" id="card_input" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" placeholder="XXXX XXXX XXXX XXXX"
-                    formControlName="cardNumber" maxlength="19" required><br><br>
+                <input class="form-control" id="card_input" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
+                    placeholder="XXXX XXXX XXXX XXXX" formControlName="cardNumber" maxlength="19" required><br><br>
             </div>
             <div class="form-control-container">
                 <label for="expiration_input">Expiration Date</label><br>
-                <input class="form-control" id="expiration_input" type="text" pattern="\d{2}\/\d{4}" placeholder="MM/YYYY"
-                    formControlName="expiration" maxlength="7" required><br><br>
+                <input class="form-control" id="expiration_input" type="text" pattern="\d{2}\/\d{4}"
+                    placeholder="MM/YYYY" formControlName="expiration" maxlength="7" required><br><br>
             </div>
             <div class="form-control-container">
                 <label for="cvv_input">CVV</label><br>
-                <input class="form-control" id="cvv_input" type="tel" inputmode="numeric" formControlName="cvv" minlength="3" maxlength="3" placeholder="XXX"
-                    required><br><br>
+                <input class="form-control" id="cvv_input" type="tel" inputmode="numeric" formControlName="cvv"
+                    minlength="3" maxlength="3" placeholder="XXX" required>
             </div>
         </div>
     </div>
-    <button id="submit-btn">Checkout</button>
+    <mat-dialog-actions>
+        <button mat-button (click)="onSubmit()">Checkout</button>
+        <button mat-button type="button" mat-dialog-close>Back</button>
+    </mat-dialog-actions>
 </form>
-<br>

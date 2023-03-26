@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Account } from '../account';
@@ -7,8 +7,9 @@ import { NotificationService } from '../notification.service';
 import { SessionService } from '../session.service';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ReceiptComponent } from '../receipt/receipt.component';
+import { CheckoutData } from './checkout-data';
 
 @Component({
   selector: 'app-checkout',
@@ -16,8 +17,8 @@ import { ReceiptComponent } from '../receipt/receipt.component';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent {
-  private _account: Account | undefined = undefined;
-  private _cart: Cart | undefined = undefined;
+  private _account: Account = this.checkoutData.account;
+  private _cart: Cart = this.checkoutData.cart;
 
   detailForm = this.formBuilder.group({
     email: '',
@@ -32,45 +33,15 @@ export class CheckoutComponent {
     expiration: ''
   });
 
-  constructor(private cartService: CartService,
+  constructor(public dialogRef: MatDialogRef<CheckoutComponent>,
+    private cartService: CartService,
     private notificationService: NotificationService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
     private router: Router,
-    private accountService: AccountService,
-    private sessionService: SessionService) { }
-
-  ngOnInit(): void {
-    // DELETE THIS
-    this.sessionService.session = {
-      type: "UserAccount",
-      id: 1,
-      username: "w",
-      plainPassword: "",
-      adminStatus: false
-    }
-
-    if (!this.sessionService.session) {
-      this.validateAuthorization();
-      return;
-    }
-
-    // Waits for account to be retrieved before doing anything else
-    this.accountService.getAccount(this.sessionService.session?.id).subscribe(account => {
-      this._account = account;
-
-      this.validateAuthorization();
-      this.cartService.getCartAndCreate(this._account.id).then((cart) => {
-        this._cart = cart;
-      });
-    })
-  }
+    @Inject(MAT_DIALOG_DATA) public checkoutData: CheckoutData) { }
 
   onSubmit(): void {
-    if (!this._account) {
-      return;
-    }
-
     if (!this.detailForm.valid) {
       this.handleInvalidForm();
       return;
@@ -100,8 +71,12 @@ export class CheckoutComponent {
 
   }
 
+  goBack(): void {
+    this.dialogRef.close();
+  }
+
   private openReceiptPrompt(): void {
-    const dialogRef = this.dialog.open(ReceiptComponent, {
+    this.dialog.open(ReceiptComponent, {
       width: '250px',
       data: { cart: this._cart! }
     })
@@ -111,10 +86,6 @@ export class CheckoutComponent {
    * Handles cart checkout
    */
   private handleValidCart(): void {
-    if (!this._account) {
-      return;
-    }
-
     // TODO: Make pop that gives receipt
     this.cartService.checkoutCart(this._account.id).subscribe(response => {
       const status = response.status;
@@ -193,14 +164,4 @@ export class CheckoutComponent {
     }
   }
 
-  /**
-  * Validates that a user is an customer
-  * If not, they are sent back to the login page
-  */
-  private validateAuthorization(): void {
-    if (this._account?.adminStatus || !this._account) {
-      this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
-      this.router.navigate(['/']);
-    }
-  }
 }

@@ -19,5 +19,8 @@ button:hover {
     border: 2.5px solid black;
     color: black;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; }
+
+body {
+    margin: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
