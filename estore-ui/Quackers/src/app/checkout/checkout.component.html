@@ -9,8 +9,15 @@
                 </mat-label>
                 <mat-form-field appearance="fill" floatLabel="always">
                     <mat-label>Email</mat-label>
-                    <input matInput type="email" formControlName="email" required>
+                    <input type="email" matInput formControlName="email" [errorStateMatcher]="matcher"
+                        placeholder="Ex. pat@example.com" required>
                 </mat-form-field>
+                <mat-error *ngIf="shouldDisplayError('email', true)">
+                    Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="shouldDisplayError('email', false)">
+                    Please enter a email address
+                </mat-error>
             </div>
             <div class="controls-container">
                 <mat-label class="control-group-label">
@@ -61,9 +68,10 @@
                 </mat-form-field>
             </div>
         </div>
-        <mat-dialog-actions>
-            <button mat-raised-button>Checkout</button>
-            <button mat-raised-button type="button" mat-dialog-close>Back</button>
-        </mat-dialog-actions>
+
     </form>
+    <mat-dialog-actions>
+        <button mat-raised-button (click)="onSubmit()">Checkout</button>
+        <button mat-raised-button mat-dialog-close>Back</button>
+    </mat-dialog-actions>
 </div>

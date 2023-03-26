@@ -8,6 +8,8 @@ import { ReceiptComponent } from '../receipt/receipt.component';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
 import { CheckoutData } from './checkout-data';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { CheckoutErrorStateMatcher } from './checkout-error-state-matcher';
 
 @Component({
   selector: 'app-checkout',
@@ -17,13 +19,30 @@ import { CheckoutData } from './checkout-data';
 export class CheckoutComponent {
   private _account: Account = this.checkoutData.account;
   private _cart: Cart = this.checkoutData.cart;
+  matcher: CheckoutErrorStateMatcher = new CheckoutErrorStateMatcher();
+
+  // Contact
+  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+
+  // Shipping
+  firstNameFormControl = new FormControl('', [Validators.required, Validators.pattern("^\s*\S+.*$")]);
+  lastNameFormControl = new FormControl('', [Validators.required, Validators.pattern("^\s*\S+.*$")]);
+  addressFormControl = new FormControl('', [Validators.required, Validators.pattern("^\s*\S+.*$")]);
+  cityFormControl = new FormControl('', [Validators.required, Validators.pattern("^\s*\S+.*$")]);
+  zipCodeFormControl = new FormControl('', [Validators.required, Validators.pattern("^\d{5}(?:[-\s]\d{4})?$")]);
+
+  // Payment
+  cardNumberFormControl = new FormControl('', [Validators.required, Validators.pattern("^\d{5}(?:[-\s]\d{4})?$"), Validators.maxLength(19)]);
+  // TODO change the input for this to a date selector
+  expirationFormControl = new FormControl('', [Validators.required]);
+  cvvFormControl = new FormControl('', [Validators.required, Validators.pattern("^\d{3}$")]);
+
 
   detailForm = this.formBuilder.group({
     email: '',
     firstName: '',
     lastName: '',
     address: '',
-    apartment: '',
     city: '',
     zipCode: '',
     cardNumber: '',
@@ -40,6 +59,7 @@ export class CheckoutComponent {
     @Inject(MAT_DIALOG_DATA) public checkoutData: CheckoutData) { }
 
   onSubmit(): void {
+
     if (!this.detailForm.valid) {
       this.handleInvalidForm();
       return;
@@ -71,6 +91,32 @@ export class CheckoutComponent {
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  shouldDisplayError(controlName: string, ignoreEmpty: boolean): boolean {
+    const control = this.getControl(controlName);
+    if (!control) return true;
+
+    if (!control.dirty) return false;
+    console.log(control.validator)
+    if (!control.invalid) return false;
+    if (!ignoreEmpty) return true;
+
+    const value = control.value;
+    if (!value || value.length == 0) return false;
+
+    return true;
+  }
+
+  getControl(controlName: string): FormControl<string | null> | null {
+    const controls = this.detailForm.controls;
+
+    // Sets the type of name to the type of the attributes in <controls>
+    let name: keyof typeof controls;
+    for (name in controls) {
+      if (name == controlName) return controls[name];
+    }
+    return null;
   }
 
   private openReceiptPrompt(): void {
