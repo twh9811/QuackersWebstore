@@ -33,6 +33,8 @@ public abstract class Account {
         @JsonProperty("adminStatus")
         private boolean adminStatus;
 
+        Pattern regex = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
+
     /**
      * Needed for Spring to run the server. Needs Public Default Constructor.
      */
@@ -107,7 +109,6 @@ public abstract class Account {
      * @return True if the password meets requirements, false otherwise.
      */
     public boolean validateStrongPassword() {
-        Pattern regex = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
         Matcher matcher = regex.matcher(plainPassword);
         return matcher.find();
     }

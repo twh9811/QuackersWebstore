@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
       } else {
         this.account = account;
         this.update();
-        this.feedback = "Account created, please login to continue."
+        this.feedback = "Account created, please login to continue.";
       }
     });
   }
