@@ -1,1 +1,12 @@
 <p>profile works!</p>
+<div *ngIf="!account">Loading your account...</div>
+
+<div *ngIf="account">your acccount is loaded!!!
+    <span>Hello {{account.username}}!</span><br>
+    <div class="btn-controls">
+        <button class="back-btn gen-btn" (click)="goBack()">Back</button>
+    </div>
+    
+</div>
+
+
