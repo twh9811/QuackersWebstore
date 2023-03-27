@@ -9,7 +9,6 @@ import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
 import { CheckoutData } from './checkout-data';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { CheckoutErrorStateMatcher } from './checkout-error-state-matcher';
 
 @Component({
   selector: 'app-checkout',
@@ -19,24 +18,6 @@ import { CheckoutErrorStateMatcher } from './checkout-error-state-matcher';
 export class CheckoutComponent {
   private _account: Account = this.checkoutData.account;
   private _cart: Cart = this.checkoutData.cart;
-  matcher: CheckoutErrorStateMatcher = new CheckoutErrorStateMatcher();
-
-  // Contact
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-
-  // Shipping
-  firstNameFormControl = new FormControl('', [Validators.required, Validators.pattern("^\s*\S+.*$")]);
-  lastNameFormControl = new FormControl('', [Validators.required, Validators.pattern("^\s*\S+.*$")]);
-  addressFormControl = new FormControl('', [Validators.required, Validators.pattern("^\s*\S+.*$")]);
-  cityFormControl = new FormControl('', [Validators.required, Validators.pattern("^\s*\S+.*$")]);
-  zipCodeFormControl = new FormControl('', [Validators.required, Validators.pattern("^\d{5}(?:[-\s]\d{4})?$")]);
-
-  // Payment
-  cardNumberFormControl = new FormControl('', [Validators.required, Validators.pattern("^\d{5}(?:[-\s]\d{4})?$"), Validators.maxLength(19)]);
-  // TODO change the input for this to a date selector
-  expirationFormControl = new FormControl('', [Validators.required]);
-  cvvFormControl = new FormControl('', [Validators.required, Validators.pattern("^\d{3}$")]);
-
 
   detailForm = this.formBuilder.group({
     email: '',
@@ -58,10 +39,17 @@ export class CheckoutComponent {
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public checkoutData: CheckoutData) { }
 
+
+  //TODO: Fix error message overlap, change expiration to date selector
+
+
+  /**
+   * Called upon form submission. Validates the form and handles checkout functionality 
+   */
   onSubmit(): void {
 
     if (!this.detailForm.valid) {
-      this.handleInvalidForm();
+      this.markAllControlsAsTouched();
       return;
     }
 
@@ -73,10 +61,10 @@ export class CheckoutComponent {
         case 200:
           if (body == null) {
             this.handleValidCart();
-            return;
+          } else {
+            this.handleInvalidCart(body);
           }
 
-          this.handleInvalidCart(body);
           break;
         case 404:
           this.notificationService.add("Please add items to your shopping cart before attempting to checkout.", 3)
@@ -85,29 +73,67 @@ export class CheckoutComponent {
           this.notificationService.add("Uh Oh, something went wrong. Please try again.", 3);
           break;
       }
+
+      this.closeDialog();
     })
 
   }
 
+  /**
+   * Marks all controls as touched to allow their errors to be displayed if they aren't already
+   */
+  markAllControlsAsTouched(): void {
+    const controls = this.detailForm.controls;
+
+    // Sets the type of name to the type of the attributes in <controls>
+    let name: keyof typeof controls;
+    for (name in controls) {
+      controls[name].markAsTouched();
+    }
+  }
+
+  // Closes the checkout dialog
   closeDialog(): void {
     this.dialogRef.close();
   }
 
-  shouldDisplayError(controlName: string, ignoreEmpty: boolean): boolean {
+  /**
+   * Whether an error should be displayed or not.
+   * Will display in the following circumstances:
+   *  1. The control is not allowed to be empty but is
+   *  2. The control is not empty but does not meet some other validator (i.e. a pattern)
+   * 
+   * @param controlName The name of the control
+   * @param ignoreRequired Whether or not to ignore the required validator
+   * @returns True if the error should be display
+   */
+  shouldDisplayError(controlName: string, ignoreRequired: boolean): boolean {
     const control = this.getControl(controlName);
     if (!control) return true;
 
-    if (!control.dirty) return false;
-    console.log(control.validator)
+    // If the control is not invalid, the error should not be displayed
     if (!control.invalid) return false;
-    if (!ignoreEmpty) return true;
+
+    // If the user has not touched the control, the error should not be displayed
+    if (!control.touched) return false;
+
+    // If the control is not allowed to be empty, the error should be displayed
+    if (!ignoreRequired) return true;
 
     const value = control.value;
+    // The control is allowed to be empty
+    // If the control's value is undefined or has a length of 0, the error should not displayed
     if (!value || value.length == 0) return false;
 
     return true;
   }
 
+  /**
+   * Gets a form control by name
+   * 
+   * @param controlName The name of the control
+   * @returns The control if found, otherwise null
+   */
   getControl(controlName: string): FormControl<string | null> | null {
     const controls = this.detailForm.controls;
 
@@ -119,6 +145,9 @@ export class CheckoutComponent {
     return null;
   }
 
+  /**
+   * Opens the receipt dialog prompt
+   */
   private openReceiptPrompt(): void {
     this.dialog.open(ReceiptComponent, {
       height: 'auto',
@@ -171,42 +200,6 @@ export class CheckoutComponent {
 
       this.notificationService.add("Uh Oh, we were unable to remove the invalid items from your cart.", 3);
     });
-  }
-
-  /**
-   * Sends an error message detailing what form controls are invalid
-   */
-  private handleInvalidForm(): void {
-    const controls = this.detailForm.controls;
-
-    // Sets the type of name to the type of the attributes in <controls>
-    let name: keyof typeof controls;
-    for (name in controls) {
-      let control = controls[name];
-
-      if (!control.invalid) {
-        continue;
-      }
-
-      switch (name) {
-        case "cardNumber":
-          this.notificationService.add(`${name} must be in the form XXXX XXXX XXXX XXXX.`, 3);
-          continue;
-        case "expiration":
-          this.notificationService.add(`${name} must be in the form of MM/YYYY.`, 3);
-          continue;
-        case "cvv":
-          this.notificationService.add(`${name} must be in the form of XXX.`, 3);
-          continue;
-      }
-
-      if (typeof control.value === "number") {
-        this.notificationService.add(`${name} must be greater than or equal to 0.`, 3);
-        continue;
-      }
-
-      this.notificationService.add(`${name} is a required field.`, 3);
-    }
   }
 
 }
