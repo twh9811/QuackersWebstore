@@ -86,6 +86,15 @@ public abstract class Account {
     }
 
     /**
+     * Checks if the entered password matches the current password
+     * @param newPassword The input that is being checked
+     * @return whether or not the passwords match
+     */
+    public boolean confirmPassword(String original, String current){
+        return original.equals(current);
+    }
+
+    /**
      * @return Boolean stating whether the account is admin (true) or not (false)
      */
     public boolean getAdminStatus() {
@@ -108,8 +117,8 @@ public abstract class Account {
      *
      * @return True if the password meets requirements, false otherwise.
      */
-    public boolean validateStrongPassword() {
-        Matcher matcher = regex.matcher(plainPassword);
+    public boolean validateStrongPassword(String password) {
+        Matcher matcher = regex.matcher(password);
         return matcher.find();
     }
 
