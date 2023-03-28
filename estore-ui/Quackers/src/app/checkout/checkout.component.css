@@ -42,13 +42,18 @@ mat-dialog-actions {
     margin: 20px 0px;
 }
 
-::ng-deep mat-form-field {
-    padding-bottom: 0;
-}
 .margin-35px {
     margin: 35px 0px 20px 0px;
 }
 
 .margin-40px {
     margin: 40px 0px 20px 0px;
+}
+
+.margin-bottom-20px {
+    margin-bottom: 20px;
+}
+
+.margin-bottom-40px {
+    margin-bottom: 40px;
 }

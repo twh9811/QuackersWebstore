@@ -71,7 +71,8 @@
                     Payment Information
                     <hr style="min-width: 100%;">
                 </mat-label>
-                <mat-form-field appearance="fill" floatLabel="always">
+                <mat-form-field appearance="fill" floatLabel="always"
+                    [ngClass]="{'margin-bottom-40px': shouldDisplayError('cardNumber', true), 'margin-bottom-20px': shouldDisplayError('cardNumber', false) && !shouldDisplayError('cardNumber', true)}">
                     <mat-label>Credit Card Number</mat-label>
                     <input matInput type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
                         placeholder="XXXX XXXX XXXX XXXX" formControlName="cardNumber" maxlength="19" required>
@@ -83,7 +84,9 @@
                         Please enter a credit card number.
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field appearance="fill" floatLabel="always">
+                <br>
+                <mat-form-field appearance="fill" floatLabel="always"
+                    [ngClass]="{'margin-bottom-20px': shouldDisplayError('expiration', true) || shouldDisplayError('expiration', false)}">
                     <mat-label>Expiration Date</mat-label>
                     <input matInput type="text" pattern="\d{2}\/\d{4}" placeholder="MM/YYYY"
                         formControlName="expiration" maxlength="7" required>
@@ -104,15 +107,16 @@
                     </mat-error>
                     <mat-error class="error"
                         *ngIf="shouldDisplayError('cvv', false) && !shouldDisplayError('cvv', true)">
-                        Please enter a CVV. 
+                        Please enter a CVV.
                     </mat-error>
                 </mat-form-field>
             </div>
         </div>
-        <mat-dialog-actions [ngClass]="{'margin-40px': shouldDisplayError('cvv', true), 'margin-35px': shouldDisplayError('cvv', false) && !shouldDisplayError('cvv', true)}">
-            <button mat-raised-button (click)="onSubmit()">Checkout</button>
+        <mat-dialog-actions
+            [ngClass]="{'margin-40px': shouldDisplayError('cvv', true), 'margin-35px': shouldDisplayError('cvv', false) && !shouldDisplayError('cvv', true)}">
+            <button mat-raised-button>Checkout</button>
             <button mat-raised-button mat-dialog-close>Back</button>
         </mat-dialog-actions>
     </form>
-    
+
 </div>
