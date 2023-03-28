@@ -256,9 +256,8 @@ public class AccountFileDAO implements AccountDAO{
             // Checks if account is in database
             if(accounts.containsKey(id)) {
                 Account account = getAccount(id);
-                String currPassword = account.getPlainPassword();
                 // checks if they have permission to change password
-                if(originalPass.equals(currPassword)) {
+                if(account.confirmPassword(originalPass)) {
                     // checks if the newPassword is a strong password
                     if(account.validateStrongPassword(newPass)){
                         //changes password
