@@ -16,11 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ducks.api.ducksapi.model.DuckOutfit;
+import com.ducks.api.ducksapi.persistence.DuckDAO;
 
 @RestController
 @RequestMapping("customize")
 public class CustomizeController {
     private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
+    private DuckDAO duckDao;
      
+    public CustomizeController(DuckDAO duckDao){
+        this.duckDao = duckDao;
+    }
 
+    @GetMapping("/customize/{id}")
+    
 }
