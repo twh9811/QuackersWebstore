@@ -1,5 +1,8 @@
 package com.ducks.api.ducksapi.model;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -29,6 +32,8 @@ public abstract class Account {
 
         @JsonProperty("adminStatus")
         private boolean adminStatus;
+
+        Pattern regex = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
 
     /**
      * Needed for Spring to run the server. Needs Public Default Constructor.
@@ -95,6 +100,17 @@ public abstract class Account {
         if(this.username.equals("admin")) {
             this.adminStatus = statusType;
         }
+    }
+
+    /**
+     * Takes password associated with the account and determines if it is strong enough or not.
+     * Must contain 8 characters, 1 lowercase, 1 uppercase and a number. It CAN contain special chars, not required.
+     *
+     * @return True if the password meets requirements, false otherwise.
+     */
+    public boolean validateStrongPassword() {
+        Matcher matcher = regex.matcher(plainPassword);
+        return matcher.find();
     }
 
     /**

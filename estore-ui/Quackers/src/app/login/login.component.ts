@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -72,16 +73,23 @@ export class LoginComponent implements OnInit {
       adminStatus : false
     };
 
-    this.accountService.createUser(this.account).subscribe(account => {
-      this.account = account;
-      this.update();
-      // Account creation failed since account is now undefined. This means username already exists since it relies on null being returned from the DAO
-      if(this.account == undefined) {
-        this.feedback = "Account creation failed, username already exists.";
-      } else if (this.account.username == "admin") {
-        this.feedback = "";
+    this.accountService.createUser(this.account).subscribe(
+      account => {
+      if(account instanceof HttpErrorResponse) {
+        let cast: HttpErrorResponse = account;
+        var code = cast.status;
+        switch (code) {
+          case 406:
+            this.feedback = "Please make sure password has at least 8 characters and has 1 uppercase, 1 lowercase, and 1 number in it. Special characters are highly recommended but not required";
+            break;
+          case 409:
+            this.feedback = "Username already exists, select a different one";
+            break;
+        }
       } else {
-        this.feedback = "Account created, please login.";
+        this.account = account;
+        this.update();
+        this.feedback = "Account created, please login to continue.";
       }
     });
   }

@@ -205,9 +205,13 @@ public class AccountFileDAO implements AccountDAO{
                 newAccount = new UserAccount(nextID(), account.getUsername(), account.getPlainPassword());
             }
             
-            accounts.put(newAccount.getId(), newAccount);
-            // Save changes to the database
-            save();
+            // Don't save account to database if the password is invalid.
+            // However we want the account object still to use in the UserController for feedback purposes.
+            if(account.validateStrongPassword()) {
+                accounts.put(newAccount.getId(), newAccount);
+                // Save changes to the database
+                save();
+            }
             return newAccount;
        }
     }
