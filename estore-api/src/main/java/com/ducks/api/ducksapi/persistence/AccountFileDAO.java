@@ -185,6 +185,22 @@ public class AccountFileDAO implements AccountDAO{
     * * {@inheritDoc}}
     */
     @Override
+    public UserAccount getUserAccount(int id) throws IOException {
+        // Handles multiple click events
+        synchronized(accounts) {
+            // If accounts has account id return it.
+            if(accounts.containsKey(id)) {
+                return accounts.get(id);
+            }
+            // If the ID doesn't exist, return null
+            return null;
+        }
+    }
+
+    /**
+    * * {@inheritDoc}}
+    */
+    @Override
     public Account createAccount(Account account) throws IOException {
        // Handles multiple click events
        synchronized(accounts) {
