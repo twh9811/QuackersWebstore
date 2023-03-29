@@ -60,7 +60,6 @@ public class UserAccount extends Account {
         this.zipCode = "";
     }   
 
-
     /**
      * @return the username of the account
      */

@@ -3,6 +3,7 @@ package com.ducks.api.ducksapi.persistence;
 import java.io.IOException;
 
 import com.ducks.api.ducksapi.model.Account;
+import com.ducks.api.ducksapi.model.UserAccount;
 
 /**
  * Defines the interface for account object persistence
@@ -45,6 +46,7 @@ public interface AccountDAO {
      */
     Account getAccount(int id) throws IOException;
 
+    UserAccount getUserAccount(int id) throws IOException;
     /**
      * Creates and saves a {@linkplain Account account}
      * 

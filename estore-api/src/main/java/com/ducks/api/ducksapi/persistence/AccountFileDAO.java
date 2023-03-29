@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +31,7 @@ public class AccountFileDAO implements AccountDAO{
     private static int nextID; // The next ID to assign to a account
     private String filename; //Filename to read and write to
     private Account adminAccount = new OwnerAccount(); // Reserved owner account.
+    private UserAccount userAccount = new UserAccount(); // Reserved user account.
 
     /**
      * Creates a Account File Data Access Object
@@ -288,7 +290,8 @@ public class AccountFileDAO implements AccountDAO{
         synchronized(accounts) {
             // Checks if account is in database
             if(accounts.containsKey(id)) {
-                Account account = getAccount(id);
+                UserAccount account = getAccount(id);
+                String currName = account.get
             
             }
         }
