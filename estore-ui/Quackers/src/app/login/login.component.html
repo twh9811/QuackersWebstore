@@ -1,7 +1,32 @@
 <h2>{{message}}</h2>
 
+<form id="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="controls-container">
+        <mat-form-field appearance="fill" floatLabel="always">
+            <mat-label>Username</mat-label>
+            <input type="text" matInput formControlName="username" pattern="^\s*\S+.*$" required>
+            <mat-error>Please enter your username.</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password" pattern="^\s*\S+.*$" required>
+            <mat-error>Please enter your password.</mat-error>
+        </mat-form-field>
+        
+    </div>
+    <div class="reset-container">
+        <div class="block"></div>
+        <button id="reset-button" mat-button type="button">Reset Password</button>
+    </div>
+   
+    <div class="button-container">
+        <button mat-raised-button>Login</button>
+        <button mat-raised-button type="button" (click)="register()">Register</button>
+    </div>
+</form>
+
 <div>
-    <label for="username">Username: 
+    <label for="username">Username:
         <input type="text" id="username" name="username" [(ngModel)]="username">
     </label>
     <br>
