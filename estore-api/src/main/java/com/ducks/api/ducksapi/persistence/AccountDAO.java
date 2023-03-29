@@ -99,4 +99,5 @@ public interface AccountDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     boolean changePassword(int id, String originalPass, String newPass) throws IOException;
+
 }
