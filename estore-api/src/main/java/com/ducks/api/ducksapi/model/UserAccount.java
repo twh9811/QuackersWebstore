@@ -61,75 +61,75 @@ public class UserAccount extends Account {
     }   
 
     /**
-     * @return the username of the account
+     * @return the First Name of the account
      */
     public String getFirstName() {
         return firstName;
     }
 
     /**
-     * Changes the username of the account
-     * @param username The username the account should be renamed to
+     * Changes the First Name of the account
+     * @param firstName The First Name the account should be renamed to
      */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
     /**
-     * @return the username of the account
+     * @return the Last Name of the account
      */
     public String getLastName() {
         return lastName;
     }
 
     /**
-     * Changes the username of the account
-     * @param username The username the account should be renamed to
+     * Changes the Last Name of the account
+     * @param lastName The Last Name the account should be renamed to
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
     /**
-     * @return the username of the account
+     * @return the Address of the account
      */
     public String getAddress() {
         return address;
     }
 
     /**
-     * Changes the username of the account
-     * @param username The username the account should be renamed to
+     * Changes the Address of the account
+     * @param address The Address the account should be renamed to
      */
     public void setAddress(String address) {
         this.address = address;
     }
 
     /**
-     * @return the username of the account
+     * @return the City of the account
      */
     public String getCity() {
         return city;
     }
 
     /**
-     * Changes the username of the account
-     * @param username The username the account should be renamed to
+     * Changes the City of the account
+     * @param city The City the account should be renamed to
      */
     public void setCity(String city) {
         this.city = city;
     }
 
     /**
-     * @return the username of the account
+     * @return the ZipCode of the account
      */
     public String getZipCode() {
         return zipCode;
     }
 
     /**
-     * Changes the username of the account
-     * @param username The username the account should be renamed to
+     * Changes the ZipCode of the account
+     * @param zipCode The ZipCode the account should be renamed to
      */
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
