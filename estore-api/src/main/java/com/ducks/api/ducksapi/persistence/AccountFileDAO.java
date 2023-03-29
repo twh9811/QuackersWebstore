@@ -272,4 +272,9 @@ public class AccountFileDAO implements AccountDAO{
             return false;
         }
     }
+
+    @Override
+    public boolean changeFirstName(int id, String newName) throws IOException{
+        return false;
+    }
 }
