@@ -1,0 +1,59 @@
+#container {
+    overflow: auto;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+#detail-form {
+    height: 100%;
+    margin: 0px 25px;
+}
+
+#control-group-container {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    min-width: 100%;
+    min-height: 100%;
+    gap: 20px;
+}
+
+.controls-container {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.control-group-label {
+    font-size: 18px;
+}
+
+mat-dialog-actions {
+    display: flex;
+    flex: row wrap;
+    justify-content: center;
+
+    gap: 10px;
+    min-width: 100%;
+    margin: 20px 0px;
+}
+
+.margin-35px {
+    margin: 35px 0px 20px 0px;
+}
+
+.margin-40px {
+    margin: 40px 0px 20px 0px;
+}
+
+.margin-bottom-20px {
+    margin-bottom: 20px;
+}
+
+.margin-bottom-40px {
+    margin-bottom: 40px;
+}
