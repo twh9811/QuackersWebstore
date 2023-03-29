@@ -306,8 +306,9 @@ public class AccountFileDAO implements AccountDAO{
         synchronized(accounts) {
             // Checks if account is in database
             if(accounts.containsKey(id)) {
-                UserAccount account = getAccount(id);
-                String currName = account.get
+            
+                Account account = getAccount(id);
+                String currName = account.getFirstName();
             
             }
         }
