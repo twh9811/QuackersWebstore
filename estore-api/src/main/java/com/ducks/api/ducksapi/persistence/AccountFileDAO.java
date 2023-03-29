@@ -235,6 +235,9 @@ public class AccountFileDAO implements AccountDAO{
         }
     }
 
+    /**
+    * * {@inheritDoc}}
+    */
     @Override
     public boolean deleteAccount(int id) throws IOException {
         // Handles multiple clickEvents
@@ -249,6 +252,9 @@ public class AccountFileDAO implements AccountDAO{
         }
     }
 
+    /**
+    * * {@inheritDoc}}
+    */
     @Override
     public boolean changePassword(int id, String originalPass, String newPass) throws IOException{
         // Handles multiple clickEvents
@@ -273,8 +279,51 @@ public class AccountFileDAO implements AccountDAO{
         }
     }
 
+    /**
+    * * {@inheritDoc}}
+    */
     @Override
     public boolean changeFirstName(int id, String newName) throws IOException{
+        // Handles multiple clickEvents
+        synchronized(accounts) {
+            // Checks if account is in database
+            if(accounts.containsKey(id)) {
+                Account account = getAccount(id);
+            
+            }
+        }
+        return false;
+    }
+
+    /**
+    * * {@inheritDoc}}
+    */
+    @Override
+    public boolean changeLastName(int id, String newName) throws IOException{
+        return false;
+    }
+
+    /**
+    * * {@inheritDoc}}
+    */
+    @Override
+    public boolean changeAddress(int id, String newAddress) throws IOException{
+        return false;
+    }
+
+    /**
+    * * {@inheritDoc}}
+    */
+    @Override
+    public boolean changeCity(int id, String newCity) throws IOException{
+        return false;
+    }
+
+    /**
+    * * {@inheritDoc}}
+    */
+    @Override
+    public boolean changeZipCode(int id, String newZipCode) throws IOException{
         return false;
     }
 }

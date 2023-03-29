@@ -59,4 +59,81 @@ public class UserAccount extends Account {
         this.city = "";
         this.zipCode = "";
     }   
+
+
+    /**
+     * @return the username of the account
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * Changes the username of the account
+     * @param username The username the account should be renamed to
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * @return the username of the account
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Changes the username of the account
+     * @param username The username the account should be renamed to
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * @return the username of the account
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * Changes the username of the account
+     * @param username The username the account should be renamed to
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
+     * @return the username of the account
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * Changes the username of the account
+     * @param username The username the account should be renamed to
+     */
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    /**
+     * @return the username of the account
+     */
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    /**
+     * Changes the username of the account
+     * @param username The username the account should be renamed to
+     */
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+    
 }
