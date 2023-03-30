@@ -33,6 +33,9 @@ public abstract class Account {
         @JsonProperty("adminStatus")
         private boolean adminStatus;
 
+        @JsonProperty("creditCard")
+        private Payment payment;
+
         Pattern regex = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
 
     /**
