@@ -1,27 +1,30 @@
-<div class="container">
-    <form id="login-form"[formGroup]="loginForm" #form="ngForm" (ngSubmit)="onLogin()">
-        <h2 style="margin: 0px 0px;">Please Login to Continue</h2>
-        <hr style="width: 100%; margin-bottom: 10px;">
-        <div class="controls-container">
-            <mat-form-field appearance="fill" floatLabel="always">
-                <mat-label>Username</mat-label>
-                <input type="text" matInput formControlName="username" pattern="^\s*\S+.*$" required>
-                <mat-error>Please enter your username.</mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="fill" floatLabel="always">
-                <mat-label>Password</mat-label>
-                <input type="password" matInput formControlName="password" required>
-                <mat-error>Please enter your password.</mat-error>
-            </mat-form-field>
-        </div>
-        <div class="login-container"
-            [ngClass]="{'margin-top': this.loginForm.controls.password.invalid && this.loginForm.controls.password.touched || this.loginForm.controls.password.invalid && form.submitted}">
-            <button id="login-button" class="fix-hover" mat-raised-button>Login</button>
-        </div>
-        <div class="button-container">
-            <button class="fix-hover" mat-raised-button type="button" (click)="onRegister()">Register</button>
-            <button class="fix-hover" mat-raised-button type="button" (click)="onPasswordReset()">Reset Password</button>
-        </div>
+<body>
+    <div class="container">
+        <form id="login-form" [formGroup]="loginForm" #form="ngForm" (ngSubmit)="onLogin()">
+            <h2 style="margin: 0px 0px;">Please Login to Continue</h2>
+            <hr style="width: 100%; margin-bottom: 10px;">
+            <div class="controls-container">
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Username</mat-label>
+                    <input type="text" matInput formControlName="username" pattern="^\s*\S+.*$" required>
+                    <mat-error>Please enter your username.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput formControlName="password" required>
+                    <mat-error>Please enter your password.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="login-container"
+                [ngClass]="{'margin-top': this.loginForm.controls.password.invalid && this.loginForm.controls.password.touched || this.loginForm.controls.password.invalid && form.submitted}">
+                <button id="login-button" class="fix-hover" mat-raised-button>Login</button>
+            </div>
+            <div class="button-container">
+                <button class="fix-hover" mat-raised-button type="button" (click)="onRegister()">Register</button>
+                <button class="fix-hover" mat-raised-button type="button" (click)="onPasswordReset()">Reset
+                    Password</button>
+            </div>
 
-    </form>
-</div>
+        </form>
+    </div>
+</body>
