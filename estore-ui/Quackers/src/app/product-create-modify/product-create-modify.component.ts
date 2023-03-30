@@ -182,7 +182,6 @@ export class ProductCreateComponent implements OnInit {
    * Finds the invalid controls and sends a notification that tells the user to fix the invalid controls
    */
   private handleInvalidForm(): void {
-    const invalid = [];
     const controls = this.createForm.controls;
 
     // Sets the type of name to the type of the attributes in <controls>

@@ -59,7 +59,7 @@ export class CatalogComponent implements OnInit {
    * Gets the ducks from the product service
    */
   getDucks(): void {
-    this.productService.getDucks().subscribe(ducks => this.ducks = ducks);
+    this.productService.getDucks().subscribe(ducks => this.ducks = ducks.filter(duck => duck.quantity != 0));
   }
 
   /**
