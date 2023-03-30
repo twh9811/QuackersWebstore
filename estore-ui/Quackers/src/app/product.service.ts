@@ -98,6 +98,7 @@ export class ProductService {
   private log(notification: string) {
     this.notificatinService.add(`ProductService: ${notification}`, 3);
   }
+  
   /**
    * Handle http operations that failed.
    * Let the app continue.

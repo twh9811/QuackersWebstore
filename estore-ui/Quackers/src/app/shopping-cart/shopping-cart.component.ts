@@ -1,16 +1,17 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
+import { CheckoutComponent } from '../checkout/checkout.component';
 import { Duck } from '../duck';
 import { NotificationService } from '../notification.service';
 import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
-
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
@@ -26,6 +27,7 @@ export class ShoppingCartComponent implements OnInit {
     private location: Location,
     private accountService: AccountService,
     private cartService: CartService,
+    private dialog: MatDialog,
     private sessionService: SessionService,
     private productService: ProductService,
     private notificationService: NotificationService,) { }
@@ -175,8 +177,16 @@ export class ShoppingCartComponent implements OnInit {
    * Sends the user to the checkout page to purchase the items
    */
   checkoutCart(): void {
-    // This method does nothing yet
-    this.notificationService.add("Checkout functionality has not been implemented yet!", 3);
+    const dialogRef = this.dialog.open(CheckoutComponent,
+      {
+        height: '100%',
+        position: { top: '0%', right: '0%' },
+        data: { account: this.account, cart: this.cart },
+      });
+    dialogRef.afterClosed().subscribe(() => {
+      document.body.style.overflow = 'visible';
+    })
+    document.body.style.overflow = 'hidden';
   }
 
   /**

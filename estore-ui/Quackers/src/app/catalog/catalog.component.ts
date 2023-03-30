@@ -59,7 +59,17 @@ export class CatalogComponent implements OnInit {
    * Gets the ducks from the product service
    */
   getDucks(): void {
-    this.productService.getDucks().subscribe(ducks => this.ducks = ducks);
+    this.productService.getDucks().subscribe(ducks => this.ducks = ducks.filter(duck => duck.quantity != 0));
+  }
+
+  /**
+   * Gets the price of a duck in the form of $x.xx
+   * 
+   * @param duck The duck that the cart price is being retrieved for
+   * @returns The calculated price to two decimals as a string
+   */
+  getDuckPrice(duck: Duck): string {
+    return `$${(duck.price).toFixed(2)}`;
   }
 
   /**

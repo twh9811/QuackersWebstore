@@ -8,17 +8,28 @@ public enum Size {
     /**
      * Small Sized Duck
      */
-    SMALL,
+    SMALL(3.00),
     /**
      * Medium Sized Duck
      */
-    MEDIUM,
+    MEDIUM(5.00),
     /**
      * Large Sized Duck
      */
-    LARGE,
+    LARGE(6.00),
     /**
      * Extra Large Sized Duck
      */
-    EXTRA_LARGE;
+    EXTRA_LARGE(7.00);
+
+    
+    private double price;
+
+    Size(double price) {
+        this.price = price;
+    }
+
+    public double getPrice() {
+        return price;
+    }
 }

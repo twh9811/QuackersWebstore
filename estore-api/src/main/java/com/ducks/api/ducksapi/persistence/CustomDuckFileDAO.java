@@ -7,11 +7,12 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import com.ducks.api.ducksapi.model.Duck;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * Implements the functionality for JSON file-based peristance for Ducks
@@ -20,10 +21,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * this
  * class and injects the instance into other classes as needed
  * 
- * @author SWEN Faculty
+ * @author Travis Hill
  */
-@Component("duckFileDAO")
-public class DuckFileDAO implements DuckDAO {
+@Component("customDuckFileDAO")
+public class CustomDuckFileDAO implements DuckDAO {
     private static final Logger LOG = Logger.getLogger(DuckFileDAO.class.getName());
     Map<Integer, Duck> ducks; // Provides a local cache of the duck objects
                               // so that we don't need to read from the file
@@ -43,7 +44,7 @@ public class DuckFileDAO implements DuckDAO {
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public DuckFileDAO(@Value("${ducks.file}") String filename, ObjectMapper objectMapper) throws IOException {
+    public CustomDuckFileDAO(@Value("${custom_ducks.file}") String filename, ObjectMapper objectMapper) throws IOException {
         this.filename = filename;
         this.objectMapper = objectMapper;
         load(); // load the ducks from the file
