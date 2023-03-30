@@ -1,17 +1,17 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
+import { CheckoutComponent } from '../checkout/checkout.component';
 import { Duck } from '../duck';
 import { NotificationService } from '../notification.service';
 import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
-import { MatDialog } from '@angular/material/dialog'
-import { CheckoutComponent } from '../checkout/checkout.component';
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
