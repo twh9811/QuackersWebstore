@@ -37,6 +37,8 @@ public class Duck {
     @JsonProperty("outfit")
     private DuckOutfit outfit;
 
+    private Price priceObject;
+
     /**
      * Create a Duck with the given id and name
      * 
@@ -70,14 +72,16 @@ public class Duck {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
-        this.price = price;
         this.size = size;
         this.color = color;
         this.outfit = outfit;
+        this.price = price;
 
         String isValidResponse = isValid();
         if (isValidResponse != null) {
             throw new IllegalArgumentException(isValidResponse);
+        } else {
+            updatePrice(price);
         }
     }
 
@@ -137,12 +141,34 @@ public class Duck {
     }
 
     /**
+     * Updates the price when any changes were made to the duck.
+     */
+    public void updatePrice() {
+        priceObject = new Price(this);
+        this.price = priceObject.getPrice();
+    }
+
+     /**
+     * Custom price for duck, not based on attributes.
+     * 
+     * @param price The custom price of the duck
+     */
+    public void updatePrice(double price) {
+        if(price == 0) {
+            updatePrice();
+        } else {
+            priceObject = new Price(price);
+            this.price = priceObject.getPrice();
+        }
+    }
+
+    /**
      * Sets the price of the duck
      * 
      * @param price The price of the duck
      */
     public void setPrice(Double price) {
-        this.price = price;
+        updatePrice(price);
     }
 
     /**
@@ -153,6 +179,7 @@ public class Duck {
      */
     public void setSize(Size size) {
         this.size = size;
+        updatePrice();
     }
 
     /**
@@ -172,6 +199,7 @@ public class Duck {
      */
     public void setColor(Colors color) {
         this.color = color;
+        updatePrice();
     }
 
     /**
@@ -191,6 +219,7 @@ public class Duck {
      */
     public void setOutfit(DuckOutfit outfit) {
         this.outfit = outfit;
+        updatePrice();
     }
 
     /**
@@ -209,6 +238,7 @@ public class Duck {
      */
     public void setHatUID(int hatUID) {
         this.outfit.setHatUID(hatUID);
+        updatePrice();
     }
 
     /**
@@ -228,6 +258,7 @@ public class Duck {
      */
     public void setShirtUID(int shirtUID) {
         this.outfit.setShirtUID(shirtUID);
+        updatePrice();
     }
 
     /**
@@ -247,6 +278,7 @@ public class Duck {
      */
     public void setShoesUID(int shoesUID) {
         this.outfit.setShoesUID(shoesUID);
+        updatePrice();
     }
 
     /**
@@ -269,6 +301,7 @@ public class Duck {
 
     public void setHandItemUID(int handItemUID) {
         this.outfit.setHandItemUID(handItemUID);
+        updatePrice();
     }
 
     /**
@@ -290,6 +323,7 @@ public class Duck {
      */
     public void setJewelryUID(int jewelryUID) {
         this.outfit.setJewelryUID(jewelryUID);
+        updatePrice();
     }
 
     /**
@@ -325,9 +359,9 @@ public class Duck {
             issues += "Quantity must be equal to or greater than 0. ";
         }
 
-        if (price < 0) {
-            issues += "Price must be greater than 0. ";
-        }
+        // if (price < 0) {
+        //     issues += "Price must be greater than 0. ";
+        // }
 
         if (size == null) {
             issues += "Size must not be null. ";

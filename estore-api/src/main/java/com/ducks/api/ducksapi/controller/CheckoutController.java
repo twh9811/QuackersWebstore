@@ -6,8 +6,10 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,7 +51,7 @@ public class CheckoutController {
      *                <br>
      *                This dependency is injected by the Spring Framework
      */
-    public CheckoutController(ShoppingCartDAO cartDAO, DuckDAO duckDAO) {
+    public CheckoutController(ShoppingCartDAO cartDAO, @Qualifier("duckFileDAO") DuckDAO duckDAO) {
         this.cartDao = cartDAO;
         this.duckDao = duckDAO;
     }

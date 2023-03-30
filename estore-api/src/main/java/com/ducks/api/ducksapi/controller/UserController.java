@@ -62,7 +62,7 @@ public class UserController {
             Account newAccount = accountDAO.createAccount(account);
             // Username doesn't already exist in system, OK to create account
             if(newAccount != null) {
-                if(newAccount.validateStrongPassword()) {
+                if(newAccount.validateStrongPassword(account.getPlainPassword())) {
                     return new ResponseEntity<Account>(newAccount, HttpStatus.CREATED);
                 } else {
                     return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
