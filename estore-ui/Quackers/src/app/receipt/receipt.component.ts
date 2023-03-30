@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Duck } from '../duck';
 import { ProductService } from '../product.service';
-import { Cart } from '../shopping-cart';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ReceiptData } from './receipt-data';
 
 
@@ -70,7 +69,7 @@ export class ReceiptComponent implements OnInit {
   private loadDucks(): void {
     for (const [duckIdStr, quantity] of Object.entries(this.cart.items)) {
       const duckId = Number.parseInt(duckIdStr);
-      this.productService.getDuck(duckId).subscribe(duck => this.ducks.push(duck))
+      this.productService.getDuck(duckId).subscribe(duck => this.ducks.push(duck));
     }
   }
 

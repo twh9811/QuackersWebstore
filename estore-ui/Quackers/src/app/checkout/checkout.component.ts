@@ -67,7 +67,7 @@ export class CheckoutComponent {
 
           break;
         case 404:
-          this.notificationService.add("Please add items to your shopping cart before attempting to checkout.", 3)
+          this.notificationService.add("Please add items to your shopping cart before attempting to checkout.", 3);
           break;
         case 500:
           this.notificationService.add("Uh Oh, something went wrong. Please try again.", 3);
@@ -153,7 +153,7 @@ export class CheckoutComponent {
       height: 'auto',
       width: 'auto',
       data: { cart: this._cart! }
-    })
+    });
   }
 
   /**
