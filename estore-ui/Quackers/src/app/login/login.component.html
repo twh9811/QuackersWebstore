@@ -1,41 +1,27 @@
-<h2>{{message}}</h2>
+<div class="container">
+    <form id="login-form"[formGroup]="loginForm" #form="ngForm" (ngSubmit)="onLogin()">
+        <h2 style="margin: 0px 0px;">Please Login to Continue</h2>
+        <hr style="width: 100%; margin-bottom: 10px;">
+        <div class="controls-container">
+            <mat-form-field appearance="fill" floatLabel="always">
+                <mat-label>Username</mat-label>
+                <input type="text" matInput formControlName="username" pattern="^\s*\S+.*$" required>
+                <mat-error>Please enter your username.</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" floatLabel="always">
+                <mat-label>Password</mat-label>
+                <input type="password" matInput formControlName="password" required>
+                <mat-error>Please enter your password.</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="login-container"
+            [ngClass]="{'margin-top': this.loginForm.controls.password.invalid && this.loginForm.controls.password.touched || this.loginForm.controls.password.invalid && form.submitted}">
+            <button id="login-button" class="fix-hover" mat-raised-button>Login</button>
+        </div>
+        <div class="button-container">
+            <button class="fix-hover" mat-raised-button type="button" (click)="onRegister()">Register</button>
+            <button class="fix-hover" mat-raised-button type="button" (click)="onPasswordReset()">Reset Password</button>
+        </div>
 
-<form id="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="controls-container">
-        <mat-form-field appearance="fill" floatLabel="always">
-            <mat-label>Username</mat-label>
-            <input type="text" matInput formControlName="username" pattern="^\s*\S+.*$" required>
-            <mat-error>Please enter your username.</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="fill" floatLabel="always">
-            <mat-label>Password</mat-label>
-            <input type="password" matInput formControlName="password" pattern="^\s*\S+.*$" required>
-            <mat-error>Please enter your password.</mat-error>
-        </mat-form-field>
-        
-    </div>
-    <div class="reset-container">
-        <div class="block"></div>
-        <button id="reset-button" mat-button type="button">Reset Password</button>
-    </div>
-   
-    <div class="button-container">
-        <button mat-raised-button>Login</button>
-        <button mat-raised-button type="button" (click)="register()">Register</button>
-    </div>
-</form>
-
-<div>
-    <label for="username">Username:
-        <input type="text" id="username" name="username" [(ngModel)]="username">
-    </label>
-    <br>
-    <label for="password">Password:
-        <input type="password" id="password" name="password" [(ngModel)]="password">
-    </label>
-    <br>
-    <span>{{feedback}}</span>
-    <br>
-    <button type="button" (click)="onLogin()" [disabled]="!username || !password">Login</button>
-    <button type="button" (click)="onRegister(username, password)" [disabled]="!username || !password">Register</button>
+    </form>
 </div>
