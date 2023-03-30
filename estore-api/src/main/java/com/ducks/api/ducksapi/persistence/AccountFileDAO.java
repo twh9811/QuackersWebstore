@@ -31,7 +31,6 @@ public class AccountFileDAO implements AccountDAO{
     private static int nextID; // The next ID to assign to a account
     private String filename; //Filename to read and write to
     private Account adminAccount = new OwnerAccount(); // Reserved owner account.
-    private UserAccount userAccount = new UserAccount(); // Reserved user account.
 
     /**
      * Creates a Account File Data Access Object
@@ -170,22 +169,6 @@ public class AccountFileDAO implements AccountDAO{
     */
     @Override
     public Account getAccount(int id) throws IOException {
-        // Handles multiple click events
-        synchronized(accounts) {
-            // If accounts has account id return it.
-            if(accounts.containsKey(id)) {
-                return accounts.get(id);
-            }
-            // If the ID doesn't exist, return null
-            return null;
-        }
-    }
-
-    /**
-    * * {@inheritDoc}}
-    */
-    @Override
-    public UserAccount getUserAccount(int id) throws IOException {
         // Handles multiple click events
         synchronized(accounts) {
             // If accounts has account id return it.

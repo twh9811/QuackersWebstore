@@ -47,19 +47,6 @@ public interface AccountDAO {
     Account getAccount(int id) throws IOException;
 
     /**
-     * Retrieves a {@linkplain UserAccount UserAccount} with the given id
-     * 
-     * @param id The id of the {@link UserAccount UserAccount} to get
-     * 
-     * @return a {@link UserAccount UserAccount} object with the matching id
-     * <br>
-     * null if no {@link UserAccount UserAccount} with a matching id is found
-     * 
-     * @throws IOException if an issue with underlying storage
-     */
-    UserAccount getUserAccount(int id) throws IOException;
-    
-    /**
      * Creates and saves a {@linkplain Account account}
      * 
      * @param account {@linkplain Account account} object to be created and saved

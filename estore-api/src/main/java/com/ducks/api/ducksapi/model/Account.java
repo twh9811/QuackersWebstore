@@ -33,6 +33,22 @@ public abstract class Account {
         @JsonProperty("adminStatus")
         private boolean adminStatus;
 
+        // information created during shipping details
+        @JsonProperty("firstName")
+        private String firstName;
+
+        @JsonProperty("LastName")
+        private String lastName;
+
+        @JsonProperty("address")
+        private String address;
+
+        @JsonProperty("city")
+        private String city;
+
+        @JsonProperty("zipCode")
+        private String zipCode;
+
         Pattern regex = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
 
     /**
@@ -42,10 +58,11 @@ public abstract class Account {
 
     // Used for creating new Account objects in the DAO.
     public Account(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("plainPassword") String plainPassword, @JsonProperty("adminStatus") boolean adminStatus) {
-        this.id = id;
-        this.username = username;
-        this.plainPassword = plainPassword;
-        this.adminStatus = adminStatus;
+        this.firstName = "";
+        this.lastName = "";
+        this.address = "";
+        this.city = "";
+        this.zipCode = "";
     }
 
     /**
@@ -122,6 +139,81 @@ public abstract class Account {
         return matcher.find();
     }
 
+    /**
+     * @return the First Name of the account
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * Changes the First Name of the account
+     * @param firstName The First Name the account should be renamed to
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * @return the Last Name of the account
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Changes the Last Name of the account
+     * @param lastName The Last Name the account should be renamed to
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * @return the Address of the account
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * Changes the Address of the account
+     * @param address The Address the account should be renamed to
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
+     * @return the City of the account
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * Changes the City of the account
+     * @param city The City the account should be renamed to
+     */
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    /**
+     * @return the ZipCode of the account
+     */
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    /**
+     * Changes the ZipCode of the account
+     * @param zipCode The ZipCode the account should be renamed to
+     */
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+    
     /**
      * {@inheritDoc}}
      */
