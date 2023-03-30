@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
 
     this.setSession(this._account);
     this._router.navigate([this._account.username == "admin" ? '/inventory' : '/catalog'])
-    this.openSnackbar(`Welcome back ${this._account.username}!`,  SnackBarType.INFO);
+    this.openSnackbar(`Welcome back to Quackers Duck Emporium ${this._account.username}!`,  SnackBarType.INFO);
   }
 
   /**
@@ -151,13 +151,15 @@ export class LoginComponent implements OnInit {
    * @param message The message to display
    */
   private openSnackbar(message: string, type: SnackBarType): void {
-    const panelClass = (type == SnackBarType.ERROR ? "snackbar-error" : (SnackBarType.SUCCESS ? "snackbar-success" : "snackbar-info"));
+    const panelClass = (type == SnackBarType.ERROR ? "snackbar-error" : (type == SnackBarType.SUCCESS ? "snackbar-success" : "snackbar-info"));
+    console.log(panelClass)
 
     this.snackbar.openFromComponent(SnackbarNotificationComponent,
       {
         data: { message: message, type: type },
         panelClass: [panelClass],
         duration: 3000
+        
       })
     //this.snackbar.open(message, "Close", { panelClass: ["custom-style"] })
   }
