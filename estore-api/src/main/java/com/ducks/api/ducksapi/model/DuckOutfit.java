@@ -203,6 +203,14 @@ public class DuckOutfit {
      * {@inheritDoc}
      */
     @Override
+    public int hashCode() {
+        return this.hatUID + this.shirtUID + this.shoesUID + this.handItemUID + this.jewelryUID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String toString() {
         return String.format(STRING_FORMAT, hatUID, shirtUID, shoesUID, handItemUID, jewelryUID);
     }

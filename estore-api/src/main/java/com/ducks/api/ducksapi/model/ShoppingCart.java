@@ -106,6 +106,15 @@ public class ShoppingCart {
      * {@inheritDoc}
      */
     @Override
+    public int hashCode() {
+        return this.customerId + this.items.hashCode();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String toString() {
         // Converts each map entry to a string in the form key=value
         // Then, joins them on ', '

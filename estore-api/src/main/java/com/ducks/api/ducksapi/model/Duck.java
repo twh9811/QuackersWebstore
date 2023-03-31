@@ -145,13 +145,13 @@ public class Duck {
         this.price = priceObject.getPrice();
     }
 
-     /**
+    /**
      * Custom price for duck, not based on attributes.
      * 
      * @param price The custom price of the duck
      */
     public void updatePrice(double price) {
-        if(price == 0) {
+        if (price == 0) {
             updatePrice();
         } else {
             priceObject = new Price(price);
@@ -386,6 +386,12 @@ public class Duck {
         return this.id == other.id && this.name.equals(other.name) && this.quantity == other.quantity
                 && this.price == other.price && this.size == other.size && this.color == other.color
                 && this.outfit.equals(other.outfit);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id + this.name.hashCode() + this.quantity + Double.hashCode(price) + this.size.hashCode()
+                + this.color.hashCode() + this.outfit.hashCode();
     }
 
     /**

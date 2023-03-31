@@ -132,6 +132,7 @@ public abstract class Account {
 
     /**
      * ID and admin status don't matter in this regard. This is solely for login verification purposes.
+     * {@inheritDoc}
      */
     @Override
     public boolean equals(Object obj) {
@@ -141,4 +142,13 @@ public abstract class Account {
         } 
         return false;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return this.username.hashCode() + this.plainPassword.hashCode();
+    }
+
 }
