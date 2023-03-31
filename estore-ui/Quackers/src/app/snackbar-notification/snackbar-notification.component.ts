@@ -8,8 +8,17 @@ import { SnackBarData } from './snackbar-data';
   styleUrls: ['./snackbar-notification.component.css']
 })
 export class SnackbarNotificationComponent {
+
   constructor(
+    private _snackbarRef: MatSnackBarRef<SnackbarNotificationComponent>,
     @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData
   ) { }
+
+  /**
+   * Closes the snackbar
+   */
+  close(): void {
+    this._snackbarRef.dismiss();
+  }
 
 }

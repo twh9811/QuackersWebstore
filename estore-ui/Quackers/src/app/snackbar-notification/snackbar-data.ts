@@ -4,7 +4,7 @@ export interface SnackBarData {
 }
 
 export enum SnackBarType {
-    SUCCESS,
-    ERROR,
-    INFO
+    SUCCESS = "SUCCESS",
+    ERROR = "ERROR",
+    INFO = "INFO"
 }

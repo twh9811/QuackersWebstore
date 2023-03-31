@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
 
     this.setSession(this._account);
     this._router.navigate([this._account.username == "admin" ? '/inventory' : '/catalog'])
-    this.openSnackbar(`Welcome back to Quackers Duck Emporium ${this._account.username}!`,  SnackBarType.INFO);
+    this.openSnackbar(`Welcome back to Quacker's Duck Emporium ${this._account.username}!`, SnackBarType.INFO);
   }
 
   /**
@@ -119,7 +119,7 @@ export class LoginComponent implements OnInit {
       const code: number = httpResponse.status;
       switch (code) {
         case 406:
-          this.openSnackbar("Your password must be at least 8 characters long and have 1 uppercase letter, 1 lowercase letter, and 1 number.",  SnackBarType.ERROR);
+          this.openSnackbar("Your password must be at least 8 characters long and have 1 uppercase letter, 1 lowercase letter, and 1 number.", SnackBarType.ERROR);
           break;
         case 409:
           this.openSnackbar("An account with the name already exists. Please select a different one.", SnackBarType.ERROR);
@@ -152,16 +152,13 @@ export class LoginComponent implements OnInit {
    */
   private openSnackbar(message: string, type: SnackBarType): void {
     const panelClass = (type == SnackBarType.ERROR ? "snackbar-error" : (type == SnackBarType.SUCCESS ? "snackbar-success" : "snackbar-info"));
-    console.log(panelClass)
 
     this.snackbar.openFromComponent(SnackbarNotificationComponent,
       {
         data: { message: message, type: type },
         panelClass: [panelClass],
         duration: 3000
-        
-      })
-    //this.snackbar.open(message, "Close", { panelClass: ["custom-style"] })
+      });
   }
 
   /**

@@ -1,1 +1,7 @@
-<span>{{data.message}}</span>
+<div class="container">
+    <div class="message-container">
+        <span class="message">{{data.message}}</span>
+    </div>
+    <button mat-button class="button" (click)="close()"
+        [ngClass]="{'error': data.type.toString() == 'ERROR', 'success': data.type.toString() == 'SUCCESS', 'info': data.type.toString() == 'INFO'}">Close</button>
+</div>
