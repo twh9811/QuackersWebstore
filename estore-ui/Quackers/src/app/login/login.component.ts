@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { SessionService } from '../session.service';
-import { SnackbarNotificationComponent } from '../snackbar-notification/snackbar-notification.component';
 import { SnackBarType } from '../snackbar-notification/snackbar-data';
+import { SnackbarNotificationComponent } from '../snackbar-notification/snackbar-notification.component';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit {
   constructor(private _router: Router,
     private _accountService: AccountService,
     private _session: SessionService,
-    private _formBuilder: FormBuilder, private snackbar: MatSnackBar) { }
+    private _formBuilder: FormBuilder, 
+    private _snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this._session.session = {
@@ -153,7 +154,7 @@ export class LoginComponent implements OnInit {
   private openSnackbar(message: string, type: SnackBarType): void {
     const panelClass = (type == SnackBarType.ERROR ? "snackbar-error" : (type == SnackBarType.SUCCESS ? "snackbar-success" : "snackbar-info"));
 
-    this.snackbar.openFromComponent(SnackbarNotificationComponent,
+    this._snackbar.openFromComponent(SnackbarNotificationComponent,
       {
         data: { message: message, type: type },
         panelClass: [panelClass],
