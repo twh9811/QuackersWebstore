@@ -19,7 +19,6 @@
 .control-group-header {
     align-self: center;
 
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 20px;
 
     padding: 0px 30px;
@@ -28,7 +27,6 @@
 }
 
 .form-control-container>label {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 16px;
 }
 
