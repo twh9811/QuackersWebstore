@@ -72,9 +72,9 @@ public class AccountFileDAOTest {
         Account[] accounts = accountFileDAO.findAccounts("Tra");
         Account[] emptySearch = accountFileDAO.findAccounts("Zuch");
         // Analyze
-        assertEquals(accounts.length, 1);
-        assertEquals(accounts[0], testAccounts[2]);
-        assertEquals(emptySearch.length, 0);
+        assertEquals(1, accounts.length);
+        assertEquals(testAccounts[2], accounts[0]);
+        assertEquals(0, emptySearch.length);
     }
 
     @Test

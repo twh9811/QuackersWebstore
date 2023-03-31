@@ -141,7 +141,10 @@ public class DuckTest {
         // All null/-1
         assertThrows(IllegalArgumentException.class, () -> new Duck(1, null, -1, -1, null, null, null));
         // Price empty/DuckOutfit invalid
-        assertThrows(IllegalArgumentException.class, () -> new Duck(1, "", -1, 0, null, null, new DuckOutfit(-1, 0, 0, 0, 0)));
+        DuckOutfit outfit = new DuckOutfit(0, 0, 0, 0, 0);
+        outfit.setHandItemUID(-1);
+        
+        assertThrows(IllegalArgumentException.class, () -> new Duck(1, "", -1, 0, null, null, outfit));
         // Price blank
         assertThrows(IllegalArgumentException.class, () -> new Duck(1, " ", -1, 0, null, null, null));
     }

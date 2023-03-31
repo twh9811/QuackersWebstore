@@ -1,7 +1,5 @@
 package com.ducks.api.ducksapi.model;
 
-import java.util.Arrays;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DuckOutfit {
@@ -152,8 +150,7 @@ public class DuckOutfit {
     }
 
     public int[] getOutfitAsArray() {
-        int[] outfitArray = {hatUID, shirtUID, shoesUID, handItemUID, jewelryUID};
-        return outfitArray;
+        return new int[] { hatUID, shirtUID, shoesUID, handItemUID, jewelryUID };
     }
 
     /**

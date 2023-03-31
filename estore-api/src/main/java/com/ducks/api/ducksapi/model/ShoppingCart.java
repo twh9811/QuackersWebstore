@@ -46,7 +46,7 @@ public class ShoppingCart {
      * @param customerId The customer id that the shopping cart belongs to
      */
     public ShoppingCart(int customerId) {
-        this(customerId, new HashMap<String, Integer>());
+        this(customerId, new HashMap<>());
     }
 
     /**

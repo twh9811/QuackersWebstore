@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -30,7 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author SWEN Faculty, SWEN-261-06 Team 8
  */
 @Tag("Persistence-tier")
-public class DuckFileDAOTest {
+public class DuckFileDAOAbstractTest {
     DuckFileDAO duckFileDAO;
     Duck[] testDucks;
     ObjectMapper mockObjectMapper;
@@ -125,7 +126,7 @@ public class DuckFileDAOTest {
                 "Unexpected exception thrown");
 
         // Analzye
-        assertEquals(result, true);
+        assertTrue(result);
         // We check the internal tree map size against the length
         // of the test ducks array - 1 (because of the delete)
         // Because ducks attribute of DuckFileDAO is package private
