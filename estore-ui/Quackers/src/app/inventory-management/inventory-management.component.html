@@ -4,7 +4,7 @@
 <div class="duck-container">
     <mat-card class="card-format" *ngFor="let duck of ducks">
         <div class="duck-box">
-            <div class="fake-image">&nbsp;</div>
+            <img class="fake-image" alt="{{duck.name}} Image" src="{{getDuckColorImage(duck)}}">
             <mat-card-header class="card-header-format">
                 <mat-card-title class="truncate">{{duck.name}}</mat-card-title>
                 <mat-card-subtitle>Quantity: {{duck.quantity}}</mat-card-subtitle>

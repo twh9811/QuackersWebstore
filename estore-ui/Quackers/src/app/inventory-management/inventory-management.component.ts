@@ -40,6 +40,15 @@ export class InventoryManagementComponent implements OnInit {
     });
   }
 
+  getDuckColorImage(duck: Duck): string {
+    if(duck.size == "EXTRA_LARGR") return "";
+
+    const color = duck.color.toLowerCase();
+    const colorFile = color.charAt(0).toUpperCase() + color.slice(1);
+    console.log(`/assets/duck-colors/${duck.size}/${colorFile}.png`)
+    return `/assets/duck-colors/${duck.size}/${colorFile}.png`;
+  }
+
   /**
    * Gets the ducks from the product service
    */
