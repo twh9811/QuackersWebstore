@@ -22,6 +22,7 @@ import { ProductCreateComponent } from './product-create-modify/product-create-m
 import { ReceiptComponent } from './receipt/receipt.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-notification.component';
+import { CustomizeComponent } from './customize/customize.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-
     CheckoutComponent,
     ReceiptComponent,
     SnackbarNotificationComponent,
+    CustomizeComponent,
   ],
   imports: [
     BrowserModule,
