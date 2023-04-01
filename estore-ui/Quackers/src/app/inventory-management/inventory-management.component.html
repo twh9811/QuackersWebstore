@@ -4,7 +4,7 @@
 <div class="duck-container">
     <mat-card class="card-format" *ngFor="let duck of ducks">
         <div class="duck-box">
-            <div class="image-container">
+            <div class="duck-image-container">
                 <img class="duck-image" alt="{{duck.name}} Image" src="{{getDuckColorImage(duck)}}">
                 <img class="{{getCSSClass('hat', duck)}}"
                     [style.visibility]="duck.outfit.hatUID == 0 ? 'hidden' : 'visible'"
