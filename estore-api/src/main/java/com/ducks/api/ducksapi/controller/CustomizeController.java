@@ -94,12 +94,16 @@ public class CustomizeController {
     public ResponseEntity<DuckOutfit> setDuckOutfit(@RequestBody DuckOutfit duckOutfit, @PathVariable int id) {
         LOG.info("POST /outfit/{id}/ " + duckOutfit);
         try {
-            duckDao.getDuck(id).setOutfit(duckOutfit);
-            DuckOutfit newDuckOutfit = duckDao.getDuck(id).getOutfit();
-            if (newDuckOutfit != null) {
-                return new ResponseEntity<DuckOutfit>(newDuckOutfit, HttpStatus.CREATED);
+            Duck duck = duckDao.getDuck(id);
+            if (duck != null) {
+                duck.setOutfit(duckOutfit);
+                if (duckOutfit != null) {
+                    return new ResponseEntity<DuckOutfit>(duckOutfit, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
             } else {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (IOException ioe) {
             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
@@ -120,9 +124,11 @@ public class CustomizeController {
     public ResponseEntity<DuckOutfit> deleteDuckOutfit(@PathVariable int id) {
         LOG.info("DELETE /outfit/" + id);
         try {
-            DuckOutfit noAccessories = new DuckOutfit(0, 0, 0, 0, 0);
-            duckDao.getDuck(id).setOutfit(noAccessories);
-            if (duckDao.deleteDuck(id)) {
+            
+            Duck duck = duckDao.getDuck(id);
+            if (duck != null) {
+                DuckOutfit noAccessories = new DuckOutfit(0, 0, 0, 0, 0);
+                duck.setOutfit(noAccessories);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
