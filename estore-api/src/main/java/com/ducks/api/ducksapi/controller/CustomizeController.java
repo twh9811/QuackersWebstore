@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.ducks.api.ducksapi.model.Duck;
 import com.ducks.api.ducksapi.model.DuckOutfit;
 import com.ducks.api.ducksapi.persistence.DuckDAO;
+import com.ducks.api.ducksapi.persistence.CustomDuckFileDAO;
 
 /**
  * Handles the REST API requests for the Duck resource
@@ -35,7 +37,7 @@ import com.ducks.api.ducksapi.persistence.DuckDAO;
 public class CustomizeController {
     private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
     private DuckDAO duckDao;
-     
+
     /**
      * Creates a REST API controller to reponds to requests
      * 
@@ -49,27 +51,22 @@ public class CustomizeController {
     }
     
     /**
-     * Responds to the GET request for the {@linkplain DuckOutfit duckOutfit} for the duck with given id
+     * Responds to the GET request for a {@linkplain Duck duck} for the given id
      * 
      * @param id The id used to locate the {@link Duck duck}
      * 
-     * @return ResponseEntity with {@linkplain DuckOutfit duckOutfit} object and HTTP status of OK if
+     * @return ResponseEntity with {@link Duck duck} object and HTTP status of OK if
      *         found<br>
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("/{id}")
-    public ResponseEntity<DuckOutfit> getDuckOutfit(@PathVariable int id) {
+    public ResponseEntity<Duck> getDuck(@PathVariable int id) {
         LOG.info("GET /outfit/" + id);
         try {
             Duck duck = duckDao.getDuck(id);
             if (duck != null) {
-                DuckOutfit duckOutfit = duck.getOutfit();
-                if (duckOutfit != null) {
-                    return new ResponseEntity<DuckOutfit>(duckOutfit, HttpStatus.OK);
-                } else {
-                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-                }
+                return new ResponseEntity<Duck>(duck, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -80,24 +77,49 @@ public class CustomizeController {
     }
 
     /**
-     * Sets the outfit {@linkplain DuckOutfit duckOutfit} of the duck with the provided id,
-     * if it exists
+     * Responds to the GET request for all {@linkplain Duck ducks}
      * 
-     * @param duckOutfit The {@linkplain DuckOutfit duckOutfit} to set
-     * 
-     * @return ResponseEntity with updated {@linkplain DuckOutfit duckOutfit} object and HTTP status
-     *         of OK if updated<br>
-     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     * @return ResponseEntity with array of {@link Duck ducks} objects (may be
+     *         empty) and HTTP status of OK<br>
+     *         ResponseEntity with HTTP status of NOT_FOUND if no ducks are
+     *         found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @PostMapping("/{id}")
-    public ResponseEntity<DuckOutfit> setDuckOutfit(@RequestBody DuckOutfit duckOutfit, @PathVariable int id) {
-        LOG.info("POST /outfit/{id}/ " + duckOutfit);
+    @GetMapping("")
+    public ResponseEntity<Duck[]> getDucks() {
+        LOG.info("GET /outfit");
         try {
-            duckDao.getDuck(id).setOutfit(duckOutfit);
-            DuckOutfit newDuckOutfit = duckDao.getDuck(id).getOutfit();
-            if (newDuckOutfit != null) {
-                return new ResponseEntity<DuckOutfit>(newDuckOutfit, HttpStatus.CREATED);
+            Duck[] ducks = duckDao.getDucks();
+            if (ducks != null && ducks.length != 0) {
+                return new ResponseEntity<Duck[]>(ducks, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (IOException ioe) {
+            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Creates a {@linkplain Duck duck} with the provided duck object
+     * 
+     * @param duck - The {@link Duck duck} to create
+     * 
+     * @return ResponseEntity with created {@link Duck duck} object and HTTP status
+     *         of CREATED<br>
+     *         ResponseEntity with HTTP status of CONFLICT if {@link Duck duck}
+     *         object already exists<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     *         Will inherently throw a 400 if the duck is invalid
+     */
+    @PostMapping("")
+    public ResponseEntity<Duck> createDuck(@RequestBody Duck duck) {
+        LOG.info("POST /outfit " + duck);
+        try {
+            Duck newDuck = duckDao.createDuck(duck);
+            if (newDuck != null) {
+                return new ResponseEntity<Duck>(newDuck, HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
@@ -108,20 +130,51 @@ public class CustomizeController {
     }
 
     /**
-     * Delete the accecories of a gien duck with the given id
+     * Updates the {@linkplain Duck duck} with the provided {@linkplain Duck duck}
+     * object, if it exists
      * 
-     * @param id The id of the duck to deleted
+     * @param duck The {@link Duck duck} to update
+     * 
+     * @return ResponseEntity with updated {@link Duck duck} object and HTTP status
+     *         of OK if updated<br>
+     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @PutMapping("")
+    public ResponseEntity<Duck> updateDuck(@RequestBody Duck duck) {
+        LOG.info("PUT /outfit " + duck);
+        try {
+            // Makes sure that a duck with this name & different id does not already exist
+            Duck foundDuck = duckDao.getDuckByName(duck.getName());
+            if (foundDuck != null && foundDuck.getId() != duck.getId()) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+
+            Duck updateDuck = duckDao.updateDuck(duck);
+            if (updateDuck != null) {
+                return new ResponseEntity<Duck>(updateDuck, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (IOException ioe) {
+            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Deletes a {@linkplain Duck duck} with the given id
+     * 
+     * @param id The id of the {@link Duck duck} to deleted
      * 
      * @return ResponseEntity HTTP status of OK if deleted<br>
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<DuckOutfit> deleteDuckOutfit(@PathVariable int id) {
+    public ResponseEntity<Duck> deleteDuck(@PathVariable int id) {
         LOG.info("DELETE /outfit/" + id);
         try {
-            DuckOutfit noAccessories = new DuckOutfit(0, 0, 0, 0, 0);
-            duckDao.getDuck(id).setOutfit(noAccessories);
             if (duckDao.deleteDuck(id)) {
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
@@ -133,3 +186,108 @@ public class CustomizeController {
         }
     }
 }
+     
+
+//     /**
+//      * Creates a REST API controller to reponds to requests
+//      * 
+//      * @param duckDao The {@link DuckDAO Duck Data Access Object} to perform CRUD
+//      *                operations
+//      *                <br>
+//      *                This dependency is injected by the Spring Framework
+//      */
+//     public CustomizeController(@Qualifier("customDuckFileDAO") CustomDuckFileDAO customDao){
+//         this.customDao = customDao;
+//     }
+    
+//     /**
+//      * Responds to the GET request for the {@linkplain DuckOutfit duckOutfit} for the duck with given id
+//      * 
+//      * @param id The id used to locate the {@link Duck duck}
+//      * 
+//      * @return ResponseEntity with {@linkplain DuckOutfit duckOutfit} object and HTTP status of OK if
+//      *         found<br>
+//      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+//      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+//      */
+//     @GetMapping("/{id}")
+//     public ResponseEntity<DuckOutfit> getDuckOutfit(@PathVariable int id) {
+//         LOG.info("GET /outfit/" + id);
+//         try {
+//             Duck duck = duckDao.getDuck(id);
+//             if (duck != null) {
+//                 DuckOutfit duckOutfit = duck.getOutfit();
+//                 if (duckOutfit != null) {
+//                     return new ResponseEntity<DuckOutfit>(duckOutfit, HttpStatus.OK);
+//                 } else {
+//                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//                 }
+//             } else {
+//                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//             }
+//         } catch (IOException e) {
+//             LOG.log(Level.SEVERE, e.getLocalizedMessage());
+//             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//         }
+//     }
+
+//     /**
+//      * Sets the outfit {@linkplain DuckOutfit duckOutfit} of the duck with the provided id,
+//      * if it exists
+//      * 
+//      * @param duckOutfit The {@linkplain DuckOutfit duckOutfit} to set
+//      * 
+//      * @return ResponseEntity with updated {@linkplain DuckOutfit duckOutfit} object and HTTP status
+//      *         of OK if updated<br>
+//      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+//      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+//      */
+//     @PostMapping("/{id}")
+//     public ResponseEntity<DuckOutfit> setDuckOutfit(@RequestBody DuckOutfit duckOutfit, @PathVariable int id) {
+//         LOG.info("POST /outfit/{id}/ " + duckOutfit);
+//         try {
+//             Duck duck = duckDao.getDuck(id);
+//             if (duck != null) {
+//                 duck.setOutfit(duckOutfit);
+//                 if (duckOutfit != null) {
+//                     return new ResponseEntity<DuckOutfit>(duckOutfit, HttpStatus.OK);
+//                 } else {
+//                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//                 }
+//             } else {
+//                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//             }
+//         } catch (IOException ioe) {
+//             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
+//             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//         }
+//     }
+
+//     /**
+//      * Delete the accecories of a gien duck with the given id
+//      * 
+//      * @param id The id of the duck to deleted
+//      * 
+//      * @return ResponseEntity HTTP status of OK if deleted<br>
+//      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+//      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+//      */
+//     @DeleteMapping("/{id}")
+//     public ResponseEntity<DuckOutfit> deleteDuckOutfit(@PathVariable int id) {
+//         LOG.info("DELETE /outfit/" + id);
+//         try {
+            
+//             Duck duck = duckDao.getDuck(id);
+//             if (duck != null) {
+//                 DuckOutfit noAccessories = new DuckOutfit(0, 0, 0, 0, 0);
+//                 duck.setOutfit(noAccessories);
+//                 return new ResponseEntity<>(HttpStatus.OK);
+//             } else {
+//                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//             }
+//         } catch (IOException ioe) {
+//             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
+//             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//         }
+//     }
+// }
