@@ -46,3 +46,7 @@ button:hover {
 .snackbar-info {
     text-align: center;
 }
+
+:root {
+    --quackers-orange-color: #e67e22;
+}

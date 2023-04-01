@@ -2,21 +2,17 @@
     <button id="create-btn" class="gen-btn" type="button" routerLink="/inventory/product">Create Product</button>
 </div>
 <div class="duck-container">
-    <div *ngFor="let duck of ducks">
-        <div class="mat-elevation-z24 duck-box">
-            <div class="duck-header">
-                <h2>{{duck.name}}</h2>
-                <hr>
-            </div>
-            <div class="duck-details">
-                <span>Id: {{duck.id}}</span><br>
-                <span>Quantity: {{duck.quantity}}</span><br>
-                <span>Price: {{getDuckPrice(duck)}}</span><br>
-                <div class="duck-btn-container">
-                    <button class="duck-modify-btn gen-btn" type="button" (click)="goToDuckModification(duck.id)">Modify</button>
-                    <button class="duck-remove-btn gen-btn" type="button" (click)="deleteDuck(duck)">Remove</button>
-                </div>
-            </div>
+    <mat-card class="card-format" *ngFor="let duck of ducks">
+        <div class="duck-box">
+            <div class="fake-image">&nbsp;</div>
+            <mat-card-header class="card-header-format">
+                <mat-card-title>{{duck.name}}</mat-card-title>
+                <mat-card-subtitle>{{getDuckPrice(duck)}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions class="card-action-format">
+                <button mat-raised-button class="fix-hover" (click)="goToDuckModification(duck.id)">Modify</button>
+                <button mat-raised-button color="warn" class="fix-hover" (click)="deleteDuck(duck)">Remove</button>
+            </mat-card-actions>
         </div>
-    </div>
+    </mat-card>
 </div>

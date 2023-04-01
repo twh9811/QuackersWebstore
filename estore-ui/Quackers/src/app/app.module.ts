@@ -9,6 +9,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatCardModule } from '@angular/material/card';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CatalogComponent } from './catalog/catalog.component';
@@ -47,6 +48,7 @@ import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
+    MatCardModule,
     BrowserAnimationsModule
   ],
   providers: [],
