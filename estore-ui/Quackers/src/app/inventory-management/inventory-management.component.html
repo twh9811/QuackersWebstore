@@ -6,7 +6,8 @@
         <div class="duck-box">
             <div class="fake-image">&nbsp;</div>
             <mat-card-header class="card-header-format">
-                <mat-card-title>{{duck.name}}</mat-card-title>
+                <mat-card-title class="truncate">{{duck.name}}</mat-card-title>
+                <mat-card-subtitle>Quantity: {{duck.quantity}}</mat-card-subtitle>
                 <mat-card-subtitle>{{getDuckPrice(duck)}}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-actions class="card-action-format">
