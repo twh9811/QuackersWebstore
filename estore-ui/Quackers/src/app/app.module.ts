@@ -2,10 +2,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -21,6 +21,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { ProductCreateComponent } from './product-create-modify/product-create-modify.component';
 import { ReceiptComponent } from './receipt/receipt.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-notification.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
     DucksearchComponent,
     DuckDetailComponent,
     CheckoutComponent,
-    ReceiptComponent
+    ReceiptComponent,
+    SnackbarNotificationComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule,
+    MatSnackBarModule,
     BrowserAnimationsModule
   ],
   providers: [],

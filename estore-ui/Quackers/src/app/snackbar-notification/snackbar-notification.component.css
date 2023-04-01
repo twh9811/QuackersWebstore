@@ -1,0 +1,43 @@
+.message {
+    order: 0;
+    justify-content: center;
+    text-align: center;
+}
+
+.button {
+    order: 1;
+    color: white;
+    font-family: var(--mdc-typography-button-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
+    font-size: var(--mdc-typography-button-font-size, 14px);
+    line-height: var(--mdc-typography-button-line-height, 36px);
+    font-weight: var(--mdc-typography-button-font-weight, 500);
+    letter-spacing: var(--mdc-typography-button-letter-spacing, 0.0892857143em);
+    text-transform: var(--mdc-typography-button-text-transform, none);
+    margin-left: 10px;
+}
+
+.button:hover {
+    background-color: white;
+    /*This just overrides the default border hover effect*/
+    border: 0px transparent solid;
+}
+
+.success:hover {
+    color: #2ecc71;
+}
+
+.error:hover {
+    color: #e74c3c;
+}
+
+.info:hover {
+    color: #333333;
+}
+
+.container {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
