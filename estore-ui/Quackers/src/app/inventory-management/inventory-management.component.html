@@ -6,7 +6,12 @@
         <div class="duck-box">
             <div class="image-container">
                 <img class="duck-image" alt="{{duck.name}} Image" src="{{getDuckColorImage(duck)}}">
-                <img class="{{getCSSClass('hat', duck)}}" [style.visibility]="duck.outfit.hatUID == 0 ? 'hidden' : 'visible'" src="{{getDuckHatImage(duck)}}">
+                <img class="{{getCSSClass('hat', duck)}}"
+                    [style.visibility]="duck.outfit.hatUID == 0 ? 'hidden' : 'visible'"
+                    src="{{getAccessoryImage('hat', duck)}}">
+                <img class="{{getCSSClass('handItem', duck)}}"
+                    [style.visibility]="duck.outfit.handItemUID == 0 ? 'hidden' : 'visible'"
+                    src="{{getAccessoryImage('handItem', duck)}}">
             </div>
 
             <mat-card-header class="card-header-format">

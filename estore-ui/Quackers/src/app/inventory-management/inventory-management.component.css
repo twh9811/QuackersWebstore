@@ -125,6 +125,30 @@
     right: 77px;
 }
 
+.duck-handItem-1-small {
+    width: 43px;
+    height: 16px;
+    position: absolute;
+    top: 115px;
+    right: 75px;
+}
+
+.duck-handItem-1-medium {
+    width: 58px;
+    height: 20px;
+    position: absolute;
+    top: 115px;
+    right: 65px;
+}
+
+.duck-handItem-1-large {
+    width: 86px;
+    height: 30px;
+    position: absolute;
+    top: 115px;
+    right: 55px;
+}
+
 .duck-name {
     font-size: 18px;
     font-weight: 600;

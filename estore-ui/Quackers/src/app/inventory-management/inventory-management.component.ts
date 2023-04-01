@@ -48,10 +48,11 @@ export class InventoryManagementComponent implements OnInit {
     return `/assets/duck-colors/${duck.size}/${colorFile}.png`;
   }
 
-  getDuckHatImage(duck: Duck): string {
-    if(duck.outfit.hatUID == 0) return "";
+  getAccessoryImage(accessoryName: string, duck: Duck) {
+    const outfit: any = duck.outfit;
+    if(outfit[accessoryName + "UID"] == 0) return "";
 
-    return `/assets/duck-hats/${duck.outfit.hatUID}.png`;
+    return `/assets/duck-${accessoryName}s/${outfit[accessoryName + "UID"]}.png`;
   }
 
   getCSSClass(accessoryName: string, duck: Duck): string {
