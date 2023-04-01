@@ -282,5 +282,56 @@ public class AccountTest {
           //Analyze
           assertEquals(expectedLastName, account.getLastName());;
     }
+
+    @Test
+    public void testSetAddress() {
+          // Setup
+          int expectedID = 1;
+          String originalusername = "admin";
+          String plainPassword = "password123";
+
+          Account account = new UserAccount(expectedID, originalusername, plainPassword);
+
+          String expectedAddress = "notBlank";
+          // Invoke
+          account.setAddress(expectedAddress);
+
+          //Analyze
+          assertEquals(expectedAddress, account.getAddress());;
+    }
+
+    @Test
+    public void testSetCity() {
+          // Setup
+          int expectedID = 1;
+          String originalusername = "admin";
+          String plainPassword = "password123";
+
+          Account account = new UserAccount(expectedID, originalusername, plainPassword);
+
+          String expectedCity = "notBlank";
+          // Invoke
+          account.setCity(expectedCity);
+
+          //Analyze
+          assertEquals(expectedCity, account.getCity());;
+    }
+
+    @Test
+    public void testSetZipCode() {
+          // Setup
+          int expectedID = 1;
+          String originalusername = "admin";
+          String plainPassword = "password123";
+
+          Account account = new UserAccount(expectedID, originalusername, plainPassword);
+
+          String expectedZipCode = "notBlank";
+          // Invoke
+          account.setZipCode(expectedZipCode);
+
+          //Analyze
+          assertEquals(expectedZipCode, account.getZipCode());;
+    }
     
 }
