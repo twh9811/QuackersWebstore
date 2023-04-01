@@ -33,8 +33,20 @@ public abstract class Account {
         @JsonProperty("adminStatus")
         private boolean adminStatus;
 
-        @JsonProperty("creditCard")
-        private Payment payment;
+        @JsonProperty("name")
+        private String name;
+
+        @JsonProperty("card")
+        private long card;
+
+        @JsonProperty("expDate")
+        private String expDate;
+
+        @JsonProperty("cvv")
+        private int cvv;
+
+        
+
 
         Pattern regex = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
 
@@ -143,5 +155,37 @@ public abstract class Account {
             return (this.username.equals(other.getUsername()) && this.plainPassword.equals(other.getPlainPassword()));
         } 
         return false;
+    }
+
+     /**
+     * @return the name on the card
+     */
+    public String getName(){
+        return this.name;
+    }
+    /**
+     * @return the credit card number
+     */
+    public long getCard(){
+        return this.card;
+    }
+    /**
+     * @return the expiration date on the card
+     */
+    public String geExpDate(){
+        return this.expDate;
+    }
+    /**
+     * @return the CVV code 
+     */
+    public int getCVV(){
+        return this.cvv;
+    }
+
+    public void savePayment(String name, long card, String expDate, int cvv){
+        this.name = name;
+        this.card = card;
+        this.expDate =  expDate;
+        this.cvv = cvv;
     }
 }
