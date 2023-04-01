@@ -101,6 +101,30 @@
     right: 80px;
 }
 
+.duck-hat-3-small {
+    width: 53px;
+    height: 33px;
+    position: absolute;
+    top: 38px;
+    right: 88px;
+}
+
+.duck-hat-3-medium {
+    width: 66px;
+    height: 41px;
+    position: absolute;
+    top: 22px;
+    right: 82px;
+}
+
+.duck-hat-3-large {
+    width: 78px;
+    height: 50px;
+    position: absolute;
+    top: 5px;
+    right: 77px;
+}
+
 .duck-name {
     font-size: 18px;
     font-weight: 600;
