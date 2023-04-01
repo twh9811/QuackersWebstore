@@ -45,8 +45,18 @@ export class InventoryManagementComponent implements OnInit {
 
     const color = duck.color.toLowerCase();
     const colorFile = color.charAt(0).toUpperCase() + color.slice(1);
-    console.log(`/assets/duck-colors/${duck.size}/${colorFile}.png`)
     return `/assets/duck-colors/${duck.size}/${colorFile}.png`;
+  }
+
+  getDuckHatImage(duck: Duck): string {
+    if(duck.outfit.hatUID == 0) return "";
+
+    return `/assets/duck-hats/${duck.outfit.hatUID}.png`;
+  }
+
+  getCSSClass(accessoryName: string, duck: Duck): string {
+    const outfit: any = duck.outfit;
+    return `duck-${accessoryName}-${outfit[accessoryName + "UID"]}-${duck.size.toLowerCase()}`;
   }
 
   /**

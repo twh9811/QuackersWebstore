@@ -40,11 +40,41 @@
     justify-content: center;
 }
 
-.fake-image {
-    background-color: red;
-    border-style: none !important;
+.image-container {
     width: 100%;
     height: 60%;
+    padding: 0%;
+    margin: 0%;
+}
+
+.duck-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.duck-hat-1-small {
+    width: 70px;
+    height: 44px;
+    position: absolute;
+    top: 30px;
+    right: 80px;
+}
+
+.duck-hat-1-medium {
+    width: 80px;
+    height: 52px;
+    position: absolute;
+    top: 13px;
+    right: 76px;
+}
+
+.duck-hat-1-large {
+    width: 93px;
+    height: 60px;
+    position: absolute;
+    top: 0px;
+    right: 70px;
 }
 
 .duck-name {
