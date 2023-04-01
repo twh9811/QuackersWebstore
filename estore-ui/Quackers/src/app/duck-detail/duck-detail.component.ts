@@ -88,6 +88,16 @@ export class DuckDetailComponent implements OnInit {
   }
 
   /**
+   * Gets the price of a duck in the form of $x.xx
+   * 
+   * @param duck The duck that the cart price is being retrieved for
+   * @returns The calculated price to two decimals as a string
+   */
+  getDuckPrice(duck: Duck): string {
+    return `$${(duck.price).toFixed(2)}`;
+  }
+
+  /**
    * Validates that a user is a customer
    * If not, they are sent back to the login page
    */
