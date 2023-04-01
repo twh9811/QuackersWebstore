@@ -105,8 +105,8 @@ public abstract class Account {
      * @param newPassword The input that is being checked
      * @return whether or not the passwords match
      */
-    public boolean confirmPassword(String original, String current){
-        return original.equals(current);
+    public boolean confirmPassword(String original){
+        return original.equals(this.plainPassword);
     }
 
     /**
