@@ -58,10 +58,10 @@ public abstract class Account {
 
     // Used for creating new Account objects in the DAO.
     public Account(@JsonProperty("id") int id, @JsonProperty("username") String username,
-     @JsonProperty("plainPassword") String plainPassword, @JsonProperty("adminStatus") boolean adminStatus,
-     @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, 
-     @JsonProperty("address") String address, @JsonProperty("city") String city,
-     @JsonProperty("zipCode") String zipCode) {
+                   @JsonProperty("plainPassword") String plainPassword, @JsonProperty("adminStatus") boolean adminStatus,
+                   @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, 
+                   @JsonProperty("address") String address, @JsonProperty("city") String city,
+                   @JsonProperty("zipCode") String zipCode) {
     }
 
     /**
