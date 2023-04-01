@@ -3,7 +3,6 @@ package com.ducks.api.ducksapi.persistence;
 import java.io.IOException;
 
 import com.ducks.api.ducksapi.model.Account;
-import com.ducks.api.ducksapi.model.UserAccount;
 
 /**
  * Defines the interface for account object persistence
@@ -115,7 +114,7 @@ public interface AccountDAO {
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
-    boolean changeFirstName(int id, String newName) throws IOException;
+    boolean changeFirstName(int id, String newFirstName) throws IOException;
 
     /**
      * Changes the Last Name of a {@linkplain Account account} with the new Last Name.
@@ -130,7 +129,7 @@ public interface AccountDAO {
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
-    boolean changeLastName(int id, String newName) throws IOException;
+    boolean changeLastName(int id, String newLastName) throws IOException;
 
     /**
      * Changes the Address of a {@linkplain Account account} with the new Address.
