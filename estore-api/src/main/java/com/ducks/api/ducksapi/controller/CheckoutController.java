@@ -66,7 +66,7 @@ public class CheckoutController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<ShoppingCart> checkout(@PathVariable int id) {
-        LOG.log(Level.INFO, "PUT /cart/checkout/%d{0}", id);
+        LOG.log(Level.INFO, "PUT /cart/checkout/{0}", id);
         try {
             ShoppingCart cart = cartDao.getShoppingCart(id);
             // 404
