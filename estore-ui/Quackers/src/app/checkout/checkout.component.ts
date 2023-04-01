@@ -1,14 +1,13 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Account } from '../account';
-import { NotificationService } from '../notification.service';
 import { ReceiptComponent } from '../receipt/receipt.component';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
+import { SnackBarService } from '../snackbar.service';
 import { CheckoutData } from './checkout-data';
-import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'app-checkout',
@@ -19,7 +18,7 @@ export class CheckoutComponent {
   private _account: Account = this.checkoutData.account;
   private _cart: Cart = this.checkoutData.cart;
 
-  detailForm = this.formBuilder.group({
+  detailForm = this._formBuilder.group({
     email: '',
     firstName: '',
     lastName: '',
@@ -32,11 +31,11 @@ export class CheckoutComponent {
   });
 
   constructor(public dialogRef: MatDialogRef<CheckoutComponent>,
-    private cartService: CartService,
-    private notificationService: NotificationService,
-    private formBuilder: FormBuilder,
-    private dialog: MatDialog,
-    private router: Router,
+    private _cartService: CartService,
+    private _snackBarService: SnackBarService,
+    private _formBuilder: FormBuilder,
+    private _dialog: MatDialog,
+    private _router: Router,
     @Inject(MAT_DIALOG_DATA) public checkoutData: CheckoutData) { }
 
 
@@ -53,7 +52,7 @@ export class CheckoutComponent {
       return;
     }
 
-    this.cartService.validateCart(this._account.id).subscribe(response => {
+    this._cartService.validateCart(this._account.id).subscribe(response => {
       const status = response.status;
       const body: Cart = response.body;
 
@@ -67,10 +66,10 @@ export class CheckoutComponent {
 
           break;
         case 404:
-          this.notificationService.add("Please add items to your shopping cart before attempting to checkout.", 3);
+          this._snackBarService.openErrorSnackbar("Please add items to your shopping cart before attempting to checkout.");
           break;
         case 500:
-          this.notificationService.add("Uh Oh, something went wrong. Please try again.", 3);
+          this._snackBarService.openErrorSnackbar("Uh Oh, something went wrong. Please try again.");
           break;
       }
 
@@ -149,7 +148,7 @@ export class CheckoutComponent {
    * Opens the receipt dialog prompt
    */
   private openReceiptPrompt(): void {
-    this.dialog.open(ReceiptComponent, {
+    this._dialog.open(ReceiptComponent, {
       height: 'auto',
       width: 'auto',
       data: { cart: this._cart! }
@@ -161,25 +160,25 @@ export class CheckoutComponent {
    */
   private handleValidCart(): void {
     // TODO: Make pop that gives receipt
-    this.cartService.checkoutCart(this._account.id).subscribe(response => {
+    this._cartService.checkoutCart(this._account.id).subscribe(response => {
       const status = response.status;
       console.log(status);
       switch (status) {
         // Theoretically shouldn't be possible due to validation before allowing checkout
         case 422:
-          this.notificationService.add("Some of the items in your cart were no longer available. We are unable to checkout your case.", 3);
+          this._snackBarService.openErrorSnackbar("Some of the items in your cart were no longer available. We are unable to checkout your case.");
           return;
         // Theoretically shouldn't be possible due to validation before allowing checkout
         case 404:
-          this.notificationService.add("Please add items to your shopping cart before attempting to checkout.", 3);
+          this._snackBarService.openErrorSnackbar("Please add items to your shopping cart before attempting to checkout.");
           return;
         case 500:
-          this.notificationService.add("Uh Oh, something went wrong. Please try again.", 3);
+          this._snackBarService.openErrorSnackbar("Uh Oh, something went wrong. Please try again.");
           return;
       }
 
       // Success (for some reason status is undefined when it is 200. I do not know why)
-      this.router.navigate(['catalog']);
+      this._router.navigate(['catalog']);
       this.openReceiptPrompt();
     });
   }
@@ -189,16 +188,16 @@ export class CheckoutComponent {
    * @param cart The validated cart
    */
   private handleInvalidCart(cart: Cart): void {
-    this.cartService.updateCart(cart).subscribe(response => {
+    this._cartService.updateCart(cart).subscribe(response => {
       this.closeDialog();
 
       // Send success if update was a success, error otherwise
       if (response.status == 200) {
-        this.notificationService.add("Some of the items in your cart were no longer available. We have adjusted your cart to remove these items.", 3);
+        this._snackBarService.openErrorSnackbar("Some of the items in your cart were no longer available. We have adjusted your cart to remove these items.");
         return;
       }
 
-      this.notificationService.add("Uh Oh, we were unable to remove the invalid items from your cart.", 3);
+      this._snackBarService.openErrorSnackbar("Uh Oh, we were unable to remove the invalid items from your cart.");
     });
   }
 
