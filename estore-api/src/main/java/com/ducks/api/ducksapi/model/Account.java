@@ -7,8 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-
-/** 
+/**
  * Represents a Account entity. Used to store User information for the Webstore.
  * 
  * @author Travis Hill
@@ -16,52 +15,63 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = UserAccount.class, name = "UserAccount"),
-    @JsonSubTypes.Type(value = OwnerAccount.class, name = "OwnerAccount")
+        @JsonSubTypes.Type(value = UserAccount.class, name = "UserAccount"),
+        @JsonSubTypes.Type(value = OwnerAccount.class, name = "OwnerAccount")
 })
 public abstract class Account {
 
-        @JsonProperty("id")
-        private int id;
+    private static Pattern strongPasswordRegex = Pattern
+            .compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
 
-        @JsonProperty("username")
-        private String username;
+    @JsonProperty("id")
+    private int id;
 
-        @JsonProperty("plainPassword")
-        private String plainPassword;
+    @JsonProperty("username")
+    private String username;
 
-        @JsonProperty("adminStatus")
-        private boolean adminStatus;
+    @JsonProperty("plainPassword")
+    private String plainPassword;
 
-        // information created during shipping details
-        @JsonProperty("firstName")
-        private String firstName;
+    @JsonProperty("adminStatus")
+    private boolean adminStatus;
 
-        @JsonProperty("lastName")
-        private String lastName;
+    // information created during shipping details
+    @JsonProperty("firstName")
+    private String firstName;
 
-        @JsonProperty("address")
-        private String address;
+    @JsonProperty("lastName")
+    private String lastName;
 
-        @JsonProperty("city")
-        private String city;
+    @JsonProperty("address")
+    private String address;
 
-        @JsonProperty("zipCode")
-        private String zipCode;
+    @JsonProperty("city")
+    private String city;
 
-        Pattern regex = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
+    @JsonProperty("zipCode")
+    private String zipCode;
 
     /**
      * Needed for Spring to run the server. Needs Public Default Constructor.
      */
-    public Account() {}
+    public Account() {
+    }
 
     // Used for creating new Account objects in the DAO.
     public Account(@JsonProperty("id") int id, @JsonProperty("username") String username,
-                   @JsonProperty("plainPassword") String plainPassword, @JsonProperty("adminStatus") boolean adminStatus,
-                   @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, 
-                   @JsonProperty("address") String address, @JsonProperty("city") String city,
-                   @JsonProperty("zipCode") String zipCode) {
+            @JsonProperty("plainPassword") String plainPassword, @JsonProperty("adminStatus") boolean adminStatus,
+            @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName,
+            @JsonProperty("address") String address, @JsonProperty("city") String city,
+            @JsonProperty("zipCode") String zipCode) {
+        this.id = id;
+        this.username = username;
+        this.plainPassword = plainPassword;
+        this.adminStatus = adminStatus;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.zipCode = zipCode;
     }
 
     /**
@@ -80,6 +90,7 @@ public abstract class Account {
 
     /**
      * Changes the username of the account
+     * 
      * @param username The username the account should be renamed to
      */
     public void setUsername(String username) {
@@ -95,6 +106,7 @@ public abstract class Account {
 
     /**
      * Changes the password of an account
+     * 
      * @param newPassword The passworld the account should change to.
      */
     public void setPassword(String newPassword) {
@@ -103,10 +115,11 @@ public abstract class Account {
 
     /**
      * Checks if the entered password matches the current password
+     * 
      * @param newPassword The input that is being checked
      * @return whether or not the passwords match
      */
-    public boolean confirmPassword(String original, String current){
+    public boolean confirmPassword(String original, String current) {
         return original.equals(current);
     }
 
@@ -116,25 +129,28 @@ public abstract class Account {
     public boolean getAdminStatus() {
         return adminStatus;
     }
-    
+
     /**
      * Changes the admin status of an account
+     * 
      * @param statusType The type of status the account should be changed to
      */
     public void setAdminStatus(boolean statusType) {
-        if(this.username.equals("admin")) {
+        if (this.username.equals("admin")) {
             this.adminStatus = statusType;
         }
     }
 
     /**
-     * Takes password associated with the account and determines if it is strong enough or not.
-     * Must contain 8 characters, 1 lowercase, 1 uppercase and a number. It CAN contain special chars, not required.
+     * Takes password associated with the account and determines if it is strong
+     * enough or not.
+     * Must contain 8 characters, 1 lowercase, 1 uppercase and a number. It CAN
+     * contain special chars, not required.
      *
      * @return True if the password meets requirements, false otherwise.
      */
     public boolean validateStrongPassword(String password) {
-        Matcher matcher = regex.matcher(password);
+        Matcher matcher = strongPasswordRegex.matcher(password);
         return matcher.find();
     }
 
@@ -147,6 +163,7 @@ public abstract class Account {
 
     /**
      * Changes the First Name of the account
+     * 
      * @param firstName The First Name the account should be renamed to
      */
     public void setFirstName(String firstName) {
@@ -162,6 +179,7 @@ public abstract class Account {
 
     /**
      * Changes the Last Name of the account
+     * 
      * @param lastName The Last Name the account should be renamed to
      */
     public void setLastName(String lastName) {
@@ -177,6 +195,7 @@ public abstract class Account {
 
     /**
      * Changes the Address of the account
+     * 
      * @param address The Address the account should be renamed to
      */
     public void setAddress(String address) {
@@ -192,6 +211,7 @@ public abstract class Account {
 
     /**
      * Changes the City of the account
+     * 
      * @param city The City the account should be renamed to
      */
     public void setCity(String city) {
@@ -207,6 +227,7 @@ public abstract class Account {
 
     /**
      * Changes the ZipCode of the account
+     * 
      * @param zipCode The ZipCode the account should be renamed to
      */
     public void setZipCode(String zipCode) {
@@ -222,14 +243,15 @@ public abstract class Account {
     }
 
     /**
-     * ID and admin status don't matter in this regard. This is solely for login verification purposes.
+     * ID and admin status don't matter in this regard. This is solely for login
+     * verification purposes.
      */
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Account) {
+        if (obj instanceof Account) {
             Account other = (Account) obj;
             return (this.username.equals(other.getUsername()) && this.plainPassword.equals(other.getPlainPassword()));
-        } 
+        }
         return false;
     }
 }
