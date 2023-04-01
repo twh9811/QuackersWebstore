@@ -142,8 +142,32 @@
 }
 
 .duck-handItem-1-large {
-    width: 86px;
-    height: 30px;
+    width: 64px;
+    height: 26px;
+    position: absolute;
+    top: 125px;
+    right: 55px;
+}
+
+.duck-handItem-2-small {
+    width: 29px;
+    height: 29px;
+    position: absolute;
+    top: 110px;
+    right: 73px;
+}
+
+.duck-handItem-2-medium {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 110px;
+    right: 65px;
+}
+
+.duck-handItem-2-large {
+    width: 42px;
+    height: 42px;
     position: absolute;
     top: 115px;
     right: 55px;
