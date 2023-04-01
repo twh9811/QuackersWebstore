@@ -53,6 +53,11 @@ public class AccountTest {
         String expectedUsername = "admin";
         String expectedPassword = "admin";
         boolean expectedAdminStatus = true;
+        String expectedFirstName = "";
+        String expectedLastName = "";
+        String expectedAddress = "";
+        String expectedCity = "";
+        String expectedZipCode = "";
 
         // Invoke
         Account account = new OwnerAccount();
@@ -64,6 +69,11 @@ public class AccountTest {
         assertEquals(expectedPassword, account.getPlainPassword());
         assertEquals(expectedID, account.getId());
         assertEquals(expectedAdminStatus, account.getAdminStatus());
+        assertEquals(expectedFirstName, account.getFirstName());
+        assertEquals(expectedLastName, account.getLastName());
+        assertEquals(expectedAddress, account.getAddress());
+        assertEquals(expectedCity, account.getCity());
+        assertEquals(expectedZipCode, account.getZipCode());
     }
 
     @Test
@@ -243,17 +253,34 @@ public class AccountTest {
     public void testSetFirstName() {
           // Setup
           int expectedID = 1;
-          String expectedUsername = "Micheal";
+          String originalusername = "admin";
           String plainPassword = "password123";
 
-          Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
+          Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
-          String expectedPassword = "password";
+          String expectedFirstName = "notBlank";
           // Invoke
-          account.setPassword(expectedPassword);
+          account.setFirstName(expectedFirstName);
+
           //Analyze
-  
-          assertEquals(expectedPassword, account.getPlainPassword());
+          assertEquals(expectedFirstName, account.getFirstName());;
+    }
+
+    @Test
+    public void testSetLastName() {
+          // Setup
+          int expectedID = 1;
+          String originalusername = "admin";
+          String plainPassword = "password123";
+
+          Account account = new UserAccount(expectedID, originalusername, plainPassword);
+
+          String expectedLastName = "notBlank";
+          // Invoke
+          account.setLastName(expectedLastName);
+
+          //Analyze
+          assertEquals(expectedLastName, account.getLastName());;
     }
     
 }
