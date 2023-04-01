@@ -163,7 +163,7 @@ public class AccountFileDAOTest {
         // Setup
         Account account = accountFileDAO.getAccount(1);
         int accountID = account.getId();
-        String newPassword = "password12345";
+        String newPassword = "Password12345!";
         // Invoke
         boolean successChange = accountFileDAO.changePassword(accountID, "password", newPassword);
         boolean failChangeWrongID = accountFileDAO.changePassword(999, "password", newPassword);
