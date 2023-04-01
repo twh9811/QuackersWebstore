@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
  * A unit test suite for the abstract Account class.
  * Tests both OwnerAccount and UserAccount classes functionality
  * 
- * @author Travis Hill
+ * @author Travis Hill & Andrew Le
  */
 @Tag("Model-tier")
 public class AccountTest {
@@ -23,6 +23,11 @@ public class AccountTest {
         String expectedUsername = "admin";
         String expectedPassword = "password123";
         boolean expectedAdminStatus = false;
+        String expectedFirstName = "";
+        String expectedLastName = "";
+        String expectedAddress = "";
+        String expectedCity = "";
+        String expectedZipCode = "";
 
         // Invoke
         Account account = new UserAccount(expectedID, expectedUsername, expectedPassword);
@@ -34,6 +39,11 @@ public class AccountTest {
         assertEquals(expectedPassword, account.getPlainPassword());
         assertEquals(expectedID, account.getId());
         assertEquals(expectedAdminStatus, account.getAdminStatus());
+        assertEquals(expectedFirstName, account.getFirstName());
+        assertEquals(expectedLastName, account.getLastName());
+        assertEquals(expectedAddress, account.getAddress());
+        assertEquals(expectedCity, account.getCity());
+        assertEquals(expectedZipCode, account.getZipCode());
     }
 
     @Test
@@ -227,6 +237,23 @@ public class AccountTest {
         //Analyze
           
         assertTrue(strongPassword);
+    }
+
+    @Test
+    public void testSetFirstName() {
+          // Setup
+          int expectedID = 1;
+          String expectedUsername = "Micheal";
+          String plainPassword = "password123";
+
+          Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
+
+          String expectedPassword = "password";
+          // Invoke
+          account.setPassword(expectedPassword);
+          //Analyze
+  
+          assertEquals(expectedPassword, account.getPlainPassword());
     }
     
 }
