@@ -57,12 +57,11 @@ public abstract class Account {
     public Account() {}
 
     // Used for creating new Account objects in the DAO.
-    public Account(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("plainPassword") String plainPassword, @JsonProperty("adminStatus") boolean adminStatus) {
-        this.firstName = "";
-        this.lastName = "";
-        this.address = "";
-        this.city = "";
-        this.zipCode = "";
+    public Account(@JsonProperty("id") int id, @JsonProperty("username") String username,
+     @JsonProperty("plainPassword") String plainPassword, @JsonProperty("adminStatus") boolean adminStatus,
+     @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, 
+     @JsonProperty("address") String address, @JsonProperty("city") String city,
+     @JsonProperty("zipCode") String zipCode) {
     }
 
     /**
@@ -213,7 +212,7 @@ public abstract class Account {
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
-    
+
     /**
      * {@inheritDoc}}
      */
