@@ -17,6 +17,7 @@
 .card-header-format {
     margin: 0px;
     align-self: center;
+    padding: 0px;
 }
 
 .truncate {
@@ -30,6 +31,7 @@
 .card-action-format {
     gap: 15px;
     align-self: center;
+    padding: 0px;
 }
 
 .duck-container {
