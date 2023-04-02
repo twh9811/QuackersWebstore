@@ -242,6 +242,7 @@ public class AccountFileDAO implements AccountDAO{
             // Checks if account is in database
             if(accounts.containsKey(id)) {
                 accounts.remove(id);
+                save();
                 return true;
             }
             // Account is not in database, therefore cannot be deleted
