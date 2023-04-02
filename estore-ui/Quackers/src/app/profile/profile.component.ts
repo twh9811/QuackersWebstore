@@ -42,6 +42,14 @@ export class ProfileComponent implements OnInit {
     this._location.back();
   }
 
+  changeShippingAddress(): void {
+    
+  }
+
+  changePaymentMethod(): void {
+    
+  }
+
   /**
   * Validates that a user is a customer
   * If not, they are sent back to the login page
