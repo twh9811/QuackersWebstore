@@ -342,7 +342,7 @@ public class AccountFileDAO implements AccountDAO{
                 Account account = getAccount(id);
 
                 // Changes Address
-                account.setLastName(newAddress);
+                account.setAddress(newAddress);
 
                 // Save changes to database
                 return save();        
@@ -366,7 +366,7 @@ public class AccountFileDAO implements AccountDAO{
                 Account account = getAccount(id);
 
                 // Changes City
-                account.setLastName(newCity);
+                account.setCity(newCity);
 
                 // Save changes to database
                 return save();       
@@ -390,7 +390,7 @@ public class AccountFileDAO implements AccountDAO{
                 Account account = getAccount(id);
 
                 // Changes ZipCode
-                account.setLastName(newZipCode);
+                account.setZipCode(newZipCode);
 
                 // Save changes to database
                 return save();         
