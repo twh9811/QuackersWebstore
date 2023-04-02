@@ -36,7 +36,7 @@ export class AccountService {
   }
 
   /**
-   * Saves any changes made to the account when logging out to the database 
+   * Saves any changes made to the account when logging out to the database
    * @param account The account with the updated information to save to the database.
    * @returns http ok when saved, if there was an error it returns an http conflict
    */

@@ -7,11 +7,11 @@ import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { CheckoutComponent } from '../checkout/checkout.component';
 import { Duck } from '../duck';
-import { NotificationService } from '../notification.service';
 import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
+import { SnackBarService } from '../snackbar.service';
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
@@ -23,27 +23,27 @@ export class ShoppingCartComponent implements OnInit {
   cart: Cart | undefined = undefined;
   ducks: Duck[] = [];
 
-  constructor(private router: Router,
-    private location: Location,
-    private accountService: AccountService,
-    private cartService: CartService,
-    private dialog: MatDialog,
-    private sessionService: SessionService,
-    private productService: ProductService,
-    private notificationService: NotificationService,) { }
+  constructor(private _router: Router,
+    private _location: Location,
+    private _accountService: AccountService,
+    private _cartService: CartService,
+    private _dialog: MatDialog,
+    private _sessionService: SessionService,
+    private _productService: ProductService,
+    private _snackBarService: SnackBarService) { }
 
   ngOnInit(): void {
     // Validates that an account is indeed logged in
-    if (!this.sessionService.session) {
+    if (!this._sessionService.session) {
       this.validateAuthorization();
       return;
     }
 
     // Gets account and validates it's authorization before attempting to retrieve it's cart
-    this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
+    this._accountService.getAccount(this._sessionService.session.id).subscribe(account => {
       this.account = account;
       this.validateAuthorization();
-      this.cartService.getCartAndCreate(this.account.id).then((cart) => {
+      this._cartService.getCartAndCreate(this.account.id).then((cart) => {
         this.cart = cart;
         this.loadDucks();
       });
@@ -85,6 +85,10 @@ export class ShoppingCartComponent implements OnInit {
     return (quantity * duck.price).toFixed(2);
   }
 
+  getDuckPrice(duck: Duck): string {
+    return duck.price.toFixed(2);
+  }
+
   /**
    * 
    * Calculates the total price of all of the duck in a given cart
@@ -111,17 +115,28 @@ export class ShoppingCartComponent implements OnInit {
   removeDuck(duck: Duck, quantityStr: string): void {
     if (!this.cart) return;
 
+    // Makes sure the number is in the form of x or x.00 (there can be as many 0s as they'd like)
+    if(!quantityStr.match(/^\d+(\.[0]+)?$/g)) {
+      this._snackBarService.openErrorSnackbar(`You must enter an integer value for the quantity input.`);
+      return;
+    }
+
     const quantity = Number.parseInt(quantityStr);
     // Shouldn't be possible but still good to check
     if (Number.isNaN(quantity)) {
-      this.notificationService.add(`${quantityStr} is not a valid number!`, 3);
+      this._snackBarService.openErrorSnackbar(`You must enter an integer value for the quantity input.`);
+      return;
+    }
+
+    if (quantity <= 0) {
+      this._snackBarService.openErrorSnackbar(`You must enter an integer value greater than 0 for the quantity input.`);
       return;
     }
 
     const newQuantity = this.getDuckQuantity(duck.id)! - quantity;
     // Shouldn't be possible but still good to check
     if (newQuantity < 0) {
-      this.notificationService.add(`You can not remove more of an item than what is in your cart!`, 3);
+      this._snackBarService.openErrorSnackbar(`You are attempting to remove ${quantity} duck(s) with the name of ${duck.name} from your cart, but you only have ${this.getDuckQuantity(duck.id)} of them in your cart.`);
       return;
     }
 
@@ -134,14 +149,14 @@ export class ShoppingCartComponent implements OnInit {
     }
 
     // Update the cart
-    this.cartService.updateCart(this.cart).subscribe(status => {
+    this._cartService.updateCart(this.cart).subscribe(status => {
       // Send success if update was a success, error otherwise
       if (status.status == 200) {
-        this.notificationService.add(`Successfully removed ${quantity} duck(s) with an id of ${duck.id} from your cart!`, 3);
+        this._snackBarService.openSuccessSnackbar(`Successfully removed ${quantity} duck(s) with an id of ${duck.id} from your cart.`);
         return;
       }
 
-      this.notificationService.add(`Failed to update your cart. Please try again!`, 3);
+      this._snackBarService.openErrorSnackbar(`Failed to update your cart. Please try again.`);
     });
   }
 
@@ -149,7 +164,7 @@ export class ShoppingCartComponent implements OnInit {
    * Sends the user back to the previous page
    */
   goBack(): void {
-    this.location.back();
+    this._location.back();
   }
 
 
@@ -163,13 +178,13 @@ export class ShoppingCartComponent implements OnInit {
     // sets the items and ducks to empty and then send it to the server
     this.cart.items = {};
     this.ducks = [];
-    this.cartService.updateCart(this.cart).subscribe(status => {
+    this._cartService.updateCart(this.cart).subscribe(status => {
       if (status.status == 200) {
-        this.notificationService.add(`Successfully cleared your cart!`, 3);
+        this._snackBarService.openSuccessSnackbar(`Successfully cleared your cart.`);
         return;
       }
 
-      this.notificationService.add(`Failed to update your cart. Please try again!`, 3);
+      this._snackBarService.openErrorSnackbar(`Failed to update your cart. Please try again.`);
     });
   }
 
@@ -177,16 +192,16 @@ export class ShoppingCartComponent implements OnInit {
    * Sends the user to the checkout page to purchase the items
    */
   checkoutCart(): void {
-    const dialogRef = this.dialog.open(CheckoutComponent,
+    const dialogRef = this._dialog.open(CheckoutComponent,
       {
         height: '100%',
         position: { top: '0%', right: '0%' },
         data: { account: this.account, cart: this.cart },
       });
     dialogRef.afterClosed().subscribe(() => {
-      document.body.style.overflow = 'visible';
+      document.body.style.overflowY = 'visible';
     })
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflowY = 'hidden';
   }
 
   /**
@@ -205,11 +220,11 @@ export class ShoppingCartComponent implements OnInit {
       // Gets a duck for each key (a duckId)
       const duckId = Number.parseInt(key);
       // Waits for the value to be retrieved
-      const duck: Duck = await firstValueFrom(this.productService.getDuck(duckId));
+      const duck: Duck = await firstValueFrom(this._productService.getDuck(duckId));
       // Removes duck from cart if it is no longer in the inventory
       if (!duck) {
         shouldUpdate = true;
-        this.notificationService.add(`The duck with the id ${key} is no longer available!`, 3);
+        this._snackBarService.openErrorSnackbar(`The duck with the id ${key} is no longer available.`);
         delete this.cart.items[key];
         continue;
       }
@@ -225,9 +240,9 @@ export class ShoppingCartComponent implements OnInit {
       shouldUpdate = true;
       // Silences error if the value request is 0; (Item shouldn't be in cart)
       if (value != 0) {
-        this.notificationService.add(`The duck with the id ${key} only has ${duck.quantity} 
+        this._snackBarService.openInfoSnackbar(`The duck with the id ${key} only has ${duck.quantity} 
           available in stock! You requested ${value}. 
-          Your cart has been reflected to only have ${duck.quantity}!`, 5);
+          Your cart has been reflected to only have ${duck.quantity}.`);
       }
 
       // Deletes the duck from the map if the quantity available is 0
@@ -242,7 +257,7 @@ export class ShoppingCartComponent implements OnInit {
 
     // Updates the cart if necessary
     if (shouldUpdate) {
-      this.cartService.updateCart(this.cart).subscribe();
+      this._cartService.updateCart(this.cart).subscribe();
     }
   }
 
@@ -254,8 +269,8 @@ export class ShoppingCartComponent implements OnInit {
     // if this account's admin staus is true or the account is
     // undefined, then the user is sent back to the login page
     if (this.account?.adminStatus || !this.account) {
-      this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
-      this.router.navigate(['/']);
+      this._snackBarService.openErrorSnackbar(`You are not authorized to view ${this._router.url}.`);
+      this._router.navigate(['/']);
     }
   }
 }
