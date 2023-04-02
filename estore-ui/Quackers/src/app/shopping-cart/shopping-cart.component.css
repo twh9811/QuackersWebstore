@@ -1,11 +1,15 @@
 #customer-info {
     font-size: 20px;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
-.price-container {
+.header-container {
     display: flex;
     justify-content: center;
+    align-items: center;
     font-size: 20px;
+    gap: 15px;
 }
 
 .card-format {

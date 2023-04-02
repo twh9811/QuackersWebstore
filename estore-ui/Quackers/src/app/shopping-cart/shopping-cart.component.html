@@ -1,12 +1,16 @@
 <div *ngIf="!account || !cart">Loading your shopping cart...</div>
 <div *ngIf="account && cart">
     <div id="customer-info">
-        <span>Hello {{account.username}}!</span><br>
-        <span *ngIf="!isCartEmpty()">Your cart is listed below.</span>
-        <span *ngIf="isCartEmpty()">Your cart is empty.</span>
+        <span>Hello {{account.username}}, </span>
+        <span *ngIf="!isCartEmpty()">your cart is listed below.</span>
+        <span *ngIf="isCartEmpty()">your cart is empty.</span>
     </div>
-    <div class="price-container" *ngIf="!isCartEmpty()">
-        <span>Total Price: ${{getCartTotal()}}</span>
+    <div class="header-container">
+        <button mat-raised-button class="fix-hover" (click)="goBack()">Go Back</button>
+        <button mat-raised-button class="fix-hover red-button" *ngIf="!isCartEmpty()" (click)="clearCart()">Clear
+            Cart</button>
+        <button mat-raised-button class="fix-hover green-button" *ngIf="!isCartEmpty()" (click)="checkoutCart()">Proceed
+            to Checkout</button>
     </div>
     <div class="duck-container">
         <mat-card class="card-format" *ngFor="let duck of ducks">
@@ -20,15 +24,14 @@
                 </mat-card-header>
                 <mat-card-actions class="card-action-format">
                     <input matInput type="number" min="0" placeholder="Quantity" class="quantity-selector" #quantity>
-                    <button mat-raised-button class="fix-hover red-button add-to-cart-btn" (click)="removeDuck(duck, quantity.value)">Remove</button>
+                    <button mat-raised-button class="fix-hover red-button add-to-cart-btn"
+                        (click)="removeDuck(duck, quantity.value)">Remove</button>
                 </mat-card-actions>
             </div>
         </mat-card>
+    </div>
+    <div class="header-container" *ngIf="!isCartEmpty()">
+        <span>Total Price: ${{getCartTotal()}}</span>
+    </div>
+    <br>
 </div>
-
-<div class="btn-controls">
-    <button class="back-btn gen-btn" (click)="goBack()">Back</button>
-    <button class="back-btn gen-btn" *ngIf="!isCartEmpty()" (click)="clearCart()">Clear Cart</button>
-    <button class="back-btn gen-btn" *ngIf="!isCartEmpty()" (click)="checkoutCart()">Proceed to Checkout</button>
-</div>
-<br>

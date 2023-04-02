@@ -15,7 +15,7 @@
             </mat-card-header>
             <mat-card-actions class="card-action-format">
 
-                <input matInput type="number" min="0" placeholder="Quantity" class="quantity-selector" #quantity>
+                <input matInput type="number" min="0" placeholder="Quantity" class="quantity-selector" value=1 #quantity>
 
                 <button mat-raised-button class="fix-hover green-button add-to-cart-btn" (click)="addDuck(duck, quantity.value)">Add
                     to Cart</button>
