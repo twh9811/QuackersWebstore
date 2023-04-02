@@ -37,7 +37,6 @@ import { CustomizeComponent } from './customize/customize.component';
     ProductCreateComponent,
     CatalogComponent,
     DucksearchComponent,
-    DuckDetailComponent,
     ProfileComponent,
     CheckoutComponent,
     ReceiptComponent,
