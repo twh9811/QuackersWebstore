@@ -58,6 +58,9 @@ public class AccountTest {
         String expectedAddress = "";
         String expectedCity = "";
         String expectedZipCode = "";
+        String expectedCard = "";
+        String expectedExpDate = "";
+        int expectedCVV = -1;
 
         // Invoke
         Account account = new OwnerAccount();
@@ -74,72 +77,76 @@ public class AccountTest {
         assertEquals(expectedAddress, account.getAddress());
         assertEquals(expectedCity, account.getCity());
         assertEquals(expectedZipCode, account.getZipCode());
+        assertEquals(expectedCard, account.getCard());
+        assertEquals(expectedExpDate, account.getExpDate());
+        assertEquals(expectedCVV, account.getCVV());
+
     }
 
     @Test
     public void testSetUsername() {
-          // Setup
-          int expectedID = 1;
-          String originalusername = "admin";
-          String plainPassword = "password123";
+        // Setup
+        int expectedID = 1;
+        String originalusername = "admin";
+        String plainPassword = "password123";
 
-          Account account = new UserAccount(expectedID, originalusername, plainPassword);
+        Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
-          String expectedUsername = "notadmin";
-          // Invoke
-          account.setUsername(expectedUsername);
+        String expectedUsername = "notadmin";
+        // Invoke
+        account.setUsername(expectedUsername);
 
-          //Analyze
-          assertEquals(expectedUsername, account.getUsername());;
+        //Analyze
+        assertEquals(expectedUsername, account.getUsername());;
     }
 
     @Test
     public void testSetPassword() {
-          // Setup
-          int expectedID = 1;
-          String expectedUsername = "admin";
-          String plainPassword = "password123";
+        // Setup
+        int expectedID = 1;
+        String expectedUsername = "admin";
+        String plainPassword = "password123";
 
-          Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
+        Account account = new UserAccount(expectedID, expectedUsername, plainPassword);
 
-          String expectedPassword = "password";
-          // Invoke
-          account.setPassword(expectedPassword);
-          //Analyze
+        String expectedPassword = "password";
+        // Invoke
+        account.setPassword(expectedPassword);
+        //Analyze
   
-          assertEquals(expectedPassword, account.getPlainPassword());
+        assertEquals(expectedPassword, account.getPlainPassword());
     }
 
     @Test
     public void testSetAdminStatusSuccess() {
-          // Setup
-          Account admin = new OwnerAccount();
-          boolean expectedAdminStatusAfterChange = false;
+        // Setup
+        Account admin = new OwnerAccount();
+        boolean expectedAdminStatusAfterChange = false;
 
-          // Invoke
-          admin.setAdminStatus(expectedAdminStatusAfterChange);
-          //Analyze
+        // Invoke
+        admin.setAdminStatus(expectedAdminStatusAfterChange);
+        //Analyze
   
-          assertEquals(expectedAdminStatusAfterChange, admin.getAdminStatus());
+        assertEquals(expectedAdminStatusAfterChange, admin.getAdminStatus());
     }
 
     @Test
     public void testSetAdminStatusFail() {
-          // Setup
-          int expectedID = 1;
-          String originalusername = "notadmin";
-          String plainPassword = "password123";
+        // Setup
+        int expectedID = 1;
+        String originalusername = "notadmin";
+        String plainPassword = "password123";
 
-          Account account = new UserAccount(expectedID, originalusername, plainPassword);
+        Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
-          boolean attemptedStatus = true;
-          boolean actualStatus = false;
+        boolean attemptedStatus = true;
+        boolean actualStatus = false;
 
-          // Invoke
-          account.setAdminStatus(attemptedStatus);
-          //Analyze
+        // Invoke
+        account.setAdminStatus(attemptedStatus);
+        //Analyze
   
-          assertEquals(actualStatus, account.getAdminStatus());
+        assertEquals(actualStatus, account.getAdminStatus());
     }
 
     @Test
@@ -251,87 +258,112 @@ public class AccountTest {
 
     @Test
     public void testSetFirstName() {
-          // Setup
-          int expectedID = 1;
-          String originalusername = "admin";
-          String plainPassword = "password123";
+        // Setup
+        int expectedID = 1;
+        String originalusername = "admin";
+        String plainPassword = "password123";
 
-          Account account = new UserAccount(expectedID, originalusername, plainPassword);
+        Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
-          String expectedFirstName = "Jeff";
-          // Invoke
-          account.setFirstName(expectedFirstName);
+        String expectedFirstName = "Jeff";
+        // Invoke
+        account.setFirstName(expectedFirstName);
 
-          //Analyze
-          assertEquals(expectedFirstName, account.getFirstName());;
+        //Analyze
+        assertEquals(expectedFirstName, account.getFirstName());;
     }
 
     @Test
     public void testSetLastName() {
-          // Setup
-          int expectedID = 1;
-          String originalusername = "admin";
-          String plainPassword = "password123";
+        // Setup
+        int expectedID = 1;
+        String originalusername = "admin";
+        String plainPassword = "password123";
 
-          Account account = new UserAccount(expectedID, originalusername, plainPassword);
+        Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
-          String expectedLastName = "Baker";
-          // Invoke
-          account.setLastName(expectedLastName);
+        String expectedLastName = "Baker";
+        // Invoke
+        account.setLastName(expectedLastName);
 
-          //Analyze
-          assertEquals(expectedLastName, account.getLastName());;
+        //Analyze
+        assertEquals(expectedLastName, account.getLastName());;
     }
 
     @Test
     public void testSetAddress() {
-          // Setup
-          int expectedID = 1;
-          String originalusername = "admin";
-          String plainPassword = "password123";
+        // Setup
+        int expectedID = 1;
+        String originalusername = "admin";
+        String plainPassword = "password123";
 
-          Account account = new UserAccount(expectedID, originalusername, plainPassword);
+        Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
-          String expectedAddress = "1 Memorial Drive";
-          // Invoke
-          account.setAddress(expectedAddress);
+        String expectedAddress = "1 Memorial Drive";
+        // Invoke
+        account.setAddress(expectedAddress);
 
-          //Analyze
-          assertEquals(expectedAddress, account.getAddress());;
+        //Analyze
+        assertEquals(expectedAddress, account.getAddress());;
     }
 
     @Test
     public void testSetCity() {
-          // Setup
-          int expectedID = 1;
-          String originalusername = "admin";
-          String plainPassword = "password123";
+        // Setup
+        int expectedID = 1;
+        String originalusername = "admin";
+        String plainPassword = "password123";
 
-          Account account = new UserAccount(expectedID, originalusername, plainPassword);
+        Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
-          String expectedCity = "Rochester";
-          // Invoke
-          account.setCity(expectedCity);
+        String expectedCity = "Rochester";
+        // Invoke
+        account.setCity(expectedCity);
 
-          //Analyze
-          assertEquals(expectedCity, account.getCity());;
+        //Analyze
+        assertEquals(expectedCity, account.getCity());;
     }
 
     @Test
     public void testSetZipCode() {
-          // Setup
-          int expectedID = 1;
-          String originalusername = "admin";
-          String plainPassword = "password123";
+        // Setup
+        int expectedID = 1;
+        String originalusername = "admin";
+        String plainPassword = "password123";
 
-          Account account = new UserAccount(expectedID, originalusername, plainPassword);
+        Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
-          String expectedZipCode = "14586";
-          // Invoke
-          account.setZipCode(expectedZipCode);
+        String expectedZipCode = "14586";
+        // Invoke
+        account.setZipCode(expectedZipCode);
 
-          //Analyze
-          assertEquals(expectedZipCode, account.getZipCode());;
+        //Analyze
+        assertEquals(expectedZipCode, account.getZipCode());;
     }
+
+    @Test
+    public void testSavePayment() {
+        // Setup
+        int expectedID = 1;
+        String originalusername = "admin";
+        String plainPassword = "password123";
+
+        Account account = new UserAccount(expectedID, originalusername, plainPassword);
+
+        String expectedCard = "1234567891234567";
+        String expectedExpDate = "04/2026";
+        int excpectedCVV = 123;
+
+        // Invoke
+        account.savePayment(expectedCard, expectedExpDate, excpectedCVV);
+
+        // Analyze
+        assertEquals(expectedCard, account.getCard());
+        assertEquals(expectedExpDate, account.getExpDate());
+        assertEquals(excpectedCVV, account.getCVV());
+    }
+
+
+
     
 }

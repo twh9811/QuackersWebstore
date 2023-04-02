@@ -9,4 +9,7 @@ export interface Account {
     address: string;
     city: string;
     zipCode: string;
+    card: string;
+    expDate: string;
+    cvv: number;
 }

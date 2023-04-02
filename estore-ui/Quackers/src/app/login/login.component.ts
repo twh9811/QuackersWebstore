@@ -41,7 +41,10 @@ export class LoginComponent implements OnInit {
       lastName: "",
       address: "",
       city: "",
-      zipCode: ""
+      zipCode: "",
+      card: "",
+      expDate: "",
+      cvv: -1
     };
   }
 
@@ -91,7 +94,10 @@ export class LoginComponent implements OnInit {
       lastName: account.lastName,
       address: account.address,
       city: account.city,
-      zipCode: account.zipCode
+      zipCode: account.zipCode,
+      card: account.card,
+      expDate: account.expDate,
+      cvv: account.cvv
     };
   }
 
@@ -118,7 +124,10 @@ export class LoginComponent implements OnInit {
       lastName: "",
       address: "",
       city: "",
-      zipCode: ""
+      zipCode: "",
+      card: "",
+      expDate: "",
+      cvv: -1
     };
 
     this._accountService.createUser(this._account).subscribe(response => {

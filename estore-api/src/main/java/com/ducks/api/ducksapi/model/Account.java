@@ -51,6 +51,16 @@ public abstract class Account {
     @JsonProperty("zipCode")
     private String zipCode;
 
+    @JsonProperty("card")
+    private String card;
+
+    @JsonProperty("expDate")
+    private String expDate;
+
+    @JsonProperty("cvv")
+    private int cvv;
+
+   
     /**
      * Needed for Spring to run the server. Needs Public Default Constructor.
      */
@@ -66,7 +76,10 @@ public abstract class Account {
             @JsonProperty("lastName") String lastName,
             @JsonProperty("address") String address,
             @JsonProperty("city") String city,
-            @JsonProperty("zipCode") String zipCode) {
+            @JsonProperty("zipCode") String zipCode,
+            @JsonProperty("card") String card,
+            @JsonProperty("expDate") String expDate,
+            @JsonProperty("cvv") int cvv) {
         this.id = id;
         this.username = username;
         this.plainPassword = plainPassword;
@@ -76,6 +89,9 @@ public abstract class Account {
         this.address = address;
         this.city = city;
         this.zipCode = zipCode;
+        this.card = card;
+        this.expDate = expDate;
+        this.cvv = cvv;
     }
 
     /**
@@ -258,6 +274,33 @@ public abstract class Account {
             return (this.username.equals(other.getUsername()) && this.plainPassword.equals(other.getPlainPassword()));
         }
         return false;
+    }
+
+    /**
+     * @return the credit card number
+     */
+    public String getCard() {
+        return this.card;
+    }
+
+    /**
+     * @return the expiration date on the card
+     */
+    public String getExpDate() {
+        return this.expDate;
+    }
+
+    /**
+     * @return the CVV code
+     */
+    public int getCVV() {
+        return this.cvv;
+    }
+
+    public void savePayment(String card, String expDate, int cvv) {
+        this.card = card;
+        this.expDate = expDate;
+        this.cvv = cvv;
     }
 
     /**

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { CheckoutData } from './checkout-data';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
-export class CheckoutComponent {
+export class CheckoutComponent implements OnInit {
   private _account: Account = this.checkoutData.account;
   private _cart: Cart = this.checkoutData.cart;
 
@@ -26,8 +26,8 @@ export class CheckoutComponent {
     city: '',
     zipCode: '',
     cardNumber: '',
-    cvv: '',
-    expiration: ''
+    expiration: '',
+    cvv: ''
   });
 
   constructor(public dialogRef: MatDialogRef<CheckoutComponent>,
@@ -39,8 +39,19 @@ export class CheckoutComponent {
     @Inject(MAT_DIALOG_DATA) public checkoutData: CheckoutData) { }
 
 
-  //TODO: Fix error message overlap, change expiration to date selector
+  ngOnInit(): void {
+    const controls = this.detailForm.controls;
 
+    controls.firstName.setValue(this._account.firstName);
+    controls.lastName.setValue(this._account.lastName);
+    controls.address.setValue(this._account.address);
+    controls.city.setValue(this._account.city);
+    controls.cardNumber.setValue(this._account.card);
+    controls.expiration.setValue(this._account.expDate);
+    if (this._account.cvv != -1) {
+      controls.cvv.setValue(this._account.cvv.toString());
+    }
+  }
 
   /**
    * Called upon form submission. Validates the form and handles checkout functionality 
