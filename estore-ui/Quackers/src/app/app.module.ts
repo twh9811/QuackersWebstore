@@ -37,7 +37,7 @@ import { CustomizeComponent } from './customize/customize.component';
     CatalogComponent,
     DucksearchComponent,
     DuckDetailComponent,
-    ProfileComponent
+    ProfileComponent,
     CheckoutComponent,
     ReceiptComponent,
     SnackbarNotificationComponent,
