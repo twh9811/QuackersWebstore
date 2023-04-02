@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class Price {
     private double finalPrice;
-    private double basePrice;
     private double outfitPrice = 2.00;
-    
-    public Price() {}
-    
+
+    public Price() {
+    }
+
     /*
      * Creates a Price object that stores the price of a duck
      * 
@@ -34,7 +34,8 @@ public class Price {
     }
 
     /**
-     * Calculates the price of a duck based on its size, color, and outfit attributes.
+     * Calculates the price of a duck based on its size, color, and outfit
+     * attributes.
      * 
      * @param duck The duck that the price is being based off of.
      * @return The total price of the duck as a double.
@@ -43,16 +44,16 @@ public class Price {
         DuckOutfit outfit = duck.getOutfit();
         Colors color = duck.getColor();
         Size size = duck.getSize();
-        basePrice = color.getPrice() + size.getPrice();
+        double basePrice = color.getPrice() + size.getPrice();
         int[] outfitAsArray = outfit.getOutfitAsArray();
-        for(int i=0; i<outfitAsArray.length; i++) {
+        for (int i = 0; i < outfitAsArray.length; i++) {
             // No customized option.
-            if(outfitAsArray[i] == 0) {
+            if (outfitAsArray[i] == 0) {
                 continue;
             }
             basePrice += outfitPrice;
         }
-        return this.basePrice;
+        return basePrice;
     }
 
     /*

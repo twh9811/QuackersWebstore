@@ -1,8 +1,6 @@
 package com.ducks.api.ducksapi.controller;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.ducks.api.ducksapi.persistence.AccountDAO;
 
 import com.ducks.api.ducksapi.model.Account;
 import com.ducks.api.ducksapi.model.UserAccount;
+import com.ducks.api.ducksapi.persistence.AccountDAO;
 
 /**
  * 
@@ -63,7 +61,7 @@ public class UserController {
             // Username doesn't already exist in system, OK to create account
             if(newAccount != null) {
                 if(newAccount.validateStrongPassword(account.getPlainPassword())) {
-                    return new ResponseEntity<Account>(newAccount, HttpStatus.CREATED);
+                    return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
                 } else {
                     return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
                 }
@@ -103,7 +101,7 @@ public class UserController {
                 for(Account databaseAccount : databaseAccounts) {
                     // Same username and hashed password
                     if(databaseAccount.equals(tempAccount)) {
-                        return new ResponseEntity<Account>(databaseAccount, HttpStatus.OK);
+                        return new ResponseEntity<>(databaseAccount, HttpStatus.OK);
                     }
                 }
                 // Account exists in the system, but wrong login information was provided by user.
@@ -160,7 +158,7 @@ public class UserController {
         try {
             Account account = accountDAO.getAccount(id);
             if(account != null) {
-                return new ResponseEntity<Account>(account, HttpStatus.OK);
+                return new ResponseEntity<>(account, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -182,7 +180,7 @@ public class UserController {
         try {
             Account[] accounts = accountDAO.getAccounts();
             if(accounts.length != 0) {
-                return new ResponseEntity<Account[]>(accounts,HttpStatus.OK);
+                return new ResponseEntity<>(accounts,HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -207,13 +205,13 @@ public class UserController {
         try {
             boolean accountDeleted = accountDAO.deleteAccount(id);
             if (accountDeleted) {
-                return new ResponseEntity<Account>(HttpStatus.OK);
+                return new ResponseEntity<>(HttpStatus.OK);
             } else {
-                return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         }
         catch(IOException e) {
-            return new ResponseEntity<Account>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

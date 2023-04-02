@@ -32,7 +32,7 @@ import com.ducks.api.ducksapi.persistence.DuckDAO;
 @RestController
 @RequestMapping("outfit")
 public class CustomizeController {
-    private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
+    private static final Logger LOG = Logger.getLogger(CustomizeController.class.getName());
     private DuckDAO duckDao;
 
     /**
