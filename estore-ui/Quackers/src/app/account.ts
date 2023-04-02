@@ -4,4 +4,12 @@ export interface Account {
     username: string;
     plainPassword: string;
     adminStatus: boolean;
+    firstName: string;
+    lastName: string;
+    address: string;
+    city: string;
+    zipCode: string;
+    card: string;
+    expDate: string;
+    cvv: number;
 }

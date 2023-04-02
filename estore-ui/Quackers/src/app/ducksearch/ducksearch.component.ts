@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Output, EventEmitter } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import {
-   debounceTime, distinctUntilChanged, switchMap
- } from 'rxjs/operators';
+  debounceTime, distinctUntilChanged, switchMap
+} from 'rxjs/operators';
 
 import { Duck } from '../duck';
 import { ProductService } from '../product.service';
@@ -12,13 +12,15 @@ import { ProductService } from '../product.service';
 @Component({
   selector: 'app-duck-search',
   templateUrl: './ducksearch.component.html',
-  styleUrls: [ './ducksearch.component.css' ]
+  styleUrls: ['./ducksearch.component.css'],
+  encapsulation : ViewEncapsulation.None,
 })
 export class DucksearchComponent implements OnInit {
-  ducks$!: Observable<Duck[]>;
+  @Output() searchEvent = new EventEmitter<Observable<Duck[]>>();
+
   private searchTerms = new Subject<string>();
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) { }
 
   // Push a search term into the observable stream.
   search(term: string): void {
@@ -26,7 +28,7 @@ export class DucksearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ducks$ = this.searchTerms.pipe(
+    this.searchEvent.emit(this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
 
@@ -34,7 +36,9 @@ export class DucksearchComponent implements OnInit {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.productService.searchDuck(term)),
-    );
+      // Gets all ducks if term is empty
+      switchMap((term: string) => term.length == 0 ? this.productService.getDucks() : this.productService.searchDuck(term))
+    ));
   }
+
 }

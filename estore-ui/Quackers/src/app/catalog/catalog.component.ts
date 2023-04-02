@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { Duck } from '../duck';
-import { NotificationService } from '../notification.service';
 import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
+import { SnackBarService } from '../snackbar.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-catalog',
@@ -19,33 +20,34 @@ export class CatalogComponent implements OnInit {
 
   cart: Cart | undefined = undefined;
   ducks: Duck[] = [];
+  ducksToDisplay: Duck[] = [];
 
-  constructor(private router: Router,
-    private productService: ProductService,
-    private notificationService: NotificationService,
-    private accountService: AccountService,
-    private sessionService: SessionService,
-    private cartService: CartService) { }
+  constructor(private _router: Router,
+    private _productService: ProductService,
+    private _snackBarService: SnackBarService,
+    private _accountService: AccountService,
+    private _sessionService: SessionService,
+    private _cartService: CartService) { }
 
   /**
   * Loads the ducks array when the page is opened
   */
   ngOnInit(): void {
-    if (!this.sessionService.session) {
+    if (!this._sessionService.session) {
       this.validateAuthorization();
       return;
     }
 
     // Waits for account to be retrieved before doing anything else
-    this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
+    this._accountService.getAccount(this._sessionService.session.id).subscribe(account => {
       this._account = account;
       this.validateAuthorization();
       // Waits for the cart to load before loading the ducks
       // This prevents issues such as the cart not loading
-      this.cartService.getCartAndCreate(this._account.id).then(cart => {
+      this._cartService.getCartAndCreate(this._account.id).then(cart => {
         if (!cart) {
-          this.router.navigate(['/']);
-          this.notificationService.add("Unable to load your cart!", 3);
+          this._router.navigate(['/']);
+          this._snackBarService.openErrorSnackbar("Unable to load your cart!");
           return;
         }
 
@@ -56,10 +58,22 @@ export class CatalogComponent implements OnInit {
   }
 
   /**
+   * Updates the ducks being displayed on screen
+   * 
+   * @param ducks The new array of ducks
+   */
+  updateDisplayDucks(ducks: Observable<Duck[]>) {
+    ducks.subscribe(duckArr => this.ducksToDisplay = duckArr)
+  }
+
+  /**
    * Gets the ducks from the product service
    */
   getDucks(): void {
-    this.productService.getDucks().subscribe(ducks => this.ducks = ducks.filter(duck => duck.quantity != 0));
+    this._productService.getDucks().subscribe(ducks => {
+      this.ducks = ducks.filter(duck => duck.quantity != 0)
+      this.ducksToDisplay = this.ducks;
+    });
   }
 
   /**
@@ -78,32 +92,60 @@ export class CatalogComponent implements OnInit {
   */
   private validateAuthorization(): void {
     if (this._account?.adminStatus || !this._account) {
-      this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
-      this.router.navigate(['/']);
+      this._snackBarService.openErrorSnackbar(`You are not authorized to view ${this._router.url}.`);
+      this._router.navigate(['/']);
     }
   }
 
   /**
    * Add a duck to shopping cart
    * 
-   * @param duckId The id of the duck being added
+   * @param duck The duck being added
+   * @param quantity The number of ducks to add
    */
-  addDuck(duckId: number): void {
-    this.productService.getDuck(duckId as number).subscribe(duck => {
+  addDuck(duck: Duck, quantityStr: string): void {
 
-      if (!duck || duck.quantity < 1) {
-        this.notificationService.add(`Thee duck with the id of ${duckId} is no longer available!`, 3);
+    // Makes sure the number is in the form of x or x.00 (there can be as many 0s as they'd like)
+    if (!quantityStr.match(/^\d+(\.[0]+)?$/g)) {
+      this._snackBarService.openErrorSnackbar(`You must enter an integer value for the quantity input.`);
+      return;
+    }
+
+    const quantity = Number.parseInt(quantityStr);
+
+    if (Number.isNaN(quantity)) {
+      this._snackBarService.openErrorSnackbar(`You must enter an integer value for the quantity input.`);
+      return;
+    }
+
+    if (quantity <= 0) {
+      this._snackBarService.openErrorSnackbar(`You must enter an integer value greater than 0 for the quantity input.`);
+      return;
+    }
+
+    if (!duck || duck.quantity < 1) {
+      this._snackBarService.openErrorSnackbar(`The requested duck is no longer available.`);
+      return;
+    }
+
+    const quantityInCart = this.cart!.items[duck.id];
+    if ((quantity + quantityInCart) > duck.quantity) {
+      this._snackBarService.openErrorSnackbar(`You have ${quantityInCart} duck(s) with the name of ${duck.name} in your cart and requested ${quantity} more, totalling to ${quantity + quantityInCart}. However, there are only ${duck.quantity} available.`);
+      return;
+    }
+
+    if (duck.quantity < quantity) {
+      this._snackBarService.openErrorSnackbar(`You requested ${quantity} duck(s) with the name of ${duck.name}. However, there are only ${duck.quantity} available.`);
+      return;
+    }
+
+    this._cartService.addItem(this.cart!, duck.id, quantity);
+    this._cartService.updateCart(this.cart!).subscribe(response => {
+      if (response.status == 200) {
+        this._snackBarService.openSuccessSnackbar(`Successfully added ${quantity} duck(s) with the name of ${duck.name} to your cart.`);
         return;
       }
-
-      this.cartService.addItem(this.cart!, duckId!, 1);
-      this.cartService.updateCart(this.cart!).subscribe(response => {
-        if (response.status == 200) {
-          this.notificationService.add(`Successfully added one duck with the id of ${duckId} to your cart!`, 3);
-          return;
-        }
-        this.notificationService.add(`Failed to add the duck with the id of ${duckId} to your cart!`, 3);
-      });
+      this._snackBarService.openErrorSnackbar(`Failed to add the duck with the name of ${duck.name} to your cart.`);
     });
   }
 
@@ -113,6 +155,6 @@ export class CatalogComponent implements OnInit {
    * @param duck The duck being showed
    */
   showDuck(id: number): void {
-    this.router.navigate([`/catalog/${id}`]);
+    this._router.navigate([`/catalog/${id}`]);
   }
 }

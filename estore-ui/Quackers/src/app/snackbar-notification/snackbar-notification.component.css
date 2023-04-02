@@ -6,32 +6,32 @@
 
 .button {
     order: 1;
-    color: white;
-    font-family: var(--mdc-typography-button-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
-    font-size: var(--mdc-typography-button-font-size, 14px);
-    line-height: var(--mdc-typography-button-line-height, 36px);
-    font-weight: var(--mdc-typography-button-font-weight, 500);
-    letter-spacing: var(--mdc-typography-button-letter-spacing, 0.0892857143em);
-    text-transform: var(--mdc-typography-button-text-transform, none);
-    margin-left: 10px;
+    color: white !important;
+    font-family: var(--mdc-typography-button-font-family, var(--mdc-typography-font-family, Roboto, sans-serif)) !important;
+    font-size: var(--mdc-typography-button-font-size, 14px) !important;
+    line-height: var(--mdc-typography-button-line-height, 36px) !important;
+    font-weight: var(--mdc-typography-button-font-weight, 500) !important;
+    letter-spacing: var(--mdc-typography-button-letter-spacing, 0.0892857143em) !important;
+    text-transform: var(--mdc-typography-button-text-transform, none) !important;
+    margin-left: 10px !important;
 }
 
 .button:hover {
-    background-color: white;
+    background-color: white !important;
     /*This just overrides the default border hover effect*/
-    border: 0px transparent solid;
+    border: 0px transparent solid !important;
 }
 
 .success:hover {
-    color: #2ecc71;
+    color: var(--quackers-green-color) !important;
 }
 
 .error:hover {
-    color: #e74c3c;
+    color: var(--quackers-red-color) !important;
 }
 
 .info:hover {
-    color: #333333;
+    color: #333333 !important;
 }
 
 .container {

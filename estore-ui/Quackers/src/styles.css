@@ -1,6 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+:root {
+    --quackers-orange-color: #e67e22;
+    --quackers-green-color: #2ecc71;
+    --quackers-red-color: #e74c3c;
+}
+
 body,
 html {
     height: 100%;
@@ -8,6 +14,7 @@ html {
 
 body {
     margin: 0;
+    overflow-x: hidden !important;
     height: auto;
     font-family: var(--mdc-typography-button-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
 }
@@ -32,17 +39,22 @@ button:hover {
 }
 
 .snackbar-success {
-    --mdc-snackbar-container-color: #2ecc71;
+    --mdc-snackbar-container-color: var(--quackers-green-color);
     --mdc-snackbar-supporting-text-color: white;
     text-align: center;
 }
 
 .snackbar-error {
-    --mdc-snackbar-container-color: #e74c3c;
+    --mdc-snackbar-container-color: var(--quackers-red-color);
     --mdc-snackbar-supporting-text-color: white;
     text-align: center;
 }
 
 .snackbar-info {
     text-align: center;
+}
+
+.green-button {
+    background-color: var(--quackers-green-color) !important;
+    color: white !important;
 }

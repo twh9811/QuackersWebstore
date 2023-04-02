@@ -1,13 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { SessionService } from '../session.service';
-import { SnackBarType } from '../snackbar-notification/snackbar-data';
-import { SnackbarNotificationComponent } from '../snackbar-notification/snackbar-notification.component';
+import { SnackBarService } from '../snackbar.service';
 
 @Component({
   selector: 'app-login',
@@ -29,8 +27,8 @@ export class LoginComponent implements OnInit {
   constructor(private _router: Router,
     private _accountService: AccountService,
     private _session: SessionService,
-    private _formBuilder: FormBuilder, 
-    private _snackbar: MatSnackBar) { }
+    private _formBuilder: FormBuilder,
+    private _snackBarService: SnackBarService) { }
 
   ngOnInit(): void {
     this._session.session = {
@@ -38,7 +36,15 @@ export class LoginComponent implements OnInit {
       username: "",
       plainPassword: "",
       id: -1,
-      adminStatus: false
+      adminStatus: false,
+      firstName: "",
+      lastName: "",
+      address: "",
+      city: "",
+      zipCode: "",
+      card: "",
+      expDate: "",
+      cvv: -1
     };
   }
 
@@ -50,7 +56,7 @@ export class LoginComponent implements OnInit {
 
     this.setSession(this._account);
     this._router.navigate([this._account.username == "admin" ? '/inventory' : '/catalog'])
-    this.openSnackbar(`Welcome back to Quacker's Duck Emporium ${this._account.username}!`, SnackBarType.INFO);
+    this._snackBarService.openInfoSnackbar(`Welcome back to Quacker's Duck Emporium ${this._account.username}!`);
   }
 
   /**
@@ -64,7 +70,7 @@ export class LoginComponent implements OnInit {
       this._account = account;
 
       if (!this._account) {
-        this.openSnackbar("You entered an invalid password and/or username.", SnackBarType.ERROR);
+        this._snackBarService.openErrorSnackbar("You entered an invalid password and/or username.");
         return;
       }
 
@@ -83,7 +89,15 @@ export class LoginComponent implements OnInit {
       username: account.username,
       plainPassword: account.plainPassword,
       id: account.id,
-      adminStatus: account.adminStatus
+      adminStatus: account.adminStatus,
+      firstName: account.firstName,
+      lastName: account.lastName,
+      address: account.address,
+      city: account.city,
+      zipCode: account.zipCode,
+      card: account.card,
+      expDate: account.expDate,
+      cvv: account.cvv
     };
   }
 
@@ -105,14 +119,22 @@ export class LoginComponent implements OnInit {
       id: -1,
       username: username,
       plainPassword: password,
-      adminStatus: false
+      adminStatus: false,
+      firstName: "",
+      lastName: "",
+      address: "",
+      city: "",
+      zipCode: "",
+      card: "",
+      expDate: "",
+      cvv: -1
     };
 
     this._accountService.createUser(this._account).subscribe(response => {
       if (!(response instanceof HttpErrorResponse)) {
         this._account = response;
         this.update();
-        this.openSnackbar("Your account was successfully created. Please login to continue.", SnackBarType.SUCCESS);
+        this._snackBarService.openSuccessSnackbar("Your account was successfully created. Please login to continue.");
         return;
       }
 
@@ -120,10 +142,10 @@ export class LoginComponent implements OnInit {
       const code: number = httpResponse.status;
       switch (code) {
         case 406:
-          this.openSnackbar("Your password must be at least 8 characters long and have 1 uppercase letter, 1 lowercase letter, and 1 number.", SnackBarType.ERROR);
+          this._snackBarService.openErrorSnackbar("Your password must be at least 8 characters long and have 1 uppercase letter, 1 lowercase letter, and 1 number.");
           break;
         case 409:
-          this.openSnackbar("An account with the name already exists. Please select a different one.", SnackBarType.ERROR);
+          this._snackBarService.openErrorSnackbar("An account with the name already exists. Please select a different one.");
           break;
       }
 
@@ -148,27 +170,11 @@ export class LoginComponent implements OnInit {
        
       }
     })
-    this.openSnackbar("This is not implemented yet.", SnackBarType.INFO);
   }
 
   // Updates the account variables (prevents double clicking buttons)
   update(): void {
     console.log(this._account);
-  }
-
-  /**
-   * Opens a snackbar that has a close button and lasts for 3 seconds with the given message
-   * @param message The message to display
-   */
-  private openSnackbar(message: string, type: SnackBarType): void {
-    const panelClass = (type == SnackBarType.ERROR ? "snackbar-error" : (type == SnackBarType.SUCCESS ? "snackbar-success" : "snackbar-info"));
-
-    this._snackbar.openFromComponent(SnackbarNotificationComponent,
-      {
-        data: { message: message, type: type },
-        panelClass: [panelClass],
-        duration: 3000
-      });
   }
 
   /**

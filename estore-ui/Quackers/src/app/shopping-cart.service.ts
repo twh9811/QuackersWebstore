@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { firstValueFrom, Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators'
 import { Cart } from './shopping-cart';
-import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,7 @@ export class CartService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient, private notificationService: NotificationService) { }
+  constructor(private _http: HttpClient) { }
 
   /**
    * Gets a shopping cart with the given id
@@ -26,7 +25,7 @@ export class CartService {
    */
   getCart(id: number): Observable<Cart> {
     const url = `${this.apiURL}/${id}`;
-    return this.http.get<Cart>(url).pipe(
+    return this._http.get<Cart>(url).pipe(
       tap(_ => console.log(`got cart ${id}`)), catchError(this.handleError<any>('get cart'))
     );
   }
@@ -50,7 +49,7 @@ export class CartService {
     cart = await firstValueFrom(this.createCart(newCart));
     if (cart) return cart;
 
-    this.notificationService.add(`Unable to create a cart for the user with an id of ${id}`, 3);
+    console.log(`Unable to create a cart for the user with an id of ${id}`, 3);
     return undefined;
   }
 
@@ -61,7 +60,7 @@ export class CartService {
    * @returns An http response object in which the newly created cart is returned (if there are no error) and the response itself
    */
   createCart(cart: Cart): Observable<Cart> {
-    return this.http.post<Cart>(this.apiURL, cart, this.httpOptions).pipe(
+    return this._http.post<Cart>(this.apiURL, cart, this.httpOptions).pipe(
       tap((newCart: Cart) => console.log(`added cart w/ id=${newCart.customerId}`)),
       catchError(this.handleError<Cart>('addCart'))
     );
@@ -91,7 +90,7 @@ export class CartService {
     const url = `${this.apiURL}/`;
 
     // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
-    return this.http.put<HttpResponse<any>>(url, cart, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+    return this._http.put<HttpResponse<any>>(url, cart, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
       .pipe(tap(_ => console.log(`Updated cart`)),
         catchError(this.handleError<HttpResponse<any>>('updateCart')));
   }
@@ -104,7 +103,7 @@ export class CartService {
    */
   validateCart(id: number): Observable<HttpResponse<any>> {
     const url = `${this.apiURL}/checkout/validate/${id}`;
-    return this.http.get<HttpResponse<any>>(url, { observe: 'response' })
+    return this._http.get<HttpResponse<any>>(url, { observe: 'response' })
       .pipe(tap(_ => console.log(`Validated cart`)),
         catchError(this.handleError<HttpResponse<any>>('validateCart', true)));
   }
@@ -117,7 +116,7 @@ export class CartService {
    */
   checkoutCart(id: number): Observable<HttpResponse<any>> {
     const url = `${this.apiURL}/checkout/${id}`;
-    return this.http.put<HttpResponse<any>>(url, { observe: 'response' })
+    return this._http.put<HttpResponse<any>>(url, { observe: 'response' })
       .pipe(tap(_ => console.log(`Checked out cart`)),
         catchError(this.handleError<HttpResponse<any>>('checkoutCart', true)));
   }
