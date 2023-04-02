@@ -1,23 +1,25 @@
 <div *ngIf="!this._account">
     <div class="topnav">
-        <button class="home" routerLink="/catalog">Quackers Duck Emporium</button>
+        <button class="home">Quackers Duck Emporium</button>
     </div>
 </div>
 <div *ngIf="this._account">
     <div class="topnav">
     
-        <button class="home" routerLink="/catalog">Quackers Duck Emporium</button>
-        <button *ngIf="this.router.url != '/login'" type="button" (click)="logout()">Logout</button>
-        <button routerLink="/profile" *ngIf="this.router.url != '/login'" type="button">Account</button>
+        <button class="home">Quackers Duck Emporium</button>
+        <div class="btn">
+            <button *ngIf="this.router.url != '/login'" type="button" (click)="logout()">Logout</button>
+            <button routerLink="/profile" *ngIf="this.router.url != '/login'" type="button">Account</button>
+        
+            <div class="adminCheck" *ngIf="checkAdminStatus() == false">
+                <button routerLink="/cart" *ngIf="this.router.url != '/login'" type="button">Shopping Cart</button>
+                <button routerLink="/customize" *ngIf="this.router.url != '/login'" type="button">Make your own Duck</button>
+                <button routerLink="/catalog" *ngIf="this.router.url != '/login'">Catalog</button>
+            </div>
     
-        <div class="adminCheck" *ngIf="checkAdminStatus() == false">
-            <button routerLink="/cart" *ngIf="this.router.url != '/login'" type="button">Shopping Cart</button>
-            <button routerLink="/customize" *ngIf="this.router.url != '/login'" type="button">Make your own Duck</button>
-            <button routerLink="/catalog" *ngIf="this.router.url != '/login'">Catalog</button>
-        </div>
-
-        <div class="adminCheck" *ngIf="checkAdminStatus() == true">
-            <button routerLink="" *ngIf="this.router.url != '/login'" type="button">Inventory</button>
+            <div class="adminCheck" *ngIf="checkAdminStatus() == true">
+                <button routerLink="/inventory" *ngIf="this.router.url != '/login'" type="button">Inventory</button>
+            </div>
         </div>
     </div>   
 </div>
