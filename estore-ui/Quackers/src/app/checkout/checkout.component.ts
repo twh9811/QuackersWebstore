@@ -46,6 +46,7 @@ export class CheckoutComponent implements OnInit {
     controls.lastName.setValue(this._account.lastName);
     controls.address.setValue(this._account.address);
     controls.city.setValue(this._account.city);
+    controls.zipCode.setValue(this._account.zipCode);
     controls.cardNumber.setValue(this._account.card);
     controls.expiration.setValue(this._account.expDate);
     if (this._account.cvv != -1) {
