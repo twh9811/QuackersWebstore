@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
     private cartService: CartService) { }
 
   ngOnInit(): void {
-  // Validates that an account is indeed logged in
+    // Validates that an account is indeed logged in
     if (!this.sessionService.session) {
       this.validateAuthorization();
       return;

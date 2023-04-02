@@ -32,7 +32,7 @@ export class NavigationBarComponent implements OnInit {
     // Waits for account to be retrieved before doing anything else
     this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
       this._account = account;
-      this.adminStatus = this.checkAdminStatus()
+      this.adminStatus = this.checkAdminStatus();
 
     });
   }
@@ -46,7 +46,7 @@ export class NavigationBarComponent implements OnInit {
     if (this._account?.adminStatus || !this._account){
       return true;
     }
-    return false;
+    return false; 
   }
 
   /**
@@ -55,6 +55,6 @@ export class NavigationBarComponent implements OnInit {
   * 
   */
   logout() : void {
-    this.router.navigate([''])
+    this.router.navigate(['']);
   }
 }
