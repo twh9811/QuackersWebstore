@@ -286,7 +286,7 @@ public abstract class Account {
     /**
      * @return the expiration date on the card
      */
-    public String geExpDate() {
+    public String getExpDate() {
         return this.expDate;
     }
 
