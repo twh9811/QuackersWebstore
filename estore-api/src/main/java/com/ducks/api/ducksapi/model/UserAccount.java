@@ -28,7 +28,7 @@ public class UserAccount extends Account {
     @JsonProperty("firstName")
     private String firstName;
 
-    @JsonProperty("LastName")
+    @JsonProperty("lastName")
     private String lastName;
 
     @JsonProperty("address")
