@@ -9,15 +9,15 @@
         <button class="home">Quackers Duck Emporium</button>
         <div class="btn">
             <button *ngIf="this.router.url != '/login'" type="button" (click)="logout()">Logout</button>
-            <button routerLink="/profile" *ngIf="this.router.url != '/login'" type="button">Account</button>
-        
-            <div class="adminCheck" *ngIf="checkAdminStatus() == false">
+            
+            <div class="adminCheck" *ngIf="!checkAdminStatus()">
+                <button routerLink="/profile" *ngIf="this.router.url != '/login'" type="button">Account</button>
                 <button routerLink="/cart" *ngIf="this.router.url != '/login'" type="button">Shopping Cart</button>
                 <button routerLink="/customize" *ngIf="this.router.url != '/login'" type="button">Make your own Duck</button>
                 <button routerLink="/catalog" *ngIf="this.router.url != '/login'">Catalog</button>
             </div>
     
-            <div class="adminCheck" *ngIf="checkAdminStatus() == true">
+            <div class="adminCheck" *ngIf="checkAdminStatus()">
                 <button routerLink="/inventory" *ngIf="this.router.url != '/login'" type="button">Inventory</button>
             </div>
         </div>

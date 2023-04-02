@@ -1,15 +1,9 @@
 /* styles the button and the nav bar */
 .topnav {
-    background-color: #212529;
-    overflow: hidden;
-    margin-bottom: 0;
-  }
-
-.home{
-    background-color: rgba(0,0,0,0.25);
-    color: white;
-    float: left;
-  }
+  background-color: #212529;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
 
 button {
   background-color: #212529;
@@ -21,16 +15,26 @@ button {
   font-size: 17px;
   font-family: sans-serif;
   border: none;
-  transition-duration: 0.4s; 
+  border-radius: 0px;
+  transition-duration: 0.4s;
 }
 
 /* change cursor to pointer */
-.btn button{
+.btn button {
   cursor: pointer;
 }
 
 /* Change the color of links on hover */
 .btn button:hover {
   background-color: #ddd;
-  color: black;   
+  color: black;
+}
+
+.home {
+  color: white;
+  float: left;
+}
+
+.home:hover {
+  cursor: default;
 }
