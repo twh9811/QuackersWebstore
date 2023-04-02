@@ -104,6 +104,13 @@ export class CatalogComponent implements OnInit {
    * @param quantity The number of ducks to add
    */
   addDuck(duck: Duck, quantityStr: string): void {
+
+    // Makes sure the number is in the form of x or x.00 (there can be as many 0s as they'd like)
+    if (!quantityStr.match(/^\d+(\.[0]+)?$/g)) {
+      this._snackBarService.openErrorSnackbar(`You must enter an integer value for the quantity input.`);
+      return;
+    }
+
     const quantity = Number.parseInt(quantityStr);
 
     if (Number.isNaN(quantity)) {

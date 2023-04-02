@@ -85,6 +85,10 @@ export class ShoppingCartComponent implements OnInit {
     return (quantity * duck.price).toFixed(2);
   }
 
+  getDuckPrice(duck: Duck): string {
+    return duck.price.toFixed(2);
+  }
+
   /**
    * 
    * Calculates the total price of all of the duck in a given cart
@@ -111,17 +115,28 @@ export class ShoppingCartComponent implements OnInit {
   removeDuck(duck: Duck, quantityStr: string): void {
     if (!this.cart) return;
 
+    // Makes sure the number is in the form of x or x.00 (there can be as many 0s as they'd like)
+    if(!quantityStr.match(/^\d+(\.[0]+)?$/g)) {
+      this._snackBarService.openErrorSnackbar(`You must enter an integer value for the quantity input.`);
+      return;
+    }
+
     const quantity = Number.parseInt(quantityStr);
     // Shouldn't be possible but still good to check
     if (Number.isNaN(quantity)) {
-      this._snackBarService.openErrorSnackbar(`${quantityStr} is not a valid number!`);
+      this._snackBarService.openErrorSnackbar(`You must enter an integer value for the quantity input.`);
+      return;
+    }
+
+    if (quantity <= 0) {
+      this._snackBarService.openErrorSnackbar(`You must enter an integer value greater than 0 for the quantity input.`);
       return;
     }
 
     const newQuantity = this.getDuckQuantity(duck.id)! - quantity;
     // Shouldn't be possible but still good to check
     if (newQuantity < 0) {
-      this._snackBarService.openErrorSnackbar(`You can not remove more of an item than what is in your cart!`);
+      this._snackBarService.openErrorSnackbar(`You are attempting to remove ${quantity} duck(s) with the name of ${duck.name} from your cart, but you only have ${this.getDuckQuantity(duck.id)} of them in your cart.`);
       return;
     }
 
@@ -137,11 +152,11 @@ export class ShoppingCartComponent implements OnInit {
     this._cartService.updateCart(this.cart).subscribe(status => {
       // Send success if update was a success, error otherwise
       if (status.status == 200) {
-        this._snackBarService.openSuccessSnackbar(`Successfully removed ${quantity} duck(s) with an id of ${duck.id} from your cart!`);
+        this._snackBarService.openSuccessSnackbar(`Successfully removed ${quantity} duck(s) with an id of ${duck.id} from your cart.`);
         return;
       }
 
-      this._snackBarService.openErrorSnackbar(`Failed to update your cart. Please try again!`);
+      this._snackBarService.openErrorSnackbar(`Failed to update your cart. Please try again.`);
     });
   }
 
@@ -165,11 +180,11 @@ export class ShoppingCartComponent implements OnInit {
     this.ducks = [];
     this._cartService.updateCart(this.cart).subscribe(status => {
       if (status.status == 200) {
-        this._snackBarService.openSuccessSnackbar(`Successfully cleared your cart!`);
+        this._snackBarService.openSuccessSnackbar(`Successfully cleared your cart.`);
         return;
       }
 
-      this._snackBarService.openErrorSnackbar(`Failed to update your cart. Please try again!`);
+      this._snackBarService.openErrorSnackbar(`Failed to update your cart. Please try again.`);
     });
   }
 
@@ -209,7 +224,7 @@ export class ShoppingCartComponent implements OnInit {
       // Removes duck from cart if it is no longer in the inventory
       if (!duck) {
         shouldUpdate = true;
-        this._snackBarService.openErrorSnackbar(`The duck with the id ${key} is no longer available!`);
+        this._snackBarService.openErrorSnackbar(`The duck with the id ${key} is no longer available.`);
         delete this.cart.items[key];
         continue;
       }
@@ -227,7 +242,7 @@ export class ShoppingCartComponent implements OnInit {
       if (value != 0) {
         this._snackBarService.openInfoSnackbar(`The duck with the id ${key} only has ${duck.quantity} 
           available in stock! You requested ${value}. 
-          Your cart has been reflected to only have ${duck.quantity}!`);
+          Your cart has been reflected to only have ${duck.quantity}.`);
       }
 
       // Deletes the duck from the map if the quantity available is 0

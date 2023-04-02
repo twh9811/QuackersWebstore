@@ -14,7 +14,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CatalogComponent } from './catalog/catalog.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-import { DuckDetailComponent } from './duck-detail/duck-detail.component';
 import { DucksearchComponent } from './ducksearch/ducksearch.component';
 import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
 import { LoginComponent } from './login/login.component';
@@ -35,7 +34,6 @@ import { DuckImageComponent } from './duck-image/duck-image.component';;
     ProductCreateComponent,
     CatalogComponent,
     DucksearchComponent,
-    DuckDetailComponent,
     CheckoutComponent,
     ReceiptComponent,
     SnackbarNotificationComponent,
