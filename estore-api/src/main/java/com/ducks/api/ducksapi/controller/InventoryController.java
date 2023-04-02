@@ -1,7 +1,8 @@
 package com.ducks.api.ducksapi.controller;
 
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ducks.api.ducksapi.model.Duck;
 import com.ducks.api.ducksapi.persistence.DuckDAO;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Handles the REST API requests for the Duck resource
  * <p>
@@ -32,9 +29,8 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("inventory")
-public class InventoryController {
+public class InventoryController extends AbstractInventoryController {
     private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
-    private DuckDAO duckDao;
 
     /**
      * Creates a REST API controller to reponds to requests
@@ -45,7 +41,7 @@ public class InventoryController {
      *                This dependency is injected by the Spring Framework
      */
     public InventoryController(@Qualifier("duckFileDAO") DuckDAO duckDao) {
-        this.duckDao = duckDao;
+        super(duckDao, LOG);
     }
 
     /**
@@ -60,18 +56,7 @@ public class InventoryController {
      */
     @GetMapping("/product/{id}")
     public ResponseEntity<Duck> getDuck(@PathVariable int id) {
-        LOG.log(Level.INFO, "GET /inventory/product/{0}", id);
-        try {
-            Duck duck = duckDao.getDuck(id);
-            if (duck != null) {
-                return new ResponseEntity<>(duck, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (IOException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return super.getDuck(id, "GET /inventory/product/{0}");
     }
 
     /**
@@ -85,18 +70,7 @@ public class InventoryController {
      */
     @GetMapping("")
     public ResponseEntity<Duck[]> getDucks() {
-        LOG.info("GET /inventory");
-        try {
-            Duck[] ducks = duckDao.getDucks();
-            if (ducks != null && ducks.length != 0) {
-                return new ResponseEntity<>(ducks, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (IOException ioe) {
-            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return super.getDucks("GET /inventory");
     }
 
     /**
@@ -117,20 +91,7 @@ public class InventoryController {
      */
     @GetMapping("/search")
     public ResponseEntity<Duck[]> searchDucks(@RequestParam String name) {
-        LOG.log(Level.INFO, "GET /inventory/search?name={0}", name);
-        try {
-            Duck[] ducks = duckDao.findDucks(name);
-
-            if (ducks != null && ducks.length != 0) {
-                return new ResponseEntity<>(ducks, HttpStatus.OK);
-            }
-
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-        } catch (IOException ioe) {
-            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return super.searchDucks(name, "GET /inventory/search?name={0}");
     }
 
     /**
@@ -147,18 +108,7 @@ public class InventoryController {
      */
     @PostMapping("/product")
     public ResponseEntity<Duck> createDuck(@RequestBody Duck duck) {
-        LOG.log(Level.INFO, "POST /inventory/product {0}", duck);
-        try {
-            Duck newDuck = duckDao.createDuck(duck);
-            if (newDuck != null) {
-                return new ResponseEntity<>(newDuck, HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
-        } catch (IOException ioe) {
-            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return super.createDuck(duck, "POST /inventory/product {0}");
     }
 
     /**
@@ -174,24 +124,7 @@ public class InventoryController {
      */
     @PutMapping("/product")
     public ResponseEntity<Duck> updateDuck(@RequestBody Duck duck) {
-        LOG.log(Level.INFO, "PUT /inventory {0}", duck);
-        try {
-            // Makes sure that a duck with this name & different id does not already exist
-            Duck foundDuck = duckDao.getDuckByName(duck.getName());
-            if (foundDuck != null && foundDuck.getId() != duck.getId()) {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
-
-            Duck updateDuck = duckDao.updateDuck(duck);
-            if (updateDuck != null) {
-                return new ResponseEntity<>(updateDuck, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (IOException ioe) {
-            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return super.updateDuck(duck, "PUT /inventory {0}");
     }
 
     /**
@@ -205,16 +138,6 @@ public class InventoryController {
      */
     @DeleteMapping("/product/{id}")
     public ResponseEntity<Duck> deleteDuck(@PathVariable int id) {
-        LOG.log(Level.INFO, "DELETE /inventory/product/{0}", id);
-        try {
-            if (duckDao.deleteDuck(id)) {
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (IOException ioe) {
-            LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return super.deleteDuck(id, "DELETE /inventory/product/{0}");
     }
 }
