@@ -112,6 +112,9 @@ public class AccountFileDAOTest {
         assertEquals("", createdAccount.getAddress());
         assertEquals("", createdAccount.getCity());
         assertEquals("", createdAccount.getZipCode());
+        assertEquals("", createdAccount.getCard());
+        assertEquals("", createdAccount.getExpDate());
+        assertEquals(-1, createdAccount.getCVV());
         assertFalse(createdAccount.getAdminStatus());
     }
 
@@ -136,6 +139,9 @@ public class AccountFileDAOTest {
         assertEquals("", createdAccount.getAddress());
         assertEquals("", createdAccount.getCity());
         assertEquals("", createdAccount.getZipCode());
+        assertEquals("", createdAccount.getCard());
+        assertEquals("", createdAccount.getExpDate());
+        assertEquals(-1, createdAccount.getCVV());
         assertTrue(createdAccount.getAdminStatus());
     }
 
