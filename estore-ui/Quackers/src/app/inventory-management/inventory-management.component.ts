@@ -52,7 +52,7 @@ export class InventoryManagementComponent implements OnInit {
     const outfit: any = duck.outfit;
     if(outfit[accessoryName + "UID"] == 0) return "";
 
-    return `/assets/duck-${accessoryName}s/${outfit[accessoryName + "UID"]}.png`;
+    return `/assets/duck-${accessoryName}/${outfit[accessoryName + "UID"]}.png`;
   }
 
   getCSSClass(accessoryName: string, duck: Duck): string {

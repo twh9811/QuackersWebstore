@@ -12,6 +12,9 @@
                 <img class="{{getCSSClass('handItem', duck)}}"
                     [style.visibility]="duck.outfit.handItemUID == 0 ? 'hidden' : 'visible'"
                     src="{{getAccessoryImage('handItem', duck)}}">
+                <img class="{{getCSSClass('jewelry', duck)}}"
+                    [style.visibility]="duck.outfit.jewelryUID == 0 ? 'hidden' : 'visible'"
+                    src="{{getAccessoryImage('jewelry', duck)}}">
             </div>
 
             <mat-card-header class="card-header-format">
