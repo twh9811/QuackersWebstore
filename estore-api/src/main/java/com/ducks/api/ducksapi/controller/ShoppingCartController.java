@@ -61,13 +61,13 @@ public class ShoppingCartController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<ShoppingCart> getShoppingCart(@PathVariable int id) {
-        LOG.info("GET /cart/" + id);
+        LOG.log(Level.INFO, "GET /cart/{0}", id);
         try {
             ShoppingCart cart = cartDao.getShoppingCart(id);
             if (cart != null) {
-                return new ResponseEntity<ShoppingCart>(cart, HttpStatus.OK);
+                return new ResponseEntity<>(cart, HttpStatus.OK);
             } else {
-                return new ResponseEntity<ShoppingCart>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (IOException ioe) {
             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
@@ -85,7 +85,7 @@ public class ShoppingCartController {
      */
     @GetMapping("")
     public ResponseEntity<ShoppingCart[]> getShoppingCarts() {
-        LOG.info("GET /cart");
+        LOG.log(Level.INFO, "GET /cart");
         try {
             ShoppingCart[] carts = cartDao.getShoppingCarts();
             if (carts != null && carts.length != 0) {
@@ -112,11 +112,11 @@ public class ShoppingCartController {
      */
     @PostMapping("")
     public ResponseEntity<ShoppingCart> createShoppingCart(@RequestBody ShoppingCart cart) {
-        LOG.info("POST /cart " + cart);
+        LOG.log(Level.INFO, "POST /cart {0}", cart);
         try {
             ShoppingCart newCart = cartDao.createShoppingCart(cart);
             if (newCart != null) {
-                return new ResponseEntity<ShoppingCart>(newCart, HttpStatus.CREATED);
+                return new ResponseEntity<>(newCart, HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
@@ -139,11 +139,11 @@ public class ShoppingCartController {
      */
     @PutMapping("")
     public ResponseEntity<ShoppingCart> updateShoppingCart(@RequestBody ShoppingCart cart) {
-        LOG.info("PUT /cart " + cart);
+        LOG.log(Level.INFO, "PUT /cart {0}", cart);
         try {
             ShoppingCart updateCart = cartDao.updateShoppingCart(cart);
             if (updateCart != null) {
-                return new ResponseEntity<ShoppingCart>(updateCart, HttpStatus.OK);
+                return new ResponseEntity<>(updateCart, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -165,7 +165,7 @@ public class ShoppingCartController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<ShoppingCart> deleteShoppingCart(@PathVariable int id) {
-        LOG.info("DELETE /cart/" + id);
+        LOG.log(Level.INFO, "DELETE /cart/{0}", id);
         try {
             if (cartDao.deleteShoppingCart(id)) {
                 return new ResponseEntity<>(HttpStatus.OK);

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @Component
 public class UserAccount extends Account {
 
+    // information created during regestration
     @JsonProperty("id")
     private int id;
 
@@ -22,6 +23,22 @@ public class UserAccount extends Account {
 
     @JsonProperty("plainPassword")
     private String plainPassword;
+
+    // information created during shipping details
+    @JsonProperty("firstName")
+    private String firstName;
+
+    @JsonProperty("LastName")
+    private String lastName;
+
+    @JsonProperty("address")
+    private String address;
+
+    @JsonProperty("city")
+    private String city;
+
+    @JsonProperty("zipCode")
+     private String zipCode;
 
     /**
      * Needed for Spring to run the server. Needs Public Default Constructor.
@@ -35,6 +52,8 @@ public class UserAccount extends Account {
      * @param plainPassword the account password in plaintext
      */
     public UserAccount(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("plainPassword") String plainPassword) {
-        super(id, username, plainPassword, false);
-    }
+        super(id, username, plainPassword, false, "", "", "", "", "");
+    
+    }   
+    
 }

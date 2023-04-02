@@ -36,7 +36,12 @@ export class LoginComponent implements OnInit {
       username: "",
       plainPassword: "",
       id: -1,
-      adminStatus: false
+      adminStatus: false,
+      firstName: "",
+      lastName: "",
+      address: "",
+      city: "",
+      zipCode: ""
     };
   }
 
@@ -81,7 +86,12 @@ export class LoginComponent implements OnInit {
       username: account.username,
       plainPassword: account.plainPassword,
       id: account.id,
-      adminStatus: account.adminStatus
+      adminStatus: account.adminStatus,
+      firstName: account.firstName,
+      lastName: account.lastName,
+      address: account.address,
+      city: account.city,
+      zipCode: account.zipCode
     };
   }
 
@@ -103,7 +113,12 @@ export class LoginComponent implements OnInit {
       id: -1,
       username: username,
       plainPassword: password,
-      adminStatus: false
+      adminStatus: false,
+      firstName: "",
+      lastName: "",
+      address: "",
+      city: "",
+      zipCode: ""
     };
 
     this._accountService.createUser(this._account).subscribe(response => {
