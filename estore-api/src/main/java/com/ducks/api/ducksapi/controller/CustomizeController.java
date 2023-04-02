@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.ducks.api.ducksapi.model.Duck;
 import com.ducks.api.ducksapi.persistence.DuckDAO;
@@ -43,10 +43,10 @@ public class CustomizeController {
      *                <br>
      *                This dependency is injected by the Spring Framework
      */
-    public CustomizeController(@Qualifier("customDuckFileDAO") DuckDAO duckDao){
+    public CustomizeController(@Qualifier("customDuckFileDAO") DuckDAO duckDao) {
         this.duckDao = duckDao;
     }
-    
+
     /**
      * Responds to the GET request for a {@linkplain Duck duck} for the given id
      * 
@@ -59,14 +59,14 @@ public class CustomizeController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Duck> getDuck(@PathVariable int id) {
-        LOG.info("GET /outfit/ " + id);
+        LOG.log(Level.INFO, "GET /outfit/{0}", id);
         try {
             Duck duck = duckDao.getDuck(id);
             if (duck != null) {
-                return new ResponseEntity<Duck>(duck, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(duck, HttpStatus.OK);
             }
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -84,14 +84,14 @@ public class CustomizeController {
      */
     @GetMapping("")
     public ResponseEntity<Duck[]> getDucks() {
-        LOG.info("GET /outfit");
+        LOG.log(Level.INFO, "GET /outfit");
         try {
             Duck[] ducks = duckDao.getDucks();
             if (ducks != null && ducks.length != 0) {
-                return new ResponseEntity<Duck[]>(ducks, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(ducks, HttpStatus.OK);
             }
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (IOException ioe) {
             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -112,14 +112,14 @@ public class CustomizeController {
      */
     @PostMapping("")
     public ResponseEntity<Duck> createDuck(@RequestBody Duck duck) {
-        LOG.info("POST /outfit" + duck);
+        LOG.log(Level.INFO, "POST /outfit {0}", duck);
         try {
             Duck newDuck = duckDao.createDuck(duck);
             if (newDuck != null) {
-                return new ResponseEntity<Duck>(newDuck, HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
+                return new ResponseEntity<>(newDuck, HttpStatus.CREATED);
             }
+
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         } catch (IOException ioe) {
             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -139,7 +139,7 @@ public class CustomizeController {
      */
     @PutMapping("")
     public ResponseEntity<Duck> updateDuck(@RequestBody Duck duck) {
-        LOG.info("PUT /outfit " + duck);
+        LOG.log(Level.INFO, "PUT /outfit {0}", duck);
         try {
             // Makes sure that a duck with this name & different id does not already exist
             Duck foundDuck = duckDao.getDuckByName(duck.getName());
@@ -149,10 +149,10 @@ public class CustomizeController {
 
             Duck updateDuck = duckDao.updateDuck(duck);
             if (updateDuck != null) {
-                return new ResponseEntity<Duck>(updateDuck, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(updateDuck, HttpStatus.OK);
             }
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException ioe) {
             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -170,13 +170,12 @@ public class CustomizeController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Duck> deleteDuck(@PathVariable int id) {
-        LOG.info("DELETE /outfit/" + id);
+        LOG.log(Level.INFO, "DELETE /outfit/{0}", id);
         try {
             if (duckDao.deleteDuck(id)) {
                 return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException ioe) {
             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
