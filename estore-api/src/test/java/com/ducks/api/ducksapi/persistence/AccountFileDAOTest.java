@@ -107,11 +107,11 @@ public class AccountFileDAOTest {
         assertEquals(4, createdAccount.getId());
         assertEquals("Timmy", createdAccount.getUsername());
         assertEquals("StrongPassword1234!", createdAccount.getPlainPassword());
-        assertEquals("", createdAccount.getFirstName());
-        assertEquals("", createdAccount.getLastName());
-        assertEquals("", createdAccount.getAddress());
-        assertEquals("", createdAccount.getCity());
-        assertEquals("", createdAccount.getZipCode());
+        assertEquals(null, createdAccount.getFirstName());
+        assertEquals(null, createdAccount.getLastName());
+        assertEquals(null, createdAccount.getAddress());
+        assertEquals(null, createdAccount.getCity());
+        assertEquals(null, createdAccount.getZipCode());
         assertFalse(createdAccount.getAdminStatus());
     }
 
@@ -131,11 +131,11 @@ public class AccountFileDAOTest {
         assertEquals(0, createdAccount.getId());
         assertEquals("admin", createdAccount.getUsername());
         assertEquals("admin", createdAccount.getPlainPassword());
-        assertEquals("", createdAccount.getFirstName());
-        assertEquals("", createdAccount.getLastName());
-        assertEquals("", createdAccount.getAddress());
-        assertEquals("", createdAccount.getCity());
-        assertEquals("", createdAccount.getZipCode());
+        assertEquals(null, createdAccount.getFirstName());
+        assertEquals(null, createdAccount.getLastName());
+        assertEquals(null, createdAccount.getAddress());
+        assertEquals(null, createdAccount.getCity());
+        assertEquals(null, createdAccount.getZipCode());
         assertTrue(createdAccount.getAdminStatus());
     }
 

@@ -17,6 +17,6 @@ public class OwnerAccount extends Account {
      * Creates a new Admin account using the default values defined in the Account class.
      */
     public OwnerAccount() {
-        super(0, "admin", "admin", true, "", "", "", "", "");
+        super(0, "admin", "admin", true, null, null, null, null, null);
     }
 }

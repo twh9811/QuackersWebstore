@@ -23,11 +23,11 @@ public class AccountTest {
         String expectedUsername = "admin";
         String expectedPassword = "password123";
         boolean expectedAdminStatus = false;
-        String expectedFirstName = "";
-        String expectedLastName = "";
-        String expectedAddress = "";
-        String expectedCity = "";
-        String expectedZipCode = "";
+        String expectedFirstName = null;
+        String expectedLastName = null;
+        String expectedAddress = null;
+        String expectedCity = null;
+        String expectedZipCode = null;
 
         // Invoke
         Account account = new UserAccount(expectedID, expectedUsername, expectedPassword);
@@ -53,11 +53,11 @@ public class AccountTest {
         String expectedUsername = "admin";
         String expectedPassword = "admin";
         boolean expectedAdminStatus = true;
-        String expectedFirstName = "";
-        String expectedLastName = "";
-        String expectedAddress = "";
-        String expectedCity = "";
-        String expectedZipCode = "";
+        String expectedFirstName = null;
+        String expectedLastName = null;
+        String expectedAddress = null;
+        String expectedCity = null;
+        String expectedZipCode = null;
 
         // Invoke
         Account account = new OwnerAccount();
@@ -258,7 +258,7 @@ public class AccountTest {
 
           Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
-          String expectedFirstName = "notBlank";
+          String expectedFirstName = "Jeff";
           // Invoke
           account.setFirstName(expectedFirstName);
 
@@ -275,7 +275,7 @@ public class AccountTest {
 
           Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
-          String expectedLastName = "notBlank";
+          String expectedLastName = "Baker";
           // Invoke
           account.setLastName(expectedLastName);
 
@@ -292,7 +292,7 @@ public class AccountTest {
 
           Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
-          String expectedAddress = "notBlank";
+          String expectedAddress = "1 Memorial Drive";
           // Invoke
           account.setAddress(expectedAddress);
 
@@ -309,7 +309,7 @@ public class AccountTest {
 
           Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
-          String expectedCity = "notBlank";
+          String expectedCity = "Rochester";
           // Invoke
           account.setCity(expectedCity);
 
@@ -326,7 +326,7 @@ public class AccountTest {
 
           Account account = new UserAccount(expectedID, originalusername, plainPassword);
 
-          String expectedZipCode = "notBlank";
+          String expectedZipCode = "14586";
           // Invoke
           account.setZipCode(expectedZipCode);
 
