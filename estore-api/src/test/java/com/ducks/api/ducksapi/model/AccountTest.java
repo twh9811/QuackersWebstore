@@ -23,11 +23,11 @@ public class AccountTest {
         String expectedUsername = "admin";
         String expectedPassword = "password123";
         boolean expectedAdminStatus = false;
-        String expectedFirstName = null;
-        String expectedLastName = null;
-        String expectedAddress = null;
-        String expectedCity = null;
-        String expectedZipCode = null;
+        String expectedFirstName = "";
+        String expectedLastName = "";
+        String expectedAddress = "";
+        String expectedCity = "";
+        String expectedZipCode = "";
 
         // Invoke
         Account account = new UserAccount(expectedID, expectedUsername, expectedPassword);
@@ -53,11 +53,11 @@ public class AccountTest {
         String expectedUsername = "admin";
         String expectedPassword = "admin";
         boolean expectedAdminStatus = true;
-        String expectedFirstName = null;
-        String expectedLastName = null;
-        String expectedAddress = null;
-        String expectedCity = null;
-        String expectedZipCode = null;
+        String expectedFirstName = "";
+        String expectedLastName = "";
+        String expectedAddress = "";
+        String expectedCity = "";
+        String expectedZipCode = "";
 
         // Invoke
         Account account = new OwnerAccount();

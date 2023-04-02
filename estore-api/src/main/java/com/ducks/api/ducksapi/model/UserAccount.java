@@ -52,7 +52,7 @@ public class UserAccount extends Account {
      * @param plainPassword the account password in plaintext
      */
     public UserAccount(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("plainPassword") String plainPassword) {
-        super(id, username, plainPassword, false, null, null, null, null, null);
+        super(id, username, plainPassword, false, "", "", "", "", "");
     
     }   
     
