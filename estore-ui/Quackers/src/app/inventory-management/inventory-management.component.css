@@ -17,7 +17,7 @@
 .card-header-format {
     margin: 0px;
     align-self: center;
-    padding: 0px;
+    padding: 0px 5px;
 }
 
 .truncate {
@@ -41,8 +41,6 @@
     flex-flow: row wrap;
     justify-content: center;
 }
-
-
 
 .duck-name {
     font-size: 18px;

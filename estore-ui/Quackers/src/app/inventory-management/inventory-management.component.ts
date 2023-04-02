@@ -40,21 +40,41 @@ export class InventoryManagementComponent implements OnInit {
     });
   }
 
+  /**
+   * Gets the path to the base image for a duck 
+   * 
+   * @param duck The duck
+   * @returns The path to the image
+   */
   getDuckColorImage(duck: Duck): string {
-    if(duck.size == "EXTRA_LARGR") return "";
+    if (duck.size == "EXTRA_LARGE") return "";
 
     const color = duck.color.toLowerCase();
     const colorFile = color.charAt(0).toUpperCase() + color.slice(1);
     return `/assets/duck-colors/${duck.size}/${colorFile}.png`;
   }
 
-  getAccessoryImage(accessoryName: string, duck: Duck) {
+  /**
+   * Gets the path to a given accessory's image
+   * 
+   * @param accessoryName The name of the accessory
+   * @param duck The duck 
+   * @returns The path to the image
+   */
+  getAccessoryImage(accessoryName: string, duck: Duck): string {
     const outfit: any = duck.outfit;
-    if(outfit[accessoryName + "UID"] == 0) return "";
+    if (outfit[accessoryName + "UID"] == 0) return "";
 
     return `/assets/duck-${accessoryName}/${outfit[accessoryName + "UID"]}.png`;
   }
 
+  /**
+   * Gets the css class for a given duck accessory
+   * 
+   * @param accessoryName The name of the accessory
+   * @param duck The duck
+   * @returns The name of the css class for the accessory
+   */
   getCSSClass(accessoryName: string, duck: Duck): string {
     const outfit: any = duck.outfit;
     return `duck-${accessoryName}-${outfit[accessoryName + "UID"]}-${duck.size.toLowerCase()}`;

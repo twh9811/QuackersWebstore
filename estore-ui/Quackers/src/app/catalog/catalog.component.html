@@ -3,21 +3,30 @@
 </div>
 <div *ngIf="ducks.length == 0">Loading ducks...</div>
 <div class="duck-container" *ngIf="ducks.length != 0">
-    <div *ngFor="let duck of ducks">
+    <mat-card class="card-format" *ngFor="let duck of ducks">
         <div class="duck-box">
-            <div class="duck-header">
-                <h2>{{duck.name}}</h2>
-                <hr>
+            <div class="duck-image-container">
+                <img class="duck-image" alt="{{duck.name}} Image" src="{{getDuckColorImage(duck)}}">
+                <img class="{{getCSSClass('hat', duck)}}"
+                    [style.visibility]="duck.outfit.hatUID == 0 ? 'hidden' : 'visible'"
+                    src="{{getAccessoryImage('hat', duck)}}">
+                <img class="{{getCSSClass('handItem', duck)}}"
+                    [style.visibility]="duck.outfit.handItemUID == 0 ? 'hidden' : 'visible'"
+                    src="{{getAccessoryImage('handItem', duck)}}">
+                <img class="{{getCSSClass('jewelry', duck)}}"
+                    [style.visibility]="duck.outfit.jewelryUID == 0 ? 'hidden' : 'visible'"
+                    src="{{getAccessoryImage('jewelry', duck)}}">
             </div>
-            <div class="duck-details">
-                <span>Id: {{duck.id}}</span>
-                <span>Price: {{getDuckPrice(duck)}}</span><br>
-                <div class="duck-btn-container">
-                    <button class="duck-add-btn gen-btn" type="button" (click)="showDuck(duck.id)">Detail</button>
-                    <button class="duck-add-btn gen-btn" type="button" (click)="addDuck(duck.id)">Add to Cart</button>
-                </div>
-            </div>
+            <mat-card-header class="card-header-format">
+                <mat-card-title class="truncate">{{duck.name}}</mat-card-title>
+                <mat-card-subtitle>Quantity Available: {{duck.quantity}}</mat-card-subtitle>
+                <mat-card-subtitle>{{getDuckPrice(duck)}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions class="card-action-format">
+                <button mat-raised-button class="fix-hover" (click)="showDuck(duck.id)">View More</button>
+                <button mat-raised-button class="fix-hover green-button" (click)="addDuck(duck.id)">Add to Cart</button>
+            </mat-card-actions>
         </div>
-    </div>
+    </mat-card>
 </div>
 <button routerLink="/cart" *ngIf="cart">Go to Cart</button><br>

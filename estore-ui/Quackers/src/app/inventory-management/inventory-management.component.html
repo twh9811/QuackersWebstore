@@ -1,7 +1,8 @@
 <div class="header-btn-container">
     <button id="create-btn" mat-raised-button routerLink="/inventory/product">Create Product</button>
 </div>
-<div class="duck-container">
+<div *ngIf="ducks.length == 0">Loading ducks...</div>
+<div class="duck-container" *ngIf="ducks.length != 0">
     <mat-card class="card-format" *ngFor="let duck of ducks">
         <div class="duck-box">
             <div class="duck-image-container">
