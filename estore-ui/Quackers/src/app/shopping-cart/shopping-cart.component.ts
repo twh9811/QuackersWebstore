@@ -269,7 +269,7 @@ export class ShoppingCartComponent implements OnInit {
     // if this account's admin staus is true or the account is
     // undefined, then the user is sent back to the login page
     if (this.account?.adminStatus || !this.account) {
-      this._snackBarService.openErrorSnackbar(`You are not authorized to view ${this._router.url}!`);
+      this._snackBarService.openErrorSnackbar(`You are not authorized to view ${this._router.url}.`);
       this._router.navigate(['/']);
     }
   }

@@ -136,7 +136,7 @@ export class InventoryManagementComponent implements OnInit {
   */
   private validateAuthorization(): void {
     if (!this._account?.adminStatus) {
-      this._snackBarService.openErrorSnackbar(`You are not authorized to view ${this._router.url}!`)
+      this._snackBarService.openErrorSnackbar(`You are not authorized to view ${this._router.url}.`)
       this._router.navigate(['/']);
     }
   }

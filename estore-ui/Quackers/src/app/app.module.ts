@@ -24,6 +24,9 @@ import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { DuckImageComponent } from './duck-image/duck-image.component';;
+import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CustomizeComponent } from './customize/customize.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,9 @@ import { DuckImageComponent } from './duck-image/duck-image.component';;
     ReceiptComponent,
     SnackbarNotificationComponent,
     DuckImageComponent,
+    ProfileComponent,
+    NavigationBarComponent,
+    CustomizeComponent
   ],
   imports: [
     BrowserModule,
