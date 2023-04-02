@@ -183,5 +183,50 @@ public class AccountTest {
         assertFalse(diffUsernameFail);
         assertFalse(diffPasswordFail);
     }
+
+    @Test
+    public void testWeakPassword() {
+        // Setup
+        int id1 = 1;
+        String user1 = "test";
+        String pass1 = "weakpassword";
+        Account account = new UserAccount(id1, user1, pass1);
+
+        // Invoke
+        boolean weakPassword = account.validateStrongPassword(account.getPlainPassword());
+        //Analyze
+          
+        assertFalse(weakPassword);
+    }
+
+    @Test
+    public void testStrongPassword() {
+        // Setup
+        int id1 = 1;
+        String user1 = "test";
+        String pass1 = "ThisIsAStrongPassword123";
+        Account account = new UserAccount(id1, user1, pass1);
+
+        // Invoke
+        boolean strongPassword = account.validateStrongPassword(account.getPlainPassword());
+        //Analyze
+          
+        assertTrue(strongPassword);
+    }
+
+    @Test
+    public void testStrongPasswordWithSpecialChars() {
+        // Setup
+        int id1 = 1;
+        String user1 = "test";
+        String pass1 = "ThisIsAStrongPassword123!?";
+        Account account = new UserAccount(id1, user1, pass1);
+
+        // Invoke
+        boolean strongPassword = account.validateStrongPassword(account.getPlainPassword());
+        //Analyze
+          
+        assertTrue(strongPassword);
+    }
     
 }

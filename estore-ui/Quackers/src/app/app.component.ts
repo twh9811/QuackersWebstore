@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Quackers Duck Emporium';
+  title = 'Quacker\'s Duck Emporium';
 
   // router needs to be public for angular to compile (used in app.component.html)
   constructor(public router: Router) {}

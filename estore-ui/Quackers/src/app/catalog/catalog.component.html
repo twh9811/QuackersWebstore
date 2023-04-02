@@ -11,7 +11,7 @@
             </div>
             <div class="duck-details">
                 <span>Id: {{duck.id}}</span>
-                <span>Price: ${{duck.price}}</span><br>
+                <span>Price: {{getDuckPrice(duck)}}</span><br>
                 <div class="duck-btn-container">
                     <button class="duck-add-btn gen-btn" type="button" (click)="showDuck(duck.id)">Detail</button>
                     <button class="duck-add-btn gen-btn" type="button" (click)="addDuck(duck.id)">Add to Cart</button>

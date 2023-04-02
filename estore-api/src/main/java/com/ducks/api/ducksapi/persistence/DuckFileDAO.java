@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
-import com.ducks.api.ducksapi.model.Duck;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import com.ducks.api.ducksapi.model.Duck;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Implements the functionality for JSON file-based peristance for Ducks
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
  * 
  * @author SWEN Faculty
  */
-@Component
+@Component("duckFileDAO")
 public class DuckFileDAO implements DuckDAO {
     private static final Logger LOG = Logger.getLogger(DuckFileDAO.class.getName());
     Map<Integer, Duck> ducks; // Provides a local cache of the duck objects
