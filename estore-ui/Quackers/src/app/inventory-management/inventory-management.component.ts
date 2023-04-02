@@ -151,14 +151,14 @@ export class InventoryManagementComponent implements OnInit {
     this._productService.deleteDuck(duck.id).subscribe(httpResponse => {
       switch (httpResponse.status) {
         case 200:
-          this._snackBarService.openSuccessSnackbar(`Successfully deleted the duck with the id ${duck.id}.`);
+          this._snackBarService.openSuccessSnackbar(`Successfully deleted the duck with the name ${duck.name}.`);
           this.ducksToDisplay = this.ducksToDisplay.filter(duckInArr => duckInArr.id != duck.id);
           break;
         case 404:
-          this._snackBarService.openErrorSnackbar(`Failed to delete the duck with the id ${duck.id} because it does not exist!`);
+          this._snackBarService.openErrorSnackbar(`Failed to delete the duck with the name ${duck.name} because it does not exist.`);
           break;
         default:
-          this._snackBarService.openErrorSnackbar(`Failed to delete the duck with the id ${duck.id} because something went wrong.`);
+          this._snackBarService.openErrorSnackbar(`Failed to delete the duck with the name ${duck.name} because something went wrong.`);
           console.error(httpResponse.statusText);
       }
     });

@@ -65,7 +65,7 @@ export class ProductCreateComponent implements OnInit {
         // Duck Creation Response
         case 201:
           let duck = response.body as Duck;
-          this._snackBarService.openSuccessSnackbar(`Created a duck with an id of ${duck.id}.`);
+          this._snackBarService.openSuccessSnackbar(`Successfully created a new duck with a name of ${duck.name}.`);
           this.close(duck);
           break;
         // Both Duck Update and Creation Response

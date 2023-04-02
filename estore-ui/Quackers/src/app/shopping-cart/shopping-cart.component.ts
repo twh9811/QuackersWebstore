@@ -116,7 +116,7 @@ export class ShoppingCartComponent implements OnInit {
     if (!this.cart) return;
 
     // Makes sure the number is in the form of x or x.00 (there can be as many 0s as they'd like)
-    if(!quantityStr.match(/^\d+(\.[0]+)?$/g)) {
+    if (!quantityStr.match(/^\d+(\.[0]+)?$/g)) {
       this._snackBarService.openErrorSnackbar(`You must enter an integer value for the quantity input.`);
       return;
     }
@@ -152,7 +152,7 @@ export class ShoppingCartComponent implements OnInit {
     this._cartService.updateCart(this.cart).subscribe(status => {
       // Send success if update was a success, error otherwise
       if (status.status == 200) {
-        this._snackBarService.openSuccessSnackbar(`Successfully removed ${quantity} duck(s) with an id of ${duck.id} from your cart.`);
+        this._snackBarService.openSuccessSnackbar(`Successfully removed ${quantity} duck(s) with a name of ${duck.name} from your cart.`);
         return;
       }
 
@@ -240,9 +240,8 @@ export class ShoppingCartComponent implements OnInit {
       shouldUpdate = true;
       // Silences error if the value request is 0; (Item shouldn't be in cart)
       if (value != 0) {
-        this._snackBarService.openInfoSnackbar(`The duck with the id ${key} only has ${duck.quantity} 
-          available in stock! You requested ${value}. 
-          Your cart has been reflected to only have ${duck.quantity}.`);
+        this._snackBarService.openInfoSnackbar(`The duck with the name ${duck.name} only has ${duck.quantity} 
+          available in stock! You requested ${value}. Your cart has been reflected to only have ${duck.quantity}.`);
       }
 
       // Deletes the duck from the map if the quantity available is 0
