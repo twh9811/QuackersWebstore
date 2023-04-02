@@ -43,7 +43,7 @@
     width: 54px;
     height: 38px;
     position: absolute;
-    top: 32px;
+    top: 35px;
     right: 91px;
     z-index: 1;
 }
@@ -198,5 +198,32 @@
     position: absolute;
     top: 84px;
     right: 63px;
+    z-index: 1;
+}
+
+.duck-jewelry-2-small {
+    width: 8px;
+    height: 19px;
+    position: absolute;
+    top: 84px;
+    right: 94px;
+    z-index: 1;
+}
+
+.duck-jewelry-2-medium {
+    width: 10px;
+    height: 25px;
+    position: absolute;
+    top: 78px;
+    right: 90px;
+    z-index: 1;
+}
+
+.duck-jewelry-2-large {
+    width: 13px;
+    height: 33px;
+    position: absolute;
+    top: 75px;
+    right: 85px;
     z-index: 1;
 }
