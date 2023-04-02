@@ -128,7 +128,7 @@ public class UserController {
      */
     @PutMapping("/logout")
     public ResponseEntity<Account> logoutUser(@RequestBody Account account) {
-        // curl.exe -X PUT -H 'Content-Type:application/json' 'http://localhost:8080/logout' -d '{\"type\":\"UserAccount\", \"id\":1,\"username\":\"TEST\",\"plainPassword\":\"TEST\"}'
+        // curl.exe -X PUT -H 'Content-Type:application/json' 'http://localhost:8080/logout' -d '{\"type\":\"UserAccount\", \"id\":1,\"username\":\"TEST\",\"plainPassword\":\"TEST1#sdf7csdf\"}'
         try {
             Account updatedAccount = accountDAO.updateAccount(account);
             // Account saved successfully
@@ -215,4 +215,7 @@ public class UserController {
         }
     }
 
+    
+
+    
 }

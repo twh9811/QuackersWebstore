@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -243,6 +244,9 @@ public class AccountFileDAO implements AccountDAO {
         }
     }
 
+    /**
+    * * {@inheritDoc}}
+    */
     @Override
     public boolean deleteAccount(int id) throws IOException {
         // Handles multiple clickEvents
@@ -258,6 +262,9 @@ public class AccountFileDAO implements AccountDAO {
         }
     }
 
+    /**
+    * * {@inheritDoc}}
+    */
     @Override
     public boolean changePassword(int id, String originalPass, String newPass) throws IOException {
         // Handles multiple clickEvents
@@ -276,6 +283,126 @@ public class AccountFileDAO implements AccountDAO {
                 }
             }
             // Account not in database, can't change password
+            return false;
+        }
+    }
+
+    /**
+    * * {@inheritDoc}}
+    */
+    @Override
+    public boolean changeFirstName(int id, String newFirstName) throws IOException{
+        // Handles multiple clickEvents
+        synchronized(accounts) {
+            // Checks if account is in database
+            if(accounts.containsKey(id)) {
+
+                // gets Account from id 
+                Account account = getAccount(id);
+
+                // Changes First name
+                account.setFirstName(newFirstName);
+
+                // Save changes to database
+                return save();       
+            }
+            // Account not in database, can't change First Name
+            return false;
+        }
+    }
+
+    /**
+    * * {@inheritDoc}}
+    */
+    @Override
+    public boolean changeLastName(int id, String newLastName) throws IOException{
+        // Handles multiple clickEvents
+        synchronized(accounts) {
+            // Checks if account is in database
+            if(accounts.containsKey(id)) {
+            
+                // gets Account from id 
+                Account account = getAccount(id);
+
+                // Changes Last name
+                account.setLastName(newLastName);
+
+                // Save changes to database
+                return save();       
+            }
+            // Account not in database, can't change Last Name
+            return false;
+        }
+    }
+
+    /**
+    * * {@inheritDoc}}
+    */
+    @Override
+    public boolean changeAddress(int id, String newAddress) throws IOException{
+        // Handles multiple clickEvents
+        synchronized(accounts) {
+            // Checks if account is in database
+            if(accounts.containsKey(id)) {
+            
+                // gets Account from id 
+                Account account = getAccount(id);
+
+                // Changes Address
+                account.setAddress(newAddress);
+
+                // Save changes to database
+                return save();        
+            }
+            // Account not in database, can't change Address
+            return false;
+        }
+    }
+
+    /**
+    * * {@inheritDoc}}
+    */
+    @Override
+    public boolean changeCity(int id, String newCity) throws IOException{
+        // Handles multiple clickEvents
+        synchronized(accounts) {
+            // Checks if account is in database
+            if(accounts.containsKey(id)) {
+            
+                // gets Account from id 
+                Account account = getAccount(id);
+
+                // Changes City
+                account.setCity(newCity);
+
+                // Save changes to database
+                return save();       
+            }
+            // Account not in database, can't change City
+            return false;
+        }
+    }
+
+    /**
+    * * {@inheritDoc}}
+    */
+    @Override
+    public boolean changeZipCode(int id, String newZipCode) throws IOException{
+        // Handles multiple clickEvents
+        synchronized(accounts) {
+            // Checks if account is in database
+            if(accounts.containsKey(id)) {
+            
+                // gets Account from id 
+                Account account = getAccount(id);
+
+                // Changes ZipCode
+                account.setZipCode(newZipCode);
+
+                // Save changes to database
+                return save();         
+            }
+            // Account not in database, can't change ZipCode
             return false;
         }
     }
