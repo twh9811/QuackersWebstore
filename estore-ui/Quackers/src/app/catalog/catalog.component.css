@@ -5,6 +5,8 @@
 .header-btn-container {
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 25px;
 }
 
 .card-format {
@@ -65,11 +67,31 @@ button {
     padding: 3px !important;
 }
 
-.fix-hover {
+.set-flex-grow {
     flex-grow: 1;
+}
+
+.fix-hover {
     border: 2px transparent solid;
 }
 
 .fix-hover:hover {
     border: 2px black solid;
+}
+
+.orange-button {
+    font-size: 15px;
+    background-color: #e67e22;
+
+    border: 2px solid #e67e22;
+
+    color: white;
+    width: 250px;
+}
+
+.orange-button:hover {
+    background-color: white;
+    border: 2px solid #e67e22;
+
+    color: #e67e22;
 }

@@ -1,0 +1,12 @@
+<div class="duck-image-container">
+    <img class="duck-image" alt="{{duck.name}} Image" src="{{getDuckColorImage()}}">
+    <img class="{{getCSSClass('hat')}}"
+        [style.visibility]="duck.outfit.hatUID == 0 ? 'hidden' : 'visible'"
+        src="{{getAccessoryImage('hat')}}">
+    <img class="{{getCSSClass('handItem')}}"
+        [style.visibility]="duck.outfit.handItemUID == 0 ? 'hidden' : 'visible'"
+        src="{{getAccessoryImage('handItem')}}">
+    <img class="{{getCSSClass('jewelry')}}"
+        [style.visibility]="duck.outfit.jewelryUID == 0 ? 'hidden' : 'visible'"
+        src="{{getAccessoryImage('jewelry')}}">
+</div>
