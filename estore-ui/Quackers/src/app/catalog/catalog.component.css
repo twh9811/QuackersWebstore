@@ -75,6 +75,6 @@ button {
 }
 
 .green-button {
-    background-color: #2ecc71;
-    color: white;
+    background-color: #2ecc71 !important;
+    color: white !important;
 }

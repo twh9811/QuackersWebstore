@@ -8,6 +8,7 @@ import { SessionService } from '../session.service';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
 import { SnackBarService } from '../snackbar.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-catalog',
@@ -19,6 +20,7 @@ export class CatalogComponent implements OnInit {
 
   cart: Cart | undefined = undefined;
   ducks: Duck[] = [];
+  ducksToDisplay: Duck[] = [];
 
   constructor(private _router: Router,
     private _productService: ProductService,
@@ -95,11 +97,18 @@ export class CatalogComponent implements OnInit {
     return `duck-${accessoryName}-${outfit[accessoryName + "UID"]}-${duck.size.toLowerCase()}`;
   }
 
+  updateDisplayDucks(ducks: Observable<Duck[]>) {
+    ducks.subscribe(duckArr => this.ducksToDisplay = duckArr)
+  }
+
   /**
    * Gets the ducks from the product service
    */
   getDucks(): void {
-    this._productService.getDucks().subscribe(ducks => this.ducks = ducks.filter(duck => duck.quantity != 0));
+    this._productService.getDucks().subscribe(ducks => {
+      this.ducks = ducks.filter(duck => duck.quantity != 0)
+      this.ducksToDisplay = this.ducks;
+    });
   }
 
   /**

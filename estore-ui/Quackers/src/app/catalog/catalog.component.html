@@ -1,9 +1,10 @@
 <div class="header-btn-container">
-    <app-duck-search *ngIf="ducks.length != 0"></app-duck-search>
+    <app-duck-search *ngIf="ducks.length != 0" (searchEvent)="updateDisplayDucks($event)"></app-duck-search>
 </div>
 <div *ngIf="ducks.length == 0">Loading ducks...</div>
-<div class="duck-container" *ngIf="ducks.length != 0">
-    <mat-card class="card-format" *ngFor="let duck of ducks">
+<div *ngIf="!ducksToDisplay" style="text-align:center;">No ducks found</div>
+<div class="duck-container" *ngIf="ducksToDisplay && ducksToDisplay.length != 0">
+    <mat-card class="card-format" *ngFor="let duck of ducksToDisplay">
         <div class="duck-box">
             <div class="duck-image-container">
                 <img class="duck-image" alt="{{duck.name}} Image" src="{{getDuckColorImage(duck)}}">

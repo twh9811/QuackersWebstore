@@ -1,12 +1,7 @@
 <div id="search-component">
-    <label for="search-box">Duck Search </label>
-    <input #searchBox id="search-box" (input)="search(searchBox.value)" />
-  
-    <ul class="search-result">
-      <li *ngFor="let duck of ducks$ | async" >
-        <a routerLink="/catalog/{{duck.id}}">
-          {{duck.name}}
-        </a>
-      </li>
-    </ul>
-  </div>
+  <mat-form-field id="search-container" appearance="outline">
+    <mat-label>Duck Search</mat-label>
+    <mat-icon matSuffix fontIcon="search"></mat-icon>
+    <input matInput #searchBox type="text" (input)="search(searchBox.value)" />
+  </mat-form-field>
+</div>
