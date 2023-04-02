@@ -16,6 +16,7 @@ import { DucksearchComponent } from './ducksearch/ducksearch.component';
 import { DuckDetailComponent } from './duck-detail/duck-detail.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CustomizeComponent } from './customize/customize.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ProfileComponent } from './profile/profile.component';
     DucksearchComponent,
     DuckDetailComponent,
     ProfileComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    CustomizeComponent
   ],
   imports: [
     BrowserModule,
