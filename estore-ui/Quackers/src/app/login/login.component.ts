@@ -139,6 +139,15 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    const username: string = this.loginForm.controls.username.value!;
+    const password: string = this.loginForm.controls.password.value!;
+
+    this._accountService.getAccounts().subscribe(accounts => {
+      let foundAccounts = accounts.filter(account => account.username == username);
+      if(foundAccounts.length == 0) {
+       
+      }
+    })
     this.openSnackbar("This is not implemented yet.", SnackBarType.INFO);
   }
 
