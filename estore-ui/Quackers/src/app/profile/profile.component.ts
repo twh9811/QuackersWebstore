@@ -43,7 +43,9 @@ export class ProfileComponent implements OnInit {
   }
 
   changeShippingAddress(): void {
-    
+    /** 
+    const dialogRef = this._dialog.open() {}
+    */
   }
 
   changePaymentMethod(): void {

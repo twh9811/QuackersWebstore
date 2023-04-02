@@ -27,6 +27,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { DuckImageComponent } from './duck-image/duck-image.component';;
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { CustomizeComponent } from './customize/customize.component';
+import { ShippingModifyComponent } from './shipping-modify/shipping-modify.component';
+import { PaymentModifyComponent } from './payment-modify/payment-modify.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { CustomizeComponent } from './customize/customize.component';
     DuckImageComponent,
     ProfileComponent,
     NavigationBarComponent,
-    CustomizeComponent
+    CustomizeComponent,
+    ShippingModifyComponent,
+    PaymentModifyComponent
   ],
   imports: [
     BrowserModule,
