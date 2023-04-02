@@ -87,7 +87,7 @@ button {
     border: 2px solid var(--quackers-orange-color) !important;
 
     color: white !important;
-    width: 250px !important;
+    width: 150px !important;
 }
 
 .orange-button:hover {
