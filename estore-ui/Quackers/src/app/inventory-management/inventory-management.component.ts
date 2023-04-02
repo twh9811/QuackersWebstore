@@ -86,6 +86,16 @@ export class InventoryManagementComponent implements OnInit {
           this.notificationService.add(`Failed to delete the duck with the id ${duck.id} because something went wrong.`, 3);
           console.error(httpResponse.statusText);
       }
-    })
+    });
+  }
+
+  /**
+   * Gets the price of a duck in the form of $x.xx
+   * 
+   * @param duck The duck that the cart price is being retrieved for
+   * @returns The calculated price to two decimals as a string
+   */
+  getDuckPrice(duck: Duck): string {
+    return `$${(duck.price).toFixed(2)}`;
   }
 }

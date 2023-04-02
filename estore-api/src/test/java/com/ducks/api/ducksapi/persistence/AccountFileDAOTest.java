@@ -87,13 +87,13 @@ public class AccountFileDAOTest {
         // Analyze
         assertEquals(account1, testAccounts[1]);
         assertEquals(account2, testAccounts[2]);
-        assertEquals(failResult, null);
+        assertNull(failResult);
     }
 
     @Test
     public void testCreateUserAccount() throws IOException {
         // Setup
-        Account successAccount = new UserAccount(4, "Timmy", "password");
+        Account successAccount = new UserAccount(4, "Timmy", "StrongPassword1234!");
         Account failAccount = new UserAccount(5, "Travis", "password");
 
         // Invoke
@@ -106,7 +106,7 @@ public class AccountFileDAOTest {
         assertEquals(UserAccount.class, successResult.getClass());
         assertEquals(4, createdAccount.getId());
         assertEquals("Timmy", createdAccount.getUsername());
-        assertEquals("password", createdAccount.getPlainPassword());
+        assertEquals("StrongPassword1234!", createdAccount.getPlainPassword());
         assertFalse(createdAccount.getAdminStatus());
     }
 
@@ -163,7 +163,7 @@ public class AccountFileDAOTest {
         // Setup
         Account account = accountFileDAO.getAccount(1);
         int accountID = account.getId();
-        String newPassword = "password12345";
+        String newPassword = "Password12345!";
         // Invoke
         boolean successChange = accountFileDAO.changePassword(accountID, "password", newPassword);
         boolean failChangeWrongID = accountFileDAO.changePassword(999, "password", newPassword);

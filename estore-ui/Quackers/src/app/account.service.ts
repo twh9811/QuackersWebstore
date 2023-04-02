@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse, HttpStatusCode} from '@angular/common/http';
 
 import { Observable,of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators'
@@ -68,21 +68,22 @@ export class AccountService {
    */
   createUser(account : Account) : Observable<Account> {
     const url = `${this.apiURL}/accounts`;
-    return this.http.post<Account>(url, account, this.httpOptions).pipe(
-      tap(_ => console.log(`created account ${account}`)), catchError(this.handleError<any>('create account'))
+    return this.http.post<HttpResponse<Account>>(url, account, this.httpOptions).pipe(
+      tap(_ => console.log(`created account ${account}`)), catchError(this.handleError<HttpResponse<any>>('create account', true))
     );
   }
 
    /**
-   * Handle Http operation that failed.
+   * Handle http operations that failed.
    * Let the app continue.
    *
    * @param operation - name of the operation that failed
+   * @param shouldReturnError whether the error should be returned and not logged
    * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', shouldReturnError: boolean = false, result?: T,): any {
     return (error: any): Observable<T> => {
-
+      if (shouldReturnError) return of(error as T);
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
@@ -91,6 +92,6 @@ export class AccountService {
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
-    };
+    }
   }
 }

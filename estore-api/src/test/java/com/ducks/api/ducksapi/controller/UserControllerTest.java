@@ -1,6 +1,7 @@
 package com.ducks.api.ducksapi.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -48,9 +49,26 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testCreateUser() throws IOException { // createUser may throw IOException
+    public void testCreateUserWeakPassword() throws IOException { // createUser may throw IOException
         // Setup
         Account user = new UserAccount(11, "sam", "123456");
+
+        // when createUser is called, return true simulating successful
+        // creation and save
+        when(mockAccountDAO.createAccount(user)).thenReturn(user);
+
+        // Invoke
+        ResponseEntity<Account> response = userController.createUser(user);
+
+        // Analyze
+        assertEquals(HttpStatus.NOT_ACCEPTABLE, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    @Test
+    public void testCreateUserStrongPassword() throws IOException { // createUser may throw IOException
+        // Setup
+        Account user = new UserAccount(11, "sam", "ThisIsAStrongPassword123!");
 
         // when createUser is called, return true simulating successful
         // creation and save

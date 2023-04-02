@@ -205,9 +205,13 @@ public class AccountFileDAO implements AccountDAO{
                 newAccount = new UserAccount(nextID(), account.getUsername(), account.getPlainPassword());
             }
             
-            accounts.put(newAccount.getId(), newAccount);
-            // Save changes to the database
-            save();
+            // Don't save account to database if the password is invalid.
+            // However we want the account object still to use in the UserController for feedback purposes.
+            if(account.validateStrongPassword(account.getPlainPassword())) {
+                accounts.put(newAccount.getId(), newAccount);
+                // Save changes to the database
+                save();
+            }
             return newAccount;
        }
     }
@@ -238,6 +242,7 @@ public class AccountFileDAO implements AccountDAO{
             // Checks if account is in database
             if(accounts.containsKey(id)) {
                 accounts.remove(id);
+                save();
                 return true;
             }
             // Account is not in database, therefore cannot be deleted
@@ -255,10 +260,13 @@ public class AccountFileDAO implements AccountDAO{
                 String currPassword = account.getPlainPassword();
                 // checks if they have permission to change password
                 if(originalPass.equals(currPassword)) {
-                    //changes password
-                    account.setPassword(newPass);
-                    // Save changes to database
-                    return save();
+                    // checks if the newPassword is a strong password
+                    if(account.validateStrongPassword(newPass)){
+                        //changes password
+                        account.setPassword(newPass);
+                        // Save changes to database
+                        return save();
+                    }
                 }
             }
             // Account not in database, can't change password
