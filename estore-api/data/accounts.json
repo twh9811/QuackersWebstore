@@ -1,1 +1,1 @@
-[{"type":"OwnerAccount","id":0,"username":"admin","plainPassword":"admin","adminStatus":true}]
+[{"type":"OwnerAccount","id":0,"username":"admin","plainPassword":"admin","adminStatus":true,"card": "","expDate":"", "cvv":0, "firstName":"","lastName":"","address":"","city":"","zipCode":""}]

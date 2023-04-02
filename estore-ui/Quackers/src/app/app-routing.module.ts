@@ -5,6 +5,8 @@ import { DuckDetailComponent } from './duck-detail/duck-detail.component';
 import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
 import { LoginComponent } from './login/login.component';
 import { ProductCreateComponent } from './product-create-modify/product-create-modify.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CustomizeComponent } from './customize/customize.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 const routes: Routes = [
@@ -15,7 +17,9 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "catalog", component: CatalogComponent },
   { path: "catalog/:id", component: DuckDetailComponent },
-  { path: "cart", component: ShoppingCartComponent }
+  { path: "cart", component: ShoppingCartComponent },
+  { path: "profile", component: ProfileComponent},
+  { path: "customize", component: CustomizeComponent}
 ];
 
 @NgModule({
