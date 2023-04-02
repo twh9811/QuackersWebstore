@@ -1,14 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Account } from '../account';
-import { AccountService } from '../account.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Duck, DuckOutfit } from '../duck';
 import { ProductService } from '../product.service';
-import { SessionService } from '../session.service';
 import { SnackBarService } from '../snackbar.service';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CheckoutData } from '../checkout/checkout-data';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-create-modify',
@@ -16,8 +13,6 @@ import { CheckoutData } from '../checkout/checkout-data';
   styleUrls: ['./product-create-modify.component.css']
 })
 export class ProductCreateComponent implements OnInit {
-  private _account: Account | undefined = undefined;
-  private _duckId: number | undefined = undefined;
 
   createForm = this._formBuilder.group({
     name: '',
@@ -25,17 +20,15 @@ export class ProductCreateComponent implements OnInit {
     price: 0.00,
     size: '',
     color: '',
-    hatUID: 0,
-    shirtUID: 0,
-    shoesUID: 0,
-    handItemUID: 0,
-    jewelryUID: 0
+    hatUID: '0',
+    handItemUID: '0',
+    jewelryUID: '0'
   });
 
   constructor(private _productService: ProductService,
     private _snackBarService: SnackBarService,
     private _formBuilder: FormBuilder,
-    private _router: Router,
+    public dialogRef: MatDialogRef<ProductCreateComponent>,
     @Inject(MAT_DIALOG_DATA) public duck: Duck) { }
 
   ngOnInit(): void {
@@ -54,23 +47,26 @@ export class ProductCreateComponent implements OnInit {
     }
 
     let formDuck = this.convertFormToDuck();
-    let observable = this._duckId ? this._productService.updateDuck(formDuck) : this._productService.createDuck(formDuck);
+    let observable = this.duck ? this._productService.updateDuck(formDuck) : this._productService.createDuck(formDuck);
 
     observable.subscribe(response => {
       let status = response.status;
       switch (status) {
         // Duck Update Response
         case 200:
-          this._snackBarService.openSuccessSnackbar(`Successfully updated the duck with an id of ${this._duckId}.`);
+          this._snackBarService.openSuccessSnackbar(`Successfully updated the duck with a name of ${this.duck.name}.`);
+          this.close(response.body as Duck);
           break;
         // Duck Update Reponse - Not possible in theory 
         case 404:
-          this._snackBarService.openErrorSnackbar(`Unable to find a duck with an id of ${this._duckId}.`);
+          this._snackBarService.openErrorSnackbar(`Unable to find the requested duck.`);
+          this.close(null);
           break;
         // Duck Creation Response
         case 201:
           let duck = response.body as Duck;
           this._snackBarService.openSuccessSnackbar(`Created a duck with an id of ${duck.id}.`);
+          this.close(duck);
           break;
         // Both Duck Update and Creation Response
         case 409:
@@ -78,7 +74,7 @@ export class ProductCreateComponent implements OnInit {
           break;
         // Both Duck Creation and Update Response - Shouldn't be possible due to form validation
         case 400:
-          let actionStr = this._duckId ? "update the given duck" : "create the duck";
+          let actionStr = this.duck ? "update the given duck" : "create the duck";
           this._snackBarService.openErrorSnackbar(`Failed to ${actionStr} due to a bad value being entered.`);
           break;
         // Both Duck Creation and Update Response
@@ -88,11 +84,14 @@ export class ProductCreateComponent implements OnInit {
       }
     });
 
-    this.goBack();
   }
 
-  goBack(): void {
-    this._router.navigate(['/inventory']);
+  /**
+   * Closes the dialog window
+   * @param wasSuccessful Whether or not the duck was updated/created
+   */
+  close(duck: Duck | null): void {
+    this.dialogRef.close(duck);
   }
 
   /**
@@ -109,11 +108,9 @@ export class ProductCreateComponent implements OnInit {
       controls.size.setValue(this.duck.size);
       controls.color.setValue(this.duck.color);
 
-      controls.hatUID.setValue(duckOutfit.hatUID);
-      controls.shirtUID.setValue(duckOutfit.shirtUID);
-      controls.shoesUID.setValue(duckOutfit.shoesUID);
-      controls.handItemUID.setValue(duckOutfit.handItemUID);
-      controls.jewelryUID.setValue(duckOutfit.jewelryUID);
+      controls.hatUID.setValue(duckOutfit.hatUID.toString());
+      controls.handItemUID.setValue(duckOutfit.handItemUID.toString());
+      controls.jewelryUID.setValue(duckOutfit.jewelryUID.toString());
   }
 
   /**
@@ -154,15 +151,15 @@ export class ProductCreateComponent implements OnInit {
     let formValue = this.createForm.value;
 
     let duckOutfit: DuckOutfit = {
-      hatUID: formValue.hatUID as number,
-      shirtUID: formValue.shirtUID as number,
-      shoesUID: formValue.shoesUID as number,
-      handItemUID: formValue.handItemUID as number,
-      jewelryUID: formValue.jewelryUID as number,
+      hatUID: Number.parseInt(formValue.hatUID!),
+      shirtUID: 0,
+      shoesUID: 0,
+      handItemUID: Number.parseInt(formValue.handItemUID!),
+      jewelryUID: Number.parseInt(formValue.jewelryUID!),
     };
 
     return <Duck>{
-      id: this._duckId ? this._duckId : -1,
+      id: this.duck ? this.duck.id : -1,
       name: formValue.name as string,
       quantity: formValue.quantity as number,
       price: formValue.price as number,

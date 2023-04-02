@@ -23,6 +23,7 @@ import { ReceiptComponent } from './receipt/receipt.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-notification.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';;
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatSnackBarModule,
     MatCardModule,
     MatIconModule,
+    MatSelectModule,
     BrowserAnimationsModule
   ],
   providers: [],

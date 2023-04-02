@@ -113,8 +113,19 @@ export class InventoryManagementComponent implements OnInit {
    */
   goToDuckModification(duck: Duck | null): void {
     const dialogRef = this._dialog.open(ProductCreateComponent, { data: duck });
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.afterClosed().subscribe((obj) => {
       document.body.style.overflow = 'visible';
+      if (obj == null) return;
+
+      const newDuck = <Duck>obj;
+      const index = this.ducksToDisplay.findIndex((duck) => duck.id == newDuck.id);
+      if (index == -1) {
+        this.ducksToDisplay.push(newDuck);
+        return;
+      }
+
+      this.ducksToDisplay[index] = newDuck;
+
     })
     document.body.style.overflow = 'hidden';
   }
@@ -141,6 +152,7 @@ export class InventoryManagementComponent implements OnInit {
       switch (httpResponse.status) {
         case 200:
           this._snackBarService.openSuccessSnackbar(`Successfully deleted the duck with the id ${duck.id}.`);
+          this.ducksToDisplay = this.ducksToDisplay.filter(duckInArr => duckInArr.id != duck.id);
           break;
         case 404:
           this._snackBarService.openErrorSnackbar(`Failed to delete the duck with the id ${duck.id} because it does not exist!`);

@@ -229,33 +229,6 @@
 }
 
 .duck-jewelry-2-small {
-    width: 8px;
-    height: 19px;
-    position: absolute;
-    top: 84px;
-    right: 94px;
-    z-index: 1;
-}
-
-.duck-jewelry-2-medium {
-    width: 10px;
-    height: 25px;
-    position: absolute;
-    top: 78px;
-    right: 90px;
-    z-index: 1;
-}
-
-.duck-jewelry-2-large {
-    width: 13px;
-    height: 33px;
-    position: absolute;
-    top: 75px;
-    right: 85px;
-    z-index: 1;
-}
-
-.duck-jewelry-3-small {
     width: 54px;
     height: 45px;
     position: absolute;
@@ -264,7 +237,7 @@
     z-index: 1;
 }
 
-.duck-jewelry-3-medium {
+.duck-jewelry-2-medium {
     width: 61px;
     height: 51px;
     position: absolute;
@@ -273,11 +246,38 @@
     z-index: 1;
 }
 
-.duck-jewelry-3-large {
+.duck-jewelry-2-large {
     width: 76px;
     height: 63px;
     position: absolute;
     top: 97px;
     right: 84px;
+    z-index: 1;
+}
+
+.duck-jewelry-3-small {
+    width: 8px;
+    height: 19px;
+    position: absolute;
+    top: 84px;
+    right: 94px;
+    z-index: 1;
+}
+
+.duck-jewelry-3-medium {
+    width: 10px;
+    height: 25px;
+    position: absolute;
+    top: 78px;
+    right: 90px;
+    z-index: 1;
+}
+
+.duck-jewelry-3-large {
+    width: 13px;
+    height: 33px;
+    position: absolute;
+    top: 75px;
+    right: 85px;
     z-index: 1;
 }
