@@ -12,6 +12,9 @@ export class AppComponent {
   // router needs to be public for angular to compile (used in app.component.html)
   constructor(public router: Router) {}
 
+  goToAccount() : void {
+    this.router.navigate(['/account'])
+  }
   /**
   * If called, the site will logout the user and
   * redirect the user back to the login page

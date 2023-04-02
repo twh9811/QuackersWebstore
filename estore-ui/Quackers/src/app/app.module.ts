@@ -15,6 +15,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { DucksearchComponent } from './ducksearch/ducksearch.component';
 import { DuckDetailComponent } from './duck-detail/duck-detail.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
     CatalogComponent,
     DucksearchComponent,
     DuckDetailComponent,
+    ProfileComponent,
     NavigationBarComponent
   ],
   imports: [
