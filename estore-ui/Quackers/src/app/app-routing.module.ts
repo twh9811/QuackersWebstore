@@ -6,9 +6,9 @@ import { InventoryManagementComponent } from './inventory-management/inventory-m
 import { LoginComponent } from './login/login.component';
 import { ProductCreateComponent } from './product-create-modify/product-create-modify.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
-import { CatalogComponent } from './catalog/catalog.component';
-import { DuckDetailComponent } from './duck-detail/duck-detail.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CustomizeComponent } from './customize/customize.component';
+
 
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: "catalog", component: CatalogComponent },
   { path: "catalog/:id", component: DuckDetailComponent },
   { path: "cart", component: ShoppingCartComponent },
-  { path: "profile", component: ProfileComponent}
+  { path: "profile", component: ProfileComponent},
+  { path: "customize", component: CustomizeComponent}
 ];
 
 @NgModule({

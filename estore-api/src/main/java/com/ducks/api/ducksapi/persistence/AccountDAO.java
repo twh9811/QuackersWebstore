@@ -99,4 +99,81 @@ public interface AccountDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     boolean changePassword(int id, String originalPass, String newPass) throws IOException;
+
+
+    /**
+     * Changes the First Name of a {@linkplain Account account} with the new First Name.
+     * 
+     * @param id The id of the {@link Account account} that needs their First Name changed
+     * 
+     * @param newName The new First Name of the {@link Account account}
+     * 
+     * @return true if the First Name of the {@link Account account} was changed
+     * <br>
+     * false if account First name was not changed
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    boolean changeFirstName(int id, String newFirstName) throws IOException;
+
+    /**
+     * Changes the Last Name of a {@linkplain Account account} with the new Last Name.
+     * 
+     * @param id The id of the {@link Account account} that needs their Last Name changed
+     * 
+     * @param newName The new Last Name of the {@link Account account}
+     * 
+     * @return true if the Last Name of the {@link Account account} was changed
+     * <br>
+     * false if account Last name was not changed
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    boolean changeLastName(int id, String newLastName) throws IOException;
+
+    /**
+     * Changes the Address of a {@linkplain Account account} with the new Address.
+     * 
+     * @param id The id of the {@link Account account} that needs their Address changed
+     * 
+     * @param newAddress The new Address of the {@link Account account}
+     * 
+     * @return true if the Address of the {@link Account account} was changed
+     * <br>
+     * false if account Address was not changed
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    boolean changeAddress(int id, String newAddress) throws IOException;
+
+    /**
+     * Changes the City of a {@linkplain Account account} with the new City.
+     * 
+     * @param id The id of the {@link Account account} that needs their City changed
+     * 
+     * @param newCity The new City of the {@link Account account}
+     * 
+     * @return true if the City of the {@link Account account} was changed
+     * <br>
+     * false if account City was not changed
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    boolean changeCity(int id, String newCity) throws IOException;
+
+    /**
+     * Changes the ZipCode of a {@linkplain Account account} with the new ZipCode.
+     * 
+     * @param id The id of the {@link Account account} that needs their ZipCode changed
+     * 
+     * @param newZipCode The new ZipCode of the {@link Account account}
+     * 
+     * @return true if the ZipCode of the {@link Account account} was changed
+     * <br>
+     * false if account ZipCode was not changed
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    boolean changeZipCode(int id, String newZipCode) throws IOException;
+
 }
