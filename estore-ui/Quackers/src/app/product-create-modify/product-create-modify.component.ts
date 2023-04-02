@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Account } from '../account';
@@ -7,6 +7,8 @@ import { Duck, DuckOutfit } from '../duck';
 import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
 import { SnackBarService } from '../snackbar.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CheckoutData } from '../checkout/checkout-data';
 
 @Component({
   selector: 'app-product-create-modify',
@@ -33,27 +35,13 @@ export class ProductCreateComponent implements OnInit {
   constructor(private _productService: ProductService,
     private _snackBarService: SnackBarService,
     private _formBuilder: FormBuilder,
-    private _route: ActivatedRoute,
     private _router: Router,
-    private _accountService: AccountService,
-    private _sessionService: SessionService) { }
+    @Inject(MAT_DIALOG_DATA) public duck: Duck) { }
 
   ngOnInit(): void {
-    if (!this._sessionService.session) {
-      this.validateAuthorization();
-      return;
+    if(this.duck != null) {
+      this.loadDuck();
     }
-
-    // Waits for account to be retrieved before doing anything else
-    this._accountService.getAccount(this._sessionService.session?.id).subscribe(account => {
-      this._account = account;
-
-      this.validateAuthorization();
-      this.retrieveDuckId();
-      if (this._duckId) {
-        this.loadDuck();
-      }
-    })
   }
 
   /**
@@ -108,75 +96,25 @@ export class ProductCreateComponent implements OnInit {
   }
 
   /**
-   * Validates that a user is an admin
-   * If not, they are sent back to the login page
-   */
-  private validateAuthorization(): void {
-    if (!this._account?.adminStatus) {
-      this._snackBarService.openErrorSnackbar(`You are not authorized to view ${this._router.url}!`);
-      this._router.navigate(['/']);
-    }
-  }
-
-  /**
-   * Gets the duck id from the route and stores it in _duckId if it is an integer.
-   * If the id is not an integer, they are redirected back to the inventory page
-   */
-  private retrieveDuckId() {
-    let duckIdStr = this._route.snapshot.paramMap.get("id");
-
-    // No id was provided. Therefore, we are creating a new duck.
-    if (!duckIdStr) {
-      this._duckId = undefined;
-      return;
-    }
-
-    let duckIdNum = Number.parseInt(duckIdStr!);
-    if (!duckIdNum) {
-      this.handleInvalidDuckId(duckIdStr);
-      return;
-    }
-
-    this._duckId = duckIdNum;
-  }
-
-  /**
    * Loads the duck with the id given in the route
    * If the duckId is invalid, they are redirected back to the inventory page
    */
   private loadDuck(): void {
-    this._productService.getDuck(this._duckId as number).subscribe(duck => {
-      if (!duck) {
-        this.handleInvalidDuckId(this._duckId);
-        return;
-      }
-
-      let duckOutfit: DuckOutfit = duck.outfit;
+      let duckOutfit: DuckOutfit = this.duck.outfit;
       let controls = this.createForm.controls;
 
-      controls.name.setValue(duck.name);
-      controls.quantity.setValue(duck.quantity);
-      controls.price.setValue(duck.price);
-      controls.size.setValue(duck.size);
-      controls.color.setValue(duck.color);
+      controls.name.setValue(this.duck.name);
+      controls.quantity.setValue(this.duck.quantity);
+      controls.price.setValue(this.duck.price);
+      controls.size.setValue(this.duck.size);
+      controls.color.setValue(this.duck.color);
 
       controls.hatUID.setValue(duckOutfit.hatUID);
       controls.shirtUID.setValue(duckOutfit.shirtUID);
       controls.shoesUID.setValue(duckOutfit.shoesUID);
       controls.handItemUID.setValue(duckOutfit.handItemUID);
       controls.jewelryUID.setValue(duckOutfit.jewelryUID);
-    });
   }
-
-  /**
-   * Sends a notification that the given id is invalid and redirects them back to the inventory page
-   * @param duckIdStr The invalid id
-   */
-  private handleInvalidDuckId(duckIdStr: any): void {
-    this._snackBarService.openErrorSnackbar(`${duckIdStr} is not a valid duck id!`);
-    this._router.navigate(['/inventory']);
-  }
-
 
   /**
    * Finds the invalid controls and sends a notification that tells the user to fix the invalid controls

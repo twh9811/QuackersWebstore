@@ -7,6 +7,8 @@ import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
 import { SnackBarService } from '../snackbar.service';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductCreateComponent } from '../product-create-modify/product-create-modify.component';
 
 @Component({
   selector: 'app-inventory-management',
@@ -24,7 +26,9 @@ export class InventoryManagementComponent implements OnInit {
     private _productService: ProductService,
     private _snackBarService: SnackBarService,
     private _accountService: AccountService,
-    private _sessionService: SessionService) { }
+    private _sessionService: SessionService,
+    private _dialog: MatDialog,
+  ) { }
 
   /**
    * Loads the ducks array when the page is opened
@@ -107,8 +111,12 @@ export class InventoryManagementComponent implements OnInit {
    * 
    * @param id The id of the duck
    */
-  goToDuckModification(id: number): void {
-    this._router.navigate([`/inventory/product/${id}`]);
+  goToDuckModification(duck: Duck | null): void {
+    const dialogRef = this._dialog.open(ProductCreateComponent, { data: duck });
+    dialogRef.afterClosed().subscribe(() => {
+      document.body.style.overflow = 'visible';
+    })
+    document.body.style.overflow = 'hidden';
   }
 
   /**

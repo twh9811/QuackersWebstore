@@ -1,6 +1,6 @@
 <div class="header-btn-container">
     <app-duck-search *ngIf="ducks.length != 0" (searchEvent)="updateDisplayDucks($event)"></app-duck-search>
-    <button id="create-btn" mat-raised-button routerLink="/inventory/product">Create Product</button>
+    <button id="create-btn" mat-raised-button (click)="goToDuckModification(null)">Create Product</button>
 </div>
 <div *ngIf="ducks.length == 0">Loading ducks...</div>
 <div *ngIf="!ducksToDisplay" style="text-align:center;">No ducks found</div>
@@ -25,7 +25,7 @@
                 <mat-card-subtitle>{{getDuckPrice(duck)}}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-actions class="card-action-format">
-                <button mat-raised-button class="fix-hover" (click)="goToDuckModification(duck.id)">Modify</button>
+                <button mat-raised-button class="fix-hover" (click)="goToDuckModification(duck)">Modify</button>
                 <button mat-raised-button color="warn" class="fix-hover" (click)="deleteDuck(duck)">Remove</button>
             </mat-card-actions>
         </div>
