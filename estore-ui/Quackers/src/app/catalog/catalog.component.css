@@ -34,6 +34,7 @@
     gap: 15px;
     align-self: center;
     padding: 0px 5px;
+    height: fit-content;
 }
 
 .duck-container {
@@ -67,7 +68,7 @@ button {
     padding: 3px !important;
 }
 
-.set-flex-grow {
+.add-to-cart-btn {
     flex-grow: 1;
 }
 
@@ -80,18 +81,42 @@ button {
 }
 
 .orange-button {
-    font-size: 15px;
-    background-color: #e67e22;
+    font-size: 15px !important;
+    background-color: var(--quackers-orange-color) !important;
 
-    border: 2px solid #e67e22;
+    border: 2px solid var(--quackers-orange-color) !important;
 
-    color: white;
-    width: 250px;
+    color: white !important;
+    width: 250px !important;
 }
 
 .orange-button:hover {
-    background-color: white;
-    border: 2px solid #e67e22;
+    background-color: white !important;
+    border: 2px solid var(--quackers-orange-color) !important;
 
-    color: #e67e22;
+    color: var(--quackers-orange-color) !important;
+}
+
+.quantity-selector {
+    width: 75px;
+    padding: 6.5px;
+    font-size: 16px;
+    font-family: var(--mdc-typography-button-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
+    text-align: center;
+    background-color: aliceblue;
+    border: 1px black solid;
+    border-radius: 5px;
+    color: black;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
 }

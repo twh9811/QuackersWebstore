@@ -184,9 +184,9 @@ export class ShoppingCartComponent implements OnInit {
         data: { account: this.account, cart: this.cart },
       });
     dialogRef.afterClosed().subscribe(() => {
-      document.body.style.overflow = 'visible';
+      document.body.style.overflowY = 'visible';
     })
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflowY = 'hidden';
   }
 
   /**

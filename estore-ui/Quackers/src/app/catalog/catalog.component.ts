@@ -58,46 +58,6 @@ export class CatalogComponent implements OnInit {
   }
 
   /**
-   * Gets the path to the base image for a duck 
-   * 
-   * @param duck The duck
-   * @returns The path to the image
-   */
-  getDuckColorImage(duck: Duck): string {
-    if (duck.size == "EXTRA_LARGE") return "";
-
-    const color = duck.color.toLowerCase();
-    const colorFile = color.charAt(0).toUpperCase() + color.slice(1);
-    return `/assets/duck-colors/${duck.size}/${colorFile}.png`;
-  }
-
-  /**
-   * Gets the path to a given accessory's image
-   * 
-   * @param accessoryName The name of the accessory
-   * @param duck The duck 
-   * @returns The path to the image
-   */
-  getAccessoryImage(accessoryName: string, duck: Duck): string {
-    const outfit: any = duck.outfit;
-    if (outfit[accessoryName + "UID"] == 0) return "";
-
-    return `/assets/duck-${accessoryName}/${outfit[accessoryName + "UID"]}.png`;
-  }
-
-  /**
-   * Gets the css class for a given duck accessory
-   * 
-   * @param accessoryName The name of the accessory
-   * @param duck The duck
-   * @returns The name of the css class for the accessory
-   */
-  getCSSClass(accessoryName: string, duck: Duck): string {
-    const outfit: any = duck.outfit;
-    return `duck-${accessoryName}-${outfit[accessoryName + "UID"]}-${duck.size.toLowerCase()}`;
-  }
-
-  /**
    * Updates the ducks being displayed on screen
    * 
    * @param ducks The new array of ducks
@@ -140,24 +100,45 @@ export class CatalogComponent implements OnInit {
   /**
    * Add a duck to shopping cart
    * 
-   * @param duckId The id of the duck being added
+   * @param duck The duck being added
+   * @param quantity The number of ducks to add
    */
-  addDuck(duckId: number): void {
-    this._productService.getDuck(duckId as number).subscribe(duck => {
+  addDuck(duck: Duck, quantityStr: string): void {
+    const quantity = Number.parseInt(quantityStr);
 
-      if (!duck || duck.quantity < 1) {
-        this._snackBarService.openErrorSnackbar(`The duck with the id of ${duckId} is no longer available!`);
+    if (Number.isNaN(quantity)) {
+      this._snackBarService.openErrorSnackbar(`You must enter an integer value for the quantity input.`);
+      return;
+    }
+
+    if (quantity <= 0) {
+      this._snackBarService.openErrorSnackbar(`You must enter an integer value greater than 0 for the quantity input.`);
+      return;
+    }
+
+    if (!duck || duck.quantity < 1) {
+      this._snackBarService.openErrorSnackbar(`The requested duck is no longer available.`);
+      return;
+    }
+
+    const quantityInCart = this.cart!.items[duck.id];
+    if ((quantity + quantityInCart) > duck.quantity) {
+      this._snackBarService.openErrorSnackbar(`You have ${quantityInCart} duck(s) with the name of ${duck.name} in your cart and requested ${quantity} more, totalling to ${quantity + quantityInCart}. However, there are only ${duck.quantity} available.`);
+      return;
+    }
+
+    if (duck.quantity < quantity) {
+      this._snackBarService.openErrorSnackbar(`You requested ${quantity} duck(s) with the name of ${duck.name}. However, there are only ${duck.quantity} available.`);
+      return;
+    }
+
+    this._cartService.addItem(this.cart!, duck.id, quantity);
+    this._cartService.updateCart(this.cart!).subscribe(response => {
+      if (response.status == 200) {
+        this._snackBarService.openSuccessSnackbar(`Successfully added ${quantity} duck(s) with the name of ${duck.name} to your cart.`);
         return;
       }
-
-      this._cartService.addItem(this.cart!, duckId!, 1);
-      this._cartService.updateCart(this.cart!).subscribe(response => {
-        if (response.status == 200) {
-          this._snackBarService.openSuccessSnackbar(`Successfully added one duck with the id of ${duckId} to your cart!`);
-          return;
-        }
-        this._snackBarService.openErrorSnackbar(`Failed to add the duck with the id of ${duckId} to your cart!`);
-      });
+      this._snackBarService.openErrorSnackbar(`Failed to add the duck with the name of ${duck.name} to your cart.`);
     });
   }
 

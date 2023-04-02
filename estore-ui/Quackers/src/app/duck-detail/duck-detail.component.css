@@ -76,18 +76,19 @@
     margin-top: 20px;
 
     gap: 10px;
-  }
-  
-  .quantity-input {
-    width: 50px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin-right: 10px;
-    font-size: 16px;
-  }
-  
-  .add-to-cart-button {
+}
+
+.quantity-input {
+
+    width: 70px;
+    text-align: center;
+    height: 30px;
+    background-color: aliceblue;
+    border: 1px black solid;
+
+}
+
+.add-to-cart-button {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -95,5 +96,4 @@
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-  }
-  
+}

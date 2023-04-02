@@ -14,7 +14,7 @@ html {
 
 body {
     margin: 0;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
     height: auto;
     font-family: var(--mdc-typography-button-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
 }

@@ -114,7 +114,7 @@ export class InventoryManagementComponent implements OnInit {
   goToDuckModification(duck: Duck | null): void {
     const dialogRef = this._dialog.open(ProductCreateComponent, { data: duck });
     dialogRef.afterClosed().subscribe((obj) => {
-      document.body.style.overflow = 'visible';
+      document.body.style.overflowY = 'visible';
       if (obj == null) return;
 
       const newDuck = <Duck>obj;
@@ -127,7 +127,7 @@ export class InventoryManagementComponent implements OnInit {
       this.ducksToDisplay[index] = newDuck;
 
     })
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflowY = 'hidden';
   }
 
   /**

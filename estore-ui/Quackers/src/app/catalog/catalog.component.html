@@ -14,8 +14,11 @@
                 <mat-card-subtitle>{{getDuckPrice(duck)}}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-actions class="card-action-format">
-                <button mat-raised-button class="fix-hover set-flex-grow" (click)="showDuck(duck.id)">View More</button>
-                <button mat-raised-button class="fix-hover green-button set-flex-grow" (click)="addDuck(duck.id)">Add to Cart</button>
+
+                <input matInput type="number" min="0" placeholder="Quantity" class="quantity-selector" #quantity>
+
+                <button mat-raised-button class="fix-hover green-button add-to-cart-btn" (click)="addDuck(duck, quantity.value)">Add
+                    to Cart</button>
             </mat-card-actions>
         </div>
     </mat-card>
