@@ -15,7 +15,7 @@ export class ReceiptComponent implements OnInit {
   ducks: Duck[] = [];
   cart = this.receiptData.cart;
 
-  constructor(private productService: ProductService,
+  constructor(private _productService: ProductService,
     @Inject(MAT_DIALOG_DATA) public receiptData: ReceiptData
   ) { }
 
@@ -69,7 +69,7 @@ export class ReceiptComponent implements OnInit {
   private loadDucks(): void {
     for (const [duckIdStr, quantity] of Object.entries(this.cart.items)) {
       const duckId = Number.parseInt(duckIdStr);
-      this.productService.getDuck(duckId).subscribe(duck => this.ducks.push(duck));
+      this._productService.getDuck(duckId).subscribe(duck => this.ducks.push(duck));
     }
   }
 

@@ -3,9 +3,12 @@ import { Router } from '@angular/router';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { Duck } from '../duck';
-import { NotificationService } from '../notification.service';
 import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
+import { SnackBarService } from '../snackbar.service';
+import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductCreateComponent } from '../product-create-modify/product-create-modify.component';
 
 @Component({
   selector: 'app-inventory-management',
@@ -15,25 +18,29 @@ import { SessionService } from '../session.service';
 export class InventoryManagementComponent implements OnInit {
   private _account: Account | undefined = undefined;
   ducks: Duck[] = [];
+  ducksToDisplay: Duck[] = [];
 
 
-  constructor(private router: Router,
-    private productService: ProductService,
-    private notificationService: NotificationService,
-    private accountService: AccountService,
-    private sessionService: SessionService) { }
+
+  constructor(private _router: Router,
+    private _productService: ProductService,
+    private _snackBarService: SnackBarService,
+    private _accountService: AccountService,
+    private _sessionService: SessionService,
+    private _dialog: MatDialog,
+  ) { }
 
   /**
    * Loads the ducks array when the page is opened
    */
   ngOnInit(): void {
-    if (!this.sessionService.session) {
+    if (!this._sessionService.session) {
       this.validateAuthorization();
       return;
     }
 
     // Waits for account to be retrieved before doing anything else
-    this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
+    this._accountService.getAccount(this._sessionService.session.id).subscribe(account => {
       this._account = account;
       this.validateAuthorization();
       this.getDucks();
@@ -41,10 +48,62 @@ export class InventoryManagementComponent implements OnInit {
   }
 
   /**
+   * Updates the ducks being displayed on screen
+   * 
+   * @param ducks The new array of ducks
+   */
+  updateDisplayDucks(ducks: Observable<Duck[]>) {
+    ducks.subscribe(duckArr => this.ducksToDisplay = duckArr)
+  }
+
+  /**
+   * Gets the path to the base image for a duck 
+   * 
+   * @param duck The duck
+   * @returns The path to the image
+   */
+  getDuckColorImage(duck: Duck): string {
+    if (duck.size == "EXTRA_LARGE") return "";
+
+    const color = duck.color.toLowerCase();
+    const colorFile = color.charAt(0).toUpperCase() + color.slice(1);
+    return `/assets/duck-colors/${duck.size}/${colorFile}.png`;
+  }
+
+  /**
+   * Gets the path to a given accessory's image
+   * 
+   * @param accessoryName The name of the accessory
+   * @param duck The duck 
+   * @returns The path to the image
+   */
+  getAccessoryImage(accessoryName: string, duck: Duck): string {
+    const outfit: any = duck.outfit;
+    if (outfit[accessoryName + "UID"] == 0) return "";
+
+    return `/assets/duck-${accessoryName}/${outfit[accessoryName + "UID"]}.png`;
+  }
+
+  /**
+   * Gets the css class for a given duck accessory
+   * 
+   * @param accessoryName The name of the accessory
+   * @param duck The duck
+   * @returns The name of the css class for the accessory
+   */
+  getCSSClass(accessoryName: string, duck: Duck): string {
+    const outfit: any = duck.outfit;
+    return `duck-${accessoryName}-${outfit[accessoryName + "UID"]}-${duck.size.toLowerCase()}`;
+  }
+
+  /**
    * Gets the ducks from the product service
    */
   getDucks(): void {
-    this.productService.getDucks().subscribe(ducks => this.ducks = ducks);
+    this._productService.getDucks().subscribe(ducks => {
+      this.ducks = ducks;
+      this.ducksToDisplay = ducks;
+    });
   }
 
   /**
@@ -52,8 +111,23 @@ export class InventoryManagementComponent implements OnInit {
    * 
    * @param id The id of the duck
    */
-  goToDuckModification(id: number): void {
-    this.router.navigate([`/inventory/product/${id}`]);
+  goToDuckModification(duck: Duck | null): void {
+    const dialogRef = this._dialog.open(ProductCreateComponent, { data: duck });
+    dialogRef.afterClosed().subscribe((obj) => {
+      document.body.style.overflowY = 'visible';
+      if (obj == null) return;
+
+      const newDuck = <Duck>obj;
+      const index = this.ducksToDisplay.findIndex((duck) => duck.id == newDuck.id);
+      if (index == -1) {
+        this.ducksToDisplay.push(newDuck);
+        return;
+      }
+
+      this.ducksToDisplay[index] = newDuck;
+
+    })
+    document.body.style.overflowY = 'hidden';
   }
 
   /**
@@ -62,8 +136,8 @@ export class InventoryManagementComponent implements OnInit {
   */
   private validateAuthorization(): void {
     if (!this._account?.adminStatus) {
-      this.notificationService.add(`You are not authorized to view ${this.router.url}!`, 3);
-      this.router.navigate(['/']);
+      this._snackBarService.openErrorSnackbar(`You are not authorized to view ${this._router.url}.`)
+      this._router.navigate(['/']);
     }
   }
 
@@ -74,16 +148,17 @@ export class InventoryManagementComponent implements OnInit {
    */
   deleteDuck(duck: Duck): void {
     this.ducks = this.ducks.filter(a_duck => a_duck != duck);
-    this.productService.deleteDuck(duck.id).subscribe(httpResponse => {
+    this._productService.deleteDuck(duck.id).subscribe(httpResponse => {
       switch (httpResponse.status) {
         case 200:
-          this.notificationService.add(`Successfully deleted the duck with the id ${duck.id}.`, 3);
+          this._snackBarService.openSuccessSnackbar(`Successfully deleted the duck with the id ${duck.id}.`);
+          this.ducksToDisplay = this.ducksToDisplay.filter(duckInArr => duckInArr.id != duck.id);
           break;
         case 404:
-          this.notificationService.add(`Failed to delete the duck with the id ${duck.id} because it does not exist!`, 3);
+          this._snackBarService.openErrorSnackbar(`Failed to delete the duck with the id ${duck.id} because it does not exist!`);
           break;
         default:
-          this.notificationService.add(`Failed to delete the duck with the id ${duck.id} because something went wrong.`, 3);
+          this._snackBarService.openErrorSnackbar(`Failed to delete the duck with the id ${duck.id} because something went wrong.`);
           console.error(httpResponse.statusText);
       }
     });
