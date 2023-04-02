@@ -174,6 +174,33 @@
     z-index: 2;
 }
 
+.duck-handItem-4-small {
+    width: 34px;
+    height: 32px;
+    position: absolute;
+    top: 105px;
+    right: 77px;
+    z-index: 2;
+}
+
+.duck-handItem-4-medium {
+    width: 38px;
+    height: 36px;
+    position: absolute;
+    top: 105px;
+    right: 68px;
+    z-index: 2;
+}
+
+.duck-handItem-4-large {
+    width: 44px;
+    height: 41px;
+    position: absolute;
+    top: 110px;
+    right: 58px;
+    z-index: 2;
+}
+
 .duck-jewelry-1-small {
     width: 58px;
     height: 27px;
