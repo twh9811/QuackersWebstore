@@ -38,10 +38,10 @@ public abstract class Account {
     /**
      * Needed for Spring to run the server. Needs Public Default Constructor.
      */
-    public Account() {}
+    protected Account() {}
 
     // Used for creating new Account objects in the DAO.
-    public Account(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("plainPassword") String plainPassword, @JsonProperty("adminStatus") boolean adminStatus) {
+    protected Account(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("plainPassword") String plainPassword, @JsonProperty("adminStatus") boolean adminStatus) {
         this.id = id;
         this.username = username;
         this.plainPassword = plainPassword;
@@ -132,6 +132,7 @@ public abstract class Account {
 
     /**
      * ID and admin status don't matter in this regard. This is solely for login verification purposes.
+     * {@inheritDoc}
      */
     @Override
     public boolean equals(Object obj) {
@@ -141,4 +142,13 @@ public abstract class Account {
         } 
         return false;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return this.username.hashCode() + this.plainPassword.hashCode();
+    }
+
 }

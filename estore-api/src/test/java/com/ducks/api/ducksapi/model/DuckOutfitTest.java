@@ -50,9 +50,9 @@ public class DuckOutfitTest {
     public void testDuckOutfitAsArray() {
         DuckOutfit outfit = new DuckOutfit(0, 0, 0, 0, 0);
         int[] actual = outfit.getOutfitAsArray();
-        int[] expected = {0,0,0,0,0};
+        int[] expected = { 0, 0, 0, 0, 0 };
 
-        for(int i=0; i<actual.length; i++) {
+        for (int i = 0; i < actual.length; i++) {
             assertEquals(expected[i], actual[i]);
         }
     }

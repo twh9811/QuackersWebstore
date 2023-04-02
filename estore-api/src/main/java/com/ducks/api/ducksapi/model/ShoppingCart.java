@@ -46,7 +46,7 @@ public class ShoppingCart {
      * @param customerId The customer id that the shopping cart belongs to
      */
     public ShoppingCart(int customerId) {
-        this(customerId, new HashMap<String, Integer>());
+        this(customerId, new HashMap<>());
     }
 
     /**
@@ -101,6 +101,15 @@ public class ShoppingCart {
         ShoppingCart other = (ShoppingCart) obj;
         return this.customerId == other.customerId && this.items.equals(other.items);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return this.customerId + this.items.hashCode();
+    }
+
 
     /**
      * {@inheritDoc}

@@ -1,7 +1,6 @@
 package com.ducks.api.ducksapi.model;
 
 import java.beans.Transient;
-import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,8 +10,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author SWEN Faculty, SWEN-261-06 Team 8
  */
 public class Duck {
-    private static final Logger LOG = Logger.getLogger(Duck.class.getName());
-
     // Package private for tests
     static final String STRING_FORMAT = "Duck [id=%d, name=%s, quantity=%d, price=%s, size=%s, color=%s, hatUID=%d, shirtUID=%d, shoesUID=%d, handitemUID=%d, jewelryUID=%d]";
 
@@ -148,13 +145,13 @@ public class Duck {
         this.price = priceObject.getPrice();
     }
 
-     /**
+    /**
      * Custom price for duck, not based on attributes.
      * 
      * @param price The custom price of the duck
      */
     public void updatePrice(double price) {
-        if(price == 0) {
+        if (price == 0) {
             updatePrice();
         } else {
             priceObject = new Price(price);
@@ -359,10 +356,6 @@ public class Duck {
             issues += "Quantity must be equal to or greater than 0. ";
         }
 
-        // if (price < 0) {
-        //     issues += "Price must be greater than 0. ";
-        // }
-
         if (size == null) {
             issues += "Size must not be null. ";
         }
@@ -393,6 +386,12 @@ public class Duck {
         return this.id == other.id && this.name.equals(other.name) && this.quantity == other.quantity
                 && this.price == other.price && this.size == other.size && this.color == other.color
                 && this.outfit.equals(other.outfit);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id + this.name.hashCode() + this.quantity + Double.hashCode(price) + this.size.hashCode()
+                + this.color.hashCode() + this.outfit.hashCode();
     }
 
     /**

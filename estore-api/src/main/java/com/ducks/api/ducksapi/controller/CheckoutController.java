@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,7 +33,7 @@ import com.ducks.api.ducksapi.persistence.ShoppingCartDAO;
 @RestController
 @RequestMapping("cart/checkout")
 public class CheckoutController {
-    private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
+    private static final Logger LOG = Logger.getLogger(CheckoutController.class.getName());
     private ShoppingCartDAO cartDao;
     private DuckDAO duckDao;
 
@@ -67,12 +66,12 @@ public class CheckoutController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<ShoppingCart> checkout(@PathVariable int id) {
-        LOG.info("PUT /cart/checkout/" + id);
+        LOG.log(Level.INFO, "PUT /cart/checkout/{0}", id);
         try {
             ShoppingCart cart = cartDao.getShoppingCart(id);
             // 404
             if (cart == null) {
-                return new ResponseEntity<ShoppingCart>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
             Map<String, Duck> invalidItems = getInvalidItems(cart);
@@ -101,7 +100,7 @@ public class CheckoutController {
             cartDao.updateShoppingCart(cart);
 
             // 200
-            return new ResponseEntity<ShoppingCart>(cart, HttpStatus.OK);
+            return new ResponseEntity<>(cart, HttpStatus.OK);
         } catch (IOException | NullPointerException | NumberFormatException exc) {
             // Realisitically this NPE and NFE should never be thrown, but to prevent
             // any possibility of runtime crashes, I am catching them
@@ -121,12 +120,12 @@ public class CheckoutController {
      */
     @GetMapping("/validate/{id}")
     public ResponseEntity<ShoppingCart> validateCart(@PathVariable int id) {
-        LOG.info("GET /cart/checkout/validate/" + id);
+        LOG.log(Level.INFO, "GET /cart/checkout/validate/%d{0}", id);
         try {
             ShoppingCart cart = cartDao.getShoppingCart(id);
             // 404
             if (cart == null) {
-                return new ResponseEntity<ShoppingCart>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
             Map<String, Duck> invalidItems = getInvalidItems(cart);
@@ -163,7 +162,7 @@ public class CheckoutController {
             }
 
             ShoppingCart returnCart = new ShoppingCart(cart.getCustomerId(), newCartItems);
-            return new ResponseEntity<ShoppingCart>(returnCart, HttpStatus.OK);
+            return new ResponseEntity<>(returnCart, HttpStatus.OK);
         } catch (IOException ioe) {
             LOG.log(Level.SEVERE, ioe.getLocalizedMessage());
             // 500
@@ -183,10 +182,10 @@ public class CheckoutController {
         Map<String, Integer> itemsMap = cart.getItems();
         // False is map is empty
         if (itemsMap.isEmpty()) {
-            return new HashMap<String, Duck>();
+            return new HashMap<>();
         }
 
-        Map<String, Duck> invalidItems = new HashMap<String, Duck>();
+        Map<String, Duck> invalidItems = new HashMap<>();
         // Loops through the invalidItems map
         for (Map.Entry<String, Integer> entry : itemsMap.entrySet()) {
             String duckIdStr = entry.getKey();
@@ -211,7 +210,6 @@ public class CheckoutController {
             // Invalid if the requested quantity exceeds the quantity available
             if (duck.getQuantity() < quantity) {
                 invalidItems.put(duckIdStr, duck);
-                continue;
             }
         }
         return invalidItems;
