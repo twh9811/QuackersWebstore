@@ -5,28 +5,34 @@
             <mat-form-field appearance="fill" floatLabel="always">
                 <mat-label>Name</mat-label>
                 <input matInput type="text" formControlName="name" pattern="^\s*\S+.*$" required>
+                <mat-error>Please enter a name.</mat-error>
             </mat-form-field>
-            <mat-form-field appearance="fill" floatLabel="always">
+            <mat-form-field appearance="fill" floatLabel="always" [ngClass]="{'extra-margin-bottom': !createForm.controls.quantity.valid && createForm.controls.quantity.touched}">
                 <mat-label>Quantity</mat-label>
                 <input matInput class="form-control" id="quantity_input" type="number" formControlName="quantity"
                     min="0" required>
+                <mat-error>Please enter a quantity greater than or equal to 0.</mat-error>
             </mat-form-field>
-            <mat-form-field appearance="fill" floatLabel="always">
+            <mat-form-field appearance="fill" floatLabel="always" [ngClass]="{'extra-margin-bottom': !createForm.controls.price.valid && createForm.controls.price.touched}">
                 <mat-label>Price (Enter 0 for default price)</mat-label>
                 <input matInput class="form-control" id="price_input" type="number" step="0.01" min="0.00"
                     formControlName="price" required>
+                <mat-error>Please enter a price greater than or equal to 0.</mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" floatLabel="always">
                 <mat-label>Size</mat-label>
-                <mat-select class="form-control" id="size_input" formControlName="size" required>
+                <mat-select class="form-control" id="size_input" formControlName="size" placeholder="Select a Size"
+                    required>
                     <mat-option value="SMALL">Small</mat-option>
                     <mat-option value="MEDIUM">Medium</mat-option>
                     <mat-option value="LARGE">Large</mat-option>
                 </mat-select>
+                <mat-error>Please select a size.</mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" floatLabel="always">
                 <mat-label>Color</mat-label>
-                <mat-select class="form-control" id="color_input" formControlName="color" required>
+                <mat-select class="form-control" id="color_input" formControlName="color" placeholder="Select a Color"
+                    required>
                     <mat-option value="RED">Red</mat-option>
                     <mat-option value="ORANGE">Orange</mat-option>
                     <mat-option value="YELLOW">Yellow</mat-option>
@@ -35,10 +41,11 @@
                     <mat-option value="INDIGO">Indigo</mat-option>
                     <mat-option value="VIOLET">Violet</mat-option>
                 </mat-select>
+                <mat-error>Please select a color.</mat-error>
             </mat-form-field>
         </div>
         <div class="controls-container">
-            <span class="control-group-header">Outfit</span>
+            <span class="control-group-header">Accessories</span>
             <mat-form-field appearance="fill" floatLabel="always">
                 <mat-label>Hat</mat-label>
                 <mat-select class="form-control" formControlName="hatUID" required>
@@ -47,6 +54,7 @@
                     <mat-option value="2">Baseball Hat</mat-option>
                     <mat-option value="3">Fedora</mat-option>
                 </mat-select>
+                <mat-error>Please select a hat.</mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" floatLabel="always">
                 <mat-label>Hand Item</mat-label>
@@ -57,6 +65,7 @@
                     <mat-option value="3">NES Controller</mat-option>
                     <mat-option value="4">Gun</mat-option>
                 </mat-select>
+                <mat-error>Please select a hand item.</mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" floatLabel="always">
                 <mat-label>Jewelry</mat-label>
@@ -66,10 +75,12 @@
                     <mat-option value="2">Necklace with Pendant</mat-option>
                     <mat-option value="3">Earring</mat-option>
                 </mat-select>
+                <mat-error>Please select an item of jewelry.</mat-error>
             </mat-form-field>
         </div>
     </div>
-    <button id="submit-btn">Submit</button>
+    <mat-dialog-actions class="button-container">
+        <button mat-raised-button class="fix-hover green-hover">Submit</button>
+        <button mat-raised-button class="fix-hover red-hover" type="button" [mat-dialog-close]="null">Close</button>
+    </mat-dialog-actions>
 </form>
-
-<button (click)="close(null)">Close</button>

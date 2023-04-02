@@ -23,11 +23,11 @@
 }
 
 .success:hover {
-    color: #2ecc71 !important;
+    color: var(--quackers-green-color) !important;
 }
 
 .error:hover {
-    color: #e74c3c !important;
+    color: var(--quackers-red-color) !important;
 }
 
 .info:hover {

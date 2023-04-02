@@ -42,7 +42,7 @@ export class ProductCreateComponent implements OnInit {
    */
   onSubmit(): void {
     if (!this.createForm.valid) {
-      this.handleInvalidForm();
+      this.markAllControlsAsTouched();
       return;
     }
 
@@ -114,35 +114,6 @@ export class ProductCreateComponent implements OnInit {
   }
 
   /**
-   * Finds the invalid controls and sends a notification that tells the user to fix the invalid controls
-   */
-  private handleInvalidForm(): void {
-    const controls = this.createForm.controls;
-
-    // Sets the type of name to the type of the attributes in <controls>
-    let name: keyof typeof controls;
-    for (name in controls) {
-      let control = controls[name];
-      if (!control.invalid) {
-        continue;
-      }
-
-      if (typeof control.value === "number") {
-        this._snackBarService.openErrorSnackbar(`${name} must be greater than or equal to 0!`);
-        continue;
-      }
-
-      if (name === "name") {
-        this._snackBarService.openErrorSnackbar(`${name} must not be empty or blank!`);
-        continue;
-      }
-
-      this._snackBarService.openErrorSnackbar(`${name} is a required field!`);
-    }
-
-  }
-
-  /**
    * Creates a duck object from the values provided in createForm
    * 
    * @returns The created duck object
@@ -167,5 +138,18 @@ export class ProductCreateComponent implements OnInit {
       color: formValue.color as string,
       outfit: duckOutfit
     };
+  }
+
+  /**
+   * Marks all controls as touched to allow their errors to be displayed if they aren't already
+   */
+  markAllControlsAsTouched(): void {
+    const controls = this.createForm.controls;
+
+    // Sets the type of name to the type of the attributes in <controls>
+    let name: keyof typeof controls;
+    for (name in controls) {
+      controls[name].markAsTouched();
+    }
   }
 }

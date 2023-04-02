@@ -96,7 +96,7 @@ h2 {
 }
 
 .duck-remove-btn:hover {
-    background-color: #e74c3c;
-    border: 2.5px solid #e74c3c;
+    background-color: var(--quackers-red-color);
+    border: 2.5px solid var(--quackers-red-color);
     color: white;
 }

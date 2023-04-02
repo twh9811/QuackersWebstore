@@ -73,8 +73,3 @@ button {
 .fix-hover:hover {
     border: 2px black solid;
 }
-
-.green-button {
-    background-color: #2ecc71 !important;
-    color: white !important;
-}
