@@ -1,1 +1,1 @@
-[{"type":"OwnerAccount","id":0,"username":"admin","plainPassword":"admin","adminStatus":true,"card": "","expDate":"", "cvv":0, "firstName":"","lastName":"","address":"","city":"","zipCode":""}]
+[{"type":"OwnerAccount","id":0,"username":"admin","plainPassword":"admin","adminStatus":true,"firstName":"","lastName":"","address":"","city":"","zipCode":"","card":"","expDate":"","cvv":0},{"type":"UserAccount","id":2,"username":"test3","plainPassword":"Password1","adminStatus":false,"firstName":"","lastName":"","address":"","city":"","zipCode":"","card":"","expDate":"","cvv":-1}]
