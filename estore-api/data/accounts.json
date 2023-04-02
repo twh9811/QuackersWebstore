@@ -1,1 +1,1 @@
-[{"type":"OwnerAccount","id":0,"username":"admin","plainPassword":"admin","adminStatus":true,"firstName":"","lastName":"","address":"","city":"","zipCode":""},{"type":"UserAccount","id":1,"username":"TEST","plainPassword":"SFDAS@f234csdfsf","adminStatus":false,"firstName":"","LastName":"","address":"","city":"","zipCode":""}]
+[{"type":"OwnerAccount","id":0,"username":"admin","plainPassword":"admin","adminStatus":true,"firstName":null,"lastName":null,"address":null,"city":null,"zipCode":null}]
