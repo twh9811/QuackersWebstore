@@ -11,7 +11,7 @@
         <button routerLink="/profile" *ngIf="this.router.url != '/login'" type="button">Account</button>
     
         <div class="adminCheck" *ngIf="checkAdminStatus() == false">
-            <button routerLink="/cart" *ngIf="this.router.url != '/login'" type="button">Go to Cart</button>
+            <button routerLink="/cart" *ngIf="this.router.url != '/login'" type="button">Shopping Cart</button>
             <button routerLink="/customize" *ngIf="this.router.url != '/login'" type="button">Make your own Duck</button>
             <button routerLink="/catalog" *ngIf="this.router.url != '/login'">Catalog</button>
         </div>
