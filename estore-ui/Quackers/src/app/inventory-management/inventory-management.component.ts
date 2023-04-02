@@ -6,6 +6,7 @@ import { Duck } from '../duck';
 import { ProductService } from '../product.service';
 import { SessionService } from '../session.service';
 import { SnackBarService } from '../snackbar.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-inventory-management',
@@ -15,6 +16,8 @@ import { SnackBarService } from '../snackbar.service';
 export class InventoryManagementComponent implements OnInit {
   private _account: Account | undefined = undefined;
   ducks: Duck[] = [];
+  ducksToDisplay: Duck[] = [];
+
 
 
   constructor(private _router: Router,
@@ -38,6 +41,15 @@ export class InventoryManagementComponent implements OnInit {
       this.validateAuthorization();
       this.getDucks();
     });
+  }
+
+  /**
+   * Updates the ducks being displayed on screen
+   * 
+   * @param ducks The new array of ducks
+   */
+  updateDisplayDucks(ducks: Observable<Duck[]>) {
+    ducks.subscribe(duckArr => this.ducksToDisplay = duckArr)
   }
 
   /**
@@ -84,7 +96,10 @@ export class InventoryManagementComponent implements OnInit {
    * Gets the ducks from the product service
    */
   getDucks(): void {
-    this._productService.getDucks().subscribe(ducks => this.ducks = ducks);
+    this._productService.getDucks().subscribe(ducks => {
+      this.ducks = ducks;
+      this.ducksToDisplay = ducks;
+    });
   }
 
   /**

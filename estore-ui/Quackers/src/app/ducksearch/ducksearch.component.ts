@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Output, EventEmitter } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
@@ -12,7 +12,8 @@ import { ProductService } from '../product.service';
 @Component({
   selector: 'app-duck-search',
   templateUrl: './ducksearch.component.html',
-  styleUrls: ['./ducksearch.component.css']
+  styleUrls: ['./ducksearch.component.css'],
+  encapsulation : ViewEncapsulation.None,
 })
 export class DucksearchComponent implements OnInit {
   @Output() searchEvent = new EventEmitter<Observable<Duck[]>>();

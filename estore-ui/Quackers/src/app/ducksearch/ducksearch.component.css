@@ -2,4 +2,6 @@
 
 #search-container {
   width: 400px;
+  /* Removes space allocated for mat-hint/mat-error */
+  margin-bottom: -1.25em;
 }

@@ -97,6 +97,11 @@ export class CatalogComponent implements OnInit {
     return `duck-${accessoryName}-${outfit[accessoryName + "UID"]}-${duck.size.toLowerCase()}`;
   }
 
+  /**
+   * Updates the ducks being displayed on screen
+   * 
+   * @param ducks The new array of ducks
+   */
   updateDisplayDucks(ducks: Observable<Duck[]>) {
     ducks.subscribe(duckArr => this.ducksToDisplay = duckArr)
   }
