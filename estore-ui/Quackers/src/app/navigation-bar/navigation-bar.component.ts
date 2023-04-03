@@ -34,21 +34,27 @@ export class NavigationBarComponent implements OnInit {
       navObservable.unsubscribe();
     });
 
-    if(!this._sessionService.session) return;
+    if (!this._sessionService.session) return;
 
     // Waits for account to be retrieved before doing anything else
     this._accountService.getAccount(this._sessionService.session.id).subscribe(account => {
       this._account = account;
       this.adminStatus = this.checkAdminStatus();
-
     });
   }
 
   openProfileDialog(): void {
-    this._dialog.open(ProfileComponent, {
+    const dialogRef = this._dialog.open(ProfileComponent, {
       height: '100%',
       position: { top: '0%', right: '0%' },
       data: this._account
+    });
+
+
+    dialogRef.afterClosed().subscribe(account => {
+      if (account != null) {
+        this._account = account;
+      }
     })
   }
 

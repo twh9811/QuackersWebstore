@@ -6,6 +6,7 @@ import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { SnackBarService } from '../snackbar.service';
 import { Observable } from 'rxjs';
+import { SessionService } from '../session.service';
 @Component({
   selector: 'app-shipping-modify',
   templateUrl: './shipping-modify.component.html',
@@ -13,27 +14,28 @@ import { Observable } from 'rxjs';
 })
 export class ShippingModifyComponent implements OnInit {
 
-    createForm = this._formBuilder.group({
-      firstName: '',
-      lastName: '',
-      address: '',
-      city: '',
-      zipCode: '',
-    });
+  createForm = this._formBuilder.group({
+    firstName: '',
+    lastName: '',
+    address: '',
+    city: '',
+    zipCode: '',
+  });
 
   constructor(private _accountService: AccountService,
+    private _sessionService: SessionService,
     private _snackBarService: SnackBarService,
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ShippingModifyComponent>,
     @Inject(MAT_DIALOG_DATA) public account: Account) { }
 
   ngOnInit(): void {
-    if(this.account != null) {
+    if (this.account != null) {
       this.loadAccount();
     }
-  } 
-  
-  
+  }
+
+
   /**
    * Called upon form submission
    */
@@ -43,38 +45,70 @@ export class ShippingModifyComponent implements OnInit {
       return;
     }
 
-    
-    let observable = this.account ? this._accountService.logout(this.account) : this._accountService.createUser(this.account);
-
-    observable.subscribe(response => {
+    this._accountService.updateAccount(this.updateAccount()).subscribe(response => {
       let status = response.status;
       switch (status) {
-        // Duck Update Response
+        // Success
         case 200:
           this._snackBarService.openSuccessSnackbar(`Successfully updated the account shipping information.`);
-          this.close(response.body as Account);
+          this._sessionService.session = response.body!;
+          this.dialogRef.close(response.body);
+          break;
+        // Account not found - should be impossible
+        case 400:
+          this._snackBarService.openErrorSnackbar(`Unable to find your account. Please logout and log back in before trying again.`);
+          this.dialogRef.close();
+          break;
+        // Password too weak - should be impossible
+        case 422:
+          this._snackBarService.openErrorSnackbar(`You must make your password stronger before you can change these settings.`);
+          this.dialogRef.close();
+          break;
+        // Server error
+        case 500:
+          this._snackBarService.openErrorSnackbar(`Uh Oh! Something went wrong. Please try again later.`);
+          this.dialogRef.close();
           break;
       }
     });
 
   }
-  
+
   /**
-   * Closes the dialog window
-   * @param wasSuccessful Whether or not the duck was updated/created
+   * Converts the form to an account
+   * 
+   * @returns A new account object with the updated values
    */
-  close(account: Account | null): void {
-    this.dialogRef.close(account);
+  updateAccount(): Account {
+    const controls = this.createForm.controls;
+
+    return <Account>{
+      type: this.account.type,
+      id: this.account.id,
+      username: this.account.username,
+      plainPassword: this.account.plainPassword,
+      adminStatus: this.account.adminStatus,
+      firstName: controls.firstName.value!,
+      lastName: controls.lastName.value!,
+      address: controls.address.value!,
+      city: controls.city.value,
+      zipCode: controls.zipCode.value,
+      card: this.account.card,
+      expDate: this.account.expDate,
+      cvv: this.account.cvv
+    }
   }
 
-  loadAccount() {
-    let controls = this.createForm.controls;
+  /**
+   * Loads the accounts values into the form
+   */
+  loadAccount(): void {
+    const controls = this.createForm.controls;
     controls.firstName.setValue(this.account.firstName);
     controls.lastName.setValue(this.account.lastName);
     controls.address.setValue(this.account.address);
     controls.city.setValue(this.account.city);
     controls.zipCode.setValue(this.account.zipCode);
-    controls.city.setValue(this.account.city);
   }
 
   /**
@@ -89,5 +123,5 @@ export class ShippingModifyComponent implements OnInit {
       controls[name].markAsTouched();
     }
   }
-  
+
 }

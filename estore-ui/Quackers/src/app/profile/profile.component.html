@@ -51,6 +51,6 @@
             <button mat-raised-button class="fix-hover gen-btn" (click)="changePaymentMethod()">Change Payment Method</button>
         </div>
         <div class="header-container">
-            <button mat-raised-button class="fix-hover" mat-dialog-close>Close</button>
+            <button mat-raised-button class="fix-hover" [mat-dialog-close]="account">Close</button>
         </div>
     </div>

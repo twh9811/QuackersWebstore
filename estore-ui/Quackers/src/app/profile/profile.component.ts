@@ -19,16 +19,14 @@ export class ProfileComponent implements OnInit {
 
 
   constructor(public dialogRef: MatDialogRef<ProfileComponent>,
-    private _router: Router,
     private _location: Location,
-    private _snackBarService: SnackBarService,
-    private _accountService: AccountService,
-    private _sessionService: SessionService,
     private _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public account: Account) { }
 
   ngOnInit(): void {
-
+    this.dialogRef.backdropClick().subscribe(() => {
+      this.dialogRef.close(this.account);
+    })
   }
 
   /**
@@ -40,17 +38,25 @@ export class ProfileComponent implements OnInit {
 
   changeShippingAddress(): void {
     const dialogRef = this._dialog.open(ShippingModifyComponent, { data: this.account });
-    dialogRef.afterClosed().subscribe((obj) => {
-
+    dialogRef.afterClosed().subscribe((account) => {
+      if (account != null) {
+        this.account = account;
+      }
+      document.body.style.overflowY = 'visible';
     })
+    document.body.style.overflowY = 'none';
 
   }
 
   changePaymentMethod(): void {
     const dialogRef = this._dialog.open(PaymentModifyComponent, { data: this.account });
-    dialogRef.afterClosed().subscribe((obj) => {
+    dialogRef.afterClosed().subscribe((account) => {
+      if (account != null) {
+        this.account = account;
+      }
       document.body.style.overflowY = 'visible';
-    })
+    });
+    document.body.style.overflowY = 'none';
   }
 
 }

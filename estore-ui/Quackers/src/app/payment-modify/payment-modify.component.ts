@@ -6,6 +6,7 @@ import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { SnackBarService } from '../snackbar.service';
 import { Observable } from 'rxjs';
+import { SessionService } from '../session.service';
 
 @Component({
   selector: 'app-payment-modify',
@@ -21,6 +22,7 @@ export class PaymentModifyComponent {
 
   constructor(private _accountService: AccountService,
     private _snackBarService: SnackBarService,
+    private _sessionService: SessionService,
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<PaymentModifyComponent>,
     @Inject(MAT_DIALOG_DATA) public account: Account) { }
@@ -41,16 +43,29 @@ export class PaymentModifyComponent {
       return;
     }
 
-
-    let observable = this.account ? this._accountService.logout(this.account) : this._accountService.createUser(this.account);
-
-    observable.subscribe(response => {
+    this._accountService.updateAccount(this.updateAccount()).subscribe(response => {
       let status = response.status;
       switch (status) {
-        // Duck Update Response
+        // Success
         case 200:
-          this._snackBarService.openSuccessSnackbar(`Successfully updated the account shipping information.`);
-          this.close(response.body as Account);
+          this._snackBarService.openSuccessSnackbar(`Successfully updated the account payment information.`);
+          this._sessionService.session = response.body!;
+          this.dialogRef.close(response.body);
+          break;
+        // Account not found - should be impossible
+        case 400:
+          this._snackBarService.openErrorSnackbar(`Unable to find your account. Please logout and log back in before trying again.`);
+          this.dialogRef.close();
+          break;
+        // Password too weak - should be impossible
+        case 422:
+          this._snackBarService.openErrorSnackbar(`You must make your password stronger before you can change these settings.`);
+          this.dialogRef.close();
+          break;
+        // Server error
+        case 500:
+          this._snackBarService.openErrorSnackbar(`Uh Oh! Something went wrong. Please try again later.`);
+          this.dialogRef.close();
           break;
       }
     });
@@ -106,13 +121,33 @@ export class PaymentModifyComponent {
   }
 
   /**
-   * Closes the dialog window
-   * @param wasSuccessful Whether or not the duck was updated/created
+   * Converts the form to an account
+   * 
+   * @returns A new account object with the updated values
    */
-  close(account: Account | null): void {
-    this.dialogRef.close(account);
+  updateAccount(): Account {
+    const controls = this.createForm.controls;
+
+    return <Account>{
+      type: this.account.type,
+      id: this.account.id,
+      username: this.account.username,
+      plainPassword: this.account.plainPassword,
+      adminStatus: this.account.adminStatus,
+      firstName: this.account.firstName,
+      lastName: this.account.lastName,
+      address: this.account.address,
+      city: this.account.city,
+      zipCode: this.account.zipCode,
+      card: controls.cardNumber.value,
+      expDate: controls.expiration.value,
+      cvv: Number.parseInt(controls.cvv.value!)
+    }
   }
 
+  /**
+   * Loads the accounts values into the form
+   */
   loadAccount() {
     let controls = this.createForm.controls;
 
