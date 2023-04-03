@@ -212,22 +212,24 @@ export class CheckoutComponent implements OnInit {
       }
     }
 
-    const customDuckResponses = await this._customDuckService.deleteAllDucksForAccount(this._account);
+    if (this._customDucks.length != 0) {
+      const customDuckResponses = await this._customDuckService.deleteAllDucksForAccount(this._account);
 
-    if (customDuckResponses != null) {
-      let showError = false;
-      customDuckResponses.forEach(response => {
+      // This null if there were no custom ducks. In theory, this is not possible, but I will leave the check
+      if (customDuckResponses != null) {
+        let showError = false;
+        customDuckResponses.forEach(response => {
+          if (response.status != 200) {
+            showError = true;
+          }
+        });
 
-        if (response.status != 200) {
-          showError = true;
+        if (showError) {
+          this._snackBarService.openErrorSnackbar("Failed to checkout some of your custom ducks. However, checkout is proceeding for the other items.");
         }
-
-      })
-
-      if (showError) {
-        this._snackBarService.openErrorSnackbar("Failed to checkout some of your custom ducks. Please try again.");
       }
     }
+
 
     // Success (for some reason status is undefined when it is 200. I do not know why)
     this._router.navigate(['catalog']);
