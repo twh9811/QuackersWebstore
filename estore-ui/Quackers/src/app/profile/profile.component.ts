@@ -36,26 +36,35 @@ export class ProfileComponent implements OnInit {
     this._location.back();
   }
 
+  /**
+   * Opens change shipping menu
+   */
   changeShippingAddress(): void {
     const dialogRef = this._dialog.open(ShippingModifyComponent, { data: this.account });
-    dialogRef.afterClosed().subscribe((account) => {
-      if (account != null) {
-        this.account = account;
-      }
-      document.body.style.overflowY = 'visible';
-    })
-    document.body.style.overflowY = 'none';
-
-  }
-
-  changePaymentMethod(): void {
-    const dialogRef = this._dialog.open(PaymentModifyComponent, { data: this.account });
+    
     dialogRef.afterClosed().subscribe((account) => {
       if (account != null) {
         this.account = account;
       }
       document.body.style.overflowY = 'visible';
     });
+
+    document.body.style.overflowY = 'none';
+  }
+
+  /**
+   * Opens change payment menu
+   */
+  changePaymentMethod(): void {
+    const dialogRef = this._dialog.open(PaymentModifyComponent, { data: this.account });
+
+    dialogRef.afterClosed().subscribe((account) => {
+      if (account != null) {
+        this.account = account;
+      }
+      document.body.style.overflowY = 'visible';
+    });
+
     document.body.style.overflowY = 'none';
   }
 

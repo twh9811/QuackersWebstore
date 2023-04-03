@@ -5,6 +5,7 @@ import { AccountService } from '../account.service';
 import { SessionService } from '../session.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileComponent } from '../profile/profile.component';
+import { CustomizeComponent } from '../customize/customize.component';
 
 @Component({
   selector: 'navigation-bar',
@@ -43,6 +44,9 @@ export class NavigationBarComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens the profile dialog
+   */
   openProfileDialog(): void {
     const dialogRef = this._dialog.open(ProfileComponent, {
       height: '100%',
@@ -50,12 +54,27 @@ export class NavigationBarComponent implements OnInit {
       data: this._account
     });
 
-
     dialogRef.afterClosed().subscribe(account => {
       if (account != null) {
         this._account = account;
       }
-    })
+      dialogRef.afterClosed().subscribe(() => document.body.style.overflowY = 'visible');
+
+    });
+
+    document.body.style.overflowY = 'none';
+  }
+
+  /**
+   * Opens the customize duck dialog
+   */
+  openCustomizeDialog(): void {
+    const dialogRef = this._dialog.open(CustomizeComponent, {
+      data: this._account
+    });
+
+    dialogRef.afterClosed().subscribe(() => document.body.style.overflowY = 'visible');
+    document.body.style.overflowY = 'none';
   }
 
   /**
