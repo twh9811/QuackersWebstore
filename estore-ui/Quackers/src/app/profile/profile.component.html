@@ -1,12 +1,10 @@
 <div *ngIf="!account">Loading your account...</div>
-<div *ngIf="account">
-    <div id="customer-info">
-        <span>Hello {{account.username}}, your account details are listed below.</span><br>
-    </div>
-    <div class="header-container">
-        <button mat-raised-button class="fix-hover" (click)="goBack()">Go Back</button>
-    </div>
+<div style="height: 100%; width: 350px" *ngIf="account">
+
     <div class="detail-container">
+        <div id="customer-info">
+            <span>Hello {{account.username}}, your account details are listed below.</span><br>
+        </div>
         <div class="detail-box" id="shipping-info">
             <div class="info-title">
                 Shipping Address
@@ -28,8 +26,9 @@
                 </div>
 
             </div>
-            <button mat-raised-button class="fix-hover" (click)="changeShippingAddress()">Change Shipping
+            <button mat-raised-button class="fix-hover gen-btn" (click)="changeShippingAddress()">Change Shipping
                 Address</button>
+
         </div>
 
         <div class="detail-box" id="payment-info">
@@ -49,6 +48,9 @@
                 </div>
 
             </div>
-            <button mat-raised-button class="fix-hover" (click)="changePaymentMethod()">Change Payment Method</button>
+            <button mat-raised-button class="fix-hover gen-btn" (click)="changePaymentMethod()">Change Payment Method</button>
+        </div>
+        <div class="header-container">
+            <button mat-raised-button class="fix-hover" mat-dialog-close>Close</button>
         </div>
     </div>
