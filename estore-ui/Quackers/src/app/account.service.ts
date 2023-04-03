@@ -10,13 +10,13 @@ import { Account } from './account';
   providedIn: 'root'
 })
 export class AccountService {
-  private apiURL = 'http://localhost:8080';
+  private _apiURL = 'http://localhost:8080';
 
-  httpOptions = {
+  private _httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   /**
    * Gets data of the account specified by the user.
@@ -30,8 +30,8 @@ export class AccountService {
    * If the account doesn't exist, returns Http Not Found
    */
   login(username: string, password: string): Observable<Account> {
-    const url = `${this.apiURL}/login?username=${username}&password=${password}`;
-    return this.http.get<Account>(url).pipe(
+    const url = `${this._apiURL}/login?username=${username}&password=${password}`;
+    return this._http.get<Account>(url).pipe(
       tap(_ => console.log(`${username} logged in`)), catchError(this.handleError<Account>('login')));
   }
 
@@ -41,7 +41,7 @@ export class AccountService {
    * @returns http ok when saved, if there was an error it returns an http conflict
    */
   logout(account: Account): Observable<any> {
-    return this.http.put(this.apiURL, account, this.httpOptions).pipe(
+    return this._http.put(this._apiURL, account, this._httpOptions).pipe(
       tap(_ => console.log(`${account.username} logged out`)), catchError(this.handleError<any>('logout')));
   }
 
@@ -52,8 +52,8 @@ export class AccountService {
    * @returns The account with the matching ID
    */
   getAccount(id: number): Observable<Account> {
-    const url = `${this.apiURL}/${id}`;
-    return this.http.get<Account>(url).pipe(
+    const url = `${this._apiURL}/${id}`;
+    return this._http.get<Account>(url).pipe(
       tap(_ => console.log(`got account ${id}`)), catchError(this.handleError<any>('get account'))
     );
   }
@@ -64,12 +64,25 @@ export class AccountService {
    * @returns An array of all account
    */
   getAccounts(): Observable<Account[]> {
-    const url = `${this.apiURL}/`;
-    return this.http.get<Account[]>(url).pipe(
+    const url = `${this._apiURL}/`;
+    return this._http.get<Account[]>(url).pipe(
       tap(_ => console.log(`got accounts`)), catchError(this.handleError<any>('get accounts'))
     );
   }
 
+  /**
+   * Updates an account
+   * 
+   * @param account The account being updated
+   * @returns The response from the endpoint
+   */
+  updateAccount(account: Account): Observable<HttpResponse<Account>> {
+    const url = `${this._apiURL}/updateaccount`;
+
+    return this._http.put<HttpResponse<any>>(url, account, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+      .pipe(tap(_ => console.log(`Updated account`)),
+        catchError(this.handleError<HttpResponse<any>>('updateAccount', true)));
+  }
 
 
   /**
@@ -79,8 +92,8 @@ export class AccountService {
    * @returns The newly created account in the database
    */
   createUser(account: Account): Observable<Account> {
-    const url = `${this.apiURL}/accounts`;
-    return this.http.post<HttpResponse<Account>>(url, account, this.httpOptions).pipe(
+    const url = `${this._apiURL}/accounts`;
+    return this._http.post<HttpResponse<Account>>(url, account, this._httpOptions).pipe(
       tap(_ => console.log(`created account ${account}`)), catchError(this.handleError<HttpResponse<any>>('create account', true))
     );
   }
