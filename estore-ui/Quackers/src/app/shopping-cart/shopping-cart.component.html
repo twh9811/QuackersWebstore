@@ -1,42 +1,37 @@
 <div *ngIf="!account || !cart">Loading your shopping cart...</div>
 <div *ngIf="account && cart">
     <div id="customer-info">
-        <span>Hello {{account.username}}!</span><br>
-        <span *ngIf="!isCartEmpty()">Your cart is listed below.</span>
-        <span *ngIf="isCartEmpty()">Your cart is empty.</span>
+        <span>Hello {{account.username}}, </span>
+        <span *ngIf="!isCartEmpty()">your cart is listed below.</span>
+        <span *ngIf="isCartEmpty()">your cart is empty.</span>
     </div>
-    <div class="price-container" *ngIf="!isCartEmpty()">
-        <span>Total Price: ${{getCartTotal()}}</span>
+    <div class="header-container">
+        <button mat-raised-button class="fix-hover" (click)="goBack()">Go Back</button>
+        <button mat-raised-button class="fix-hover red-button" *ngIf="!isCartEmpty()" (click)="clearCart()">Clear
+            Cart</button>
+        <button mat-raised-button class="fix-hover green-button" *ngIf="!isCartEmpty()" (click)="checkoutCart()">Proceed
+            to Checkout</button>
     </div>
     <div class="duck-container">
-        <div *ngFor="let duck of ducks">
+        <mat-card class="card-format" *ngFor="let duck of ducks">
             <div class="duck-box">
-                <div class="duck-header">
-                    <h2>{{duck.name}}</h2>
-                    <hr>
-                </div>
-                <div class="duck-content-container">
-                    <div class="duck-details">
-                        <span>Id: {{duck.id}}</span><br>
-                        <span>Quantity: {{getDuckQuantity(duck.id)}}</span><br>
-                        <span>Price: ${{getTotalDuckPrice(duck)}}</span><br>
-                        <span>(${{duck.price}} each)</span><br>
-
-                    </div>
-                    <div class="duck-btn-container">
-                        <input class="duck-quantity-input" type="number" min="1" max="{{getDuckQuantity(duck.id)!}}" value="1" #quantityInput>
-                        <button class="duck-remove-btn gen-btn" type="button" (click)="removeDuck(duck, quantityInput.value)">Remove</button>
-                    </div>
-                </div>
-
+                <app-duck-image style="height: 210px" [duck]=duck></app-duck-image>
+                <mat-card-header class="card-header-format">
+                    <mat-card-title class="truncate">{{duck.name}}</mat-card-title>
+                    <mat-card-subtitle>Quantity: {{getDuckQuantity(duck.id)}}</mat-card-subtitle>
+                    <mat-card-subtitle>Total: ${{getTotalDuckPrice(duck)}}</mat-card-subtitle>
+                    <mat-card-subtitle>(${{getDuckPrice(duck)}} each)</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-actions class="card-action-format">
+                    <input matInput type="number" min="0" placeholder="Quantity" class="quantity-selector" #quantity>
+                    <button mat-raised-button class="fix-hover red-button add-to-cart-btn"
+                        (click)="removeDuck(duck, quantity.value)">Remove</button>
+                </mat-card-actions>
             </div>
-        </div>
+        </mat-card>
     </div>
+    <div class="header-container" *ngIf="!isCartEmpty()">
+        <span>Total Price: ${{getCartTotal()}}</span>
+    </div>
+    <br>
 </div>
-
-<div class="btn-controls">
-    <button class="back-btn gen-btn" (click)="goBack()">Back</button>
-    <button class="back-btn gen-btn" *ngIf="!isCartEmpty()" (click)="clearCart()">Clear Cart</button>
-    <button class="back-btn gen-btn" *ngIf="!isCartEmpty()" (click)="checkoutCart()">Proceed to Checkout</button>
-</div>
-<br>
