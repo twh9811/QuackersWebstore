@@ -65,7 +65,7 @@ export class ProductService {
     // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
     return this._http.post<HttpResponse<any>>(url, duck, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
       .pipe(tap(_ => console.log(`Created duck`)),
-        catchError(this.handleError<HttpResponse<any>>('ceateDuck', true)));
+        catchError(this.handleError<HttpResponse<any>>('createDuck', true)));
   }
 
   updateDuck(duck: Duck): Observable<HttpResponse<any>> {
@@ -118,6 +118,5 @@ export class ProductService {
       return of(result as T);
     }
   }
-
 
 }

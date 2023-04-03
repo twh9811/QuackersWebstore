@@ -4,7 +4,7 @@
             <div class="header">Payment Information</div>
             <div class="info-detail">
                 <mat-form-field appearance="fill" floatLabel="always"
-                    [ngClass]="{'margin-bottom-20px': shouldDisplayError('cardNumber', false)}">
+                    [ngClass]="{'margin-bottom-20px': shouldDisplayError('cardNumber', true)}">
                     <mat-label>Credit Card Number</mat-label>
                     <input matInput type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
                         placeholder="XXXX XXXX XXXX XXXX" formControlName="cardNumber" maxlength="19" required>
@@ -18,7 +18,7 @@
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill" floatLabel="always"
-                    [ngClass]="{'margin-bottom-20px': shouldDisplayError('expiration', true) || shouldDisplayError('expiration', false)}">
+                    [ngClass]="{'margin-bottom-20px': shouldDisplayError('expiration', true)}">
                     <mat-label>Expiration Date</mat-label>
                     <input matInput type="text" pattern="\d{2}\/\d{4}" placeholder="MM/YYYY"
                         formControlName="expiration" maxlength="7" required>

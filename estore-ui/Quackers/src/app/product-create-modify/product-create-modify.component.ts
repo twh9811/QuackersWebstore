@@ -38,6 +38,16 @@ export class ProductCreateComponent implements OnInit {
   }
 
   /**
+   * Whether the duck preview should show
+   * 
+   * @returns True if the color and size are set in the form
+   */
+  showPreview(): boolean {
+    const controls = this.createForm.controls;
+    return controls.color.valid && controls.size.valid;
+  }
+
+  /**
    * Called upon form submission
    */
   onSubmit(): void {
@@ -118,7 +128,7 @@ export class ProductCreateComponent implements OnInit {
    * 
    * @returns The created duck object
    */
-  private convertFormToDuck(): Duck {
+ convertFormToDuck(): Duck {
     let formValue = this.createForm.value;
 
     let duckOutfit: DuckOutfit = {

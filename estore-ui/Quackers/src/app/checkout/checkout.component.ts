@@ -8,6 +8,11 @@ import { SessionService } from '../session.service';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
 import { SnackBarService } from '../snackbar.service';
+import { CheckoutData } from './checkout-data';
+import { Duck } from '../duck';
+import { firstValueFrom } from 'rxjs';
+import { CustomDuckService } from '../custom-duck.service';
+
 
 @Component({
   selector: 'app-checkout',
@@ -16,6 +21,8 @@ import { SnackBarService } from '../snackbar.service';
 })
 export class CheckoutComponent implements OnInit {
   private _account: Account = this._sessionService.session!;
+  private _cart: Cart = this.checkoutData.cart;
+  private _customDucks: Duck[] = this.checkoutData.customDucks;
 
   detailForm = this._formBuilder.group({
     email: '',
@@ -31,12 +38,13 @@ export class CheckoutComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<CheckoutComponent>,
     private _cartService: CartService,
+    private _customDuckService: CustomDuckService,
     private _snackBarService: SnackBarService,
     private _formBuilder: FormBuilder,
     private _dialog: MatDialog,
     private _router: Router,
     private _sessionService: SessionService,
-    @Inject(MAT_DIALOG_DATA) public cart: Cart) { }
+    @Inject(MAT_DIALOG_DATA) public checkoutData: CheckoutData) { }
 
 
   ngOnInit(): void {
@@ -68,16 +76,29 @@ export class CheckoutComponent implements OnInit {
       const status = response.status;
       const body: Cart = response.body;
 
+      console.log(status);
       switch (status) {
         case 200:
           if (body == null) {
-            this.handleValidCart();
+            // Skip cart checkout if cart is empty
+            this.handleValidCart(Object.keys(this._cart.items).length == 0);
           } else {
             this.handleInvalidCart(body);
           }
 
           break;
+        case 422:
+          if (this._customDucks.length != 0) {
+            this.handleValidCart(true);
+            return;
+          }
+          this._snackBarService.openErrorSnackbar("Some of the items in your cart were no longer available. We are unable to checkout your cart.");
+          return;
         case 404:
+          if (this._customDucks.length != 0) {
+            this.handleValidCart(true);
+            return;
+          }
           this._snackBarService.openErrorSnackbar("Please add items to your shopping cart before attempting to checkout.");
           break;
         case 500:
@@ -163,36 +184,53 @@ export class CheckoutComponent implements OnInit {
     this._dialog.open(ReceiptComponent, {
       height: 'auto',
       width: 'auto',
-      data: { cart: this.cart }
+      data: { cart: this._cart, customDucks: this._customDucks }
     });
   }
 
   /**
    * Handles cart checkout
    */
-  private handleValidCart(): void {
-    // TODO: Make pop that gives receipt
-    this._cartService.checkoutCart(this._account.id).subscribe(response => {
-      const status = response.status;
-      console.log(status);
-      switch (status) {
+  private async handleValidCart(skipCart: boolean): Promise<void> {
+    if (!skipCart) {
+      const checkoutResponse = await firstValueFrom(this._cartService.checkoutCart(this._account.id));
+
+      switch (checkoutResponse.status) {
         // Theoretically shouldn't be possible due to validation before allowing checkout
         case 422:
-          this._snackBarService.openErrorSnackbar("Some of the items in your cart were no longer available. We are unable to checkout your case.");
+          this._snackBarService.openErrorSnackbar("Some of the items in your cart were no longer available. We are unable to checkout your cart.");
           return;
         // Theoretically shouldn't be possible due to validation before allowing checkout
         case 404:
+          if (this._customDucks.length != 0) { break; }
+
           this._snackBarService.openErrorSnackbar("Please add items to your shopping cart before attempting to checkout.");
           return;
         case 500:
           this._snackBarService.openErrorSnackbar("Uh Oh, something went wrong. Please try again.");
           return;
       }
+    }
 
-      // Success (for some reason status is undefined when it is 200. I do not know why)
-      this._router.navigate(['catalog']);
-      this.openReceiptPrompt();
-    });
+    if (this._customDucks.length != 0) {
+      const customDuckResponses = await this._customDuckService.deleteAllDucksForAccount(this._account);
+
+      let showError = false;
+      customDuckResponses?.forEach(response => {
+        if (response.status != 200) {
+          showError = true;
+        }
+      });
+
+      if (showError) {
+        this._snackBarService.openErrorSnackbar("Failed to checkout some of your custom ducks. However, checkout is proceeding for the other items.");
+      }
+    }
+
+
+    // Success (for some reason status is undefined when it is 200. I do not know why)
+    this._router.navigate(['catalog']);
+    this.openReceiptPrompt();
   }
 
   /**

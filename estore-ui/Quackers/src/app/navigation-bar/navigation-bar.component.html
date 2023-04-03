@@ -13,7 +13,7 @@
             <div class="adminCheck" *ngIf="!checkAdminStatus()">
                 <button (click)="openProfileDialog()" *ngIf="this.router.url != '/login'" type="button">Account</button>
                 <button routerLink="/cart" *ngIf="this.router.url != '/login'" type="button">Shopping Cart</button>
-                <button routerLink="/customize" *ngIf="this.router.url != '/login'" type="button">Make your own Duck</button>
+                <button (click)="openCustomizeDialog()" *ngIf="this.router.url != '/login'" type="button">Make your own Duck</button>
                 <button routerLink="/catalog" *ngIf="this.router.url != '/login'">Catalog</button>
             </div>
     
