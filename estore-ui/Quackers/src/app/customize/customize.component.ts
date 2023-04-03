@@ -69,6 +69,63 @@ export class CustomizeComponent implements OnInit {
   }
 
   /**
+   * Gets the price string or an error if a control is invalid
+   * 
+   * @returns The price string
+   */
+  getPriceString(): string {
+    const controls = this.createForm.controls;
+
+    if (!this.canPriceShow()) {
+      return "In order for the price to display, you must select a size and a color and have a valid quantity inputted."
+    }
+    
+    const individual = this.calculatePrice()
+    const total = (individual * controls.quantity.value!).toFixed(2);
+    return `Price: $${total} ($${individual.toFixed(2)} each)`;
+  }
+
+  canPriceShow(): boolean {
+    const controls = this.createForm.controls;
+    return this.calculatePrice() != -1 && controls.quantity.valid;
+  }
+
+  /**
+   * Calculates the price of the duck
+   * 
+   * @returns The price of the duck
+   */
+  calculatePrice(): number {
+    const controls = this.createForm.controls;
+
+    if (!controls.size.valid || !controls.color.valid) {
+      return -1;
+    }
+    let price = 0;
+
+    // Color
+    price += 1;
+
+    switch (controls.size.value) {
+      case "SMALL":
+        price += 3
+        break;
+      case "MEDIUM":
+        price += 5
+        break;
+      case "LARGE":
+        price += 6;
+        break;
+    }
+
+    if (controls.hatUID.value != "0") price += 2;
+    if (controls.handItemUID.value != "0") price += 2;
+    if (controls.jewelryUID.value != "0") price += 2;
+
+    return price;
+  }
+
+  /**
    * Whether the duck preview should show
    * 
    * @returns True if the color and size are set in the form

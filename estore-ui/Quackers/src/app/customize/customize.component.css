@@ -95,3 +95,7 @@ input[type=number] {
 .enlarge {
     width: 150px;
 }
+
+.negative-margin {
+    margin-top: -15px;
+}

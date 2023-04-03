@@ -9,11 +9,11 @@
                     <mat-error>Please enter a name.</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" floatLabel="always"
-                    [ngClass]="{'extra-margin-bottom': !createForm.controls.quantity.valid && createForm.controls.quantity.touched}">
+                    [ngClass]="{'extra-margin-bottom2': !createForm.controls.quantity.valid && createForm.controls.quantity.touched}">
                     <mat-label>Quantity</mat-label>
                     <input matInput class="form-control" id="quantity_input" type="number" formControlName="quantity"
-                        min="0" required>
-                    <mat-error>Please enter a quantity greater than or equal to 0.</mat-error>
+                        min="0" pattern="^\d+(\.[0]+)?$" required>
+                    <mat-error>Please enter an integer quantity greater than or equal to 0.</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" floatLabel="always"
                     [ngClass]="{'extra-margin-bottom': !createForm.controls.price.valid && createForm.controls.price.touched}">

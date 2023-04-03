@@ -12,8 +12,8 @@
                     [ngClass]="{'extra-margin-bottom': !createForm.controls.quantity.valid && createForm.controls.quantity.touched}">
                     <mat-label>Quantity</mat-label>
                     <input matInput class="form-control" id="quantity_input" type="number" formControlName="quantity"
-                        min="1" required>
-                    <mat-error>Please enter a quantity greater than 0.</mat-error>
+                        min="1" pattern="^\d+(\.[0]+)?$" required>
+                    <mat-error>Please enter an integer quantity greater than 0.</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" floatLabel="always">
                     <mat-label>Size</mat-label>
@@ -75,13 +75,17 @@
                 </mat-form-field>
             </div>
         </div>
-        
+
     </form>
     <div class="preview-container">
         <span class="control-group-header">Preview</span>
-        <span *ngIf="!showPreview()" style="text-align: center;">In order for the preview to display, you must select a
+        <span *ngIf="!showPreview()" style="text-align: center; margin-bottom: 15px">In order for the preview to
+            display, you must select a
             size and a color.</span>
         <app-duck-image *ngIf="showPreview()" [duck]="convertFormToDuck()"></app-duck-image>
+        <span class="control-group-header"
+            [ngClass]="{'negative-margin': !canPriceShow() && showPreview()}">Price</span>
+        <span style="text-align: center;">{{getPriceString()}}</span>
     </div>
 </div>
 <mat-dialog-actions class="button-container">
