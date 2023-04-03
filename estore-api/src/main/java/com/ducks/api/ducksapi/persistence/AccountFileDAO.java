@@ -232,6 +232,10 @@ public class AccountFileDAO implements AccountDAO {
         // Handles multiple click events
         synchronized (accounts) {
             int accountID = account.getId();
+            // Fail account update if password is not strong
+            if (!account.validateStrongPassword(account.getPlainPassword())) {
+                return null;
+            }
             // If the database has the account in it, put the changed account into it.
             if (accounts.containsKey(accountID)) {
                 accounts.put(accountID, account);
@@ -244,8 +248,8 @@ public class AccountFileDAO implements AccountDAO {
     }
 
     /**
-    * * {@inheritDoc}}
-    */
+     * * {@inheritDoc}}
+     */
     @Override
     public boolean deleteAccount(int id) throws IOException {
         // Handles multiple clickEvents
@@ -262,8 +266,8 @@ public class AccountFileDAO implements AccountDAO {
     }
 
     /**
-    * * {@inheritDoc}}
-    */
+     * * {@inheritDoc}}
+     */
     @Override
     public boolean changePassword(int id, String originalPass, String newPass) throws IOException {
         // Handles multiple clickEvents
@@ -287,23 +291,23 @@ public class AccountFileDAO implements AccountDAO {
     }
 
     /**
-    * * {@inheritDoc}}
-    */
+     * * {@inheritDoc}}
+     */
     @Override
-    public boolean changeFirstName(int id, String newFirstName) throws IOException{
+    public boolean changeFirstName(int id, String newFirstName) throws IOException {
         // Handles multiple clickEvents
-        synchronized(accounts) {
+        synchronized (accounts) {
             // Checks if account is in database
-            if(accounts.containsKey(id)) {
+            if (accounts.containsKey(id)) {
 
-                // gets Account from id 
+                // gets Account from id
                 Account account = getAccount(id);
 
                 // Changes First name
                 account.setFirstName(newFirstName);
 
                 // Save changes to database
-                return save();       
+                return save();
             }
             // Account not in database, can't change First Name
             return false;
@@ -311,23 +315,23 @@ public class AccountFileDAO implements AccountDAO {
     }
 
     /**
-    * * {@inheritDoc}}
-    */
+     * * {@inheritDoc}}
+     */
     @Override
-    public boolean changeLastName(int id, String newLastName) throws IOException{
+    public boolean changeLastName(int id, String newLastName) throws IOException {
         // Handles multiple clickEvents
-        synchronized(accounts) {
+        synchronized (accounts) {
             // Checks if account is in database
-            if(accounts.containsKey(id)) {
-            
-                // gets Account from id 
+            if (accounts.containsKey(id)) {
+
+                // gets Account from id
                 Account account = getAccount(id);
 
                 // Changes Last name
                 account.setLastName(newLastName);
 
                 // Save changes to database
-                return save();       
+                return save();
             }
             // Account not in database, can't change Last Name
             return false;
@@ -335,23 +339,23 @@ public class AccountFileDAO implements AccountDAO {
     }
 
     /**
-    * * {@inheritDoc}}
-    */
+     * * {@inheritDoc}}
+     */
     @Override
-    public boolean changeAddress(int id, String newAddress) throws IOException{
+    public boolean changeAddress(int id, String newAddress) throws IOException {
         // Handles multiple clickEvents
-        synchronized(accounts) {
+        synchronized (accounts) {
             // Checks if account is in database
-            if(accounts.containsKey(id)) {
-            
-                // gets Account from id 
+            if (accounts.containsKey(id)) {
+
+                // gets Account from id
                 Account account = getAccount(id);
 
                 // Changes Address
                 account.setAddress(newAddress);
 
                 // Save changes to database
-                return save();        
+                return save();
             }
             // Account not in database, can't change Address
             return false;
@@ -359,23 +363,23 @@ public class AccountFileDAO implements AccountDAO {
     }
 
     /**
-    * * {@inheritDoc}}
-    */
+     * * {@inheritDoc}}
+     */
     @Override
-    public boolean changeCity(int id, String newCity) throws IOException{
+    public boolean changeCity(int id, String newCity) throws IOException {
         // Handles multiple clickEvents
-        synchronized(accounts) {
+        synchronized (accounts) {
             // Checks if account is in database
-            if(accounts.containsKey(id)) {
-            
-                // gets Account from id 
+            if (accounts.containsKey(id)) {
+
+                // gets Account from id
                 Account account = getAccount(id);
 
                 // Changes City
                 account.setCity(newCity);
 
                 // Save changes to database
-                return save();       
+                return save();
             }
             // Account not in database, can't change City
             return false;
@@ -383,23 +387,23 @@ public class AccountFileDAO implements AccountDAO {
     }
 
     /**
-    * * {@inheritDoc}}
-    */
+     * * {@inheritDoc}}
+     */
     @Override
-    public boolean changeZipCode(int id, String newZipCode) throws IOException{
+    public boolean changeZipCode(int id, String newZipCode) throws IOException {
         // Handles multiple clickEvents
-        synchronized(accounts) {
+        synchronized (accounts) {
             // Checks if account is in database
-            if(accounts.containsKey(id)) {
-            
-                // gets Account from id 
+            if (accounts.containsKey(id)) {
+
+                // gets Account from id
                 Account account = getAccount(id);
 
                 // Changes ZipCode
                 account.setZipCode(newZipCode);
 
                 // Save changes to database
-                return save();         
+                return save();
             }
             // Account not in database, can't change ZipCode
             return false;

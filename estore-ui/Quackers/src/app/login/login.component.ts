@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -147,6 +147,9 @@ export class LoginComponent implements OnInit {
         case 409:
           this._snackBarService.openErrorSnackbar("An account with the name already exists. Please select a different one.");
           break;
+        case 500:
+          this._snackBarService.openErrorSnackbar("Something went wrong creating your account. Please try again.");
+          break;
       }
 
     });
@@ -161,7 +164,43 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this._snackBarService.openInfoSnackbar("This is not implemented yet.");
+    const username: string = this.loginForm.controls.username.value!;
+    const password: string = this.loginForm.controls.password.value!;
+
+    this._accountService.getAccounts().subscribe(accounts => {
+      const foundAccounts = accounts.filter(account => account.username == username);
+      if (foundAccounts.length == 0) {
+        this._snackBarService.openErrorSnackbar(`No account was found with the username ${username}.`);
+        return;
+      }
+
+      let modifyAccount = foundAccounts[0];
+      modifyAccount.plainPassword = password;
+
+      this._accountService.updateAccount(modifyAccount).subscribe(response => {
+        const httpResponse = response as HttpResponse<Account>;
+        const status = httpResponse.status;
+
+        switch (status) {
+          // Success
+          case 200:
+            this._snackBarService.openSuccessSnackbar("Your password has successfully been changed. Please login to continue.");
+            break;
+          // Password not strong enough
+          case 422:
+            this._snackBarService.openErrorSnackbar("Your password must be at least 8 characters long and have 1 uppercase letter, 1 lowercase letter, and 1 number.");
+            break;
+          // Account not found - shouldn't be possible in theory
+          case 404:
+            this._snackBarService.openErrorSnackbar(`No account was found with the username ${username}.`);
+            break;
+          // Internal server error
+          case 500:
+            this._snackBarService.openErrorSnackbar("Something went wrong resetting your password. Please try again.");
+            break;
+        }
+      })
+    })
   }
 
   // Updates the account variables (prevents double clicking buttons)
