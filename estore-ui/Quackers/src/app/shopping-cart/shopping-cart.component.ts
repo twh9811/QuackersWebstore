@@ -12,6 +12,7 @@ import { SessionService } from '../session.service';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
 import { SnackBarService } from '../snackbar.service';
+import { CustomDuckService } from '../custom-duck.service';
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
@@ -22,6 +23,7 @@ export class ShoppingCartComponent implements OnInit {
   account: Account | undefined = undefined;
   cart: Cart | undefined = undefined;
   ducks: Duck[] = [];
+  customDucks: Duck[] = [];
 
   constructor(private _router: Router,
     private _location: Location,
@@ -30,6 +32,7 @@ export class ShoppingCartComponent implements OnInit {
     private _dialog: MatDialog,
     private _sessionService: SessionService,
     private _productService: ProductService,
+    private _customDuckService: CustomDuckService,
     private _snackBarService: SnackBarService) { }
 
   ngOnInit(): void {
@@ -46,6 +49,7 @@ export class ShoppingCartComponent implements OnInit {
       this._cartService.getCartAndCreate(this.account.id).then((cart) => {
         this.cart = cart;
         this.loadDucks();
+        this.loadCustomDucks();
       });
     });
   }
@@ -85,6 +89,22 @@ export class ShoppingCartComponent implements OnInit {
     return (quantity * duck.price).toFixed(2);
   }
 
+  /**
+   * Calculates the total price of a given custom duck in the cart (duck.quantity * duck.price)
+   * 
+   * @param duck The custom duck that the cart price is being retrieved for
+   * @returns The calculated price to two decimals as a string
+   */
+  getTotalCustomDuckPrice(duck: Duck): string {
+    return (duck.quantity * duck.price).toFixed(2);
+  }
+
+  /**
+   * Gets a ducks price in the format x.xx
+   * 
+   * @param duck The duck
+   * @returns The price in the format x.xx
+   */
   getDuckPrice(duck: Duck): string {
     return duck.price.toFixed(2);
   }
@@ -112,7 +132,7 @@ export class ShoppingCartComponent implements OnInit {
    * @param duck The duck whose quantity is being removed
    * @param quantityStr The amount to remove from the cart
    */
-  removeDuck(duck: Duck, quantityStr: string): void {
+  removeDuck(duck: Duck, quantityStr: string, isCustom: boolean = false): void {
     if (!this.cart) return;
 
     // Makes sure the number is in the form of x or x.00 (there can be as many 0s as they'd like)
@@ -133,12 +153,58 @@ export class ShoppingCartComponent implements OnInit {
       return;
     }
 
-    const newQuantity = this.getDuckQuantity(duck.id)! - quantity;
+    const quantityInCart = isCustom ? duck.quantity : this.getDuckQuantity(duck.id)!;
+    const newQuantity = quantityInCart - quantity;
     // Shouldn't be possible but still good to check
     if (newQuantity < 0) {
-      this._snackBarService.openErrorSnackbar(`You are attempting to remove ${quantity} duck(s) with the name of ${duck.name} from your cart, but you only have ${this.getDuckQuantity(duck.id)} of them in your cart.`);
+      this._snackBarService.openErrorSnackbar(`You are attempting to remove ${quantity} duck(s) with the name of ${duck.name} from your cart, but you only have ${quantityInCart} of them in your cart.`);
       return;
     }
+
+    if (isCustom) {
+      this.handleCustomDuckRemove(duck, newQuantity, quantity);
+      return;
+    }
+
+    this.handlePremadeDuckRemove(duck, newQuantity, quantity);
+  }
+
+  /**
+   * Handles custom duck quantity adjustments
+   * 
+   * @param duck The duck whose quantity requested is being adjusted
+   * @param newQuantity The new quantity requested
+   * @param quantity The old quantity requested
+   */
+  private handleCustomDuckRemove(duck: Duck, newQuantity: number, quantity: number): void {
+    if(!this.account) return;
+
+    duck.quantity = newQuantity;
+    const observable = newQuantity == 0 ? this._customDuckService.deleteDuck(duck.id) : this._customDuckService.updateDuckForAccount(this.account, duck);
+
+    if (newQuantity == 0) {
+      this.customDucks = this.customDucks.filter(arrDuck => arrDuck.id != duck.id);
+    }
+
+    observable.subscribe(status => {
+      if (status.status == 200) {
+        this._snackBarService.openSuccessSnackbar(`Successfully removed ${quantity} custom duck(s) with a name of ${duck.name} from your cart.`);
+        return;
+      }
+
+      this._snackBarService.openErrorSnackbar(`Failed to update your cart. Please try again.`);
+    });
+  }
+
+  /**
+   * Handles premade duck quantity adjustments
+   * 
+   * @param duck The duck whose quantity requested is being adjusted
+   * @param newQuantity The new quantity requested
+   * @param quantity The old quantity requested
+   */
+  private handlePremadeDuckRemove(duck: Duck, newQuantity: number, quantity: number) {
+    if (!this.cart) return;
 
     // Remove the item from the cart if the newQuantity is 0
     if (newQuantity == 0) {
@@ -202,6 +268,13 @@ export class ShoppingCartComponent implements OnInit {
       document.body.style.overflowY = 'visible';
     })
     document.body.style.overflowY = 'hidden';
+  }
+
+  private async loadCustomDucks() {
+    if (!this.account) return;
+
+    this.customDucks = await this._customDuckService.getDucksForAccount(this.account);
+    console.log(this.customDucks);
   }
 
   /**

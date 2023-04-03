@@ -21,7 +21,7 @@ export class CustomDuckService {
    * 
    * @returns An array of Ducks containing all of the ducks in the inventory
    */
-  getDucks(): Observable<Duck[]> {
+  private getDucks(): Observable<Duck[]> {
     const url = `${this.apiURL}`;
     return this._http.get<Duck[]>(url).pipe(
       tap(_ => console.log("Custom Ducks retrieved")),
@@ -34,7 +34,7 @@ export class CustomDuckService {
    * @param id The id of the duck being retrieved
    * @returns The duck if found otherwise an empty duck
    */
-  getDuck(id: number): Observable<Duck> {
+  private getDuck(id: number): Observable<Duck> {
     const url = `${this.apiURL}/${id}`;
     return this._http.get<Duck>(url).pipe(
       tap(_ => console.log(`Custom Duck with Id ${id} retrieved`)),
@@ -57,7 +57,7 @@ export class CustomDuckService {
    * @param duck The duck object that is being created
    * @returns An http response object in which the newly created duck is returned (if there are no error) and the response itself
    */
-  createDuck(duck: Duck): Observable<HttpResponse<Duck>> {
+  private createDuck(duck: Duck): Observable<HttpResponse<Duck>> {
     const url = `${this.apiURL}/`;
 
     // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
@@ -66,7 +66,7 @@ export class CustomDuckService {
         catchError(this.handleError<HttpResponse<any>>('createCutomDuck', true)));
   }
 
-  updateDuck(duck: Duck): Observable<HttpResponse<Duck>> {
+  private updateDuck(duck: Duck): Observable<HttpResponse<Duck>> {
     const url = `${this.apiURL}/`;
 
     // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
@@ -84,7 +84,12 @@ export class CustomDuckService {
   async getDucksForAccount(account: Account): Promise<Duck[]> {
     let ducks = await firstValueFrom(this.getDucks());
     // /u200B is a 0 width space
-    return ducks.filter(duck => duck.name.startsWith(`${account.username} \u200B-`));
+    ducks = ducks.filter(duck => duck.name.startsWith(`${account.username} \u200B- `));
+
+    ducks.forEach(duck => {
+      duck.name = duck.name.replace(`${account.username} \u200B- `, "");
+    })
+    return ducks;
   }
 
   /**
@@ -99,6 +104,23 @@ export class CustomDuckService {
     duck.name = `${account.username} \u200B- ${currentName}`;
 
     return this.createDuck(duck);
+  }
+
+  /**
+   * Updates a duck for an account
+   * 
+   * @param account The account the duck is being updated for
+   * @param duck The new duck object
+   * @returns An http response
+   */
+  updateDuckForAccount(account: Account, duck: Duck): Observable<HttpResponse<Duck>> {
+    // Clones the duck so there is no name flashing when the name is updated
+    let clone: Duck = { ...duck };
+
+    const currentName = duck.name;
+    clone.name = `${account.username} \u200B- ${currentName}`;
+
+    return this.updateDuck(clone);
   }
 
   /**
