@@ -66,7 +66,6 @@ export class CheckoutComponent implements OnInit {
    * Called upon form submission. Validates the form and handles checkout functionality 
    */
   onSubmit(): void {
-
     if (!this.detailForm.valid) {
       this.markAllControlsAsTouched();
       return;
@@ -183,7 +182,7 @@ export class CheckoutComponent implements OnInit {
   private openReceiptPrompt(): void {
     this._dialog.open(ReceiptComponent, {
       height: 'auto',
-      width: 'auto',
+      width: '300px',
       data: { cart: this._cart, customDucks: this._customDucks }
     });
   }

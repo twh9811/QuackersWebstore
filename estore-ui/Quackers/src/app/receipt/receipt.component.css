@@ -1,0 +1,17 @@
+.detail-container {
+    display: flex;
+    justify-content: space-around;
+    min-width: 100%;
+}
+
+.truncate {
+    width: 170px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.price {
+    margin-left: auto;
+}

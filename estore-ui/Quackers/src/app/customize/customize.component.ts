@@ -82,7 +82,13 @@ export class CustomizeComponent implements OnInit {
     
     const individual = this.calculatePrice()
     const total = (individual * controls.quantity.value!).toFixed(2);
-    return `Price: $${total} ($${individual.toFixed(2)} each)`;
+    let priceStr = `Price: $${total}`;
+
+    if(controls.quantity.value! > 1) {
+      priceStr += ` ($${individual.toFixed(2)} each)`
+    }
+    
+    return priceStr;
   }
 
   canPriceShow(): boolean {
