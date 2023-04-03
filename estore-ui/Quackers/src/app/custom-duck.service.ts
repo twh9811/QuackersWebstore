@@ -123,9 +123,9 @@ export class CustomDuckService {
     return this.updateDuck(clone);
   }
 
-  async deleteAllDucksForAccount(account: Account): Promise<HttpResponse<Duck>[]> {
+  async deleteAllDucksForAccount(account: Account): Promise<HttpResponse<Duck>[] | null> {
     let ducks = await this.getDucksForAccount(account);
-    
+    if(ducks.length == 0) return null;
     return firstValueFrom(forkJoin(ducks.map(duck => this.deleteDuck(duck.id))));
   }
 

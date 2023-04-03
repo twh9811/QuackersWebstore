@@ -41,7 +41,6 @@
 }
 
 .duck-container {
-    margin: 0px 20px;
     width: 100%;
     display: flex;
     flex-flow: row wrap;

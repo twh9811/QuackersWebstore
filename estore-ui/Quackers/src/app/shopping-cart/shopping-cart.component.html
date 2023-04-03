@@ -12,10 +12,10 @@
         <button mat-raised-button class="fix-hover green-button" *ngIf="!isCartEmpty()" (click)="checkoutCart()">Proceed
             to Checkout</button>
     </div>
-    <div class="header-container" *ngIf="!isCartEmpty()">
+    <div class="header-container" *ngIf="!isPremadeEmpty()">
         <h2>Premade Ducks</h2>
     </div>
-    <div class="duck-container">
+    <div class="duck-container" *ngIf="!isPremadeEmpty()">
         <mat-card class="card-format" *ngFor="let duck of ducks">
             <div class="duck-box">
                 <app-duck-image style="height: 210px" [duck]=duck></app-duck-image>
@@ -33,10 +33,10 @@
             </div>
         </mat-card>
     </div>
-    <div class="header-container" *ngIf="customDucks.length != 0">
+    <div class="header-container" *ngIf="!isCustomEmpty()">
         <h2>Custom Ducks</h2>
     </div>
-    <div class="duck-container" *ngIf="customDucks.length != 0">
+    <div class="duck-container" *ngIf="!isCustomEmpty()">
         <mat-card class="card-format" *ngFor="let duck of customDucks">
             <div class="duck-box">
                 <app-duck-image style="height: 210px" [duck]=duck></app-duck-image>

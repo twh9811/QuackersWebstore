@@ -76,15 +76,24 @@ export class CheckoutComponent implements OnInit {
       const status = response.status;
       const body: Cart = response.body;
 
+      console.log(status);
       switch (status) {
         case 200:
           if (body == null) {
-            this.handleValidCart(false);
+            // Skip cart checkout if cart is empty
+            this.handleValidCart(Object.keys(this._cart.items).length == 0);
           } else {
             this.handleInvalidCart(body);
           }
 
           break;
+        case 422:
+          if (this._customDucks.length != 0) {
+            this.handleValidCart(true);
+            return;
+          }
+          this._snackBarService.openErrorSnackbar("Some of the items in your cart were no longer available. We are unable to checkout your cart.");
+          return;
         case 404:
           if (this._customDucks.length != 0) {
             this.handleValidCart(true);
@@ -175,7 +184,7 @@ export class CheckoutComponent implements OnInit {
     this._dialog.open(ReceiptComponent, {
       height: 'auto',
       width: 'auto',
-      data: { cart: this._cart }
+      data: { cart: this._cart, customDucks: this._customDucks }
     });
   }
 
@@ -189,12 +198,12 @@ export class CheckoutComponent implements OnInit {
       switch (checkoutResponse.status) {
         // Theoretically shouldn't be possible due to validation before allowing checkout
         case 422:
-          this._snackBarService.openErrorSnackbar("Some of the items in your cart were no longer available. We are unable to checkout your case.");
+          this._snackBarService.openErrorSnackbar("Some of the items in your cart were no longer available. We are unable to checkout your cart.");
           return;
         // Theoretically shouldn't be possible due to validation before allowing checkout
         case 404:
           if (this._customDucks.length != 0) { break; }
-          
+
           this._snackBarService.openErrorSnackbar("Please add items to your shopping cart before attempting to checkout.");
           return;
         case 500:
@@ -205,17 +214,19 @@ export class CheckoutComponent implements OnInit {
 
     const customDuckResponses = await this._customDuckService.deleteAllDucksForAccount(this._account);
 
-    let showError = false;
-    customDuckResponses.forEach(response => {
+    if (customDuckResponses != null) {
+      let showError = false;
+      customDuckResponses.forEach(response => {
 
-      if (response.status != 200) {
-        showError = true;
+        if (response.status != 200) {
+          showError = true;
+        }
+
+      })
+
+      if (showError) {
+        this._snackBarService.openErrorSnackbar("Failed to checkout some of your custom ducks. Please try again.");
       }
-
-    })
-
-    if (showError) {
-      this._snackBarService.openErrorSnackbar("Failed to checkout some of your custom ducks. Please try again.");
     }
 
     // Success (for some reason status is undefined when it is 200. I do not know why)

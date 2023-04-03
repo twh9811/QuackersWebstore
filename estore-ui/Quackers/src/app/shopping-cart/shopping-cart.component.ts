@@ -71,11 +71,29 @@ export class ShoppingCartComponent implements OnInit {
   /**
    * Checks if the cart has no items
    * 
-   * @returns True if the cart has no items, false otherwise (including if the cart is undefined)
+   * @returns True if the cart has no premade and custom items
    */
   isCartEmpty(): boolean {
+    return this.isPremadeEmpty() && this.isCustomEmpty();
+  }
+
+  /**
+   * Whethere there are premade ducks
+   * 
+   * @returns True if there are no premade ducks
+   */
+  isPremadeEmpty(): boolean {
     if (!this.cart) return true;
-    return Object.keys(this.cart.items).length == 0;
+    return Object.keys(this.cart.items).length == 0
+  }
+
+  /**
+   * Whether there are custom ducks
+   * 
+   * @returns True if there are no custom ducks
+   */
+  isCustomEmpty(): boolean {
+    return this.customDucks.length == 0;
   }
 
   /**
@@ -118,14 +136,22 @@ export class ShoppingCartComponent implements OnInit {
    */
   getCartTotal(): string {
     let cartTotal: number = 0;
-    //iterates over the current duck list to get the total price of the cart
+
+    // Gets premade duck total
     for (const duck of this.ducks) {
       const duckPrice = parseFloat(this.getTotalDuckPrice(duck));
       cartTotal += duckPrice;
     }
 
+    // Gets custom duck total
+    for (const duck of this.customDucks) {
+      const duckPrice = parseFloat(this.getTotalCustomDuckPrice(duck));
+      cartTotal += duckPrice;
+    }
+
     return cartTotal.toFixed(2);
   }
+  
   /**
    * Removes a given amount of a given duck from the cart
    * 
