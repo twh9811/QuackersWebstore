@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, firstValueFrom, of, tap } from 'rxjs';
+import { Observable, catchError, firstValueFrom, forkJoin, of, tap } from 'rxjs';
 import { Duck } from './duck';
 import { Account } from './account';
 
@@ -121,6 +121,12 @@ export class CustomDuckService {
     clone.name = `${account.username} \u200B- ${currentName}`;
 
     return this.updateDuck(clone);
+  }
+
+  async deleteAllDucksForAccount(account: Account): Promise<HttpResponse<Duck>[]> {
+    let ducks = await this.getDucksForAccount(account);
+    
+    return firstValueFrom(forkJoin(ducks.map(duck => this.deleteDuck(duck.id))));
   }
 
   /**

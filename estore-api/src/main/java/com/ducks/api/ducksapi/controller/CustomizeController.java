@@ -118,4 +118,5 @@ public class CustomizeController extends AbstractInventoryController {
     public ResponseEntity<Duck> deleteDuck(@PathVariable int id) {
         return super.deleteDuck(id, "DELETE /customduck/{0}");
     }
+    
 }

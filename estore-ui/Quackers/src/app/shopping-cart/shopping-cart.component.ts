@@ -177,7 +177,7 @@ export class ShoppingCartComponent implements OnInit {
    * @param quantity The old quantity requested
    */
   private handleCustomDuckRemove(duck: Duck, newQuantity: number, quantity: number): void {
-    if(!this.account) return;
+    if (!this.account) return;
 
     duck.quantity = newQuantity;
     const observable = newQuantity == 0 ? this._customDuckService.deleteDuck(duck.id) : this._customDuckService.updateDuckForAccount(this.account, duck);
@@ -262,8 +262,9 @@ export class ShoppingCartComponent implements OnInit {
       {
         height: '100%',
         position: { top: '0%', right: '0%' },
-        data: this.cart,
+        data: { cart: this.cart, customDucks: this.customDucks },
       });
+
     dialogRef.afterClosed().subscribe(() => {
       document.body.style.overflowY = 'visible';
     })
