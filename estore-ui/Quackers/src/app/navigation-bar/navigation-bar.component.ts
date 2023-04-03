@@ -3,6 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { SessionService } from '../session.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'navigation-bar',
@@ -12,29 +14,41 @@ import { SessionService } from '../session.service';
 export class NavigationBarComponent implements OnInit {
 
   _account: Account | undefined = undefined;
-  adminStatus : boolean = false;
+  adminStatus: boolean = false;
 
   // router needs to be public for angular to compile (used in app.component.html)
   constructor(public router: Router,
-    private accountService: AccountService,
-    private sessionService: SessionService) { }
+    private _accountService: AccountService,
+    private _sessionService: SessionService,
+    private _dialog: MatDialog,
+  ) { }
 
   /**
   * api will first check if an account currently exist and the admin status of the account
   */
   ngOnInit(): void {
     const navObservable = this.router.events.subscribe(event => {
-      if(!(event instanceof NavigationEnd)) return;
+      if (!(event instanceof NavigationEnd)) return;
 
       this.ngOnInit();
       navObservable.unsubscribe();
     })
+    
+
     // Waits for account to be retrieved before doing anything else
-    this.accountService.getAccount(this.sessionService.session.id).subscribe(account => {
+    this._accountService.getAccount(this._sessionService.session.id).subscribe(account => {
       this._account = account;
       this.adminStatus = this.checkAdminStatus();
 
     });
+  }
+
+  openProfileDialog(): void {
+    this._dialog.open(ProfileComponent, {
+      height: '100%',
+      position: { top: '0%', right: '0%' },
+      data: this._account
+    })
   }
 
   /**
@@ -42,11 +56,11 @@ export class NavigationBarComponent implements OnInit {
   * 
   * @returns True if the user is an admin, false otherwise (including if the cart is undefined)
   */
-  checkAdminStatus() : boolean {
-    if (this._account?.adminStatus || !this._account){
+  checkAdminStatus(): boolean {
+    if (this._account?.adminStatus || !this._account) {
       return true;
     }
-    return false; 
+    return false;
   }
 
   /**
@@ -54,7 +68,7 @@ export class NavigationBarComponent implements OnInit {
   * redirect the user back to the login page
   * 
   */
-  logout() : void {
+  logout(): void {
     this.router.navigate(['']);
   }
 }

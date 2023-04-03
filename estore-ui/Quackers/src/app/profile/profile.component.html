@@ -2,54 +2,53 @@
 <div *ngIf="account">
     <div id="customer-info">
         <span>Hello {{account.username}}, your account details are listed below.</span><br>
-    </div>   
-        <div class="header-container">
-            <button mat-raised-button class="fix-hover" (click)="goBack()">Go Back</button>
-        </div>
-        <div class="detail-container">
-            <div class="detail-box" id="shipping-info">
-                <div class="info-title">
-                    Shipping Address
-                </div>
-                <div class="info-detail">
-                    <div class="detail-title">
-                        <span>First Name:<br></span>
-                        <span>Last Name:<br></span>
-                        <span>Address:<br></span>
-                        <span>City:<br></span>
-                        <span>Zip Code:<br></span>
-                    </div>
-                    <div class="detail-value">
-                        <span>{{account.firstName}}<br></span>
-                        <span>{{account.lastName}}<br></span>
-                        <span>{{account.address}}<br></span>
-                        <span>{{account.city}}<br></span>
-                        <span>{{account.zipCode}}<br></span>
-                    </div>
-        
-                </div>
-                <button mat-raised-button class="fix-hover" (click)="changeShippingAddress()">Change Shipping Address</button>
+    </div>
+    <div class="header-container">
+        <button mat-raised-button class="fix-hover" (click)="goBack()">Go Back</button>
+    </div>
+    <div class="detail-container">
+        <div class="detail-box" id="shipping-info">
+            <div class="info-title">
+                Shipping Address
             </div>
-
-            <div class="detail-box" id="payment-info">
-                <div class="info-title">
-                    Payment Method
+            <div class="info-detail">
+                <div class="detail-title">
+                    <span>First Name:<br></span>
+                    <span>Last Name:<br></span>
+                    <span>Address:<br></span>
+                    <span>City:<br></span>
+                    <span>Zip Code:<br></span>
                 </div>
-                <div class="info-detail">
-                    <div class="detail-title">
-                        <span>Credit Card Number:<br></span>
-                        <span>Expiration Date:<br></span>
-                        <span>CVV:<br></span>
-                    </div>
-                    <div class="detail-value">
-                        <span>{{account.card}}<br></span>
-                        <span>{{account.expDate}}<br></span>
-                        <span>{{account.cvv}}<br></span>
-                    </div>
-        
+                <div class="detail-value">
+                    <span>{{account.firstName}}<br></span>
+                    <span>{{account.lastName}}<br></span>
+                    <span>{{account.address}}<br></span>
+                    <span>{{account.city}}<br></span>
+                    <span>{{account.zipCode}}<br></span>
                 </div>
-                <button mat-raised-button class="fix-hover" (click)="changePaymentMethod()">Change Payment Method</button>
-        </div>        
-</div>
 
+            </div>
+            <button mat-raised-button class="fix-hover" (click)="changeShippingAddress()">Change Shipping
+                Address</button>
+        </div>
 
+        <div class="detail-box" id="payment-info">
+            <div class="info-title">
+                Payment Method
+            </div>
+            <div class="info-detail">
+                <div class="detail-title">
+                    <span>Credit Card Number:<br></span>
+                    <span>Expiration Date:<br></span>
+                    <span>CVV:<br></span>
+                </div>
+                <div class="detail-value">
+                    <span>{{account.card}}<br></span>
+                    <span>{{account.expDate}}<br></span>
+                    <span>{{account.cvv}}<br></span>
+                </div>
+
+            </div>
+            <button mat-raised-button class="fix-hover" (click)="changePaymentMethod()">Change Payment Method</button>
+        </div>
+    </div>

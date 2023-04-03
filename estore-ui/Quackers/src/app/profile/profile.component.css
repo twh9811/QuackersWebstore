@@ -14,9 +14,10 @@
 
 .detail-container {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column wrap;
     justify-content: space-evenly;
     margin-top: 50px;
+    height: 100%;
 }
 
 .info-title {

@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CatalogComponent } from './catalog/catalog.component';
+import { CustomizeComponent } from './customize/customize.component';
 import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
 import { LoginComponent } from './login/login.component';
-import { ProductCreateComponent } from './product-create-modify/product-create-modify.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
-import { ProfileComponent } from './profile/profile.component';
-import { CustomizeComponent } from './customize/customize.component';
 
 
 const routes: Routes = [
@@ -15,7 +13,6 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "catalog", component: CatalogComponent },
   { path: "cart", component: ShoppingCartComponent },
-  { path: "profile", component: ProfileComponent},
   { path: "customize", component: CustomizeComponent}
 ];
 
