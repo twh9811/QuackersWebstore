@@ -127,7 +127,6 @@ export class PaymentModifyComponent {
    */
   updateAccount(): Account {
     const controls = this.createForm.controls;
-
     return <Account>{
       type: this.account.type,
       id: this.account.id,
@@ -153,7 +152,9 @@ export class PaymentModifyComponent {
 
     controls.cardNumber.setValue(this.account.card);
     controls.expiration.setValue(this.account.expDate);
-    controls.cvv.setValue(this.account.cvv.toString());
+    if (this.account.cvv != -1) {
+      controls.cvv.setValue(this.account.cvv.toString());
+    }
   }
 
   /**
