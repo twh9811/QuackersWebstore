@@ -24,21 +24,30 @@
     margin-bottom: 10px;
 }
 
+.info-detail {
+    display: flex;
+    flex-flow: column;
+}
+
 .button-container {
-    align-self: center;
-    gap: 15px;
+    display: flex;
+    justify-content: space-evenly;
 }
 
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+.margin-35px {
+    margin: 35px 0px 20px 0px;
 }
 
-/* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
+.margin-40px {
+    margin: 40px 0px 20px 0px;
+}
+
+.margin-bottom-20px {
+    margin-bottom: 20px;
+}
+
+.margin-bottom-40px {
+    margin-bottom: 40px;
 }
 
 .fix-hover {
@@ -65,4 +74,3 @@ input[type=number] {
 .extra-margin-bottom {
     margin-bottom: 20px;
 }
-

@@ -24,21 +24,14 @@
     margin-bottom: 10px;
 }
 
+.info-detail {
+    display: flex;
+    flex-flow: column;
+}
+
 .button-container {
-    align-self: center;
-    gap: 15px;
-}
-
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
+	display: flex;
+	justify-content: space-evenly;
 }
 
 .fix-hover {

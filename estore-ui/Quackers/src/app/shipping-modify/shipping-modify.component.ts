@@ -19,9 +19,6 @@ export class ShippingModifyComponent implements OnInit {
       address: '',
       city: '',
       zipCode: '',
-      card: '',
-      expDate: '',
-      cvv: 0
     });
 
   constructor(private _accountService: AccountService,
@@ -77,10 +74,7 @@ export class ShippingModifyComponent implements OnInit {
     controls.address.setValue(this.account.address);
     controls.city.setValue(this.account.city);
     controls.zipCode.setValue(this.account.zipCode);
-
-    controls.city.setValue(this.account.card);
-    controls.expDate.setValue(this.account.expDate);
-    controls.cvv.setValue(this.account.cvv);
+    controls.city.setValue(this.account.city);
   }
 
   /**

@@ -3,44 +3,38 @@
         <div class="controls-container">
             <div class="header">Shipping Information</div>
             <div class="info-detail">
-
-
-
-                <div class="detail-value">
-                    <mat-form-field appearance="fill" floatLabel="always">
-                        <mat-label>First Name</mat-label>
-                        <input matInput type="text" formControlName="firstName" pattern="^\s*\S+.*$" required>
-                        <mat-error>Please enter a name.</mat-error>
-                    </mat-form-field><br>
-                    <mat-form-field appearance="fill" floatLabel="always">
-                        <mat-label>Last Name</mat-label>
-                        <input matInput type="text" formControlName="lastName" pattern="^\s*\S+.*$" required>
-                        <mat-error>Please enter a Last Name.</mat-error>
-                    </mat-form-field><br>
-                    <mat-form-field appearance="fill" floatLabel="always">
-                        <mat-label>Address</mat-label>
-                        <input matInput type="text" formControlName="address" pattern="^\s*\S+.*$" required>
-                        <mat-error>Please enter an Address.</mat-error>
-                    </mat-form-field><br>
-                    <mat-form-field appearance="fill" floatLabel="always">
-                        <mat-label>City</mat-label>
-                        <input matInput type="text" formControlName="city" pattern="^\s*\S+.*$" required>
-                        <mat-error>Please enter a City.</mat-error>
-                    </mat-form-field><br>
-                    <mat-form-field appearance="fill" floatLabel="always">
-                        <mat-label>Zip Code</mat-label>
-                        <input matInput type="text" formControlName="zipCode" pattern="^\s*\S+.*$" required>
-                        <mat-error>Please enter a Zip Code.</mat-error>
-                    </mat-form-field>
-                </div>
-
-
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>First Name</mat-label>
+                    <input matInput type="text" formControlName="firstName" pattern="^\s*\S+.*$" required>
+                    <mat-error>Please enter a first name.</mat-error>
+                </mat-form-field><br>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput type="text" formControlName="lastName" pattern="^\s*\S+.*$" required>
+                    <mat-error>Please enter a last Name.</mat-error>
+                </mat-form-field><br>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Address</mat-label>
+                    <input matInput type="text" formControlName="address" pattern="^\s*\S+.*$" required>
+                    <mat-error>Please enter an address.</mat-error>
+                </mat-form-field><br>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>City</mat-label>
+                    <input matInput type="text" formControlName="city" pattern="^\s*\S+.*$" required>
+                    <mat-error>Please enter a city.</mat-error>
+                </mat-form-field><br>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Zip Code</mat-label>
+                    <input matInput type="text" formControlName="zipCode" pattern="^\s*\S+.*$" required>
+                    <mat-error>Please enter a zip code.</mat-error>
+                </mat-form-field>
 
             </div>
             <mat-dialog-actions class="button-container">
                 <button mat-raised-button class="fix-hover green-hover">Submit</button>
-                <button mat-raised-button class="fix-hover red-hover" type="button" [mat-dialog-close]="null">Close</button>
+                <button mat-raised-button class="fix-hover red-hover" type="button"
+                    [mat-dialog-close]="null">Close</button>
             </mat-dialog-actions>
-            </div>
+        </div>
     </div>
 </form>
