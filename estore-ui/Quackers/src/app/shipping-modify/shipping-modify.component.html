@@ -23,10 +23,18 @@
                     <input matInput type="text" formControlName="city" pattern="^\s*\S+.*$" required>
                     <mat-error>Please enter a city.</mat-error>
                 </mat-form-field><br>
-                <mat-form-field appearance="fill" floatLabel="always">
+                <mat-form-field appearance="fill" floatLabel="always"
+                    [ngClass]="{'extra-margin-bottom': shouldZipCodeDisplayError(true)}">
                     <mat-label>Zip Code</mat-label>
-                    <input matInput type="text" formControlName="zipCode" pattern="^\s*\S+.*$" required>
-                    <mat-error>Please enter a zip code.</mat-error>
+                    <input matInput type="text" formControlName="zipCode" minlength="5" pattern="^\d{5}(?:[-\s]\d{4})?$"
+                        placeholder="12345" required>
+                    <mat-error class="error" *ngIf="shouldZipCodeDisplayError(true)">
+                        Please enter a valid zipcode (i.e. 12345).
+                    </mat-error>
+                    <mat-error class="error"
+                        *ngIf="shouldZipCodeDisplayError(false) && !shouldZipCodeDisplayError(true)">
+                        Please enter a zipcode.
+                    </mat-error>
                 </mat-form-field>
 
             </div>

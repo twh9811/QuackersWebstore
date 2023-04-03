@@ -1,17 +1,10 @@
-import { Location } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { Account } from '../account';
-import { AccountService } from '../account.service';
-import { Duck, DuckOutfit } from '../duck';
-import { ProductService } from '../product.service';
-import { SessionService } from '../session.service';
-import { Cart } from '../shopping-cart';
-import { CartService } from '../shopping-cart.service';
-import { SnackBarService } from '../snackbar.service';
 import { CustomDuckService } from '../custom-duck.service';
+import { Duck, DuckOutfit } from '../duck';
+import { SnackBarService } from '../snackbar.service';
 
 @Component({
   selector: 'app-customize',
@@ -22,8 +15,7 @@ export class CustomizeComponent implements OnInit {
 
   createForm = this._formBuilder.group({
     name: '',
-    quantity: 0,
-    price: 0.00,
+    quantity: 1,
     size: '',
     color: '',
     hatUID: '0',
@@ -77,11 +69,21 @@ export class CustomizeComponent implements OnInit {
   }
 
   /**
+   * Whether the duck preview should show
+   * 
+   * @returns True if the color and size are set in the form
+   */
+  showPreview(): boolean {
+    const controls = this.createForm.controls;
+    return controls.color.valid && controls.size.valid;
+  }
+
+  /**
    * Creates a duck object from the values provided in createForm
    * 
    * @returns The created duck object
    */
-  private convertFormToDuck(): Duck {
+  convertFormToDuck(): Duck {
     let formValue = this.createForm.value;
 
     let duckOutfit: DuckOutfit = {
@@ -96,7 +98,7 @@ export class CustomizeComponent implements OnInit {
       id: -1,
       name: formValue.name as string,
       quantity: formValue.quantity as number,
-      price: formValue.price as number,
+      price: 0,
       size: formValue.size as string,
       color: formValue.color as string,
       outfit: duckOutfit

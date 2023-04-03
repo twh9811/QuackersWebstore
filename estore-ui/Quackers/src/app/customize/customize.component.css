@@ -1,8 +1,12 @@
+.container {
+    display: flex;
+    margin: 15px 15px 0px 15px;
+}
 #create-form {
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
-    margin: 15px;
+    margin-right: 15px;
 }
 
 #control-group-container {
@@ -37,8 +41,10 @@
 }
 
 .button-container {
-    align-self: center;
+    justify-content: center;
     gap: 15px;
+    margin-bottom: 15px;
+    padding: 0px;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -76,4 +82,15 @@ input[type=number] {
 
 .extra-margin-bottom {
     margin-bottom: 20px;
+}
+
+.preview-container {
+    width: 225px;
+    height: 210px;
+    display: flex;
+    flex-flow: column;
+}
+
+.enlarge {
+    width: 150px;
 }

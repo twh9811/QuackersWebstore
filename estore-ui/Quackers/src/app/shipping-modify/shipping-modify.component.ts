@@ -75,6 +75,36 @@ export class ShippingModifyComponent implements OnInit {
   }
 
   /**
+   * Whether an error should be displayed or not for zipcode control.
+   * Will display in the following circumstances:
+   *  1. The control is not allowed to be empty but is
+   *  2. The control is not empty but does not meet some other validator (i.e. a pattern)
+   * 
+   * @param ignoreRequired Whether or not to ignore the required validator
+   * @returns True if the error should be display
+   */
+  shouldZipCodeDisplayError(ignoreRequired: boolean): boolean {
+    const control = this.createForm.controls.zipCode;
+    if (!control) return true;
+
+    // If the control is not invalid, the error should not be displayed
+    if (!control.invalid) return false;
+
+    // If the user has not touched the control, the error should not be displayed
+    if (!control.touched) return false;
+
+    // If the control is not allowed to be empty, the error should be displayed
+    if (!ignoreRequired) return true;
+
+    const value = control.value;
+    // The control is allowed to be empty
+    // If the control's value is undefined or has a length of 0, the error should not displayed
+    if (!value || value.length == 0) return false;
+
+    return true;
+  }
+
+  /**
    * Converts the form to an account
    * 
    * @returns A new account object with the updated values
