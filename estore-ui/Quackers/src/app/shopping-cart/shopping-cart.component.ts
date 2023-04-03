@@ -196,7 +196,7 @@ export class ShoppingCartComponent implements OnInit {
       {
         height: '100%',
         position: { top: '0%', right: '0%' },
-        data: { account: this.account, cart: this.cart },
+        data: this.cart,
       });
     dialogRef.afterClosed().subscribe(() => {
       document.body.style.overflowY = 'visible';
