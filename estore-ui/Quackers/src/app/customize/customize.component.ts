@@ -11,6 +11,7 @@ import { SessionService } from '../session.service';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
 import { SnackBarService } from '../snackbar.service';
+import { CustomDuckService } from '../custom-duck.service';
 
 @Component({
   selector: 'app-customize',
@@ -30,14 +31,14 @@ export class CustomizeComponent implements OnInit {
     jewelryUID: '0'
   });
 
-  constructor(private _productService: ProductService,
+  constructor(private _customDuckService: CustomDuckService,
     private _snackBarService: SnackBarService,
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<CustomizeComponent>,
     @Inject(MAT_DIALOG_DATA) public account: Account) { }
 
   ngOnInit(): void {
-   
+
   }
 
   /**
@@ -50,35 +51,20 @@ export class CustomizeComponent implements OnInit {
     }
 
     let formDuck = this.convertFormToDuck();
-    let observable =  this._productService.createDuck(formDuck);
+    // Needed because createDuckForAccount modifies the duck's name
+    const duckName = formDuck.name;
 
-    observable.subscribe(response => {
+    this._customDuckService.createDuckForAccount(this.account, formDuck).subscribe(response => {
       let status = response.status;
       switch (status) {
         // Duck Update Response
-        case 200:
-          this._snackBarService.openSuccessSnackbar(`Successfully updated the duck with a name of ${formDuck.name}.`);
-          this.close(response.body as Duck);
+        case 201:
+          this._snackBarService.openSuccessSnackbar(`Successfully updated the duck with a name of ${duckName}.`);
+          this.dialogRef.close();
           break;
         // Duck Update Reponse - Not possible in theory 
-        case 404:
-          this._snackBarService.openErrorSnackbar(`Unable to find the requested duck.`);
-          this.close(null);
-          break;
-        // Duck Creation Response
-        case 201:
-          let duck = response.body as Duck;
-          this._snackBarService.openSuccessSnackbar(`Successfully created a new duck with a name of ${duck.name}.`);
-          this.close(duck);
-          break;
-        // Both Duck Update and Creation Response
         case 409:
-          this._snackBarService.openErrorSnackbar(`A duck already exists with the name ${formDuck.name}.`);
-          break;
-        // Both Duck Creation and Update Response - Shouldn't be possible due to form validation
-        case 400:
-          let actionStr = "create the duck";
-          this._snackBarService.openErrorSnackbar(`Failed to ${actionStr} due to a bad value being entered.`);
+          this._snackBarService.openErrorSnackbar(`You already have a custom duck with the name ${duckName}.`);
           break;
         // Both Duck Creation and Update Response
         case 500:
@@ -87,14 +73,6 @@ export class CustomizeComponent implements OnInit {
       }
     });
 
-  }
-
-  /**
-   * Closes the dialog window
-   * @param wasSuccessful Whether or not the duck was updated/created
-   */
-  close(duck: Duck | null): void {
-    this.dialogRef.close(duck);
   }
 
   /**
