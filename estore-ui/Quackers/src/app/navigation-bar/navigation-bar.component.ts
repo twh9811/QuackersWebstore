@@ -32,8 +32,9 @@ export class NavigationBarComponent implements OnInit {
 
       this.ngOnInit();
       navObservable.unsubscribe();
-    })
-    
+    });
+
+    if(!this._sessionService.session) return;
 
     // Waits for account to be retrieved before doing anything else
     this._accountService.getAccount(this._sessionService.session.id).subscribe(account => {

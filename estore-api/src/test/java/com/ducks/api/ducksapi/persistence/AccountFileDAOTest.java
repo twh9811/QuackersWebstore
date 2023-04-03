@@ -148,16 +148,19 @@ public class AccountFileDAOTest {
     @Test
     public void testUpdateAccount() throws IOException {
         // Setup
-        Account updatedAccount = new UserAccount(1, "notJeff", "password");
-        Account failUpdatedAccount = new UserAccount(50, "notJeff", "password");
+        Account updatedAccount = new UserAccount(1, "notJeff", "Password1");
+        Account accountNotFound = new UserAccount(50, "notJeff", "Password1");
+        Account weakPassword = new UserAccount(2, "bob", "password");
 
         // Invoke
         Account successResult = accountFileDAO.updateAccount(updatedAccount);
-        Account failResult = accountFileDAO.updateAccount(failUpdatedAccount);
+        Account accountNotFoundResult = accountFileDAO.updateAccount(accountNotFound);
+        Account weakPasswordResult = accountFileDAO.updateAccount(weakPassword);
 
         // Analyze
         Account databaseUpdatedAccount = accountFileDAO.getAccount(1);
-        assertNull(failResult);
+        assertNull(accountNotFoundResult);
+        assertNull(weakPasswordResult);
         assertEquals(successResult.getClass(), UserAccount.class);
         assertEquals(databaseUpdatedAccount, updatedAccount);
     }
