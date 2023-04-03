@@ -1,16 +1,14 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-
+import { Observable, catchError, firstValueFrom, of, tap } from 'rxjs';
 import { Duck } from './duck';
+import { Account } from './account';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
-  private apiURL = 'http://localhost:8080/inventory';
+export class CustomDuckService {
+  private apiURL = 'http://localhost:8080/customduck';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -26,8 +24,8 @@ export class ProductService {
   getDucks(): Observable<Duck[]> {
     const url = `${this.apiURL}`;
     return this._http.get<Duck[]>(url).pipe(
-      tap(_ => console.log("Ducks retrieved")),
-      catchError(this.handleError<Duck[]>('getProducts')));
+      tap(_ => console.log("Custom Ducks retrieved")),
+      catchError(this.handleError<Duck[]>('get custom ducks')));
   }
 
   /**
@@ -37,10 +35,10 @@ export class ProductService {
    * @returns The duck if found otherwise an empty duck
    */
   getDuck(id: number): Observable<Duck> {
-    const url = `${this.apiURL}/product/${id}`;
+    const url = `${this.apiURL}/${id}`;
     return this._http.get<Duck>(url).pipe(
-      tap(_ => console.log(`Duck with Id ${id} retrieved`)),
-      catchError(this.handleError<Duck>('getProduct')));
+      tap(_ => console.log(`Custom Duck with Id ${id} retrieved`)),
+      catchError(this.handleError<Duck>('get custom duck')));
   }
 
   /**
@@ -49,8 +47,8 @@ export class ProductService {
    * @param id The id of the duck being deleted
    */
   deleteDuck(id: number): Observable<HttpResponse<any>> {
-    const url = `${this.apiURL}/product/${id}`;
-    return this._http.delete(url, { observe: 'response' }).pipe(tap(_ => console.log(`Duck with Id ${id} deleted`)), catchError(this.handleError<HttpResponse<any>>('deleteDuck')));
+    const url = `${this.apiURL}/${id}`;
+    return this._http.delete(url, { observe: 'response' }).pipe(tap(_ => console.log(`Custom Duck with Id ${id} deleted`)), catchError(this.handleError<HttpResponse<any>>('deleteDuck')));
   }
 
   /**
@@ -59,42 +57,48 @@ export class ProductService {
    * @param duck The duck object that is being created
    * @returns An http response object in which the newly created duck is returned (if there are no error) and the response itself
    */
-  createDuck(duck: Duck): Observable<HttpResponse<any>> {
-    const url = `${this.apiURL}/product`;
+  createDuck(duck: Duck): Observable<HttpResponse<Duck>> {
+    const url = `${this.apiURL}/`;
 
     // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
     return this._http.post<HttpResponse<any>>(url, duck, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
-      .pipe(tap(_ => console.log(`Created duck`)),
-        catchError(this.handleError<HttpResponse<any>>('createDuck', true)));
+      .pipe(tap(_ => console.log(`Created custom duck`)),
+        catchError(this.handleError<HttpResponse<any>>('createCutomDuck', true)));
   }
 
-  updateDuck(duck: Duck): Observable<HttpResponse<any>> {
-    const url = `${this.apiURL}/product`;
+  updateDuck(duck: Duck): Observable<HttpResponse<Duck>> {
+    const url = `${this.apiURL}/`;
 
     // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
     return this._http.put<HttpResponse<any>>(url, duck, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
-      .pipe(tap(_ => console.log(`Updated duck`)),
-        catchError(this.handleError<HttpResponse<any>>('updateDuck', true)));
+      .pipe(tap(_ => console.log(`Updated custom duck`)),
+        catchError(this.handleError<HttpResponse<any>>('updateCustomDuck', true)));
   }
 
-  /* GET ducks whose name contains search term */
-  searchDuck(term: string): Observable<Duck[]> {
-    const url = `${this.apiURL}/search?name=${term}`;
-    if (!term.trim()) {
-      // if not search term, return empty hero array.
-      return of([]);
-    }
-    return this._http.get<Duck[]>(url).pipe(
-      tap(x => x?.length ?
-        this.log(`found ducks matching "${term}"`) :
-        this.log(`no ducks matching "${term}"`)),
-      catchError(this.handleError<Duck>('getProduct'))
-    );
+  /**
+   * Gets all custom ducks associated with an account
+   * 
+   * @param account The account the ducks are being retrieved for
+   * @returns All found custom ducks
+   */
+  async getDucksForAccount(account: Account): Promise<Duck[]> {
+    let ducks = await firstValueFrom(this.getDucks());
+    // /u200B is a 0 width space
+    return ducks.filter(duck => duck.name.startsWith(`${account.username} \u200B-`));
   }
 
-  /** Log a ProductService message with the MessageService */
-  private log(notification: string) {
-    console.log(notification);
+  /**
+   * Creates a duck for an account (name is appended with "<username> <0 width space>-")
+   * 
+   * @param account The account the duck is being created for
+   * @param duck The duck
+   * @returns An http response
+   */
+  createDuckForAccount(account: Account, duck: Duck): Observable<HttpResponse<Duck>> {
+    const currentName = duck.name;
+    duck.name = `${account.username} \u200B- ${currentName}`;
+
+    return this.createDuck(duck);
   }
 
   /**
@@ -118,5 +122,4 @@ export class ProductService {
       return of(result as T);
     }
   }
-
 }

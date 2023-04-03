@@ -27,7 +27,7 @@ import com.ducks.api.ducksapi.persistence.DuckDAO;
  */
 
 @RestController
-@RequestMapping("outfit")
+@RequestMapping("customduck")
 public class CustomizeController extends AbstractInventoryController {
     private static final Logger LOG = Logger.getLogger(CustomizeController.class.getName());
 
@@ -55,7 +55,7 @@ public class CustomizeController extends AbstractInventoryController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Duck> getDuck(@PathVariable int id) {
-        return super.getDuck(id, "GET /outfit/{0}");
+        return super.getDuck(id, "GET /customduck/{0}");
     }
 
     /**
@@ -69,7 +69,7 @@ public class CustomizeController extends AbstractInventoryController {
      */
     @GetMapping("")
     public ResponseEntity<Duck[]> getDucks() {
-        return super.getDucks("GET /outfit");
+        return super.getDucks("GET /customduck");
     }
 
     /**
@@ -86,7 +86,7 @@ public class CustomizeController extends AbstractInventoryController {
      */
     @PostMapping("")
     public ResponseEntity<Duck> createDuck(@RequestBody Duck duck) {
-        return super.createDuck(duck, "POST /outfit {0}");
+        return super.createDuck(duck, "POST /customduck {0}");
     }
 
     /**
@@ -102,7 +102,7 @@ public class CustomizeController extends AbstractInventoryController {
      */
     @PutMapping("")
     public ResponseEntity<Duck> updateDuck(@RequestBody Duck duck) {
-        return super.updateDuck(duck, "PUT /outfit {0}");
+        return super.updateDuck(duck, "PUT /customduck {0}");
     }
 
     /**
@@ -116,6 +116,6 @@ public class CustomizeController extends AbstractInventoryController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Duck> deleteDuck(@PathVariable int id) {
-        return super.deleteDuck(id, "DELETE /outfit/{0}");
+        return super.deleteDuck(id, "DELETE /customduck/{0}");
     }
 }
