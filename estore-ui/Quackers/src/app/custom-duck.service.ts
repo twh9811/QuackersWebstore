@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, firstValueFrom, forkJoin, of, tap } from 'rxjs';
+import { Observable, Subject, catchError, firstValueFrom, forkJoin, of, tap } from 'rxjs';
 import { Duck } from './duck';
 import { Account } from './account';
 
@@ -8,6 +8,8 @@ import { Account } from './account';
   providedIn: 'root'
 })
 export class CustomDuckService {
+  newDuck = new Subject<Duck>();
+
   private apiURL = 'http://localhost:8080/customduck';
 
   httpOptions = {
@@ -15,6 +17,18 @@ export class CustomDuckService {
   };
 
   constructor(private _http: HttpClient) { }
+
+
+  /**
+   * Sends a new duck update to all class listening to newDuck
+   * 
+   * @param account The account that created the duck
+   * @param duck The new duck
+   */
+  sendNewDuck(account: Account, duck: Duck) {
+    this.removeDuckPrefix(account, duck);
+    this.newDuck.next(duck);
+  }
 
   /**
    * Gets all of the ducks currently in the inventory from the ducks-api
@@ -87,9 +101,19 @@ export class CustomDuckService {
     ducks = ducks.filter(duck => duck.name.startsWith(`${account.username} \u200B- `));
 
     ducks.forEach(duck => {
-      duck.name = duck.name.replace(`${account.username} \u200B- `, "");
+      this.removeDuckPrefix(account, duck);
     })
     return ducks;
+  }
+
+  /**
+   * Removes the name prefix of custom ducks
+   * 
+   * @param account The account the duck was created by
+   * @param duck The duck object
+   */
+  private removeDuckPrefix(account: Account, duck: Duck): void {
+    duck.name = duck.name.replace(`${account.username} \u200B- `, "");
   }
 
   /**
@@ -125,7 +149,7 @@ export class CustomDuckService {
 
   async deleteAllDucksForAccount(account: Account): Promise<HttpResponse<Duck>[] | null> {
     let ducks = await this.getDucksForAccount(account);
-    if(ducks.length == 0) return null;
+    if (ducks.length == 0) return null;
     return firstValueFrom(forkJoin(ducks.map(duck => this.deleteDuck(duck.id))));
   }
 

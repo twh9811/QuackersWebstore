@@ -19,7 +19,6 @@ export class ProfileComponent implements OnInit {
 
 
   constructor(public dialogRef: MatDialogRef<ProfileComponent>,
-    private _location: Location,
     private _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public account: Account) { }
 
@@ -30,10 +29,11 @@ export class ProfileComponent implements OnInit {
   }
 
   /**
-  * Sends the user back to the previous page
-  */
-  goBack(): void {
-    this._location.back();
+   * Gets an accounts cvv if there is one
+   * @returns The cvv or an empty string
+   */
+  getCVV(): string {
+    return this.account.cvv == -1 ? '' : this.account.cvv.toString();
   }
 
   /**
@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
    */
   changeShippingAddress(): void {
     const dialogRef = this._dialog.open(ShippingModifyComponent, { data: this.account });
-    
+
     dialogRef.afterClosed().subscribe((account) => {
       if (account != null) {
         this.account = account;

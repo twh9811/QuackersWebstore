@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
+import { first, firstValueFrom } from 'rxjs';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { CheckoutComponent } from '../checkout/checkout.component';
@@ -52,6 +52,10 @@ export class ShoppingCartComponent implements OnInit {
         this.loadCustomDucks();
       });
     });
+
+    this._customDuckService.newDuck.subscribe(newDuck => {
+      this.customDucks.push(newDuck);
+    })
   }
 
   /**
@@ -151,7 +155,7 @@ export class ShoppingCartComponent implements OnInit {
 
     return cartTotal.toFixed(2);
   }
-  
+
   /**
    * Removes a given amount of a given duck from the cart
    * 
@@ -263,21 +267,36 @@ export class ShoppingCartComponent implements OnInit {
   /**
    * Clears the items in the cart
    */
-  clearCart(): void {
-    // if this cart does not exist then return
+  async clearCart(): Promise<void> {
+    // if the cart or account do not exist then return
     if (!this.cart) return;
+    if (!this.account) return;
 
+    // Handles cart clearing
     // sets the items and ducks to empty and then send it to the server
     this.cart.items = {};
     this.ducks = [];
-    this._cartService.updateCart(this.cart).subscribe(status => {
-      if (status.status == 200) {
-        this._snackBarService.openSuccessSnackbar(`Successfully cleared your cart.`);
-        return;
-      }
+    const updateCartResponse = await firstValueFrom(this._cartService.updateCart(this.cart));
 
-      this._snackBarService.openErrorSnackbar(`Failed to update your cart. Please try again.`);
-    });
+    if (updateCartResponse.status != 200) {
+      this._snackBarService.openErrorSnackbar(`Failed to clear your cart. Please refresh the page and try again.`);
+      return;
+    }
+
+    // Handles custom duck clearing
+    if (this.customDucks.length != 0) {
+      this.customDucks = [];
+      const deleteCustomDucksResponses = await this._customDuckService.deleteAllDucksForAccount(this.account);
+
+      deleteCustomDucksResponses?.forEach(response => {
+        if (response.status != 200) {
+          this._snackBarService.openErrorSnackbar(`Failed to remove some of your custom ducks. Please refresh the page and try again.`);
+          return;
+        }
+      });
+    }
+
+    this._snackBarService.openSuccessSnackbar(`Successfully cleared your cart.`);
   }
 
   /**

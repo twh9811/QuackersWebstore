@@ -59,7 +59,8 @@ export class CustomizeComponent implements OnInit {
       switch (status) {
         // Duck Update Response
         case 201:
-          this._snackBarService.openSuccessSnackbar(`Successfully updated the duck with a name of ${duckName}.`);
+          this._snackBarService.openSuccessSnackbar(`Successfully created a custom duck with a name of ${duckName}.`);
+          this._customDuckService.sendNewDuck(this.account, response.body!)
           this.dialogRef.close();
           break;
         // Duck Update Reponse - Not possible in theory 
