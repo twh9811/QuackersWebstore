@@ -1,1 +1,23 @@
-<p>shipping-modify works!</p>
+<form id="create-form" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <div class="header">Shipping Information</div>
+    <div class="info-detail">
+        <div class="detail-title">
+            <span>First Name:<br></span>
+            <span>Last Name:<br></span>
+            <span>Address:<br></span>
+            <span>City:<br></span>
+            <span>Zip Code:<br></span>
+        </div>
+        <div class="detail-value">
+            <span>{{account.firstName}}<br></span>
+            <span>{{account.lastName}}<br></span>
+            <span>{{account.address}}<br></span>
+            <span>{{account.city}}<br></span>
+            <span>{{account.zipCode}}<br></span>
+        </div>
+    </div>
+    <mat-dialog-actions class="button-container">
+        <button mat-raised-button class="fix-hover green-hover">Submit</button>
+        <button mat-raised-button class="fix-hover red-hover" type="button" [mat-dialog-close]="null">Close</button>
+    </mat-dialog-actions>
+</form>

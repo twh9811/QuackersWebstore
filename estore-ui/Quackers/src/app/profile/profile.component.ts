@@ -5,7 +5,10 @@ import { Account } from '../account';
 import { AccountService } from '../account.service';
 import { SessionService } from '../session.service';
 import { SnackBarService } from '../snackbar.service';
-
+import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ShippingModifyComponent } from '../shipping-modify/shipping-modify.component';
+import { PaymentModifyComponent } from '../payment-modify/payment-modify.component';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +23,8 @@ export class ProfileComponent implements OnInit {
     private _location: Location,
     private _snackBarService: SnackBarService,
     private _accountService: AccountService,
-    private _sessionService: SessionService) { }
+    private _sessionService: SessionService,
+    private _dialog: MatDialog,) { }
 
   ngOnInit(): void {
     // Validates that an account is indeed logged in
@@ -43,13 +47,18 @@ export class ProfileComponent implements OnInit {
   }
 
   changeShippingAddress(): void {
-    /** 
-    const dialogRef = this._dialog.open() {}
-    */
+    const dialogRef = this._dialog.open(ShippingModifyComponent, { data: this.account});
+    dialogRef.afterClosed().subscribe((obj) => {
+
+    })
+
   }
 
   changePaymentMethod(): void {
-    
+    const dialogRef = this._dialog.open(PaymentModifyComponent, { data: this.account});
+    dialogRef.afterClosed().subscribe((obj) => {
+      document.body.style.overflowY = 'visible';
+    })
   }
 
   /**

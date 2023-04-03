@@ -1,0 +1,84 @@
+#create-form {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    margin: 15px;
+}
+
+.header {
+    align-self: center;
+
+    font-size: 20px;
+
+    padding: 0px 30px;
+    margin-bottom: 10px;
+    border-bottom: 1.5px solid black;
+}
+
+.detail-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    margin-top: 50px;
+}
+
+.info-title {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.info-detail {
+    font-size: 15px;
+    margin-bottom: 10px;
+    min-height: 100px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.info-detail span {
+    margin: 10px;
+}
+
+.button-container {
+    align-self: center;
+    gap: 15px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.fix-hover {
+    border: 2px transparent solid;
+}
+
+.fix-hover:hover {
+    border: 2px black solid;
+}
+
+.green-hover:hover {
+    background-color: var(--quackers-green-color);
+    color: white;
+    border: 2px var(--quackers-green-color) solid;
+}
+
+
+.red-hover:hover {
+    background-color: var(--quackers-red-color);
+    color: white;
+    border: 2px var(--quackers-red-color) solid;
+}
+
+.extra-margin-bottom {
+    margin-bottom: 20px;
+}
