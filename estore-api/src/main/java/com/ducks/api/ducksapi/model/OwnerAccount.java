@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * 
  * @author Travis Hill
  */
-@JsonTypeName("admin")
+@JsonTypeName("OwnerAccount")
 @Component
 public class OwnerAccount extends Account {
 

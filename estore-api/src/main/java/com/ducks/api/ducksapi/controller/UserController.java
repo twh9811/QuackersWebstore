@@ -224,7 +224,7 @@ public class UserController {
      * 
      * @param account The account being updated
      * @return 404 if account doesn't exist
-     *         406 if password isn't strong
+     *         422 if password isn't strong
      *         200 + account obj if updated successfully
      *         500 if dao fails
      */

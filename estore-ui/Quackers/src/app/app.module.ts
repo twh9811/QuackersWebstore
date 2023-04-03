@@ -18,6 +18,7 @@ import { DucksearchComponent } from './ducksearch/ducksearch.component';
 import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
 import { LoginComponent } from './login/login.component';
 import { ProductCreateComponent } from './product-create-modify/product-create-modify.component';
+import { ProfileComponent } from './profile/profile.component';
 import { ReceiptComponent } from './receipt/receipt.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-notification.component';
@@ -25,8 +26,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { DuckImageComponent } from './duck-image/duck-image.component';;
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
-import { ProfileComponent } from './profile/profile.component';
 import { CustomizeComponent } from './customize/customize.component';
+import { ShippingModifyComponent } from './shipping-modify/shipping-modify.component';
+import { PaymentModifyComponent } from './payment-modify/payment-modify.component';
 
 @NgModule({
   declarations: [
@@ -37,13 +39,16 @@ import { CustomizeComponent } from './customize/customize.component';
     ProductCreateComponent,
     CatalogComponent,
     DucksearchComponent,
+    ProfileComponent,
     CheckoutComponent,
     ReceiptComponent,
     SnackbarNotificationComponent,
     DuckImageComponent,
     ProfileComponent,
     NavigationBarComponent,
-    CustomizeComponent
+    CustomizeComponent,
+    ShippingModifyComponent,
+    PaymentModifyComponent
   ],
   imports: [
     BrowserModule,

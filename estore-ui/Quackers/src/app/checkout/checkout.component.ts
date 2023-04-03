@@ -4,10 +4,10 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { Router } from '@angular/router';
 import { Account } from '../account';
 import { ReceiptComponent } from '../receipt/receipt.component';
+import { SessionService } from '../session.service';
 import { Cart } from '../shopping-cart';
 import { CartService } from '../shopping-cart.service';
 import { SnackBarService } from '../snackbar.service';
-import { CheckoutData } from './checkout-data';
 
 @Component({
   selector: 'app-checkout',
@@ -15,8 +15,7 @@ import { CheckoutData } from './checkout-data';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
-  private _account: Account = this.checkoutData.account;
-  private _cart: Cart = this.checkoutData.cart;
+  private _account: Account = this._sessionService.session!;
 
   detailForm = this._formBuilder.group({
     email: '',
@@ -36,7 +35,8 @@ export class CheckoutComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _dialog: MatDialog,
     private _router: Router,
-    @Inject(MAT_DIALOG_DATA) public checkoutData: CheckoutData) { }
+    private _sessionService: SessionService,
+    @Inject(MAT_DIALOG_DATA) public cart: Cart) { }
 
 
   ngOnInit(): void {
@@ -163,7 +163,7 @@ export class CheckoutComponent implements OnInit {
     this._dialog.open(ReceiptComponent, {
       height: 'auto',
       width: 'auto',
-      data: { cart: this._cart! }
+      data: { cart: this.cart }
     });
   }
 
