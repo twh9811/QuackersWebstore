@@ -4,7 +4,7 @@
     <div style="min-width: 100%" *ngIf="ducks.length != 0">
         <span style="text-decoration: underline;">Premade Ducks</span>
         <div class="detail-container" *ngFor="let duck of ducks">
-            <span>{{getDuckQuantity(duck.id)}} x {{duck.name}}  </span>
+            <span>{{getDuckQuantity(duck.id)}} x {{duck.name}}</span>
             <span class="price">${{getTotalDuckPrice(duck)}}</span>
         </div>
     </div>
@@ -12,7 +12,7 @@
         <br>
         <span style="text-decoration: underline;">Custom Ducks</span>
         <div class="detail-container" *ngFor="let duck of customDucks">
-            <span class="truncate">{{duck.quantity}} x {{duck.name}}  </span>
+            <span class="truncate">{{duck.quantity}} x {{duck.name}}</span>
             <span class="price">${{getTotalCustomDuckPrice(duck)}}</span>
         </div>
     </div>
