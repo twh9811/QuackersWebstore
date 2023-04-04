@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * 
  * @author Travis Hill
  */
-@JsonTypeName("admin")
+@JsonTypeName("OwnerAccount")
 @Component
 public class OwnerAccount extends Account {
 
@@ -17,6 +17,6 @@ public class OwnerAccount extends Account {
      * Creates a new Admin account using the default values defined in the Account class.
      */
     public OwnerAccount() {
-        super(0, "admin", "admin", true);
+        super(0, "admin", "admin", true, "", "", "", "", "", "", "", -1);
     }
 }

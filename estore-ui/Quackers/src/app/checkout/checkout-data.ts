@@ -1,7 +1,7 @@
-import { Account } from "../account";
+import { Duck } from "../duck";
 import { Cart } from "../shopping-cart";
 
 export interface CheckoutData {
-    account: Account;
-    cart: Cart;
+    cart: Cart,
+    customDucks: Duck[]
 }

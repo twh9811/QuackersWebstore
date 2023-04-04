@@ -1,7 +1,13 @@
+.container {
+    display: flex;
+    margin: 15px 15px 0px 15px;
+}
+
 #create-form {
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
+    margin: 15px;
 }
 
 #control-group-container {
@@ -35,7 +41,61 @@
     width: 150px;
 }
 
-#submit-btn {
-    align-self: center;
+.button-container {
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding: 0px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.fix-hover {
+    border: 2px transparent solid;
+}
+
+.fix-hover:hover {
+    border: 2px black solid;
+}
+
+.green-hover:hover {
+    background-color: var(--quackers-green-color);
+    color: white;
+    border: 2px var(--quackers-green-color) solid;
+}
+
+
+.red-hover:hover {
+    background-color: var(--quackers-red-color);
+    color: white;
+    border: 2px var(--quackers-red-color) solid;
+}
+
+.extra-margin-bottom {
+    margin-bottom: 20px;
+}
+
+.extra-margin-bottom2 {
+    margin-bottom: 40px;
+}
+
+.preview-container {
+    width: 225px;
+    height: 210px;
+    display: flex;
+    flex-flow: column;
+}
+
+.enlarge {
     width: 150px;
 }

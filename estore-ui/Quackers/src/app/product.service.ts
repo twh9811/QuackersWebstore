@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators'
+import { catchError, tap } from 'rxjs/operators';
 
 import { Duck } from './duck';
-import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +16,7 @@ export class ProductService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient,
-    private notificatinService: NotificationService) { }
+  constructor(private _http: HttpClient) { }
 
   /**
    * Gets all of the ducks currently in the inventory from the ducks-api
@@ -27,8 +25,8 @@ export class ProductService {
    */
   getDucks(): Observable<Duck[]> {
     const url = `${this.apiURL}`;
-    return this.http.get<Duck[]>(url).pipe(
-      tap(_ => console.log("Ducks retrieved")), 
+    return this._http.get<Duck[]>(url).pipe(
+      tap(_ => console.log("Ducks retrieved")),
       catchError(this.handleError<Duck[]>('getProducts')));
   }
 
@@ -40,8 +38,8 @@ export class ProductService {
    */
   getDuck(id: number): Observable<Duck> {
     const url = `${this.apiURL}/product/${id}`;
-    return this.http.get<Duck>(url).pipe(
-      tap(_ => console.log(`Duck with Id ${id} retrieved`)), 
+    return this._http.get<Duck>(url).pipe(
+      tap(_ => console.log(`Duck with Id ${id} retrieved`)),
       catchError(this.handleError<Duck>('getProduct')));
   }
 
@@ -52,7 +50,7 @@ export class ProductService {
    */
   deleteDuck(id: number): Observable<HttpResponse<any>> {
     const url = `${this.apiURL}/product/${id}`;
-    return this.http.delete(url, { observe: 'response' }).pipe(tap(_ => console.log(`Duck with Id ${id} deleted`)), catchError(this.handleError<HttpResponse<any>>('deleteDuck')));
+    return this._http.delete(url, { observe: 'response' }).pipe(tap(_ => console.log(`Duck with Id ${id} deleted`)), catchError(this.handleError<HttpResponse<any>>('deleteDuck')));
   }
 
   /**
@@ -65,40 +63,40 @@ export class ProductService {
     const url = `${this.apiURL}/product`;
 
     // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
-    return this.http.post<HttpResponse<any>>(url, duck, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+    return this._http.post<HttpResponse<any>>(url, duck, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
       .pipe(tap(_ => console.log(`Created duck`)),
-        catchError(this.handleError<HttpResponse<any>>('ceateDuck', true)));
+        catchError(this.handleError<HttpResponse<any>>('createDuck', true)));
   }
 
   updateDuck(duck: Duck): Observable<HttpResponse<any>> {
     const url = `${this.apiURL}/product`;
 
     // No idea why it won't let me store the httpOptions in an object and pass them as a parameter. So I have to do what I do below
-    return this.http.put<HttpResponse<any>>(url, duck, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+    return this._http.put<HttpResponse<any>>(url, duck, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
       .pipe(tap(_ => console.log(`Updated duck`)),
         catchError(this.handleError<HttpResponse<any>>('updateDuck', true)));
   }
 
   /* GET ducks whose name contains search term */
- searchDuck(term: string): Observable<Duck[]> {
+  searchDuck(term: string): Observable<Duck[]> {
     const url = `${this.apiURL}/search?name=${term}`;
     if (!term.trim()) {
       // if not search term, return empty hero array.
       return of([]);
     }
-    return this.http.get<Duck[]>(url).pipe(
-      tap( x => x?.length ?
+    return this._http.get<Duck[]>(url).pipe(
+      tap(x => x?.length ?
         this.log(`found ducks matching "${term}"`) :
         this.log(`no ducks matching "${term}"`)),
       catchError(this.handleError<Duck>('getProduct'))
     );
   }
-  
+
   /** Log a ProductService message with the MessageService */
   private log(notification: string) {
-    this.notificatinService.add(`ProductService: ${notification}`, 3);
+    console.log(notification);
   }
-  
+
   /**
    * Handle http operations that failed.
    * Let the app continue.
@@ -120,6 +118,5 @@ export class ProductService {
       return of(result as T);
     }
   }
-
 
 }

@@ -1,22 +1,22 @@
 <div class="header-btn-container">
-    <button id="create-btn" class="gen-btn" type="button" routerLink="/inventory/product">Create Product</button>
+    <app-duck-search *ngIf="ducks.length != 0" (searchEvent)="updateDisplayDucks($event)"></app-duck-search>
+    <button id="create-btn" mat-raised-button (click)="goToDuckModification(null)">Create Product</button>
 </div>
-<div class="duck-container">
-    <div *ngFor="let duck of ducks">
+<div *ngIf="ducks.length == 0">Loading ducks...</div>
+<div *ngIf="!ducksToDisplay" style="text-align:center;">No ducks found</div>
+<div class="duck-container" *ngIf="ducksToDisplay && ducksToDisplay.length != 0">
+    <mat-card class="card-format" *ngFor="let duck of ducksToDisplay">
         <div class="duck-box">
-            <div class="duck-header">
-                <h2>{{duck.name}}</h2>
-                <hr>
-            </div>
-            <div class="duck-details">
-                <span>Id: {{duck.id}}</span><br>
-                <span>Quantity: {{duck.quantity}}</span><br>
-                <span>Price: {{getDuckPrice(duck)}}</span><br>
-                <div class="duck-btn-container">
-                    <button class="duck-modify-btn gen-btn" type="button" (click)="goToDuckModification(duck.id)">Modify</button>
-                    <button class="duck-remove-btn gen-btn" type="button" (click)="deleteDuck(duck)">Remove</button>
-                </div>
-            </div>
+            <app-duck-image style="height: 60%" [duck]=duck></app-duck-image>
+            <mat-card-header class="card-header-format">
+                <mat-card-title class="truncate">{{duck.name}}</mat-card-title>
+                <mat-card-subtitle>Quantity: {{duck.quantity}}</mat-card-subtitle>
+                <mat-card-subtitle>{{getDuckPrice(duck)}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions class="card-action-format">
+                <button mat-raised-button class="fix-hover" (click)="goToDuckModification(duck)">Modify</button>
+                <button mat-raised-button color="warn" class="fix-hover" (click)="deleteDuck(duck)">Remove</button>
+            </mat-card-actions>
         </div>
-    </div>
+    </mat-card>
 </div>

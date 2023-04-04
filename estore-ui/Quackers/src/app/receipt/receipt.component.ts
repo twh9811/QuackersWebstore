@@ -14,8 +14,9 @@ import { ReceiptData } from './receipt-data';
 export class ReceiptComponent implements OnInit {
   ducks: Duck[] = [];
   cart = this.receiptData.cart;
+  customDucks = this.receiptData.customDucks;
 
-  constructor(private productService: ProductService,
+  constructor(private _productService: ProductService,
     @Inject(MAT_DIALOG_DATA) public receiptData: ReceiptData
   ) { }
 
@@ -49,6 +50,16 @@ export class ReceiptComponent implements OnInit {
   }
 
   /**
+   * Calculates the total price of a given custom duck in the cart (duck.quantity * duck.price)
+   * 
+   * @param duck The custom duck that the cart price is being retrieved for
+   * @returns The calculated price to two decimals as a string
+   */
+  getTotalCustomDuckPrice(duck: Duck): string {
+    return (duck.quantity * duck.price).toFixed(2);
+  }
+
+  /**
    * 
    * Calculates the total price of all of the duck in a given cart
    * 
@@ -57,9 +68,16 @@ export class ReceiptComponent implements OnInit {
    */
   getCartTotal(): string {
     let cartTotal: number = 0;
-    //iterates over the current duck list to get the total price of the cart
+
+    // Gets premade duck total
     for (const duck of this.ducks) {
       const duckPrice = parseFloat(this.getTotalDuckPrice(duck));
+      cartTotal += duckPrice;
+    }
+
+    // Gets custom duck total
+    for (const duck of this.customDucks) {
+      const duckPrice = parseFloat(this.getTotalCustomDuckPrice(duck));
       cartTotal += duckPrice;
     }
 
@@ -69,7 +87,7 @@ export class ReceiptComponent implements OnInit {
   private loadDucks(): void {
     for (const [duckIdStr, quantity] of Object.entries(this.cart.items)) {
       const duckId = Number.parseInt(duckIdStr);
-      this.productService.getDuck(duckId).subscribe(duck => this.ducks.push(duck));
+      this._productService.getDuck(duckId).subscribe(duck => this.ducks.push(duck));
     }
   }
 

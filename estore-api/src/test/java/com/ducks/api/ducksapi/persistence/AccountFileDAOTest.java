@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * A unit test suite for the AccountFileDAO Class to test its functionality
  * 
- * @author Travis Hill
+ * @author Travis Hill & Andrew Le
  */
 @Tag("Persistence-tier")
 public class AccountFileDAOTest {
@@ -72,9 +72,9 @@ public class AccountFileDAOTest {
         Account[] accounts = accountFileDAO.findAccounts("Tra");
         Account[] emptySearch = accountFileDAO.findAccounts("Zuch");
         // Analyze
-        assertEquals(accounts.length, 1);
-        assertEquals(accounts[0], testAccounts[2]);
-        assertEquals(emptySearch.length, 0);
+        assertEquals(1, accounts.length);
+        assertEquals(testAccounts[2], accounts[0]);
+        assertEquals(0, emptySearch.length);
     }
 
     @Test
@@ -107,6 +107,14 @@ public class AccountFileDAOTest {
         assertEquals(4, createdAccount.getId());
         assertEquals("Timmy", createdAccount.getUsername());
         assertEquals("StrongPassword1234!", createdAccount.getPlainPassword());
+        assertEquals("", createdAccount.getFirstName());
+        assertEquals("", createdAccount.getLastName());
+        assertEquals("", createdAccount.getAddress());
+        assertEquals("", createdAccount.getCity());
+        assertEquals("", createdAccount.getZipCode());
+        assertEquals("", createdAccount.getCard());
+        assertEquals("", createdAccount.getExpDate());
+        assertEquals(-1, createdAccount.getCVV());
         assertFalse(createdAccount.getAdminStatus());
     }
 
@@ -126,22 +134,33 @@ public class AccountFileDAOTest {
         assertEquals(0, createdAccount.getId());
         assertEquals("admin", createdAccount.getUsername());
         assertEquals("admin", createdAccount.getPlainPassword());
+        assertEquals("", createdAccount.getFirstName());
+        assertEquals("", createdAccount.getLastName());
+        assertEquals("", createdAccount.getAddress());
+        assertEquals("", createdAccount.getCity());
+        assertEquals("", createdAccount.getZipCode());
+        assertEquals("", createdAccount.getCard());
+        assertEquals("", createdAccount.getExpDate());
+        assertEquals(-1, createdAccount.getCVV());
         assertTrue(createdAccount.getAdminStatus());
     }
 
     @Test
     public void testUpdateAccount() throws IOException {
         // Setup
-        Account updatedAccount = new UserAccount(1, "notJeff", "password");
-        Account failUpdatedAccount = new UserAccount(50, "notJeff", "password");
+        Account updatedAccount = new UserAccount(1, "notJeff", "Password1");
+        Account accountNotFound = new UserAccount(50, "notJeff", "Password1");
+        Account weakPassword = new UserAccount(2, "bob", "password");
 
         // Invoke
         Account successResult = accountFileDAO.updateAccount(updatedAccount);
-        Account failResult = accountFileDAO.updateAccount(failUpdatedAccount);
+        Account accountNotFoundResult = accountFileDAO.updateAccount(accountNotFound);
+        Account weakPasswordResult = accountFileDAO.updateAccount(weakPassword);
 
         // Analyze
         Account databaseUpdatedAccount = accountFileDAO.getAccount(1);
-        assertNull(failResult);
+        assertNull(accountNotFoundResult);
+        assertNull(weakPasswordResult);
         assertEquals(successResult.getClass(), UserAccount.class);
         assertEquals(databaseUpdatedAccount, updatedAccount);
     }
@@ -175,6 +194,96 @@ public class AccountFileDAOTest {
         assertEquals(newPassword, updatedAccount.getPlainPassword());
         assertFalse(failChangeWrongID);
         assertFalse(failChangeWrongOriginalPassword);
+    }
+
+    @Test
+    public void testChangeFirstName() throws IOException {
+        // Setup
+        Account account = accountFileDAO.getAccount(1);
+        int accountID = account.getId();
+        String newFirstName = "Jeff";
+        // Invoke
+        boolean successChange = accountFileDAO.changeFirstName(accountID, newFirstName);
+        boolean failChangeWrongID = accountFileDAO.changeFirstName(999, newFirstName);
+
+
+        // Analyze
+        Account updatedAccount = accountFileDAO.getAccount(accountID);
+        assertTrue(successChange);
+        assertEquals(newFirstName, updatedAccount.getFirstName());
+        assertFalse(failChangeWrongID);
+    }
+
+    @Test
+    public void testChangeLastName() throws IOException {
+        // Setup
+        Account account = accountFileDAO.getAccount(1);
+        int accountID = account.getId();
+        String newLastName = "Baker";
+        // Invoke
+        boolean successChange = accountFileDAO.changeLastName(accountID, newLastName);
+        boolean failChangeWrongID = accountFileDAO.changeLastName(999, newLastName);
+
+
+        // Analyze
+        Account updatedAccount = accountFileDAO.getAccount(accountID);
+        assertTrue(successChange);
+        assertEquals(newLastName, updatedAccount.getLastName());
+        assertFalse(failChangeWrongID);
+    }
+
+    @Test
+    public void testChangeAddress() throws IOException {
+        // Setup
+        Account account = accountFileDAO.getAccount(1);
+        int accountID = account.getId();
+        String newAddress = "1 Memorial Drive";
+        // Invoke
+        boolean successChange = accountFileDAO.changeAddress(accountID, newAddress);
+        boolean failChangeWrongID = accountFileDAO.changeAddress(999, newAddress);
+
+
+        // Analyze
+        Account updatedAccount = accountFileDAO.getAccount(accountID);
+        assertTrue(successChange);
+        assertEquals(newAddress, updatedAccount.getAddress());
+        assertFalse(failChangeWrongID);
+    }
+
+    @Test
+    public void testChangeCity() throws IOException {
+        // Setup
+        Account account = accountFileDAO.getAccount(1);
+        int accountID = account.getId();
+        String newCity = "Rochester";
+        // Invoke
+        boolean successChange = accountFileDAO.changeCity(accountID, newCity);
+        boolean failChangeWrongID = accountFileDAO.changeCity(999, newCity);
+
+
+        // Analyze
+        Account updatedAccount = accountFileDAO.getAccount(accountID);
+        assertTrue(successChange);
+        assertEquals(newCity, updatedAccount.getCity());
+        assertFalse(failChangeWrongID);
+    }
+
+    @Test
+    public void testChangeZipCode() throws IOException {
+        // Setup
+        Account account = accountFileDAO.getAccount(1);
+        int accountID = account.getId();
+        String newZipCode = "14586";
+        // Invoke
+        boolean successChange = accountFileDAO.changeZipCode(accountID, newZipCode);
+        boolean failChangeWrongID = accountFileDAO.changeZipCode(999, newZipCode);
+
+
+        // Analyze
+        Account updatedAccount = accountFileDAO.getAccount(accountID);
+        assertTrue(successChange);
+        assertEquals(newZipCode, updatedAccount.getZipCode());
+        assertFalse(failChangeWrongID);
     }
 
 }

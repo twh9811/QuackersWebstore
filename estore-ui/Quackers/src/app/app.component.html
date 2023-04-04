@@ -1,4 +1,6 @@
-<h1>{{title}}</h1>
-<router-outlet></router-outlet>
-<app-notifications></app-notifications>
-<button *ngIf="this.router.url != '/login'" type="button" (click)="logout()">Logout</button>
+<div class="header">
+    <navigation-bar></navigation-bar>
+</div>
+<div class="main">
+    <router-outlet></router-outlet>
+</div>

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,8 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class ShoppingCartFileDAO implements ShoppingCartDAO {
-
-    private static final Logger LOG = Logger.getLogger(DuckFileDAO.class.getName());
     Map<Integer, ShoppingCart> carts; // Provides a local cache of the shopping cart objects
                                       // so that we don't need to read from the file
                                       // each time

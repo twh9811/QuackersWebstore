@@ -1,0 +1,53 @@
+<form id="create-form" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <div id="control-group-container">
+        <div class="controls-container">
+            <div class="header">Payment Information</div>
+            <div class="info-detail">
+                <mat-form-field appearance="fill" floatLabel="always"
+                    [ngClass]="{'margin-bottom-20px': shouldDisplayError('cardNumber', true)}">
+                    <mat-label>Credit Card Number</mat-label>
+                    <input matInput type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
+                        placeholder="XXXX XXXX XXXX XXXX" formControlName="cardNumber" maxlength="19" required>
+                    <mat-error class="error" *ngIf="shouldDisplayError('cardNumber', true)">
+                        Please enter a valid credit card number (i.e. 5555 5555 5555 5555).
+                    </mat-error>
+                    <mat-error class="error"
+                        *ngIf="shouldDisplayError('cardNumber', false) && !shouldDisplayError('cardNumber', true)">
+                        Please enter a credit card number.
+                    </mat-error>
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" floatLabel="always"
+                    [ngClass]="{'margin-bottom-20px': shouldDisplayError('expiration', true)}">
+                    <mat-label>Expiration Date</mat-label>
+                    <input matInput type="text" pattern="\d{2}\/\d{4}" placeholder="MM/YYYY"
+                        formControlName="expiration" maxlength="7" required>
+                    <mat-error class="error" *ngIf="shouldDisplayError('expiration', true)">
+                        Please enter a valid expiration date (i.e. 10/2004).
+                    </mat-error>
+                    <mat-error class="error"
+                        *ngIf="shouldDisplayError('expiration', false) && !shouldDisplayError('expiration', true)">
+                        Please enter an expiration date.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>CVV</mat-label>
+                    <input matInput type="tel" inputmode="numeric" formControlName="cvv" pattern="\d{3}"
+                        placeholder="XXX" required>
+                    <mat-error class="error" *ngIf="shouldDisplayError('cvv', true)">
+                        Please enter a valid CVV (i.e. 123).
+                    </mat-error>
+                    <mat-error class="error"
+                        *ngIf="shouldDisplayError('cvv', false) && !shouldDisplayError('cvv', true)">
+                        Please enter a CVV.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <mat-dialog-actions class="button-container">
+                <button mat-raised-button class="fix-hover green-hover">Submit</button>
+                <button mat-raised-button class="fix-hover red-hover" type="button"
+                    [mat-dialog-close]="null">Close</button>
+            </mat-dialog-actions>
+        </div>
+    </div>
+</form>

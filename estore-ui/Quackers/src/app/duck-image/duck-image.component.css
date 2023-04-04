@@ -1,0 +1,282 @@
+.duck-image-container {
+    padding: 0%;
+    margin: 0%;
+    position: relative;
+}
+
+.duck-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 0;
+}
+
+.duck-hat-1-small {
+    width: 70px;
+    height: 44px;
+    position: absolute;
+    top: 30px;
+    right: 80px;
+    z-index: 1;
+}
+
+.duck-hat-1-medium {
+    width: 80px;
+    height: 52px;
+    position: absolute;
+    top: 13px;
+    right: 76px;
+    z-index: 1;
+}
+
+.duck-hat-1-large {
+    width: 93px;
+    height: 60px;
+    position: absolute;
+    top: 0px;
+    right: 70px;
+    z-index: 1;
+}
+
+.duck-hat-2-small {
+    width: 54px;
+    height: 38px;
+    position: absolute;
+    top: 35px;
+    right: 91px;
+    z-index: 1;
+}
+
+.duck-hat-2-medium {
+    width: 68px;
+    height: 48px;
+    position: absolute;
+    top: 16px;
+    right: 85px;
+    z-index: 1;
+}
+
+.duck-hat-2-large {
+    width: 81px;
+    height: 57px;
+    position: absolute;
+    top: 0px;
+    right: 80px;
+    z-index: 1;
+}
+
+.duck-hat-3-small {
+    width: 53px;
+    height: 33px;
+    position: absolute;
+    top: 38px;
+    right: 88px;
+    z-index: 1;
+}
+
+.duck-hat-3-medium {
+    width: 66px;
+    height: 41px;
+    position: absolute;
+    top: 22px;
+    right: 82px;
+    z-index: 1;
+}
+
+.duck-hat-3-large {
+    width: 78px;
+    height: 50px;
+    position: absolute;
+    top: 5px;
+    right: 77px;
+    z-index: 1;
+}
+
+.duck-handItem-1-small {
+    width: 43px;
+    height: 16px;
+    position: absolute;
+    top: 115px;
+    right: 75px;
+    z-index: 2;
+}
+
+.duck-handItem-1-medium {
+    width: 58px;
+    height: 20px;
+    position: absolute;
+    top: 115px;
+    right: 65px;
+    z-index: 2;
+}
+
+.duck-handItem-1-large {
+    width: 64px;
+    height: 26px;
+    position: absolute;
+    top: 125px;
+    right: 55px;
+    z-index: 2;
+}
+
+.duck-handItem-2-small {
+    width: 29px;
+    height: 29px;
+    position: absolute;
+    top: 110px;
+    right: 73px;
+    z-index: 2;
+}
+
+.duck-handItem-2-medium {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 110px;
+    right: 65px;
+    z-index: 2;
+}
+
+.duck-handItem-2-large {
+    width: 42px;
+    height: 42px;
+    position: absolute;
+    top: 115px;
+    right: 55px;
+    z-index: 2;
+}
+
+.duck-handItem-3-small {
+    width: 37px;
+    height: 16px;
+    position: absolute;
+    top: 117px;
+    right: 77px;
+    z-index: 2;
+}
+
+.duck-handItem-3-medium {
+    width: 50px;
+    height: 22px;
+    position: absolute;
+    top: 117px;
+    right: 68px;
+    z-index: 2;
+}
+
+.duck-handItem-3-large {
+    width: 55px;
+    height: 24px;
+    position: absolute;
+    top: 122px;
+    right: 58px;
+    z-index: 2;
+}
+
+.duck-handItem-4-small {
+    width: 34px;
+    height: 32px;
+    position: absolute;
+    top: 105px;
+    right: 77px;
+    z-index: 2;
+}
+
+.duck-handItem-4-medium {
+    width: 38px;
+    height: 36px;
+    position: absolute;
+    top: 105px;
+    right: 68px;
+    z-index: 2;
+}
+
+.duck-handItem-4-large {
+    width: 44px;
+    height: 41px;
+    position: absolute;
+    top: 110px;
+    right: 58px;
+    z-index: 2;
+}
+
+.duck-jewelry-1-small {
+    width: 58px;
+    height: 27px;
+    position: absolute;
+    top: 96px;
+    right: 88px;
+    z-index: 1;
+}
+
+.duck-jewelry-1-medium {
+    width: 74px;
+    height: 34px;
+    position: absolute;
+    top: 90px;
+    right: 77px;
+    z-index: 1;
+}
+
+.duck-jewelry-1-large {
+    width: 97px;
+    height: 49px;
+    position: absolute;
+    top: 84px;
+    right: 63px;
+    z-index: 1;
+}
+
+.duck-jewelry-2-small {
+    width: 54px;
+    height: 45px;
+    position: absolute;
+    top: 99px;
+    right: 90px;
+    z-index: 1;
+}
+
+.duck-jewelry-2-medium {
+    width: 61px;
+    height: 51px;
+    position: absolute;
+    top: 99px;
+    right: 90px;
+    z-index: 1;
+}
+
+.duck-jewelry-2-large {
+    width: 76px;
+    height: 63px;
+    position: absolute;
+    top: 97px;
+    right: 84px;
+    z-index: 1;
+}
+
+.duck-jewelry-3-small {
+    width: 8px;
+    height: 19px;
+    position: absolute;
+    top: 84px;
+    right: 94px;
+    z-index: 1;
+}
+
+.duck-jewelry-3-medium {
+    width: 10px;
+    height: 25px;
+    position: absolute;
+    top: 78px;
+    right: 90px;
+    z-index: 1;
+}
+
+.duck-jewelry-3-large {
+    width: 13px;
+    height: 33px;
+    position: absolute;
+    top: 75px;
+    right: 85px;
+    z-index: 1;
+}

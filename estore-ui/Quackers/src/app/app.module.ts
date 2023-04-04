@@ -9,19 +9,26 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatCardModule } from '@angular/material/card';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CatalogComponent } from './catalog/catalog.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-import { DuckDetailComponent } from './duck-detail/duck-detail.component';
 import { DucksearchComponent } from './ducksearch/ducksearch.component';
 import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
 import { LoginComponent } from './login/login.component';
-import { NotificationsComponent } from './notifications/notifications.component';
 import { ProductCreateComponent } from './product-create-modify/product-create-modify.component';
+import { ProfileComponent } from './profile/profile.component';
 import { ReceiptComponent } from './receipt/receipt.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-notification.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { DuckImageComponent } from './duck-image/duck-image.component';;
+import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import { CustomizeComponent } from './customize/customize.component';
+import { ShippingModifyComponent } from './shipping-modify/shipping-modify.component';
+import { PaymentModifyComponent } from './payment-modify/payment-modify.component';
 
 @NgModule({
   declarations: [
@@ -30,13 +37,18 @@ import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-
     ShoppingCartComponent,
     InventoryManagementComponent,
     ProductCreateComponent,
-    NotificationsComponent,
     CatalogComponent,
     DucksearchComponent,
-    DuckDetailComponent,
+    ProfileComponent,
     CheckoutComponent,
     ReceiptComponent,
     SnackbarNotificationComponent,
+    DuckImageComponent,
+    ProfileComponent,
+    NavigationBarComponent,
+    CustomizeComponent,
+    ShippingModifyComponent,
+    PaymentModifyComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +61,9 @@ import { SnackbarNotificationComponent } from './snackbar-notification/snackbar-
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
+    MatCardModule,
+    MatIconModule,
+    MatSelectModule,
     BrowserAnimationsModule
   ],
   providers: [],

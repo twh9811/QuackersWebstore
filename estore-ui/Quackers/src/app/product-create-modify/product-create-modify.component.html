@@ -1,74 +1,97 @@
-<form id="create-form" [formGroup]="createForm" (ngSubmit)="onSubmit()">
-    <div id="control-group-container">
-        <div class="controls-container">
-            <span class="control-group-header">General</span>
-            <div class="form-control-container">
-                <label for="name_input">Name</label><br>
-                <input class="form-control" id="name_input" type="text" formControlName="name" pattern="^\s*\S+.*$"
-                    required><br><br>
+<div class="container">
+    <form id="create-form" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+        <div id="control-group-container">
+            <div class="controls-container">
+                <span class="control-group-header">General</span>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" formControlName="name" pattern="^\s*\S+.*$" required>
+                    <mat-error>Please enter a name.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always"
+                    [ngClass]="{'extra-margin-bottom2': !createForm.controls.quantity.valid && createForm.controls.quantity.touched}">
+                    <mat-label>Quantity</mat-label>
+                    <input matInput class="form-control" id="quantity_input" type="number" formControlName="quantity"
+                        min="0" pattern="^\d+(\.[0]+)?$" required>
+                    <mat-error>Please enter an integer quantity greater than or equal to 0.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always"
+                    [ngClass]="{'extra-margin-bottom': !createForm.controls.price.valid && createForm.controls.price.touched}">
+                    <mat-label>Price (Enter 0 for default price)</mat-label>
+                    <input matInput class="form-control" id="price_input" type="number" step="0.01" min="0.00"
+                        formControlName="price" required>
+                    <mat-error>Please enter a price greater than or equal to 0.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Size</mat-label>
+                    <mat-select class="form-control" id="size_input" formControlName="size" placeholder="Select a Size"
+                        required>
+                        <mat-option value="SMALL">Small</mat-option>
+                        <mat-option value="MEDIUM">Medium</mat-option>
+                        <mat-option value="LARGE">Large</mat-option>
+                    </mat-select>
+                    <mat-error>Please select a size.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Color</mat-label>
+                    <mat-select class="form-control" id="color_input" formControlName="color"
+                        placeholder="Select a Color" required>
+                        <mat-option value="RED">Red</mat-option>
+                        <mat-option value="ORANGE">Orange</mat-option>
+                        <mat-option value="YELLOW">Yellow</mat-option>
+                        <mat-option value="GREEN">Green</mat-option>
+                        <mat-option value="BLUE">Blue</mat-option>
+                        <mat-option value="INDIGO">Indigo</mat-option>
+                        <mat-option value="VIOLET">Violet</mat-option>
+                    </mat-select>
+                    <mat-error>Please select a color.</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-control-container">
-                <label for="quantity_input">Quantity</label><br>
-                <input class="form-control" id="quantity_input" type="number" formControlName="quantity" min="0"
-                    required><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="price_input">Price (Enter 0 for default price)</label><br>
-                <input class="form-control" id="price_input" type="number" step="0.01" min="0.00" formControlName="price"
-                    required><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="size_input">Size</label><br>
-                <select class="form-control" id="size_input" formControlName="size" required>
-                    <option value="SMALL">Small</option>
-                    <option value="MEDIUM">Medium</option>
-                    <option value="LARGE">Large</option>
-                    <option value="EXTRA_LARGE">Extra Large</option>
-                </select><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="color_input">Color</label><br>
-                <select class="form-control" id="color_input" formControlName="color" required>
-                    <option value="RED">Red</option>
-                    <option value="ORANGE">Orange</option>
-                    <option value="YELLOW">Yellow</option>
-                    <option value="GREEN">Green</option>
-                    <option value="BLUE">Blue</option>
-                    <option value="INDIGO">Indigo</option>
-                    <option value="VIOLET">Violet</option>
-                </select><br><br>
+            <div class="controls-container">
+                <span class="control-group-header">Accessories</span>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Hat</mat-label>
+                    <mat-select class="form-control" formControlName="hatUID" required>
+                        <mat-option value="0">None</mat-option>
+                        <mat-option value="1">Bucket Hat</mat-option>
+                        <mat-option value="2">Baseball Hat</mat-option>
+                        <mat-option value="3">Fedora</mat-option>
+                    </mat-select>
+                    <mat-error>Please select a hat.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Hand Item</mat-label>
+                    <mat-select class="form-control" formControlName="handItemUID" required>
+                        <mat-option value="0">None</mat-option>
+                        <mat-option value="1">Knife</mat-option>
+                        <mat-option value="2">iPhone</mat-option>
+                        <mat-option value="3">NES Controller</mat-option>
+                        <mat-option value="4">Gun</mat-option>
+                    </mat-select>
+                    <mat-error>Please select a hand item.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-label>Jewelry</mat-label>
+                    <mat-select class="form-control" formControlName="jewelryUID" required>
+                        <mat-option value="0">None</mat-option>
+                        <mat-option value="1">Necklace without Pendant</mat-option>
+                        <mat-option value="2">Necklace with Pendant</mat-option>
+                        <mat-option value="3">Earring</mat-option>
+                    </mat-select>
+                    <mat-error>Please select an item of jewelry.</mat-error>
+                </mat-form-field>
             </div>
         </div>
-        <div class="controls-container">
-            <span class="control-group-header">Outfit</span>
-            <div class="form-control-container">
-                <label for="hat_input">Hat UID</label><br>
-                <input class="form-control" id="hat_input" type="number" formControlName="hatUID" min="0"
-                    required><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="shirt_input">Shirt UID</label><br>
-                <input class="form-control" id="shirt_input" type="number" formControlName="shirtUID" min="0"
-                    required><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="shoes_input">Shoes UID</label><br>
-                <input class="form-control" id="shoes_input" type="number" formControlName="shoesUID" min="0"
-                    required><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="hand_item_input">Hand Item UID</label><br>
-                <input class="form-control" id="hand_item_input" type="number" formControlName="handItemUID" min="0"
-                    required><br><br>
-            </div>
-            <div class="form-control-container">
-                <label for="jewelry_input">Jewelry UID</label><br>
-                <input class="form-control" id="jewelry_input" type="number" formControlName="jewelryUID" min="0"
-                    required><br><br>
-            </div>
-        </div>
+
+    </form>
+    <div class="preview-container">
+        <span class="control-group-header">Preview</span>
+        <span *ngIf="!showPreview()" style="text-align: center;">In order for the preview to display, you must select a
+            size and a color.</span>
+        <app-duck-image *ngIf="showPreview()" [duck]="convertFormToDuck()"></app-duck-image>
     </div>
-    <button id="submit-btn">Submit</button>
-</form>
-<br>
-<button (click)="goBack()">Back to Inventory Management Page</button>
+</div>
+<mat-dialog-actions class="button-container">
+    <button mat-raised-button class="fix-hover green-hover" (click)="onSubmit()">Confirm</button>
+    <button mat-raised-button class="fix-hover red-hover" type="button" [mat-dialog-close]="null">Close</button>
+</mat-dialog-actions>
