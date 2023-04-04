@@ -17,7 +17,7 @@ An online E-store system built in Java 19 and Angular
 - Java 19 (Make sure to have correct JAVA_HOME setup in your environment)
 - Maven
 - Install angular material (`npm install --save @angular/material`)
-    - Note: If you are having compiling issues after doing this still try running `npm install`
+    - Note: If you are having compiling issues with angular after doing this, try running `npm install`
 
 
 ## How to run it
