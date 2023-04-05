@@ -354,12 +354,16 @@ export class ShoppingCartComponent implements OnInit {
       // Make sure requested quantity is available in inventory
       if (duck.quantity >= value) continue;
 
+      if(duck.quantity == 0) {
+        this._snackBarService.openErrorSnackbar(`The duck with the name ${duck.name} is no longer available.`);
+      }
+
       // If quantity requested > quantity available, error then update cart to only have the
       // quantity available in it
       shouldUpdate = true;
       // Silences error if the value request is 0; (Item shouldn't be in cart)
-      if (value != 0) {
-        this._snackBarService.openInfoSnackbar(`The duck with the name ${duck.name} only has ${duck.quantity} 
+      if (value != 0 && duck.quantity != 0) {
+        this._snackBarService.openErrorSnackbar(`The duck with the name ${duck.name} only has ${duck.quantity} 
           available in stock! You requested ${value}. Your cart has been reflected to only have ${duck.quantity}.`);
       }
 
