@@ -198,6 +198,8 @@ without modifying it. This allows for easy extension of the Account class by
 adding new classes that also inherit from it, without changing the existing 
 implementation.
 
+![user-owner-account UML Diagram](user-owner-account.png)
+
 
 ### Pure Fabrication
 
@@ -217,7 +219,7 @@ in its records and parse it respectively with its own methods. If a user wants
 to delete their account, the authentication system removes it from its records. 
 A user account has no functionality other than storing the data for an account.
 
-![Inventory Controller UML Diagram](inventory-controller-uml.png)
+![UserAccount UML Diagram](UserAccount.png)
 
 Our shopping cart would most likely serve to benefit from pure fabrication. We
 need something to handle the product methods. Right now, we would have to add
@@ -278,7 +280,7 @@ the item exists in the cart by searching through its list of item objects. If th
 item is found, the Shopping cart class can remove it from the cart, as it holds 
 the necessary information about the item.
 
-![Inventory Controller UML Diagram](inventory-controller-uml.png)
+![Account UML Diagram](Account.png)
 
 Another class that supports the information expert principle is the Accounts class.
 The Accounts class is responsible for updating the profile information and this is 
