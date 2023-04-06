@@ -131,31 +131,48 @@ not have access to a shopping cart.
 
 ### Open/Closed Principle
 
-The Open/Closed Principle is that software entities should be open for 
-extension but closed for modification. Our Model Tier UML diagram illustrates 
-this by creating multiple states/entities that can be used in other entities 
-through extension but cannot be changed/modified by them. 
+The Open/Closed Principle is a design principle stating that software entities 
+should be open for extension but closed for modification, in order to allow for 
+flexibility and maintainability in the software design. 
 
-An example of this is our Account class. Our Account class on its own is an
-abstract class that supplies basic functionality and necessary properties
-to classes that implement it, such as our UserAccount and OwnerAccount classes.
+Applications:<br>
+The Open/Closed Principle is applied in our design by creating multiple states/
+entities that are open for extension but closed for modification by other 
+entities. To further adhere to this principle, we broke down our design into more
+specific components and creating additional entities that share functionality, 
+allowing for easier extension without the need for modification.
+An example of this principle in action is our Account class, which is an abstract
+class that provides essential properties and basic functionality to classes like 
+UserAccount and OwnerAccount, which implement it. UserAccount and OwnerAccount 
+classes meet the Open/Closed Principle by extending the abstract Account class, 
+which is closed for modification. Both UserAccount and OwnerAccount classes 
+inherit the properties and basic functionality provided by the Account class 
+without modifying it. This allows for easy extension of the Account class by 
+adding new classes that also inherit from it, without changing the existing 
+implementation.
 
-We could follow this principle better by either breaking down our design 
-into more specific components or by creating more entities that share
-functionality.
+![user-owner-account UML Diagram](user-owner-account.png)
+
 
 ### Pure Fabrication
 
-This principle is applied in our design with our user account, as seen above in
+Pure Fabrication is a design principle stating that a class or module should be
+created solely for the purpose of fulfilling a certain functionality or 
+responsibility, without being tied to a specific entity or behavior in the system.
+
+Applications:<br>
+This principle is applied in our design with our user account, as seen above in 
 the Model Tier UML diagram. This is merely a way to store a username, password, 
-and payment information in an easy manner. Our authentication system is going 
-to be handling all the creation, establishing, and verifying of the credentials 
+and payment information in an easy manner. Our authentication system is going to
+be handling all the creation, establishing, and verifying of the credentials 
 within it. If the user account is being created, the authentication system will 
 store it in its records. If an account already exists and somebody is trying to 
 log in, then our authentication system will take the data from the user account 
 in its records and parse it respectively with its own methods. If a user wants 
 to delete their account, the authentication system removes it from its records. 
 A user account has no functionality other than storing the data for an account.
+
+![UserAccount UML Diagram](UserAccount.png)
 
 Our shopping cart would most likely serve to benefit from pure fabrication. We
 need something to handle the product methods. Right now, we would have to add
@@ -171,6 +188,10 @@ screen.
 
 ### Single Responsibility
 
+Single Responsibility is a design principle stating that a class or module 
+should have only one reason to change.
+
+Applications:<br>
 As of now, our design makes use of the single responsibility object-oriented
 design principle by separating our entity objects from our data accessor
 objects. We use the entities to allow for runtime data persistence, and we use
@@ -198,24 +219,31 @@ stored in the customer entity object.
 
 ### Information Expert
 
-The responsibility should be assigned to the object that has the information
+The responsibility should be assigned to the object that has the information 
 that allows the task to be completed.
 
 Applications:<br>
-The Model Tier UML diagram above adhere to the information expert principle.
-For example, in the shopping cart class, the shopping cart is given the
-responsibility of checking out and removing the item. This adheres to the
-principle because since the object holds the item, we can assign the
-responsibilities of adding the item, removing the item, and editing the number
-of the item to the Shopping cart class. This keeps the class UML diagram simple
-and easy to understand without creating complications. Another class that
-supports the information expert principle is the Accounts class. The Accounts
-class is responsible for updating the profile information and this is important
-as the Accounts class holds a profile object. Since the account class holds a
-profile object, It is appropriate to give the Accounts class the responsibility
-of updating the profile information. Thus, making the UML diagram adhere to
-the information expert principle.
+The Model Tier UML diagram above adhere to the information expert principle. For
+example, in the shopping cart class, the shopping cart is given the 
+responsibility of checking out and removing the item. This adheres to the 
+principle because since the object holds the item, we can assign the 
+responsibilities of adding the item, removing the item, and editing the number 
+of the item to the Shopping cart class. This keeps the class UML diagram simple 
+and easy to understand without creating complications. For example, if a user 
+wants to remove an item from their cart, the Shopping cart class can check whether
+the item exists in the cart by searching through its list of item objects. If the
+item is found, the Shopping cart class can remove it from the cart, as it holds 
+the necessary information about the item.
 
+![ShoppingCart UML Diagram](ShoppingCart.png)
+
+Another class that supports the information expert principle is the Accounts class.
+The Accounts class is responsible for updating the profile information and this is 
+important as the Accounts class holds a profile object. Since the account class 
+holds a profile object, it is appropriate to give the Accounts class the 
+responsibility of updating the profile information.
+
+![Account UML Diagram](Account.png)
 
 ## Testing
 
