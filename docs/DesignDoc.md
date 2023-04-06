@@ -257,7 +257,7 @@ paths.
 
 ### Unit Testing and Code Coverage
 
-![Overall Code Coverage for Sprint 2](Sprint%202%20Code%20Coverage/Overall.png)
-![Persistence Code Coverage for Sprint 2](Sprint%202%20Code%20Coverage/Persistence.png)
-![Model Code Coverage for Sprint 2](Sprint%202%20Code%20Coverage/Model.png)
-![Controller Code Coverage for Sprint 2](Sprint%202%20Code%20Coverage/Controller.png)
+![Overall Code Coverage for Sprint 2](Code%20Coverage/Overall.png)
+![Persistence Code Coverage for Sprint 2](Code%20Coverage/Persistence.png)
+![Model Code Coverage for Sprint 2](Code%20Coverage/Model.png)
+![Controller Code Coverage for Sprint 2](Code%20Coverage/Controller.png)
