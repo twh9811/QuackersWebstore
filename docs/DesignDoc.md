@@ -47,14 +47,6 @@ From an owners perspective, they have access to the whole store catalog
 and can add/remove new products or even update existing ones at the click 
 of a button.
 
-### MVP Features
-
-> _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
-
-### Enhancements
-
-> _**[Sprint 4]** Describe what enhancements you have implemented for the
-project._
 
 ## Application Domain
 
@@ -113,46 +105,6 @@ added the items they want, they can proceed to the shopping cart to modify
 the quantity of each item and checkout. After checking out, they are directed to a page
 where they are given a receipt.
 
-### View Tier
-
-> _**[Sprint 4]** Provide a summary of the View Tier UI of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities. This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
-
-> _**[Sprint 4]** You must provide at least **2 sequence diagrams** as is
-relevant to a particular aspects
-> of the design that you are describing. For example, in e-store you might
-create a
-> sequence diagram of a customer searching for an item and adding to their
-cart.
-> As these can span multiple tiers, be sure to include an relevant HTTP
-requests from the client-side to the server-side
-> to help illustrate the end-to-end flow._
-
-> _**[Sprint 4]** To adequately show your system, you will need to present
-the **class diagrams** where relevant in your design. Some additional tips:_
->* _Class diagrams only apply to the **ViewModel** and **Model** Tier_
->* _A single class diagram of the entire system will not be effective. You may
-   start with one, but will be need to break it down into smaller sections to
-   account for requirements of each of the Tier static models below._
->* _Correct labeling of relationships with proper notation for the relationship
-   type, multiplicities, and navigation information will be important._
->* _Include other details such as attributes and method signatures that you
-   think are needed to support the level of detail in your discussion._
-
-### ViewModel Tier
-
-> _**[Sprint 4]** Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
-
-> _At appropriate places as part of this narrative provide **one** or more
-updated and **properly labeled**
-> static models (UML class diagrams) with some details such as critical
-attributes and methods._
->
-![Replace with your ViewModel Tier class diagram 1, etc.](model-placeholder.png)
 
 ### Model Tier
 
@@ -173,6 +125,7 @@ linked to their own Shopping Cart ID, an OwnerAccount's ID is not and they do
 not have access to a shopping cart.
 
 ![Model Tier UML Diagram](model-uml.png)
+
 
 ## OO Design Principles
 
@@ -266,19 +219,19 @@ stored in the customer entity object.
 
 ### Information Expert
 
-The responsibility should be assigned to the object that has the information 
-that allows the task to be completed.
+Information Expert is a design principle where responsibility is assigned 
+to an object that has the information needed to complete a task.
 
 Applications:<br>
-The Model Tier UML diagram above adhere to the information expert principle. For
+The Model Tier UML diagram above adheres to the information expert principle. For
 example, in the shopping cart class, the shopping cart is given the 
-responsibility of checking out and removing the item. This adheres to the 
-principle because since the object holds the item, we can assign the 
-responsibilities of adding the item, removing the item, and editing the number 
-of the item to the Shopping cart class. This keeps the class UML diagram simple 
-and easy to understand without creating complications. For example, if a user 
+responsibility of checking out and removing items from the cart. 
+Because the shopping cart object holds the item array, we can assign it the
+responsibility of adding items, removing items, and editing the quantity of
+each item in the cart. This keeps the class UML diagram simple and easy to 
+understand without creating complications. For example, if a user 
 wants to remove an item from their cart, the Shopping cart class can check whether
-the item exists in the cart by searching through its list of item objects. If the
+the item exists in the cart by searching through its list of items. If the
 item is found, the Shopping cart class can remove it from the cart, as it holds 
 the necessary information about the item.
 
@@ -292,30 +245,15 @@ responsibility of updating the profile information.
 
 ![Account UML Diagram](Account.png)
 
-> _**[Sprint 3 & 4]** OO Design Principles should span across **all tiers.**_
-
-## Static Code Analysis/Future Design Improvements
-
-> _**[Sprint 4]** With the results from the Static Code Analysis exercise,
-> **Identify 3-4** areas within your code that have been flagged by the Static
-Code
-> Analysis Tool (SonarQube) and provide your analysis and recommendations.  
-> Include any relevant screenshot(s) with each area._
-
-> _**[Sprint 4]** Discuss **future** refactoring and other design improvements
-your team would explore if the team had additional time._
-
 ## Testing
 
 ### Acceptance Testing
 
-All 37 of our acceptance criteria tests for sprint 2 have passed. We have a total
-of 47 acceptance criteria tests, 10 of which have not been tested as they are sprint
-3 stories. For the sake of the acceptance criteria test plan, they have been marked
-as failing for sprint 2 but are noted as not being sprint 2 stories. We do not have
-any major concerns about our acceptance test plan. However, we have realized that 
-some of our acceptance criteria are a little vague. We hope to fix that going forward.
-Other than that, we believe everything is ready to be demoed.
+Out of our 64 acceptance critera tests all pass except for 7 of them. However, we
+expected these 7 to fail because the story card is for a feature that we deemed
+no longer necessary and removed. Other than those tests, everything else went well.
+Unlike Sprint 2, we made our acceptance criteria tests more in depth to cover more
+paths.
 
 ### Unit Testing and Code Coverage
 

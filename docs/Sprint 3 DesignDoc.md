@@ -219,19 +219,19 @@ stored in the customer entity object.
 
 ### Information Expert
 
-The responsibility should be assigned to the object that has the information 
-that allows the task to be completed.
+Information Expert is a design principle where responsibility is assigned 
+to an object that has the information needed to complete a task.
 
 Applications:<br>
-The Model Tier UML diagram above adhere to the information expert principle. For
+The Model Tier UML diagram above adheres to the information expert principle. For
 example, in the shopping cart class, the shopping cart is given the 
-responsibility of checking out and removing the item. This adheres to the 
-principle because since the object holds the item, we can assign the 
-responsibilities of adding the item, removing the item, and editing the number 
-of the item to the Shopping cart class. This keeps the class UML diagram simple 
-and easy to understand without creating complications. For example, if a user 
+responsibility of checking out and removing items from the cart. 
+Because the shopping cart object holds the item array, we can assign it the
+responsibility of adding items, removing items, and editing the quantity of
+each item in the cart. This keeps the class UML diagram simple and easy to 
+understand without creating complications. For example, if a user 
 wants to remove an item from their cart, the Shopping cart class can check whether
-the item exists in the cart by searching through its list of item objects. If the
+the item exists in the cart by searching through its list of items. If the
 item is found, the Shopping cart class can remove it from the cart, as it holds 
 the necessary information about the item.
 
@@ -249,13 +249,11 @@ responsibility of updating the profile information.
 
 ### Acceptance Testing
 
-All 37 of our acceptance criteria tests for sprint 2 have passed. We have a total
-of 47 acceptance criteria tests, 10 of which have not been tested as they are sprint
-3 stories. For the sake of the acceptance criteria test plan, they have been marked
-as failing for sprint 2 but are noted as not being sprint 2 stories. We do not have
-any major concerns about our acceptance test plan. However, we have realized that 
-some of our acceptance criteria are a little vague. We hope to fix that going forward.
-Other than that, we believe everything is ready to be demoed.
+Out of our 64 acceptance critera tests all pass except for 7 of them. However, we
+expected these 7 to fail because the story card is for a feature that we deemed
+no longer necessary and removed. Other than those tests, everything else went well.
+Unlike Sprint 2, we made our acceptance criteria tests more in depth to cover more
+paths.
 
 ### Unit Testing and Code Coverage
 
