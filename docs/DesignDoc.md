@@ -217,16 +217,7 @@ in its records and parse it respectively with its own methods. If a user wants
 to delete their account, the authentication system removes it from its records. 
 A user account has no functionality other than storing the data for an account.
 
-This principle is applied in our design with our user account, as seen above in
-the Model Tier UML diagram. This is merely a way to store a username, password, 
-and payment information in an easy manner. Our authentication system is going 
-to be handling all the creation, establishing, and verifying of the credentials 
-within it. If the user account is being created, the authentication system will 
-store it in its records. If an account already exists and somebody is trying to 
-log in, then our authentication system will take the data from the user account 
-in its records and parse it respectively with its own methods. If a user wants 
-to delete their account, the authentication system removes it from its records. 
-A user account has no functionality other than storing the data for an account.
+![Inventory Controller UML Diagram](inventory-controller-uml.png)
 
 Our shopping cart would most likely serve to benefit from pure fabrication. We
 need something to handle the product methods. Right now, we would have to add
@@ -286,6 +277,8 @@ wants to remove an item from their cart, the Shopping cart class can check wheth
 the item exists in the cart by searching through its list of item objects. If the
 item is found, the Shopping cart class can remove it from the cart, as it holds 
 the necessary information about the item.
+
+![Inventory Controller UML Diagram](inventory-controller-uml.png)
 
 Another class that supports the information expert principle is the Accounts class.
 The Accounts class is responsible for updating the profile information and this is 
