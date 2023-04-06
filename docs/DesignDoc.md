@@ -124,7 +124,7 @@ startup and can not be regsitered or created directly. The UserAccount's ID is
 linked to their own Shopping Cart ID, an OwnerAccount's ID is not and they do
 not have access to a shopping cart.
 
-![Model Tier UML Diagram](model-uml.png)
+![Model Tier UML Diagram](UML%20Diagrams/model-uml.png)
 
 
 ## OO Design Principles
@@ -151,7 +151,7 @@ without modifying it. This allows for easy extension of the Account class by
 adding new classes that also inherit from it, without changing the existing 
 implementation.
 
-![user-owner-account UML Diagram](user-owner-account.png)
+![user-owner-account UML Diagram](UML%20Diagrams/user-owner-account.png)
 
 
 ### Pure Fabrication
@@ -172,7 +172,7 @@ in its records and parse it respectively with its own methods. If a user wants
 to delete their account, the authentication system removes it from its records. 
 A user account has no functionality other than storing the data for an account.
 
-![UserAccount UML Diagram](UserAccount.png)
+![UserAccount UML Diagram](UML%20Diagrams/UserAccount.png)
 
 Our shopping cart would most likely serve to benefit from pure fabrication. We
 need something to handle the product methods. Right now, we would have to add
@@ -215,7 +215,7 @@ be saved in a profile entity object that is linked to the customer entity
 object. However, certain information, such as the customer’s name, would remain
 stored in the customer entity object.
 
-![Inventory Controller UML Diagram](inventory-controller-uml.png)
+![Inventory Controller UML Diagram](UML%20Diagrams/inventory-controller-uml.png)
 
 ### Information Expert
 
@@ -235,7 +235,7 @@ the item exists in the cart by searching through its list of items. If the
 item is found, the Shopping cart class can remove it from the cart, as it holds 
 the necessary information about the item.
 
-![ShoppingCart UML Diagram](ShoppingCart.png)
+![ShoppingCart UML Diagram](UML%20Diagrams/ShoppingCart.png)
 
 Another class that supports the information expert principle is the Accounts class.
 The Accounts class is responsible for updating the profile information and this is 
@@ -243,7 +243,7 @@ important as the Accounts class holds a profile object. Since the account class
 holds a profile object, it is appropriate to give the Accounts class the 
 responsibility of updating the profile information.
 
-![Account UML Diagram](Account.png)
+![Account UML Diagram](UML%20Diagrams/Account.png)
 
 ## Testing
 
