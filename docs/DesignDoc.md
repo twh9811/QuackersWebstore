@@ -219,7 +219,7 @@ in its records and parse it respectively with its own methods. If a user wants
 to delete their account, the authentication system removes it from its records. 
 A user account has no functionality other than storing the data for an account.
 
-![UserAccount UML Diagram](UserAccount.png)
+![ShoppingCart UML Diagram](ShoppingCart.png)
 
 Our shopping cart would most likely serve to benefit from pure fabrication. We
 need something to handle the product methods. Right now, we would have to add
@@ -232,6 +232,8 @@ cart class more cohesive in the process. Not to mention, this code can also be
 applied in other situations than the checkout, such as showing the total value
 of all the items in the shopping cart when a user is not on the checkout
 screen.
+
+![UserAccount UML Diagram](UserAccount.png)
 
 ### Single Responsibility
 
