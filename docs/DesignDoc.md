@@ -219,7 +219,7 @@ in its records and parse it respectively with its own methods. If a user wants
 to delete their account, the authentication system removes it from its records. 
 A user account has no functionality other than storing the data for an account.
 
-![ShoppingCart UML Diagram](ShoppingCart.png)
+![UserAccount UML Diagram](UserAccount.png)
 
 Our shopping cart would most likely serve to benefit from pure fabrication. We
 need something to handle the product methods. Right now, we would have to add
@@ -233,12 +233,11 @@ applied in other situations than the checkout, such as showing the total value
 of all the items in the shopping cart when a user is not on the checkout
 screen.
 
-![UserAccount UML Diagram](UserAccount.png)
-
 ### Single Responsibility
 
 Single Responsibility is a design principle stating that a class or module 
 should have only one reason to change.
+
 Applications:<br>
 As of now, our design makes use of the single responsibility object-oriented
 design principle by separating our entity objects from our data accessor
@@ -269,6 +268,7 @@ stored in the customer entity object.
 
 The responsibility should be assigned to the object that has the information 
 that allows the task to be completed.
+
 Applications:<br>
 The Model Tier UML diagram above adhere to the information expert principle. For
 example, in the shopping cart class, the shopping cart is given the 
@@ -282,13 +282,15 @@ the item exists in the cart by searching through its list of item objects. If th
 item is found, the Shopping cart class can remove it from the cart, as it holds 
 the necessary information about the item.
 
-![Account UML Diagram](Account.png)
+![ShoppingCart UML Diagram](ShoppingCart.png)
 
 Another class that supports the information expert principle is the Accounts class.
 The Accounts class is responsible for updating the profile information and this is 
 important as the Accounts class holds a profile object. Since the account class 
 holds a profile object, it is appropriate to give the Accounts class the 
 responsibility of updating the profile information.
+
+![Account UML Diagram](Account.png)
 
 > _**[Sprint 3 & 4]** OO Design Principles should span across **all tiers.**_
 
