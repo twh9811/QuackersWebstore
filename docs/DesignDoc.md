@@ -47,14 +47,6 @@ From an owners perspective, they have access to the whole store catalog
 and can add/remove new products or even update existing ones at the click 
 of a button.
 
-### MVP Features
-
-> _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
-
-### Enhancements
-
-> _**[Sprint 4]** Describe what enhancements you have implemented for the
-project._
 
 ## Application Domain
 
@@ -113,46 +105,6 @@ added the items they want, they can proceed to the shopping cart to modify
 the quantity of each item and checkout. After checking out, they are directed to a page
 where they are given a receipt.
 
-### View Tier
-
-> _**[Sprint 4]** Provide a summary of the View Tier UI of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities. This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
-
-> _**[Sprint 4]** You must provide at least **2 sequence diagrams** as is
-relevant to a particular aspects
-> of the design that you are describing. For example, in e-store you might
-create a
-> sequence diagram of a customer searching for an item and adding to their
-cart.
-> As these can span multiple tiers, be sure to include an relevant HTTP
-requests from the client-side to the server-side
-> to help illustrate the end-to-end flow._
-
-> _**[Sprint 4]** To adequately show your system, you will need to present
-the **class diagrams** where relevant in your design. Some additional tips:_
->* _Class diagrams only apply to the **ViewModel** and **Model** Tier_
->* _A single class diagram of the entire system will not be effective. You may
-   start with one, but will be need to break it down into smaller sections to
-   account for requirements of each of the Tier static models below._
->* _Correct labeling of relationships with proper notation for the relationship
-   type, multiplicities, and navigation information will be important._
->* _Include other details such as attributes and method signatures that you
-   think are needed to support the level of detail in your discussion._
-
-### ViewModel Tier
-
-> _**[Sprint 4]** Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
-
-> _At appropriate places as part of this narrative provide **one** or more
-updated and **properly labeled**
-> static models (UML class diagrams) with some details such as critical
-attributes and methods._
->
-![Replace with your ViewModel Tier class diagram 1, etc.](model-placeholder.png)
 
 ### Model Tier
 
@@ -172,37 +124,55 @@ startup and can not be regsitered or created directly. The UserAccount's ID is
 linked to their own Shopping Cart ID, an OwnerAccount's ID is not and they do
 not have access to a shopping cart.
 
-![Model Tier UML Diagram](model-uml.png)
+![Model Tier UML Diagram](UML%20Diagrams/model-uml.png)
+
 
 ## OO Design Principles
 
 ### Open/Closed Principle
 
-The Open/Closed Principle is that software entities should be open for 
-extension but closed for modification. Our Model Tier UML diagram illustrates 
-this by creating multiple states/entities that can be used in other entities 
-through extension but cannot be changed/modified by them. 
+The Open/Closed Principle is a design principle stating that software entities 
+should be open for extension but closed for modification, in order to allow for 
+flexibility and maintainability in the software design. 
 
-An example of this is our Account class. Our Account class on its own is an
-abstract class that supplies basic functionality and necessary properties
-to classes that implement it, such as our UserAccount and OwnerAccount classes.
+Applications:<br>
+The Open/Closed Principle is applied in our design by creating multiple states/
+entities that are open for extension but closed for modification by other 
+entities. To further adhere to this principle, we broke down our design into more
+specific components and creating additional entities that share functionality, 
+allowing for easier extension without the need for modification.
+An example of this principle in action is our Account class, which is an abstract
+class that provides essential properties and basic functionality to classes like 
+UserAccount and OwnerAccount, which implement it. UserAccount and OwnerAccount 
+classes meet the Open/Closed Principle by extending the abstract Account class, 
+which is closed for modification. Both UserAccount and OwnerAccount classes 
+inherit the properties and basic functionality provided by the Account class 
+without modifying it. This allows for easy extension of the Account class by 
+adding new classes that also inherit from it, without changing the existing 
+implementation.
 
-We could follow this principle better by either breaking down our design 
-into more specific components or by creating more entities that share
-functionality.
+![user-owner-account UML Diagram](UML%20Diagrams/user-owner-account.png)
+
 
 ### Pure Fabrication
 
-This principle is applied in our design with our user account, as seen above in
+Pure Fabrication is a design principle stating that a class or module should be
+created solely for the purpose of fulfilling a certain functionality or 
+responsibility, without being tied to a specific entity or behavior in the system.
+
+Applications:<br>
+This principle is applied in our design with our user account, as seen above in 
 the Model Tier UML diagram. This is merely a way to store a username, password, 
-and payment information in an easy manner. Our authentication system is going 
-to be handling all the creation, establishing, and verifying of the credentials 
+and payment information in an easy manner. Our authentication system is going to
+be handling all the creation, establishing, and verifying of the credentials 
 within it. If the user account is being created, the authentication system will 
 store it in its records. If an account already exists and somebody is trying to 
 log in, then our authentication system will take the data from the user account 
 in its records and parse it respectively with its own methods. If a user wants 
 to delete their account, the authentication system removes it from its records. 
 A user account has no functionality other than storing the data for an account.
+
+![UserAccount UML Diagram](UML%20Diagrams/UserAccount.png)
 
 Our shopping cart would most likely serve to benefit from pure fabrication. We
 need something to handle the product methods. Right now, we would have to add
@@ -218,6 +188,10 @@ screen.
 
 ### Single Responsibility
 
+Single Responsibility is a design principle stating that a class or module 
+should have only one reason to change.
+
+Applications:<br>
 As of now, our design makes use of the single responsibility object-oriented
 design principle by separating our entity objects from our data accessor
 objects. We use the entities to allow for runtime data persistence, and we use
@@ -241,56 +215,49 @@ be saved in a profile entity object that is linked to the customer entity
 object. However, certain information, such as the customer’s name, would remain
 stored in the customer entity object.
 
-![Inventory Controller UML Diagram](inventory-controller-uml.png)
+![Inventory Controller UML Diagram](UML%20Diagrams/inventory-controller-uml.png)
 
 ### Information Expert
 
-The responsibility should be assigned to the object that has the information
-that allows the task to be completed.
+Information Expert is a design principle where responsibility is assigned 
+to an object that has the information needed to complete a task.
 
 Applications:<br>
-The Model Tier UML diagram above adhere to the information expert principle.
-For example, in the shopping cart class, the shopping cart is given the
-responsibility of checking out and removing the item. This adheres to the
-principle because since the object holds the item, we can assign the
-responsibilities of adding the item, removing the item, and editing the number
-of the item to the Shopping cart class. This keeps the class UML diagram simple
-and easy to understand without creating complications. Another class that
-supports the information expert principle is the Accounts class. The Accounts
-class is responsible for updating the profile information and this is important
-as the Accounts class holds a profile object. Since the account class holds a
-profile object, It is appropriate to give the Accounts class the responsibility
-of updating the profile information. Thus, making the UML diagram adhere to
-the information expert principle.
+The Model Tier UML diagram above adheres to the information expert principle. For
+example, in the shopping cart class, the shopping cart is given the 
+responsibility of checking out and removing items from the cart. 
+Because the shopping cart object holds the item array, we can assign it the
+responsibility of adding items, removing items, and editing the quantity of
+each item in the cart. This keeps the class UML diagram simple and easy to 
+understand without creating complications. For example, if a user 
+wants to remove an item from their cart, the Shopping cart class can check whether
+the item exists in the cart by searching through its list of items. If the
+item is found, the Shopping cart class can remove it from the cart, as it holds 
+the necessary information about the item.
 
-> _**[Sprint 3 & 4]** OO Design Principles should span across **all tiers.**_
+![ShoppingCart UML Diagram](UML%20Diagrams/ShoppingCart.png)
 
-## Static Code Analysis/Future Design Improvements
+Another class that supports the information expert principle is the Accounts class.
+The Accounts class is responsible for updating the profile information and this is 
+important as the Accounts class holds a profile object. Since the account class 
+holds a profile object, it is appropriate to give the Accounts class the 
+responsibility of updating the profile information.
 
-> _**[Sprint 4]** With the results from the Static Code Analysis exercise,
-> **Identify 3-4** areas within your code that have been flagged by the Static
-Code
-> Analysis Tool (SonarQube) and provide your analysis and recommendations.  
-> Include any relevant screenshot(s) with each area._
-
-> _**[Sprint 4]** Discuss **future** refactoring and other design improvements
-your team would explore if the team had additional time._
+![Account UML Diagram](UML%20Diagrams/Account.png)
 
 ## Testing
 
 ### Acceptance Testing
 
-All 37 of our acceptance criteria tests for sprint 2 have passed. We have a total
-of 47 acceptance criteria tests, 10 of which have not been tested as they are sprint
-3 stories. For the sake of the acceptance criteria test plan, they have been marked
-as failing for sprint 2 but are noted as not being sprint 2 stories. We do not have
-any major concerns about our acceptance test plan. However, we have realized that 
-some of our acceptance criteria are a little vague. We hope to fix that going forward.
-Other than that, we believe everything is ready to be demoed.
+Out of our 64 acceptance critera tests all pass except for 7 of them. However, we
+expected these 7 to fail because the story card is for a feature that we deemed
+no longer necessary and removed. Other than those tests, everything else went well.
+Unlike Sprint 2, we made our acceptance criteria tests more in depth to cover more
+paths.
 
 ### Unit Testing and Code Coverage
 
-![Overall Code Coverage for Sprint 2](Sprint%202%20Code%20Coverage/Overall.png)
-![Persistence Code Coverage for Sprint 2](Sprint%202%20Code%20Coverage/Persistence.png)
-![Model Code Coverage for Sprint 2](Sprint%202%20Code%20Coverage/Model.png)
-![Controller Code Coverage for Sprint 2](Sprint%202%20Code%20Coverage/Controller.png)
+![Overall Code Coverage for Sprint 2](Code%20Coverage/Overall.png)
+![Persistence Code Coverage for Sprint 2](Code%20Coverage/Persistence.png)
+![Model Code Coverage for Sprint 2](Code%20Coverage/Model.png)
+![Controller Code Coverage for Sprint 2](Code%20Coverage/Controller.png)

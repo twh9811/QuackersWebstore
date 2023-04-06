@@ -10,7 +10,7 @@
                 <mat-form-field appearance="fill" floatLabel="always">
                     <mat-label>Email</mat-label>
                     <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com"
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required>
+                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" required>
                     <mat-error *ngIf="shouldDisplayError('email', true)">
                         Please enter a valid email address.
                     </mat-error>
