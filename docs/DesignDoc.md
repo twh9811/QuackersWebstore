@@ -39,13 +39,27 @@ This section describes the features of the application.
 
 ### Definition of MVP
 
-As of right now, our customers can select and search through a variety of
-pre-made ducks from our store catalog and add or remove them from their
-shopping cartsas they please. Users can register accounts to save their 
-previous shopping sessions and login at a later date to resume them. 
-From an owners perspective, they have access to the whole store catalog 
-and can add/remove new products or even update existing ones at the click 
-of a button.
+Customers, granted they are logged into an account, can view and 
+search through a variety of pre-made ducks from the store catalog.
+If a customer does not have an account they can register one to use 
+the store if the account name does not already exist. This account 
+will also save their previous shopping sessions so they can return
+at a later date to resume them. Once they find a duck they would like 
+to purchase, they can select it and add it to their cart. They may view 
+their shopping cart contents at any time during the shopping process by 
+clicking on the shopping cart button. When viewing the contents of the 
+shopping cart and the customer decides they no longer want to purchase a 
+duck, they may remove it from their shopping cart individually or clear 
+the entire cart all at once. The total price is also displayed on the page. 
+Once a customer has decided they are done shopping and would like to checkout 
+they navigate to the shopping cart page and select the checkout button. Here
+they will enter their contact, shipping, and payment information. When the 
+checkout is complete they will be given a receipt that shows the contents of 
+the order and the total price paid. From an owners perspective, they have access
+to the whole store catalog and can add/remove new products or even update existing 
+ones at the click of a button. They can also search for specific ducks in the inventory
+for easier access. Admin accounts do not have access to a shopping cart and cannot shop 
+on the store.
 
 ### MVP Features
 >  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
