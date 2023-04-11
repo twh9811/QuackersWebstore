@@ -54,14 +54,14 @@ This section describes the application domain.
 
 ![Domain Model](domain-model.png)
 
-As our goal is to make an e-store, our domain contains entities, such as products, 
-customer, shopping cart, and more. Products are connected to most things are our
-domain model, which exemplifies how important they are as an entity. For instance,
-products have to be added and removed from the shopping cart, and customers need to
-be able to view the products. Customers are also vital to our domain model, as we
-can't make money if customers cannot use our website. As seen in the model 
-above, customers can browse products, add items to shopping carts, complete 
-orders, and more.
+As our goal is to create an e-store, our domain model contains entities, such as 
+duck (our product), customer, shopping cart, and more. One of our most essential
+entities is Duck. Duck is connected to most of the other entities to facilitate
+necessary functionality, such as displaying our items on our catalog page.
+Additionally, our profile page allows our customers to view and modify their payment
+and shipping information. This information can then be auto-filled into the checkout
+form, giving them a more enjoyable checkout experience. Finally, our Custom Duck
+entity lets customers create their own ducks if they do not like any of our premade ones.
 
 ## Architecture and Design
 
