@@ -39,14 +39,33 @@ This section describes the features of the application.
 
 ### Definition of MVP
 
-As of right now, our customers can select and search through a variety of
-pre-made ducks from our store catalog and add or remove them from their
-shopping cartsas they please. Users can register accounts to save their 
-previous shopping sessions and login at a later date to resume them. 
-From an owners perspective, they have access to the whole store catalog 
-and can add/remove new products or even update existing ones at the click 
-of a button.
+Customers, granted they are logged into an account, can view and 
+search through a variety of pre-made ducks from the store catalog.
+If a customer does not have an account they can register one to use 
+the store if the account name does not already exist. This account 
+will also save their previous shopping sessions so they can return
+at a later date to resume them. Once they find a duck they would like 
+to purchase, they can select it and add it to their cart. They may view 
+their shopping cart contents at any time during the shopping process by 
+clicking on the shopping cart button. When viewing the contents of the 
+shopping cart and the customer decides they no longer want to purchase a 
+duck, they may remove it from their shopping cart individually or clear 
+the entire cart all at once. The total price is also displayed on the page. 
+Once a customer has decided they are done shopping and would like to checkout 
+they navigate to the shopping cart page and select the checkout button. Here
+they will enter their contact, shipping, and payment information. When the 
+checkout is complete they will be given a receipt that shows the contents of 
+the order and the total price paid. From an owners perspective, they have access
+to the whole store catalog and can add/remove new products or even update existing 
+ones at the click of a button. They can also search for specific ducks in the inventory
+for easier access. Admin accounts do not have access to a shopping cart and cannot shop 
+on the store.
 
+### MVP Features
+>  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
+
+### Enhancements
+> _**[Sprint 4]** Describe what enhancements you have implemented for the project._
 
 ## Application Domain
 
@@ -54,14 +73,14 @@ This section describes the application domain.
 
 ![Domain Model](domain-model.png)
 
-As our goal is to make an e-store, our domain contains entities, such as products, 
-customer, shopping cart, and more. Products are connected to most things are our
-domain model, which exemplifies how important they are as an entity. For instance,
-products have to be added and removed from the shopping cart, and customers need to
-be able to view the products. Customers are also vital to our domain model, as we
-can't make money if customers cannot use our website. As seen in the model 
-above, customers can browse products, add items to shopping carts, complete 
-orders, and more.
+As our goal is to create an e-store, our domain model contains entities, such as 
+duck (our product), customer, shopping cart, and more. One of our most essential
+entities is Duck. Duck is connected to most of the other entities to facilitate
+necessary functionality, such as displaying our items on our catalog page.
+Additionally, our profile page allows our customers to view and modify their payment
+and shipping information. This information can then be auto-filled into the checkout
+form, giving them a more enjoyable checkout experience. Finally, our Custom Duck
+entity lets customers create their own ducks if they do not like any of our premade ones.
 
 ## Architecture and Design
 
@@ -105,6 +124,33 @@ added the items they want, they can proceed to the shopping cart to modify
 the quantity of each item and checkout. After checking out, they are directed to a page
 where they are given a receipt.
 
+### View Tier
+> _**[Sprint 4]** Provide a summary of the View Tier UI of your architecture.
+> Describe the types of components in the tier and describe their
+> responsibilities.  This should be a narrative description, i.e. it has
+> a flow or "story line" that the reader can follow._
+
+> _**[Sprint 4]** You must  provide at least **2 sequence diagrams** as is relevant to a particular aspects
+> of the design that you are describing.  For example, in e-store you might create a
+> sequence diagram of a customer searching for an item and adding to their cart.
+> As these can span multiple tiers, be sure to include an relevant HTTP requests from the client-side to the server-side
+> to help illustrate the end-to-end flow._
+
+> _**[Sprint 4]** To adequately show your system, you will need to present the **class diagrams** where relevant in your design. Some additional tips:_
+>* _Class diagrams only apply to the **ViewModel** and **Model** Tier_
+>* _A single class diagram of the entire system will not be effective. You may start with one, but will be need to break it down into smaller sections to account for requirements of each of the Tier static models below._
+>* _Correct labeling of relationships with proper notation for the relationship type, multiplicities, and navigation information will be important._
+>* _Include other details such as attributes and method signatures that you think are needed to support the level of detail in your discussion._
+
+### ViewModel Tier
+> _**[Sprint 4]** Provide a summary of this tier of your architecture. This
+> section will follow the same instructions that are given for the View
+> Tier above._
+
+> _At appropriate places as part of this narrative provide **one** or more updated and **properly labeled**
+> static models (UML class diagrams) with some details such as critical attributes and methods._
+>
+![Replace with your ViewModel Tier class diagram 1, etc.](model-placeholder.png)
 
 ### Model Tier
 
@@ -125,7 +171,6 @@ linked to their own Shopping Cart ID, an OwnerAccount's ID is not and they do
 not have access to a shopping cart.
 
 ![Model Tier UML Diagram](UML%20Diagrams/model-uml.png)
-
 
 ## OO Design Principles
 
@@ -245,17 +290,40 @@ responsibility of updating the profile information.
 
 ![Account UML Diagram](UML%20Diagrams/Account.png)
 
+## Static Code Analysis/Future Design Improvements
+> _**[Sprint 4]** With the results from the Static Code Analysis exercise,
+> **Identify 3-4** areas within your code that have been flagged by the Static Code
+> Analysis Tool (SonarQube) and provide your analysis and recommendations.  
+> Include any relevant screenshot(s) with each area._
+
+> _**[Sprint 4]** Discuss **future** refactoring and other design improvements your team would explore if the team had additional time._
+
 ## Testing
 
 ### Acceptance Testing
 
-Out of our 64 acceptance critera tests all pass except for 7 of them. However, we
-expected these 7 to fail because the story card is for a feature that we deemed
-no longer necessary and removed. Other than those tests, everything else went well.
-Unlike Sprint 2, we made our acceptance criteria tests more in depth to cover more
-paths.
+Out of our 64 acceptance criteria tests, all passed except for 7 of them. However, we
+expected these 7 to fail because the story card was for a feature that was removed due to
+it being no longer necessary. Furthermore, some of our acceptance criteria needed slight 
+adjustments to account for pages being turned into angular modals, meaning they no longer 
+had the routes the criteria referred to. Other than the tests mentioned above and these slight
+changes, everything went well. In this sprint, we also tried to make our acceptance criteria
+tests more detailed to cover more paths.
 
 ### Unit Testing and Code Coverage
+
+When creating unit tests, we focused on making sure that the most critical features had
+nearly all, if not all, branches covered. We deemed all MVP features critical and
+aimed for nearly 100% code coverage for them. When it came to non MVP features, such as
+our enhancements, we aimed for 90%+ code coverage. We chose these values because we felt
+they would nearly guarantee our backend to be bug-free. Additionally, we felt that
+because of how important the MVP was, we needed to ensure that there would be as few
+bugs as possible, so we aimed for nearly 100% code coverage for those features.
+
+We reached our goals with an overall 96% code coverage. All of our MVP features have
+code coverages of upwards of 95%. Our Account class had the lowest coverage of 87%.
+This is because we did not unit-test the hashCode and confirmPassword functions.
+In fact, a lot of our missing coverage comes from not testing our hashCode functions.
 
 ![Overall Code Coverage for Sprint 2](Code%20Coverage/Overall.png)
 ![Persistence Code Coverage for Sprint 2](Code%20Coverage/Persistence.png)
