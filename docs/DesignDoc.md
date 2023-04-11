@@ -65,7 +65,35 @@ on the store.
 >  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
 
 ### Enhancements
-> _**[Sprint 4]** Describe what enhancements you have implemented for the project._
+
+There are three main enhancements for the project: Profile Pages, Strong Passwords, 
+and Custom Duck Creation. Strong passwords is the simplest feature of the three.
+It adds password management and increased security for user accounts on the store. 
+During account creation, a user is forced to enter a password during account creation,
+it cannot be blank. Ontop of that it must meet a minimum of 8 characters and have at
+least one upper and lower case character, one number, and one special character. If
+a password does not meet these requirements, the account will not be created and feedback
+will be displayed to the user telling them the requirements. A user can also reset their
+passwords with this enhancement. They can enter a new password and it will be changed,
+as long as the new password is also considered a strong password. Before, this was not 
+possible and no password, let alone a strong one, was required upon account creation. 
+Profile Page is a relatively straight forward enhancement as well. During checkout, a 
+user must enter all their contact, shipping, and payment information. Before they had
+to do this by hand every single time which was a time-consuming process. However, if they 
+use the profile page enhancement they can fill out all this information once and it 
+will be saved to their account. Then upon checkout, all this information will be filled 
+out automatically by the store based on the profile page associated with the account.
+This profile information can be updated and saved at any time and is accessible by 
+clicking the "Account" button on the store page. The third and final enhancement 
+is a Custom Duck Creator. Customers can access this by selecting the "Make Your Own Duck" 
+button on the store page. Once selected, a customer can create their own custom duck by 
+using the GUI presented to them rather than selecting a pre-made one that is in the catalog. 
+In this GUI, they can select the name, quantity, size, color, and accessories of the duck 
+from a drop down menu of existing options. A live preview is shown on the side where it shows
+each customization that is being made to the duck is made as well as a live price calculation
+so the customer knows what they are buying and at what cost. Once they are done creating the 
+custom duck, it is added to the customers shopping cart and is capable of being purchased.
+
 
 ## Application Domain
 
