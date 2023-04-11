@@ -249,13 +249,28 @@ responsibility of updating the profile information.
 
 ### Acceptance Testing
 
-Out of our 64 acceptance critera tests all pass except for 7 of them. However, we
-expected these 7 to fail because the story card is for a feature that we deemed
-no longer necessary and removed. Other than those tests, everything else went well.
-Unlike Sprint 2, we made our acceptance criteria tests more in depth to cover more
-paths.
+Out of our 64 acceptance criteria tests, all passed except for 7 of them. However, we
+expected these 7 to fail because the story card was for a feature that was removed due to
+it being no longer necessary. Furthermore, some of our acceptance criteria needed slight 
+adjustments to account for pages being turned into angular modals, meaning they no longer 
+had the routes the criteria referred to. Other than the tests mentioned above and these slight
+changes, everything went well. In this sprint, we also tried to make our acceptance criteria
+tests more detailed to cover more paths.
 
 ### Unit Testing and Code Coverage
+
+When creating unit tests, we focused on making sure that the most critical features had
+nearly all, if not all, branches covered. We deemed all MVP features critical and
+aimed for nearly 100% code coverage for them. When it came to non MVP features, such as
+our enhancements, we aimed for 90%+ code coverage. We chose these values because we felt
+they would nearly guarantee our backend to be bug-free. Additionally, we felt that
+because of how important the MVP was, we needed to ensure that there would be as few
+bugs as possible, so we aimed for nearly 100% code coverage for those features.
+
+We reached our goals with an overall 96% code coverage. All of our MVP features have
+code coverages of upwards of 95%. Our Account class had the lowest coverage of 87%.
+This is because we did not unit-test the hashCode and confirmPassword functions.
+In fact, a lot of our missing coverage comes from not testing our hashCode functions.
 
 ![Overall Code Coverage for Sprint 2](Code%20Coverage/Overall.png)
 ![Persistence Code Coverage for Sprint 2](Code%20Coverage/Persistence.png)
