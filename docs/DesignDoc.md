@@ -344,8 +344,19 @@ This can be solved by making the load() method static:
 
 private static boolean load() throws IOException {<br>nextID = 0;<br>...<br>}
 
+### Aera 3: Call java.util.Map.containsKey() before proceeding with adding or changing the value in the map. 
 ![Static code analysis aera 3 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-3.png)
+It’s a common pattern to test the result of a java.util.Map.get() against null or 
+calling java.util.Map.containsKey() before proceeding with adding or changing the
+value in the map. However the java.util.Map API offers a significantly better 
+alternative in the form of the computeIfPresent() and computeIfAbsent() methods. 
+Using these instead leads to cleaner and more readable code.
+This can be solved by replacing this "Map.containsKey()" with a call to "Map.computeIfPresent()".:
 
+accounts.computeIfPresent(accountID, (key, value) -> {
+    <br>save();
+    <br>return account;
+<br>});
 
 > _**[Sprint 4]** Discuss **future** refactoring and other design improvements your team would explore if the team had additional time._
 
