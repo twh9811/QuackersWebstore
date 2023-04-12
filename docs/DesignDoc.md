@@ -39,19 +39,61 @@ This section describes the features of the application.
 
 ### Definition of MVP
 
-As of right now, our customers can select and search through a variety of
-pre-made ducks from our store catalog and add or remove them from their
-shopping cartsas they please. Users can register accounts to save their 
-previous shopping sessions and login at a later date to resume them. 
-From an owners perspective, they have access to the whole store catalog 
-and can add/remove new products or even update existing ones at the click 
-of a button.
+Customers, granted they are logged into an account, can view and 
+search through a variety of pre-made ducks from the store catalog.
+If a customer does not have an account they can register one to use 
+the store if the account name does not already exist. This account 
+will also save their previous shopping sessions so they can return
+at a later date to resume them. Once they find a duck they would like 
+to purchase, they can select it and add it to their cart. They may view 
+their shopping cart contents at any time during the shopping process by 
+clicking on the shopping cart button. When viewing the contents of the 
+shopping cart and the customer decides they no longer want to purchase a 
+duck, they may remove it from their shopping cart individually or clear 
+the entire cart all at once. The total price is also displayed on the page. 
+Once a customer has decided they are done shopping and would like to checkout 
+they navigate to the shopping cart page and select the checkout button. Here
+they will enter their contact, shipping, and payment information. When the 
+checkout is complete they will be given a receipt that shows the contents of 
+the order and the total price paid. From an owners perspective, they have access
+to the whole store catalog and can add/remove new products or even update existing 
+ones at the click of a button. They can also search for specific ducks in the inventory
+for easier access. Admin accounts do not have access to a shopping cart and cannot shop 
+on the store.
 
 ### MVP Features
 >  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
 
 ### Enhancements
-> _**[Sprint 4]** Describe what enhancements you have implemented for the project._
+
+There are three main enhancements for the project: Profile Pages, Strong Passwords, 
+and Custom Duck Creation. Strong passwords is the simplest feature of the three.
+It adds password management and increased security for user accounts on the store. 
+During account creation, a user is forced to enter a password during account creation,
+it cannot be blank. Ontop of that it must meet a minimum of 8 characters and have at
+least one upper and lower case character, one number, and one special character. If
+a password does not meet these requirements, the account will not be created and feedback
+will be displayed to the user telling them the requirements. A user can also reset their
+passwords with this enhancement. They can enter a new password and it will be changed,
+as long as the new password is also considered a strong password. Before, this was not 
+possible and no password, let alone a strong one, was required upon account creation. 
+Profile Page is a relatively straight forward enhancement as well. During checkout, a 
+user must enter all their contact, shipping, and payment information. Before they had
+to do this by hand every single time which was a time-consuming process. However, if they 
+use the profile page enhancement they can fill out all this information once and it 
+will be saved to their account. Then upon checkout, all this information will be filled 
+out automatically by the store based on the profile page associated with the account.
+This profile information can be updated and saved at any time and is accessible by 
+clicking the "Account" button on the store page. The third and final enhancement 
+is a Custom Duck Creator. Customers can access this by selecting the "Make Your Own Duck" 
+button on the store page. Once selected, a customer can create their own custom duck by 
+using the GUI presented to them rather than selecting a pre-made one that is in the catalog. 
+In this GUI, they can select the name, quantity, size, color, and accessories of the duck 
+from a drop down menu of existing options. A live preview is shown on the side where it shows
+each customization that is being made to the duck is made as well as a live price calculation
+so the customer knows what they are buying and at what cost. Once they are done creating the 
+custom duck, it is added to the customers shopping cart and is capable of being purchased.
+
 
 ## Application Domain
 
