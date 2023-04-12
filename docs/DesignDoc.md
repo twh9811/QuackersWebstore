@@ -153,16 +153,38 @@ the quantity of each item and checkout. After checking out, they are directed to
 where they are given a receipt.
 
 ### View Tier
-> _**[Sprint 4]** Provide a summary of the View Tier UI of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
+Our view tier has many components and services. The first one our users come into contact 
+with is our LoginComponent. This component is responsible for displaying the login page. 
+Next, they indirectly use our AccountService to verify their credentials when they click 
+the login button. From here, there are two options:
 
-> _**[Sprint 4]** You must  provide at least **2 sequence diagrams** as is relevant to a particular aspects
-> of the design that you are describing.  For example, in e-store you might create a
-> sequence diagram of a customer searching for an item and adding to their cart.
-> As these can span multiple tiers, be sure to include an relevant HTTP requests from the client-side to the server-side
-> to help illustrate the end-to-end flow._
+1. If they are a customer, they will be redirected to our catalog page that is rendered using
+our CatalogComponent. Our CatalogComponent also calls our CartService to get their shopping service
+and our ProductService to retrieve all of our items. From here, a user is able to add items to their
+cart, create custom ducks (via our CustomizeComponent), search for ducks (via our DuckSearchCompponent), 
+access their shopping cart (via our ShoppingCartComponent), and view their profile page 
+(via our ProfileComponent).<br>
+    * If a user wants to add an item to their cart, the following sequence of events will happen:
+    ![Add Item To Cart Sequence Diagram](Sequence%20Diagrams/Add%20Item%20To%20Cart.png)
+    * If a user wants to create a custom duck, the following sequence of events will happen:
+    ![Create a Custom Duck Sequence Diagram](Sequence%20Diagrams/Create%20a%20Custom%20Duck%20Sequence.png)
+    * If a user wants to search for a duck, they simply use the search box at the top of catalog page. Upon typing in the box, our DuckSearchComponent will automatically find all ducks that contain the search query (case sensitive).
+    * If a user opts to open their shopping cart, the CartService and CustomDuckService will both be used to retrieve all of the items in their cart. While in the cart, they will be able to clear their cart, remove items, and checkout. Our checkout menu is rendered using out CheckoutComponent. Upon submitting the checkout form the CartService and CustomDuckService are used to validate and clear their cart before our ReceiptComponent opens to show the user their receipt.
+    * If a user opts to open their profile page, they will be able to modify their payment and shipping information by clicking the respective buttons. These buttons will open menus that are rendered by our PaymentModifyComponent and ShippingModifyComponent. Once they are in the menu, they are able to update their information and click submit, which will then call our AccountService to update their account. 
+2. If they are an owner, they will be redirected to our inventory management page that is rendered
+using our InventoryManagementComponent. Our InventoryManagementComponent calls our Product service
+to retrieve all of our items and their respective details. Like the catalog, owners can also search
+for products to make it easier to find the product they want to modify. This functionality is once
+again provided by the DuckSearchComponent. Owners are also able to remove items from the catalog by
+clicking the remove button (via our ProductService). Finally, owners can create and modify ducks by
+using our ProductCreateModifyComponent and indirectly using our ProductService.
+    * If an owner wants to create or modify a product, they simply either click the modify button 
+    underneath an item's name or they click the create a product button at the top of the 
+    inventory managment page. Next, if the owner is modifying an item, the ProductService will be 
+    called to fill in the info of the current duck. If they are creating an item, the menu will
+    simply open with no default values. Once they fill in the form completely they can hit the
+    submit button, which will again call the ProductService, but this time, to update the item or to
+    create a new one.
 
 > _**[Sprint 4]** To adequately show your system, you will need to present the **class diagrams** where relevant in your design. Some additional tips:_
 >* _Class diagrams only apply to the **ViewModel** and **Model** Tier_
@@ -170,10 +192,23 @@ where they are given a receipt.
 >* _Correct labeling of relationships with proper notation for the relationship type, multiplicities, and navigation information will be important._
 >* _Include other details such as attributes and method signatures that you think are needed to support the level of detail in your discussion._
 
-![Add Item To Cart Sequence Diagram](Sequence%20Diagrams/Add%20Item%20To%20Cart.png)
-![Create a Custom Duck Sequence Diagram](Sequence%20Diagrams/Create%20a%20Custom%20Duck%20Sequence.png)
 
 ### ViewModel Tier
+
+------
+**View Tier Instructions** (For reference)
+> _**[Sprint 4]** Provide a summary of the View Tier UI of your architecture.
+> Describe the types of components in the tier and describe their
+> responsibilities.  This should be a narrative description, i.e. it has
+> a flow or "story line" that the reader can follow._
+
+> _**[Sprint 4]** To adequately show your system, you will need to present the **class diagrams** where relevant in your design. Some additional tips:_
+>* _Class diagrams only apply to the **ViewModel** and **Model** Tier_
+>* _A single class diagram of the entire system will not be effective. You may start with one, but will be need to break it down into smaller sections to account for requirements of each of the Tier static models below._
+>* _Correct labeling of relationships with proper notation for the relationship type, multiplicities, and navigation information will be important._
+>* _Include other details such as attributes and method signatures that you think are needed to support the level of detail in your discussion._
+------
+
 > _**[Sprint 4]** Provide a summary of this tier of your architecture. This
 > section will follow the same instructions that are given for the View
 > Tier above._
@@ -322,7 +357,7 @@ responsibility of updating the profile information.
 ![Account UML Diagram](UML%20Diagrams/Account.png)
 
 ## Static Code Analysis/Future Design Improvements
-### Aera 1: More than one break and continue statements in the loop.
+### Area 1: More than one break and continue statements in the loop.
 ![Static code analysis aera 1-1 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-1.png)
 ![Static code analysis aera 1-2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-2.png)
 Restricting the number of break and continue statements in a loop is done in the 
@@ -330,11 +365,12 @@ interest of good structured programming because it can help make the code more
 readable, understandable, and maintainable. 
 This can be solved by combining the conditions that are used to skip processing 
 of the cart items into a single if statement:
-
-if (!invalidItems.containsKey(cartDuckIdStr) || invalidItems.get(cartDuckIdStr) == null) {<br>continue;
-<br>}
-
-### Aera 2: Reference non-static variables or methods from within a static method or block.
+```java
+if (!invalidItems.containsKey(cartDuckIdStr) || invalidItems.get(cartDuckIdStr) == null) {
+    continue;
+}
+```
+### Area 2: Reference non-static variables or methods from within a static method or block.
 ![Static code analysis aera 2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-2.png)
 Correctly updating a static field from a non-static method is tricky to get right and
 could easily lead to bugs if there are multiple class instances and/or multiple 
@@ -342,9 +378,14 @@ threads in play. Ideally, static fields are only updated from synchronized stati
 methods. 
 This can be solved by making the load() method static:
 
-private static boolean load() throws IOException {<br>nextID = 0;<br>...<br>}
+```java
+private static boolean load() throws IOException {
+    nextID = 0;
+    ...
+}
+```
 
-### Aera 3: Call java.util.Map.containsKey() before proceeding with adding or changing the value in the map. 
+### Area 3: Call java.util.Map.containsKey() before proceeding with adding or changing the value in the map. 
 ![Static code analysis aera 3 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-3.png)
 It’s a common pattern to test the result of a java.util.Map.get() against null or 
 calling java.util.Map.containsKey() before proceeding with adding or changing the
@@ -353,10 +394,12 @@ alternative in the form of the computeIfPresent() and computeIfAbsent() methods.
 Using these instead leads to cleaner and more readable code.
 This can be solved by replacing this "Map.containsKey()" with a call to "Map.computeIfPresent()":
 
+```java
 accounts.computeIfPresent(accountID, (key, value) -> {
-    <br>save();
-    <br>return account;
-<br>});
+    save();
+    return account;
+});
+```
 ### Future Refactoring: Implement an email verification feature for the password reset process
 In the current version, resetting a password only requires entering a username and
 a new password, then clicking the reset password button without any verification. 
