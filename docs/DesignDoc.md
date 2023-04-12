@@ -322,18 +322,23 @@ responsibility of updating the profile information.
 ![Account UML Diagram](UML%20Diagrams/Account.png)
 
 ## Static Code Analysis/Future Design Improvements
-> _**[Sprint 4]** With the results from the Static Code Analysis exercise,
-
+Aera 1: More than one break and continue statements in the loop.
 ![Static code analysis aera 1-1 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-1.png)
 ![Static code analysis aera 1-2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-2.png)
+Restricting the number of break and continue statements in a loop is done in the 
+interest of good structured programming because it can help make the code more 
+readable, understandable, and maintainable. This can be solved by combining the 
+conditions that are used to skip processing of the cart items into a single if 
+statement.
+
+if (!invalidItems.containsKey(cartDuckIdStr) || invalidItems.get(cartDuckIdStr) == null) {
+        continue;
+    }
 
 ![Static code analysis aera 2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-2.png)
 
 ![Static code analysis aera 3 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-3.png)
 
-> **Identify 3-4** areas within your code that have been flagged by the Static Code
-> Analysis Tool (SonarQube) and provide your analysis and recommendations.  
-> Include any relevant screenshot(s) with each area._
 
 > _**[Sprint 4]** Discuss **future** refactoring and other design improvements your team would explore if the team had additional time._
 
