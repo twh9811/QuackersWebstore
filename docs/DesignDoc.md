@@ -171,6 +171,7 @@ where they are given a receipt.
 >* _Include other details such as attributes and method signatures that you think are needed to support the level of detail in your discussion._
 
 ![Add Item To Cart Sequence Diagram](Sequence%20Diagrams/Add%20Item%20To%20Cart.png)
+![Create a Custom Duck Sequence Diagram](Sequence%20Diagrams/Create%20a%20Custom%20Duck%20Sequence.png)
 
 ### ViewModel Tier
 > _**[Sprint 4]** Provide a summary of this tier of your architecture. This
