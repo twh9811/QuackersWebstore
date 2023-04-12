@@ -322,20 +322,27 @@ responsibility of updating the profile information.
 ![Account UML Diagram](UML%20Diagrams/Account.png)
 
 ## Static Code Analysis/Future Design Improvements
-Aera 1: More than one break and continue statements in the loop.
+### Aera 1: More than one break and continue statements in the loop.
 ![Static code analysis aera 1-1 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-1.png)
 ![Static code analysis aera 1-2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-2.png)
 Restricting the number of break and continue statements in a loop is done in the 
 interest of good structured programming because it can help make the code more 
-readable, understandable, and maintainable. This can be solved by combining the 
-conditions that are used to skip processing of the cart items into a single if 
-statement.
+readable, understandable, and maintainable. 
+This can be solved by combining the conditions that are used to skip processing 
+of the cart items into a single if statement:
 
-if (!invalidItems.containsKey(cartDuckIdStr) || invalidItems.get(cartDuckIdStr) == null) {
-        continue;
-    }
+if (!invalidItems.containsKey(cartDuckIdStr) || invalidItems.get(cartDuckIdStr) == null) {<br>continue;
+<br>}
 
+### Aera 2: Reference non-static variables or methods from within a static method or block.
 ![Static code analysis aera 2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-2.png)
+Correctly updating a static field from a non-static method is tricky to get right and
+could easily lead to bugs if there are multiple class instances and/or multiple 
+threads in play. Ideally, static fields are only updated from synchronized static 
+methods. 
+This can be solved by making the load() method static:
+
+private static boolean load() throws IOException {<br>nextID = 0;<br>...<br>}
 
 ![Static code analysis aera 3 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-3.png)
 
