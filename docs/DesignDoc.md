@@ -65,48 +65,51 @@ on the store.
 ### 1. Minimal Authentication for Customer/Onwer Login & Logout
 * Login Page (5)
     * Story : As a Customer/Owner, I want to be able to view the login page first and log in before being sent to my shopping cart and the catalog OR accessing admin tools depending on privileges.
-    * Details : Every User must sign-in before using the site. The site will then authenticate if the user is a Customer or an Admin
+    * Details : Every User must sign in before using the site. The site will then authenticate if the user is a customer or an admin.
 
 
 ### 2. Customer Funtionality
 * Catalog Page (18) (EPIC)
     * Story : As a BUYER I want to BE ABLE TO VIEW THE PRODUCT PAGE so that I CAN VIEW PRODUCTS AND ADD THEM TO MY CART.
-    * Details : The site will provde the customer with a user interface which will allow ther customer to purchase ducks.
+    * Details : The site will provide the customer with a user interface that will allow the customer to purchase ducks.
 * Catalog Page - Product View (3)
     * Story : As an BUYER I want to SEE PRODUCTS ON THE CATALOG PAGE so that I ADD THEM MY SHOPPING CART.
-    * Details : The site will provide the customer with a catalog page that will allow the customer to see ducks available on the website.
+    * Details : The site will provide the customer with a catalog page that will allow the customer to see the available ducks on the website.
 * Catalog Page - Search Products (5)
     * Story : As a BUYER I want to BE ABLE TO SEARCH THE PRODUCT PAGE so that I CAN VIEW PRODUCTS WITH SPECIFIC NAME.
-    * Details : The site will provide the customer with a search bar that will allow the customer to find a ducks with a specific name available on the website.
+    * Details : The site will provide the customer with a search bar that will allow the customer to find ducks with a specific name available on the website.
 * Catalog Page - Add to Cart (5)
     * Story : As a Customer/Owner, I want to be able to view the login page first and log in before being sent to my shopping cart and the catalog OR accessing admin tools depending on privileges.
-    * Details : The site will provide the customer with the ability via a button to add a duck to a shopping cart allowing them to purchase it.
+    * Details : The site will provide the customer with the ability to add a duck to a shopping cart, allowing them to purchase it.
 * Shopping Cart Page (6)
     * Story : As a BUYER I want to BE ABLE TO VIEW MY SHOPPING CART so that ADD/REMOVE ITEMS FROM MY CART AND BUY THEM.
-    * Details : The site will provide the customer with a shopping cart page that will allow the customer view the ducks in the shopping cart before checkout and make changes to the shopping cart by allowing the customer to remove ducks if needed.
+    * Details : The site will provide the customer with a shopping cart page that will allow the customer to view the ducks in the cart before checkout and make changes to the cart, such as removing ducks if needed.
 * Checkout Page - Checkout (3)
     * Story : As a CUSTOMER I want to SEE A RECEIPT OF THE ITEMS I PURCHASED so that I CAN MAKE SURE I BOUGHT EVERYTHING I WANT
-    * Details : The site will provide the customer with a reciept that will allow the customer to purchase the ducks within the shopping cart and review a summary of what the customer purchased
+    * Details : The site will provide the customer with a receipt that will allow the customer to purchase the ducks within the shopping cart and review a summary of what the customer purchased.
 
 
 ### 3. Inventory Management   
 * Inventory Management (15) (EPIC)
    * Story : As an OWNER I want to HAVE AN INVENTORY MANAGEMENT PAGE so that I CAN ADD/REMOVE/EDIT PRODUCTS.
-    * Details : The site will provide the owner with an inventory managment page that will allow the owner to add, remove, and edit products within the inventory and its changes will reflect what the customer will see in the catalog.
+    * Details : The site will provide the owner with an inventory managment page that will allow the owner to add, remove, and edit products within the inventory, and the changes will reflect what the customer will see in the catalog.
 * Inventory Management - Product View (5)
     * Story : As an OWNER I want to SEE PRODUCTS ON THE INVENTORY MANAGEMENT PAGE so that I CAN SELECT THEM TO MODIFY.
-    * Details : The site will provide the Owner with a inventory mangagement page that will allow the owner to see the ducks listed in the inventory.
+    * Details : The site will provide the Owner with an inventory mangagement page that will allow the owner to see the ducks listed in the inventory.
 * Inventory Management - Create Product Page (5)
     * Story : As an owner I want to create be able to create a product so that my customers are able to buy it.
-    * Details : The site will provide the Owner with the ability to create a pre-customized duck that will allow the owner to add new ducks to the inventory and will reflect what the customer will see in the catalog.
+    * Details : The site will provide the Owner with the ability to create a new duck that will be added to the inventory, and these changes will be reflected on the catalog page.
 * Inventory Management - Modify Product Page (5)
     * Story : As an OWNER I want to be able to modify products so that I can change the price, quantity available, name, etc of my items.
-    * Details : The site will provide the Owner with the ability to modify a pre-customized duck that will allow the owner to makes changes to existing ducks in the inventory and will reflect what the customer will see in the catalog.
+    * Details : The site will provide the Owner with the ability to modify and delete a duck from the inventory, and these changes will be reflected on the catalog page.
 
 ### 4. Data Persistence
 * Session Management (3)
     * Story : As a USER I want to HAVE MY DATA PERSIST BETWEEN PAGES so that I DONT HAVE TO LOGIN EVERY TIME
-    * Details : The website will provide the user with a means to have their current data persist between pages. This will allow the user to freely enter other pages of the website without having to login every time.
+    * Details : The website will remember what user is logged in when switching between pages. This will allow the user to freely enter other pages of the website without having to login every time.
+* Create Shopping Card Models - Shopping Cart (5)
+    * Story : As a DEVELOPER, I want to be able to access a Customer’s shopping cart so that the SYSTEM is able to save it, modify it, and display the correct information.
+    * Details : The website will provide a shopping cart that remembers its previous state. So if a customer adds an item to their cart and logs out, they should see the same items in their shopping cart when they log back in.
 
 ### Enhancements
 
@@ -285,7 +288,7 @@ without modifying it. This allows for easy extension of the Account class by
 adding new classes that also inherit from it, without changing the existing 
 implementation.
 
-![user-owner-account UML Diagram](UML%20Diagrams/user-owner-account.png)
+![User/Owner/Account UML Diagrams](UML%20Diagrams/user-owner-account.png)
 
 
 ### Pure Fabrication
@@ -381,8 +384,8 @@ responsibility of updating the profile information.
 
 ## Static Code Analysis/Future Design Improvements
 ### Area 1: More than one break and continue statements in the loop.
-![Static code analysis aera 1-1 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-1.png)
-![Static code analysis aera 1-2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-2.png)
+![Static Code Analysis Area 1-1 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-1.png)
+![Static Code Analysis Area 1-2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-2.png)
 Restricting the number of break and continue statements in a loop is done in the 
 interest of good structured programming because it can help make the code more 
 readable, understandable, and maintainable. 
@@ -394,7 +397,7 @@ if (!invalidItems.containsKey(cartDuckIdStr) || invalidItems.get(cartDuckIdStr) 
 }
 ```
 ### Area 2: Reference non-static variables or methods from within a static method or block.
-![Static code analysis aera 2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-2.png)
+![Static Code Analysis Area 2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-2.png)
 Correctly updating a static field from a non-static method is tricky to get right and
 could easily lead to bugs if there are multiple class instances and/or multiple 
 threads in play. Ideally, static fields are only updated from synchronized static 
@@ -408,14 +411,14 @@ private static boolean load() throws IOException {
 }
 ```
 
-### Area 3: Call java.util.Map.containsKey() before proceeding with adding or changing the value in the map. 
-![Static code analysis aera 3 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-3.png)
-It’s a common pattern to test the result of a java.util.Map.get() against null or 
-calling java.util.Map.containsKey() before proceeding with adding or changing the
-value in the map. However the java.util.Map API offers a significantly better 
-alternative in the form of the computeIfPresent() and computeIfAbsent() methods. 
+### Area 3: Call `java.util.Map.containsKey()` before proceeding with adding or changing the value in the map. 
+![Static Code Analysis Area 3 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-3.png)
+It’s a common pattern to test the result of a `java.util.Map.get()` against null or 
+calling `java.util.Map.containsKey()` before proceeding with adding or changing the
+value in the map. However, the java.util.Map API offers a significantly better 
+alternative in the form of the `computeIfPresent()` and `computeIfAbsent()` methods. 
 Using these instead leads to cleaner and more readable code.
-This can be solved by replacing this "Map.containsKey()" with a call to "Map.computeIfPresent()":
+This can be solved by replacing this `Map.containsKey()` with a call to `Map.computeIfPresent()`:
 
 ```java
 accounts.computeIfPresent(accountID, (key, value) -> {
@@ -423,20 +426,23 @@ accounts.computeIfPresent(accountID, (key, value) -> {
     return account;
 });
 ```
-### Future Refactoring: Implement an email verification feature for the password reset process
+### Future Refactoring: Implement an email verification feature for the password reset process.
 In the current version, resetting a password only requires entering a username and
-a new password, then clicking the reset password button without any verification. 
-The risk is that anyone can tamper password with a specific username, which could 
-lead to the disclosure of address and payment information.
-<br>To prevent this, an email verification step can be added to the password reset 
+a new password and then clicking the reset password button. There is no verification 
+that the user resetting the account owns it. The risk is that anyone can change the 
+password of any account as long as they have the username. This could lead to the disclosure 
+of shipping and payment information. 
+<br><br>
+To prevent this, an email verification step can be added to the password reset 
 process. When the user initiates a password reset request, the system can send an
-email to the registered email address with a verification code or link. The user 
+email containing a verification code or link to the registered email address. The user 
 must then enter the code or click the link to verify their email address before 
 being allowed to proceed with resetting their password.
-<br>To implement this feature, the Account model would need to be updated to include 
+<br><br>
+To implement this feature, the Account model would need to be updated to include 
 email properties, such as the user's email address and a flag indicating whether 
 the email address has been verified. The system would also need to include logic 
-for generating and sending the verification email, and for verifying the user's
+for generating and sending the verification email and for verifying the user's
 email address when they enter the verification code or click the verification link.
 
 
