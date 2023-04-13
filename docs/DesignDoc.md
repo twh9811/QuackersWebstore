@@ -65,19 +65,19 @@ on the store.
 ### 1. Minimal Authentication for Customer/Onwer Login & Logout
 * Login Page (5)
     * Story : As a Customer/Owner, I want to be able to view the login page first and log in before being sent to my shopping cart and the catalog OR accessing admin tools depending on privileges.
-    * Details : Every User must sign-in before using the site. The site will then authenticate if the user is a Customer or an Admin.
+    * Details : Every User must sign in before using the site. The site will then authenticate if the user is a customer or an admin.
 
 
 ### 2. Customer Funtionality
 * Catalog Page (18) (EPIC)
     * Story : As a BUYER I want to BE ABLE TO VIEW THE PRODUCT PAGE so that I CAN VIEW PRODUCTS AND ADD THEM TO MY CART.
-    * Details : The site will provde the customer with a user interface which will allow the customer to purchase ducks.
+    * Details : The site will provide the customer with a user interface that will allow the customer to purchase ducks.
 * Catalog Page - Product View (3)
     * Story : As an BUYER I want to SEE PRODUCTS ON THE CATALOG PAGE so that I ADD THEM MY SHOPPING CART.
     * Details : The site will provide the customer with a catalog page that will allow the customer to see the available ducks on the website.
 * Catalog Page - Search Products (5)
     * Story : As a BUYER I want to BE ABLE TO SEARCH THE PRODUCT PAGE so that I CAN VIEW PRODUCTS WITH SPECIFIC NAME.
-    * Details : The site will provide the customer with a search bar that will allow the customer to find a ducks with a specific name available on the website.
+    * Details : The site will provide the customer with a search bar that will allow the customer to find ducks with a specific name available on the website.
 * Catalog Page - Add to Cart (5)
     * Story : As a Customer/Owner, I want to be able to view the login page first and log in before being sent to my shopping cart and the catalog OR accessing admin tools depending on privileges.
     * Details : The site will provide the customer with the ability to add a duck to a shopping cart, allowing them to purchase it.
@@ -86,7 +86,7 @@ on the store.
     * Details : The site will provide the customer with a shopping cart page that will allow the customer to view the ducks in the cart before checkout and make changes to the cart, such as removing ducks if needed.
 * Checkout Page - Checkout (3)
     * Story : As a CUSTOMER I want to SEE A RECEIPT OF THE ITEMS I PURCHASED so that I CAN MAKE SURE I BOUGHT EVERYTHING I WANT
-    * Details : The site will provide the customer with a reciept that will allow the customer to purchase the ducks within the shopping cart and review a summary of what the customer purchased.
+    * Details : The site will provide the customer with a receipt that will allow the customer to purchase the ducks within the shopping cart and review a summary of what the customer purchased.
 
 
 ### 3. Inventory Management   
