@@ -290,8 +290,7 @@ The CheckoutController component contians all functions involving the checkout p
     The checkout endpoint checks if all the items in the cart are still in inventory, reduces the inventory count of
     each item in the cart, and clears all the items from the shoppingCart. 
 
-    The validateCart endpoint validates a given shopping cart by checking if the shoppingCart exists in the data file,
-    if there are any items within the shopping cart, and checks each item in the cart to make sure it exists in the inventory and has enough stock to fulfill the order.
+    The validateCart endpoint validates a given shopping cart by checking if the shoppingCart exists in the data file, if there are any items within the shopping cart, and checks each item in the cart to make sure it exists in the inventory and has enough stock to fulfill the order.
 
 ![REST-API Controller UML Diagrams](UML%20Diagrams/controller-uml.png)
 
