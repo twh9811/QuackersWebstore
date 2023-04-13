@@ -392,8 +392,8 @@ responsibility of updating the profile information.
 
 ## Static Code Analysis/Future Design Improvements
 ### Area 1: More than one break and continue statements in the loop.
-![Static code analysis aera 1-1 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-1.png)
-![Static code analysis aera 1-2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-2.png)
+![Static Code Analysis Area 1-1 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-1.png)
+![Static Code Analysis Area 1-2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-1-2.png)
 Restricting the number of break and continue statements in a loop is done in the 
 interest of good structured programming because it can help make the code more 
 readable, understandable, and maintainable. 
@@ -405,7 +405,7 @@ if (!invalidItems.containsKey(cartDuckIdStr) || invalidItems.get(cartDuckIdStr) 
 }
 ```
 ### Area 2: Reference non-static variables or methods from within a static method or block.
-![Static code analysis aera 2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-2.png)
+![Static Code Analysis Area 2 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-2.png)
 Correctly updating a static field from a non-static method is tricky to get right and
 could easily lead to bugs if there are multiple class instances and/or multiple 
 threads in play. Ideally, static fields are only updated from synchronized static 
@@ -420,7 +420,7 @@ private static boolean load() throws IOException {
 ```
 
 ### Area 3: Call java.util.Map.containsKey() before proceeding with adding or changing the value in the map. 
-![Static code analysis aera 3 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-3.png)
+![Static Code Analysis Area 3 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-3.png)
 It’s a common pattern to test the result of a java.util.Map.get() against null or 
 calling java.util.Map.containsKey() before proceeding with adding or changing the
 value in the map. However the java.util.Map API offers a significantly better 
