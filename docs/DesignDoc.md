@@ -130,6 +130,30 @@ where they are given a receipt.
 > responsibilities.  This should be a narrative description, i.e. it has
 > a flow or "story line" that the reader can follow._
 
+The View Tier UI is responsible for presenting the user interface to the end user. It consists 
+of various components that handle different aspects of the UI such as the User Interface Framework, 
+View Manager, View Controller, and the data binding component
+
+The User Interface Framework, which provides a foundation for building the UI. 
+This includes things like layout managers, event handlers, and other UI controls.
+
+The View Manager, which is responsible for managing the views that are displayed to the user. 
+This includes things like creating new views, updating existing views, and managing the overall 
+layout of the UI.
+
+The third component is the view controller, which is responsible for managing the interactions between 
+the user and the UI. This includes things like handling user input, responding to user actions, and 
+managing the state of the UI.
+
+Finally, there is the data binding component, which is responsible for binding data from the backend 
+to the UI. This includes things like retrieving data from a database, formatting the data for display, 
+and updating the UI as the data changes.
+
+Overall, the View Tier UI is responsible for providing a responsive and intuitive user interface for 
+the application. By using a combination of these components, we created a UI that is both 
+easy to use and easy to maintain.
+
+
 > _**[Sprint 4]** You must  provide at least **2 sequence diagrams** as is relevant to a particular aspects
 > of the design that you are describing.  For example, in e-store you might create a
 > sequence diagram of a customer searching for an item and adding to their cart.
