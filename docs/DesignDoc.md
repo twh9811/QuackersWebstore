@@ -101,7 +101,7 @@ on the store.
     * Details : The site will provide the Owner with the ability to create a pre-customized duck that will allow the owner to add new ducks to the inventory and will reflect what the customer will see in the catalog.
 * Inventory Management - Modify Product Page (5)
     * Story : As an OWNER I want to be able to modify products so that I can change the price, quantity available, name, etc of my items.
-    * Details : The site will provide the Owner with the ability to modify a pre-customized duck that will allow the owner to makes changes to existing ducks in the inventory and will reflect what the customer will see in the catalog.
+    * Details : The site will provide the Owner with the ability to modify and delete a pre-customized duck that will allow the owner to makes changes to existing ducks in the inventory and will reflect what the customer will see in the catalog.
 
 ### 4. Data Persistence
 * Session Management (3)
