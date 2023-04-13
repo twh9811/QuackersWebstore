@@ -434,20 +434,23 @@ accounts.computeIfPresent(accountID, (key, value) -> {
     return account;
 });
 ```
-### Future Refactoring: Implement an email verification feature for the password reset process
+### Future Refactoring: Implement an email verification feature for the password reset process.
 In the current version, resetting a password only requires entering a username and
-a new password, then clicking the reset password button without any verification. 
-The risk is that anyone can tamper password with a specific username, which could 
-lead to the disclosure of address and payment information.
-<br>To prevent this, an email verification step can be added to the password reset 
+a new password and then clicking the reset password button. There is no verification 
+that the user resetting the account owns it. The risk is that anyone can change the 
+password of any account as long as they have the username. This could lead to the disclosure 
+of shipping and payment information. 
+<br><br>
+To prevent this, an email verification step can be added to the password reset 
 process. When the user initiates a password reset request, the system can send an
-email to the registered email address with a verification code or link. The user 
+email containing a verification code or link to the registered email address. The user 
 must then enter the code or click the link to verify their email address before 
 being allowed to proceed with resetting their password.
-<br>To implement this feature, the Account model would need to be updated to include 
+<br><br>
+To implement this feature, the Account model would need to be updated to include 
 email properties, such as the user's email address and a flag indicating whether 
 the email address has been verified. The system would also need to include logic 
-for generating and sending the verification email, and for verifying the user's
+for generating and sending the verification email and for verifying the user's
 email address when they enter the verification code or click the verification link.
 
 
