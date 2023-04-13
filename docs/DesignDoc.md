@@ -251,8 +251,8 @@ responding to user actions, and managing the state of the UI. Finally, there is 
 component, which is responsible for binding data from the backend to the UI. This includes things 
 like retrieving data from a database, formatting the data for display, and updating the UI as the
 data changes. Overall, our View Tier UI provides a responsive and intuitive user interface for 
-the application. By using a combination of these components, 
-we created a UI that is both easy to use and easy to maintain.
+the website. By using a combination of these components, we created a UI that is both easy 
+to use and easy to maintain.
 
 > _**[Sprint 4]** You must  provide at least **2 sequence diagrams** as is relevant to a particular aspects
 > of the design that you are describing.  For example, in e-store you might create a
