@@ -65,7 +65,7 @@ on the store.
 ### 1. Minimal Authentication for Customer/Onwer Login & Logout
 * Login Page (5)
     * Story : As a Customer/Owner, I want to be able to view the login page first and log in before being sent to my shopping cart and the catalog OR accessing admin tools depending on privileges.
-    * Details : Every User must sign-in before using the site. The site will then authenticate if the user is a Customer or an Admin
+    * Details : Every User must sign-in before using the site. The site will then authenticate if the user is a Customer or an Admin.
 
 
 ### 2. Customer Funtionality
@@ -86,7 +86,7 @@ on the store.
     * Details : The site will provide the customer with a shopping cart page that will allow the customer view the ducks in the shopping cart before checkout and make changes to the shopping cart by allowing the customer to remove ducks if needed.
 * Checkout Page - Checkout (3)
     * Story : As a CUSTOMER I want to SEE A RECEIPT OF THE ITEMS I PURCHASED so that I CAN MAKE SURE I BOUGHT EVERYTHING I WANT
-    * Details : The site will provide the customer with a reciept that will allow the customer to purchase the ducks within the shopping cart and review a summary of what the customer purchased
+    * Details : The site will provide the customer with a reciept that will allow the customer to purchase the ducks within the shopping cart and review a summary of what the customer purchased.
 
 
 ### 3. Inventory Management   
@@ -107,6 +107,9 @@ on the store.
 * Session Management (3)
     * Story : As a USER I want to HAVE MY DATA PERSIST BETWEEN PAGES so that I DONT HAVE TO LOGIN EVERY TIME
     * Details : The website will provide the user with a means to have their current data persist between pages. This will allow the user to freely enter other pages of the website without having to login every time.
+* Create Shopping Card Models - Shopping Cart (5)
+    * Story : As a DEVELOPER, I want to be able to access a Customer’s shopping cart so that the SYSTEM is able to save it, modify it, and display the correct information.
+    * Details : The website provides a shopping cart. So if a customer has purcahsed something and logged out, they should see the same items in their shopping cart when they log back in.
 
 ### Enhancements
 
