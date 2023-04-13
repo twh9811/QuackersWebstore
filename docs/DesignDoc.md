@@ -235,50 +235,63 @@ using our ProductCreateModifyComponent and indirectly using our ProductService.
 
 ### ViewModel Tier
 
-Our View Model Tier is composed up of 6 main components with multiple endpoints within each one. These components are the User Controller, Inventory Controller, Shopping Cart Controller, and Checkout Controller. 
-The User Controller component contains all functions that are related to users' accounts: createUser, logoutUser, updateAccount, loginUser, getAccount, and deleteAccount. 
+Our View Model Tier is composed up of 6 main components with multiple endpoints within each one. 
+These components are the User Controller, Inventory Controller, Shopping Cart Controller, and Checkout Controller. 
 
-The createUser endpoint allows us to create new accounts by taking in an account object, checking if a user already exists with the name in the account object, and validates the strength of the password before saving it to our data file. 
+The User Controller component contains all functions that are related to users' accounts: createUser, 
+logoutUser, updateAccount, loginUser, getAccount, and deleteAccount. 
 
-The logoutUser endpoint allows the user to exit the estore while saving all the information that was applied to the user's account. 
+    The createUser endpoint allows us to create new accounts by taking in an account object, checking if 
+    a user already exists with the name in the account object, and validates the strength of the password 
+    before saving it to our data file. 
 
-The updateAccount endpoint modifies the user's information by altering the account's data in our data file.
+    The logoutUser endpoint allows the user to exit the estore while saving all the information that was 
+    applied to the user's account. 
 
-The loginUser endpoint allows the user to enter the estore by entering a username and password that are verified by the existing accounts in our data file. 
+    The updateAccount endpoint modifies the user's information by altering the account's data in our
+    data file.
+
+    The loginUser endpoint allows the user to enter the estore by entering a username and password that 
+    are verified by the existing accounts in our data file. 
  
-The getAccount endpoint locates an account object by searching for the account's id within our data file. 
+    The getAccount endpoint locates an account object by searching for the account's id within our data file. 
 
-The deleteAccount endpoint removes the user's account information from our data file.
+    The deleteAccount endpoint removes the user's account information from our data file.
 
-The Inventory & CustomDuck Controllers componet contains all functions that are related to the estore's inventory & custom ducks: getDuck, createDuck, updateDuck, seearchDucks, getDucks, and deleteDucks. 
+The Inventory & CustomDuck Controllers componet contains all functions that are related to the estore's inventory
+& custom ducks: getDuck, createDuck, updateDuck, seearchDucks, getDucks, and deleteDucks. 
 
-The getDuck endpoint locates a duck using an id and locating the duck id within our data file. 
+    The getDuck endpoint locates a duck using an id and locating the duck id within our data file. 
 
-The createDuck endpoint creates a new duck and adds the duck's information into our inventory data file. 
+    The createDuck endpoint creates a new duck and adds the duck's information into our inventory data file. 
 
-The updateDuck endpoint modifies the duck's information by altering the duck's data in our data file. 
+    The updateDuck endpoint modifies the duck's information by altering the duck's data in our data file. 
 
-The searchDucks endpoint uses an input string to search for all ducks that have the string within the ducks' name within our data file. 
+    The searchDucks endpoint uses an input string to search for all ducks that have the string within the ducks' 
+    name within our data file. 
 
-The getDucks endpoint returns a list of duck objects using a string to find the ducks from our data file. 
+    The getDucks endpoint returns a list of duck objects using a string to find the ducks from our data file. 
 
-The deleteDuck endpoint removes the duck object's informtation from our data file.
+    The deleteDuck endpoint removes the duck object's informtation from our data file.
 
-The ShoppingCartController component contains all functions involving an account's shopping cart: createShoppingCart, updateShoppingCart, getShoppingCart, and deleteShoppingCart. 
+The ShoppingCartController component contains all functions involving an account's shopping cart: createShoppingCart, 
+updateShoppingCart, getShoppingCart, and deleteShoppingCart. 
 
-The createShoppingCart endpoint creates a shopping cart object and adds it into our shopping cart data file. 
+    The createShoppingCart endpoint creates a shopping cart object and adds it into our shopping cart data file. 
 
-The updateShoppingCart endpoint modifies a shopping cart by altering the cart's data in our data file. 
+    The updateShoppingCart endpoint modifies a shopping cart by altering the cart's data in our data file. 
 
-The getShoppingCart endpoints loates a shoppingcart by searching for its id within our shopping cart data file. 
+    The getShoppingCart endpoints loates a shoppingcart by searching for its id within our shopping cart data file. 
 
-The deleteShoppingCart endpoint removes a shopping cart from the shopping cart data file.
+    The deleteShoppingCart endpoint removes a shopping cart from the shopping cart data file.
 
-The CheckoutController component contians all functions involving the checkout page: checkout, vaildateCart, and getInvalidItems.
+The CheckoutController component contians all functions involving the checkout page: checkout and vaildateCart.
 
-The checkout endpoint checks if all the items in the cart are still in inventory, reduces the inventory count of each item in the cart, and clears all the items from the shoppingCart. 
+    The checkout endpoint checks if all the items in the cart are still in inventory, reduces the inventory count of
+    each item in the cart, and clears all the items from the shoppingCart. 
 
-The validateCart endpoint validates a given shopping cart by checking if the shoppingCart exists in the data file, if there are any items within the shopping cart, and checks each item in the cart to make sure it exists in the inventory and has enough stock to fulfill the order.
+    The validateCart endpoint validates a given shopping cart by checking if the shoppingCart exists in the data file,
+    if there are any items within the shopping cart, and checks each item in the cart to make sure it exists in the inventory and has enough stock to fulfill the order.
 
 ![REST-API Controller UML Diagrams](UML%20Diagrams/controller-uml.png)
 
