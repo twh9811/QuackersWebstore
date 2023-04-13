@@ -232,20 +232,12 @@ using our ProductCreateModifyComponent and indirectly using our ProductService.
 
 ### ViewModel Tier
 
-The View Tier UI is responsible for presenting the user interface to the end user. It consists 
-of various components that handle different aspects of the UI such as the User Interface Framework, 
-View Manager, View Controller, and the data binding component. The User Interface Framework, which 
-provides a foundation for building the UI. This includes things like layout managers, event handlers, 
-and other UI controls.The View Manager, which is responsible for managing the views that are displayed 
-to the user. This includes things like creating new views, updating existing views, and managing 
-the overall layout of the UI. The third component is the view controller, which is responsible for 
-managing the interactions between the user and the UI. This includes things like handling user input,
-responding to user actions, and managing the state of the UI. Finally, there is the data binding 
-component, which is responsible for binding data from the backend to the UI. This includes things 
-like retrieving data from a database, formatting the data for display, and updating the UI as the
-data changes. Overall, our View Tier UI provides a responsive and intuitive user interface for 
-the website. By using a combination of these components, we created a UI that is both easy 
-to use and easy to maintain.
+Our View Model Tier is composed up of 6 main components with multiple endpoints within each one. These components are the User Controller, Inventory Controller, Shopping Cart Controller, and Checkout Controller. 
+The User Controller component contains all functions that are related to users' accounts: createUser, logoutUser, updaeAccount, loginUser, getAccount, and deleteAccount. The createUser endpoint  allows us to create new accounts by taking in an account object, checking if a user already exists with the name in the account object, and validates the strength of the password before saving it to our data file. The logoutUser endpoint allows the user to exit the estore while saving all the information that was applied to the user's account. The updateAccount endpoint modifies the user's information by altering the account's data in our data file. The loginSUer endpoint allows the user to enter the estore by entering a user name and endpoint ehich is verified by the existing accounts in ouyr data file. The getAccount endpoint locates an account object by searching for the account's id within our data file. The deleteAccount endpoint removes the user's account information from our data file.
+The Inventory Controller componet contains all functions that are related to the estore's inventory: getDuck, createDuck, updateDuck, seearchDucks, getDucks, and deleteDucks. The getDuck endpoint locates a duck using an id and locating the duck id within our data file. The createDuck enpoint creates a new duck and adds the duck's information into our inventory data file. The updateDuck endpoint modifies the duck's information by altering the duck's data in our data file. The searchDucks endpoint uses an input string to search for all ducks that have the string within the ducks' name within our data file. The getDucks endpoint returns a list of duck objects using a string to find the ducks from our data file. The deleteDuck endpoint removes the duck object's informtation from our data file.
+The ShoppingCartController component contains all functions involving an account's shopping cart: createShoppingCart, updateShoppingCart, getShoppingCart, and deleteShoppingCart. The createShoppingCart endpoint creates a shopping chart object and adds it into our shopping cart data file. The updateShoppingCart endpoint modifies a shopping cart by altering the cart's data in our data file. The getShoppingCart endpoints loates a shoppingcart by searching for it's id within our shopping cart data file. The deleteShoppingCart enpoint removes a shopping cart from the shopping cart data file.
+The CheckoutController component contians all functions involving the checkout page; checkout, vaildateCart, and getInvalidItems. The checkout endpoint checks if all the items in the cart are still in inventory, reduces the inventory count of each item in the cart, and clears all the items from the shoppingCart. The validateCart endpoint validates a given shopping cart by checking if the shoppingCart exists in the data file, if there are any items within the shopping cart, and checks for invalid items. The getInvalidItems endpoint checks for any invalid items by checking each item in the cart if it exists in the inventory or if th the requested quantiity of the item exceeds the amount in the inventory.
+
 
 ![REST-API Controller UML Diagrams](UML%20Diagrams/controller-uml.png)
 
