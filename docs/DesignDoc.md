@@ -296,7 +296,7 @@ without modifying it. This allows for easy extension of the Account class by
 adding new classes that also inherit from it, without changing the existing 
 implementation.
 
-![user-owner-account UML Diagram](UML%20Diagrams/user-owner-account.png)
+![User/Owner/Account UML Diagrams](UML%20Diagrams/user-owner-account.png)
 
 
 ### Pure Fabrication
