@@ -423,7 +423,7 @@ private static boolean load() throws IOException {
 ![Static Code Analysis Area 3 Diagram](Static_Code_Analysis_Diagrams/static-code-analysis-3.png)
 It’s a common pattern to test the result of a java.util.Map.get() against null or 
 calling java.util.Map.containsKey() before proceeding with adding or changing the
-value in the map. However the java.util.Map API offers a significantly better 
+value in the map. However, the java.util.Map API offers a significantly better 
 alternative in the form of the computeIfPresent() and computeIfAbsent() methods. 
 Using these instead leads to cleaner and more readable code.
 This can be solved by replacing this "Map.containsKey()" with a call to "Map.computeIfPresent()":
