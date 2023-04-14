@@ -20,7 +20,7 @@ This is a summary of the project.
 
 ### Purpose
 
-Our goal is to create an onlne e-store that sells highly customizable
+Our goal is to create an online e-store that sells highly customizable
 ducks. We aim to be able to fulfill both pre-made ducks and user customized
 ducks.
 
@@ -51,7 +51,7 @@ clicking on the shopping cart button. When viewing the contents of the
 shopping cart and the customer decides they no longer want to purchase a 
 duck, they may remove it from their shopping cart individually or clear 
 the entire cart all at once. The total price is also displayed on the page. 
-Once a customer has decided they are done shopping and would like to checkout 
+Once a customer has decided they are done shopping and would like to check out 
 they navigate to the shopping cart page and select the checkout button. Here
 they will enter their contact, shipping, and payment information. When the 
 checkout is complete they will be given a receipt that shows the contents of 
@@ -59,10 +59,10 @@ the order and the total price paid. From an owners perspective, they have access
 to the whole store catalog and can add/remove new products or even update existing 
 ones at the click of a button. They can also search for specific ducks in the inventory
 for easier access. Admin accounts do not have access to a shopping cart and cannot shop 
-on the store.
+in the store.
 
 ### MVP Features
-### 1. Minimal Authentication for Customer/Onwer Login & Logout
+### 1. Minimal Authentication for Customer/Owner Login & Logout
 * Login Page (5)
     * Story : As a Customer/Owner, I want to be able to view the login page first and log in before being sent to my shopping cart and the catalog OR accessing admin tools depending on privileges.
     * Details : Every User must sign in before using the site. The site will then authenticate if the user is a customer or an admin.
@@ -83,7 +83,7 @@ on the store.
     * Details : The site will provide the customer with the ability to add a duck to a shopping cart, allowing them to purchase it.
 * Shopping Cart Page (6)
     * Story : As a BUYER I want to BE ABLE TO VIEW MY SHOPPING CART so that ADD/REMOVE ITEMS FROM MY CART AND BUY THEM.
-    * Details : The site will provide the customer with a shopping cart page that will allow the customer to view the ducks in the cart before checkout and make changes to the cart, such as removing ducks if needed.
+    * Details : The site will provide the customer with a shopping cart page that will allow the customer to view the ducks in the cart before checking out and make changes to the cart, such as removing ducks if needed.
 * Checkout Page - Checkout (3)
     * Story : As a CUSTOMER I want to SEE A RECEIPT OF THE ITEMS I PURCHASED so that I CAN MAKE SURE I BOUGHT EVERYTHING I WANT
     * Details : The site will provide the customer with a receipt that will allow the customer to purchase the ducks within the shopping cart and review a summary of what the customer purchased.
@@ -114,10 +114,10 @@ on the store.
 ### Enhancements
 
 There are three main enhancements for the project: Profile Pages, Strong Passwords, 
-and Custom Duck Creation. Strong passwords is the simplest feature of the three.
-It adds password management and increased security for user accounts on the store. 
-During account creation, a user is forced to enter a password during account creation,
-it cannot be blank. Ontop of that it must meet a minimum of 8 characters and have at
+and Custom Duck Creation. Strong passwords are the simplest feature of the three.
+They add password management and increased security for regusterded user accounts. 
+During account creation, a user is forced to enter a password, which is not blank, 
+during account creation. On top of that it must meet a minimum of 8 characters and have at
 least one upper and lower case character, one number, and one special character. If
 a password does not meet these requirements, the account will not be created and feedback
 will be displayed to the user telling them the requirements. A user can also reset their
@@ -442,6 +442,10 @@ readable, understandable, and maintainable.
 This can be solved by combining the conditions that are used to skip processing 
 of the cart items into a single if statement:
 ```java
+if(!invalidItems.containsKey(cartDuckIdStr)) {
+    newCartItems.put(cartDuckIdStr, cartQuantity);
+}
+
 if (!invalidItems.containsKey(cartDuckIdStr) || invalidItems.get(cartDuckIdStr) == null) {
     continue;
 }
@@ -516,7 +520,7 @@ aimed for nearly 100% code coverage for them. When it came to non MVP features, 
 our enhancements, we aimed for 90%+ code coverage. We chose these values because we felt
 they would nearly guarantee our backend to be bug-free. Additionally, we felt that
 because of how important the MVP was, we needed to ensure that there would be as few
-bugs as possible, so we aimed for nearly 100% code coverage for those features.
+bugs as possible, which is why we aimed for such a high code coverage for those features.
 
 We reached our goals with an overall 96% code coverage. All of our MVP features have
 code coverages of upwards of 95%. Our Account class had the lowest coverage of 87%.
