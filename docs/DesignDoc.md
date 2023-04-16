@@ -412,7 +412,7 @@ to an object that has the information needed to complete a task.
 Applications:<br>
 The Model Tier UML diagram above adheres to the information expert principle. For
 example, in the shopping cart class, the shopping cart is given the 
-responsibility of checking out and removing items from the cart. 
+responsibility of maintaining the storage of items in the cart. 
 Because the shopping cart object holds the item array, we can assign it the
 responsibility of adding items, removing items, and editing the quantity of
 each item in the cart. This keeps the class UML diagram simple and easy to 
@@ -426,8 +426,8 @@ the necessary information about the item.
 
 Another class that supports the information expert principle is the Accounts class.
 The Accounts class is responsible for updating the profile information and this is 
-important as the Accounts class holds a profile object. Since the account class 
-holds a profile object, it is appropriate to give the Accounts class the 
+important as the Accounts class has the necessary fields, such as address. Since the 
+account class holds these fields, it is appropriate to give the Accounts class the 
 responsibility of updating the profile information.
 
 ![Account UML Diagram](UML%20Diagrams/Account.png)
