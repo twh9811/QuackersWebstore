@@ -376,7 +376,7 @@ screen.
 ### Single Responsibility
 
 Single Responsibility is a design principle stating that a class or module 
-should have only one reason to change.
+should be made to fulfill one specific function.
 
 Applications:<br>
 As of now, our design makes use of the single responsibility object-oriented
